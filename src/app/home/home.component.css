@@ -1,0 +1,185 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem;
+  }
+
+  .card-content {
+    background: linear-gradient(135deg, #47b392, #74c6ac );
+    border-radius: 1.5rem;
+    padding: 3rem;
+    color: #fff;
+    width: 90%;
+    max-width: 1200px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    position:relative;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 2rem;
+  }
+
+  .card-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  .card-description {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .card-content:hover {
+    box-shadow: 0 15px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .card-icons img {
+    position: absolute;
+    opacity: 0.3;
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+  }
+
+  .book-icon {
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6rem;
+    height: auto;
+  }
+
+  .calendar-icon {
+    bottom: 1.5rem;
+    right: 2rem;
+    width: 6rem;
+    height: auto;
+  }
+
+  .ellipse-icon {
+    bottom: 1%;
+    left: 7%;
+    transform: translateX(-50%);
+    width: 12rem;
+    height: auto;
+  }
+
+  .card-content:hover .book-icon {
+    transform: translateX(-50%) scale(1.2);
+    opacity: 0.6;
+  }
+
+  .card-content:hover .calendar-icon {
+    transform: scale(1.2);
+    opacity: 0.6;
+  }
+
+  .card-content:hover .ellipse-icon {
+    transform: translateX(-50%) scale(1.2);
+    opacity: 0.6;
+  }
+
+
+  /* sub-card design  */
+
+  .sub-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%; 
+  }
+
+  .sub-card { 
+    background: linear-gradient(135deg, #47b392, #74c6ac );
+    border-radius: 1.5rem;
+    padding: 2rem;
+    color: #fff;
+    flex: 1;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .sub-card.course-catalog {
+    background: #2d2f36;
+  }
+
+  .sub-card.training-transcript {
+    background: #ff6f61;
+  }
+
+  .sub-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .sub-card p {
+    font-size: 1rem;
+  }
+
+  .sub-card img {
+    width: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .sub-cards {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+  }
+
+  /* Sub card design  */
+/* Container to align cards horizontally */
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5 rem;
+    padding: 2rem;
+    width: 90%;
+  }
+  
+  /* Card styling */
+  .custom-card {
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Colors based on uploaded image */
+  .idp-card {
+    background: linear-gradient(135deg, #47b392, #74c6ac);
+    color: #fff;
+  }
+  
+  .course-card {
+    background: #2d2f36;
+    color: #fff;
+  }
+  
+  .transcript-card {
+    background: #ff6f61;
+    color: #fff;
+  }
+  
+  /* Card hover effect */
+  .custom-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 1024px) {
+    .card-container {
+      flex-direction: column;
+      align-items: center;
+      width: 90%;
+    }
+
+    .idp-card,.course-card,.transcript-card {
+      margin-bottom: 5%;
+    
+    }
+  }
+  
+

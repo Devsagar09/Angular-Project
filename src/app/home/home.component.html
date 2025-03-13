@@ -1,0 +1,68 @@
+<div class="card-content">
+    <div class="learning-card">
+        <h1 class="card-title">Welcome to Your Learning Journey</h1>
+        <p class="card-description">
+            Empower yourself with knowledge and skills. Explore curated courses, track your progress,
+            and achieve new milestones — all in one place. Your future starts here!
+        </p>
+    </div>
+    <div class="card-icons">
+        <img src="book.png" alt="Book Icon" class="book-icon" />
+        <img src="calpng.png" alt="Calendar Icon" class="calendar-icon" />
+        <img src="ellipse.png" alt="Ellipse Icon" class="ellipse-icon" />
+    </div>
+</div>
+
+ 
+<!-- Sub card design start -->
+
+<div class="card-container">
+    <!-- IDP Card -->
+    <kendo-card class="custom-card idp-card" width="360px">
+      <kendo-card-header class="k-hstack">
+        <kendo-avatar
+          width="50px"
+          height="50px"
+          [imageSrc]="idpIcon"
+          shape="circle"
+        ></kendo-avatar>
+        <div>
+          <h2 kendoCardTitle>IDP</h2>
+          <p kendoCardSubtitle>Individual Development Plan</p>
+        </div>
+      </kendo-card-header>
+    </kendo-card>
+
+    <!-- Course Catalog Card -->
+    <kendo-card class="custom-card course-card" width="360px">
+      <kendo-card-header class="k-hstack">
+        <kendo-avatar
+          width="50px"
+          height="50px"
+          [imageSrc]="catalogIcon"
+          shape="circle"
+        ></kendo-avatar>
+        <div>
+          <h2 kendoCardTitle>Course Catalog</h2>
+          <p kendoCardSubtitle>View Course Catalog</p>
+        </div>
+      </kendo-card-header>
+    </kendo-card>
+
+    <!-- Training Transcript Card -->
+    <kendo-card class="custom-card transcript-card" width="360px">
+      <kendo-card-header class="k-hstack">
+        <kendo-avatar
+          width="50px"
+          height="50px"
+          [imageSrc]="transcriptIcon"
+          shape="circle"
+        ></kendo-avatar>
+        <div>
+          <h2 kendoCardTitle>Training Transcript</h2>
+          <p kendoCardSubtitle>View Training Transcript</p>
+        </div>
+      </kendo-card-header>
+    </kendo-card>
+  </div>
+<!-- Sub card design end -->
