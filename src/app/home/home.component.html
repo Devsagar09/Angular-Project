@@ -3,7 +3,7 @@
         <h1 class="card-title">Welcome to Your Learning Journey</h1>
         <p class="card-description">
             Empower yourself with knowledge and skills. Explore curated courses, track your progress,
-            and achieve new milestones — all in one place. Your future starts here!
+            <br /> achieve new milestones — all in one place. Your future starts here!
         </p>
     </div>
     <div class="card-icons">
@@ -13,56 +13,85 @@
     </div>
 </div>
 
- 
+
 <!-- Sub card design start -->
+<!-- 
+    <div class="card-container">
+ 
+        <kendo-card class="custom-card idp-card" width="400px" height="100px">
+          <kendo-card-header class="k-hstack">
+            <kendo-avatar width="55px" height="55px" [imageSrc]="idpIcon" shape="circle"></kendo-avatar>
+            <div class="card-text">
+              <h2 kendoCardTitle>IDP</h2>
+              <p kendoCardSubtitle>Individual Development Plan</p>
+            </div>
+          </kendo-card-header>
+        </kendo-card>
+      
+ 
+        <kendo-card class="custom-card course-card" width="400px" height="100px">
+          <kendo-card-header class="k-hstack">
+            <kendo-avatar width="55px" height="55px" [imageSrc]="catalogIcon" shape="circle"></kendo-avatar>
+            <div class="card-text">
+              <h2 kendoCardTitle>Course Catalog</h2>
+              <p kendoCardSubtitle>View Course Catalog</p>
+            </div>
+          </kendo-card-header>
+        </kendo-card> 
 
-<div class="card-container">
-    <!-- IDP Card -->
-    <kendo-card class="custom-card idp-card" width="360px">
-      <kendo-card-header class="k-hstack">
-        <kendo-avatar
-          width="50px"
-          height="50px"
-          [imageSrc]="idpIcon"
-          shape="circle"
-        ></kendo-avatar>
-        <div>
-          <h2 kendoCardTitle>IDP</h2>
-          <p kendoCardSubtitle>Individual Development Plan</p>
-        </div>
-      </kendo-card-header>
-    </kendo-card>
+        <kendo-card class="custom-card transcript-card" width="400px" height="100px">
+          <kendo-card-header class="k-hstack">
+            <kendo-avatar width="55px" height="55px" [imageSrc]="transcriptIcon"  ></kendo-avatar>
+            <div class="card-text">
+              <h2 kendoCardTitle>Training Transcript</h2>
+              <p kendoCardSubtitle>View Training Transcript</p>
+            </div>
+          </kendo-card-header>
+        </kendo-card>
+      </div> -->
 
-    <!-- Course Catalog Card -->
-    <kendo-card class="custom-card course-card" width="360px">
-      <kendo-card-header class="k-hstack">
-        <kendo-avatar
-          width="50px"
-          height="50px"
-          [imageSrc]="catalogIcon"
-          shape="circle"
-        ></kendo-avatar>
-        <div>
-          <h2 kendoCardTitle>Course Catalog</h2>
-          <p kendoCardSubtitle>View Course Catalog</p>
-        </div>
-      </kendo-card-header>
-    </kendo-card>
 
-    <!-- Training Transcript Card -->
-    <kendo-card class="custom-card transcript-card" width="360px">
-      <kendo-card-header class="k-hstack">
-        <kendo-avatar
-          width="50px"
-          height="50px"
-          [imageSrc]="transcriptIcon"
-          shape="circle"
-        ></kendo-avatar>
-        <div>
-          <h2 kendoCardTitle>Training Transcript</h2>
-          <p kendoCardSubtitle>View Training Transcript</p>
-        </div>
-      </kendo-card-header>
-    </kendo-card>
-  </div>
+
 <!-- Sub card design end -->
+
+<div class="stats-container">
+     
+    <div class="stat-card idp-card">
+        <div class="stat-icon">
+            <img src="idp.png" alt="IDP" />
+        </div>
+        <div class="stat-details">
+            <p class="stat-title">IDP</p>
+            <p class="stat-value">
+                <strong>Individual Development Plan</strong>
+
+            </p>
+        </div>
+    </div>
+ 
+    <div class="stat-card course-card">
+        <div class="stat-icon">
+            <img src="catalog.png" alt="Course Catalog" />
+        </div>
+        <div class="stat-details">
+            <p class="stat-title">Course Catalog</p>
+            <p class="stat-value">
+                <strong>View Course Catalog</strong>
+
+            </p>
+        </div>
+    </div>
+ 
+    <div class="stat-card transcript-card">
+        <div class="stat-icon">
+            <img src="trascript.png" alt="Transcript" />
+        </div>
+        <div class="stat-details">
+            <p class="stat-title">Training Trascript</p>
+            <p class="stat-value">
+                <strong>View Training Transcript</strong>
+
+            </p>
+        </div>
+    </div>
+</div>

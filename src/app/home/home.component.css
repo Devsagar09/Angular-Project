@@ -1,3 +1,8 @@
+
+::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari */
+  }
+  
 :host {
     display: flex;
     justify-content: center;
@@ -82,104 +87,110 @@
 
   /* sub-card design  */
 
-  .sub-cards {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    width: 100%; 
+ 
+ 
+
+/* Container for all stat cards */
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2rem;
+   width: 95%;
+   cursor: pointer;
+}
+
+/* Individual stat card */
+.stat-card {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: #ffffff;
+  border: 3px solid #e0e0e0;
+  border-radius: 2rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Icon styling */
+.stat-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border: 3px solid #e0e0e0;
+  border-radius: 50%;
+  background: #ffffff;
+  margin-right: 1.5rem;
+}
+
+.stat-icon img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Stat details */
+.stat-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #3c2e2e;
+  margin: 0;
+}
+
+.stat-value {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0.5rem 0 0 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #000000;
+}
+
+/* Trend indicators */
+.positive-trend {
+  font-size: 1.1rem;
+  color: #47b392;
+}
+
+.negative-trend {
+  font-size: 1.1rem;
+  color: #ff6f61;
+}
+/* .idp-card{
+  background-color: rgb(226, 186, 113)
+  ;
+}
+
+.course-card{
+  background-color: #364358;
+}
+
+.transcript-card{
+  background-color: #ff6a59;
+} */
+
+/* Hover effect */
+.stat-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .stats-container {
+    flex-direction: column;
+    align-items: center;
   }
 
-  .sub-card { 
-    background: linear-gradient(135deg, #47b392, #74c6ac );
-    border-radius: 1.5rem;
-    padding: 2rem;
-    color: #fff;
-    flex: 1;
-    text-align: center;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease-in-out;
-  }
-
-  .sub-card.course-catalog {
-    background: #2d2f36;
-  }
-
-  .sub-card.training-transcript {
-    background: #ff6f61;
-  }
-
-  .sub-card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .sub-card p {
-    font-size: 1rem;
-  }
-
-  .sub-card img {
-    width: 3rem;
-    margin-bottom: 1rem;
-  }
-
-  @media (max-width: 768px) {
-    .sub-cards {
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-  }
-
-  /* Sub card design  */
-/* Container to align cards horizontally */
-.card-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 0.5 rem;
-    padding: 2rem;
+  .stat-card {
     width: 90%;
   }
-  
-  /* Card styling */
-  .custom-card {
-    border-radius: 1.5rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease-in-out;
-  }
-  
-  /* Colors based on uploaded image */
-  .idp-card {
-    background: linear-gradient(135deg, #47b392, #74c6ac);
-    color: #fff;
-  }
-  
-  .course-card {
-    background: #2d2f36;
-    color: #fff;
-  }
-  
-  .transcript-card {
-    background: #ff6f61;
-    color: #fff;
-  }
-  
-  /* Card hover effect */
-  .custom-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Responsive design */
-  @media (max-width: 1024px) {
-    .card-container {
-      flex-direction: column;
-      align-items: center;
-      width: 90%;
-    }
-
-    .idp-card,.course-card,.transcript-card {
-      margin-bottom: 5%;
-    
-    }
-  }
-  
-
+}
