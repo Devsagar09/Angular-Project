@@ -1,93 +1,104 @@
-
 ::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari */
-  }
-  
+  display: none;
+}
+
 :host {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 2rem;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+}
 
-  .card-content {
-    background: linear-gradient(135deg, #47b392, #74c6ac );
-    border-radius: 1.5rem;
-    padding: 3rem;
-    color: #fff;
-    width: 90%;
-    max-width: 1200px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    position:relative;
-    overflow: hidden;
-    transition: all 0.3s ease-in-out;
-    margin-bottom: 2rem;
-  }
+.card-content {
+  background: linear-gradient(135deg, #44a589, #5aa18b);
+  border-radius: 1.5rem;
+  padding: 3rem;
+  color: #ffffff;
+  width: 90%;
+  max-width: 1200px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  margin-bottom: 2rem;
+}
 
-  .card-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
+.card-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
 
-  .card-description {
-    font-size: 1rem;
-    line-height: 1.8;
-  }
+.card-description {
+  font-size: 1rem;
+  line-height: 1.8;
+}
 
-  .card-content:hover {
-    box-shadow: 0 15px 15px rgba(0, 0, 0, 0.3);
-  }
+.card-content:hover {
+  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.3);
+}
 
-  .card-icons img {
-    position: absolute;
-    opacity: 0.3;
-    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
-  }
+.card-icons img {
+  position: absolute;
+  opacity: 0.3;
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+}
 
-  .book-icon {
-    top: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6rem;
-    height: auto;
-  }
+.book-icon {
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6rem;
+  height: auto;
+}
 
-  .calendar-icon {
-    bottom: 1.5rem;
-    right: 2rem;
-    width: 6rem;
-    height: auto;
-  }
+.calendar-icon {
+  bottom: 1.5rem;
+  right: 2rem;
+  width: 6rem;
+  height: auto;
+}
 
-  .ellipse-icon {
-    bottom: 1%;
-    left: 7%;
-    transform: translateX(-50%);
-    width: 12rem;
-    height: auto;
-  }
+.ellipse-icon {
+  bottom: 1%;
+  left: 7%;
+  transform: translateX(-50%);
+  width: 12rem;
+  height: auto;
+}
 
-  .card-content:hover .book-icon {
-    transform: translateX(-50%) scale(1.2);
-    opacity: 0.6;
-  }
+.card-content:hover .book-icon {
+  transform: translateX(-50%) scale(1.2);
+  opacity: 0.6;
+}
 
-  .card-content:hover .calendar-icon {
-    transform: scale(1.2);
-    opacity: 0.6;
-  }
+.card-content:hover .calendar-icon {
+  transform: scale(1.2);
+  opacity: 0.6;
+}
 
-  .card-content:hover .ellipse-icon {
-    transform: translateX(-50%) scale(1.2);
-    opacity: 0.6;
-  }
+.card-content:hover .ellipse-icon {
+  transform: translateX(-50%) scale(1.2);
+  opacity: 0.6;
+}
 
 
-  /* sub-card design  */
+/* sub-card design  */
 
- 
+.quick-links {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  align-self: flex-start;
+  width: 90%;   
+  color: #000000;
+  font-weight: 700;
+  font-size: 1.2rem; /* Keep size readable */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.8rem; 
+  margin-bottom: 0;
+  margin-left: 2%;
+}
  
 
 /* Container for all stat cards */
@@ -95,9 +106,9 @@
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  padding: 2rem;
-   width: 95%;
-   cursor: pointer;
+  padding: 1rem;
+  width: 95%;
+  cursor: pointer;
 }
 
 /* Individual stat card */
@@ -138,7 +149,7 @@
 }
 
 .stat-title {
-  font-size: 1.3rem;
+  font-size: 1 rem;
   font-weight: 600;
   color: #3c2e2e;
   margin: 0;
@@ -164,6 +175,7 @@
   font-size: 1.1rem;
   color: #ff6f61;
 }
+
 /* .idp-card{
   background-color: rgb(226, 186, 113)
   ;
@@ -183,6 +195,11 @@
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
 }
 
+.stat-card:hover .stat-icon {
+  background: #66bab6;  
+  color: white; 
+}
+
 /* Responsive design */
 @media (max-width: 1024px) {
   .stats-container {
@@ -192,5 +209,76 @@
 
   .stat-card {
     width: 90%;
+  }
+}
+
+
+/* state card design  */
+
+ 
+ /* Main Container */
+.container {
+  text-align: center; 
+  width: 100%; 
+  padding: 20px;
+}
+
+/* Title */
+h2 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  align-self: flex-start;
+  width: 90%;   
+  color: #000000;
+  font-weight: 700;
+  font-size: 1.2rem; /* Keep size readable */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.8rem; 
+  margin-bottom: 0;
+  margin-left: 2%;
+}
+
+/* Card Container */
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Individual Cards */
+.stat-cards {
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 550px;
+  transition: transform 0.3s ease;
+}
+
+/* Hover Effect */
+.stat-cards:hover {
+  transform: translateY(-5px);
+}
+
+/* Chart Styling */
+canvas {
+  width: 220px !important;
+  height: 220px !important;
+  margin: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card-container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .stat-cards {
+      width: 90%;
   }
 }

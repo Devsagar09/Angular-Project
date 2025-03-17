@@ -15,47 +15,12 @@
 
 
 <!-- Sub card design start -->
-<!-- 
-    <div class="card-container">
- 
-        <kendo-card class="custom-card idp-card" width="400px" height="100px">
-          <kendo-card-header class="k-hstack">
-            <kendo-avatar width="55px" height="55px" [imageSrc]="idpIcon" shape="circle"></kendo-avatar>
-            <div class="card-text">
-              <h2 kendoCardTitle>IDP</h2>
-              <p kendoCardSubtitle>Individual Development Plan</p>
-            </div>
-          </kendo-card-header>
-        </kendo-card>
-      
- 
-        <kendo-card class="custom-card course-card" width="400px" height="100px">
-          <kendo-card-header class="k-hstack">
-            <kendo-avatar width="55px" height="55px" [imageSrc]="catalogIcon" shape="circle"></kendo-avatar>
-            <div class="card-text">
-              <h2 kendoCardTitle>Course Catalog</h2>
-              <p kendoCardSubtitle>View Course Catalog</p>
-            </div>
-          </kendo-card-header>
-        </kendo-card> 
 
-        <kendo-card class="custom-card transcript-card" width="400px" height="100px">
-          <kendo-card-header class="k-hstack">
-            <kendo-avatar width="55px" height="55px" [imageSrc]="transcriptIcon"  ></kendo-avatar>
-            <div class="card-text">
-              <h2 kendoCardTitle>Training Transcript</h2>
-              <p kendoCardSubtitle>View Training Transcript</p>
-            </div>
-          </kendo-card-header>
-        </kendo-card>
-      </div> -->
-
-
-
-<!-- Sub card design end -->
+<h3 class="quick-links">Quick Links</h3>
 
 <div class="stats-container">
-     
+
+
     <div class="stat-card idp-card">
         <div class="stat-icon">
             <img src="idp.png" alt="IDP" />
@@ -68,7 +33,7 @@
             </p>
         </div>
     </div>
- 
+
     <div class="stat-card course-card">
         <div class="stat-icon">
             <img src="catalog.png" alt="Course Catalog" />
@@ -81,7 +46,7 @@
             </p>
         </div>
     </div>
- 
+
     <div class="stat-card transcript-card">
         <div class="stat-icon">
             <img src="trascript.png" alt="Transcript" />
@@ -95,3 +60,32 @@
         </div>
     </div>
 </div>
+<!-- Sub card design end -->
+
+<!-- states start --> 
+<h2>Training Statistics</h2>
+<div class="container">
+
+    <div class="card-container">
+        <!-- Document Training Card -->
+        <div class="stat-cards">
+            <h3>Document Training</h3>
+            <canvas id="docChart"></canvas>
+            <p>Completed: <strong>{{ documentTraining.completed }}</strong></p>
+            <p>Assigned: <strong>{{ documentTraining.assigned }}</strong></p>
+            <p>Enrolled: <strong>{{ documentTraining.enrolled }}</strong></p>
+        </div>
+
+        <!-- External Link Training Card -->
+        <div class="stat-cards">
+            <h3>External Link Training</h3>
+            <canvas id="linkChart"></canvas>
+            <p>Completed: <strong>{{ externalTraining.completed }}</strong></p>
+            <p>Assigned: <strong>{{ externalTraining.assigned }}</strong></p>
+            <p>Enrolled: <strong>{{ externalTraining.enrolled }}</strong></p>
+        </div>
+    </div>
+</div>
+<!-- states end -->
+ 
+ 

@@ -11,6 +11,10 @@ import { HomeComponent } from './home/home.component';
 
 import { CardModule } from '@progress/kendo-angular-layout'; 
 import { AvatarModule } from '@progress/kendo-angular-layout';
+
+import { ChartsModule } from '@progress/kendo-angular-charts';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +27,9 @@ import { AvatarModule } from '@progress/kendo-angular-layout';
     IconModule,
     ButtonsModule,
     CardModule,
-    AvatarModule
+    AvatarModule,
+    ChartsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
