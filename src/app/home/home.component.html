@@ -62,7 +62,7 @@
 </div>
 <!-- Sub card design end -->
 
-<!-- states start --> 
+<!-- states start -->
 <h2>Training Statistics</h2>
 <div class="container">
 
@@ -70,7 +70,13 @@
         <!-- Document Training Card -->
         <div class="stat-cards">
             <h3>Document Training</h3>
-            <canvas id="docChart"></canvas>
+
+            <div *ngIf="isLoading" class="loader-container">
+                <div class="loader"></div>
+            </div>
+
+            <canvas  *ngIf="!isLoading" id="docChart"></canvas>
+
             <p>Completed: <strong>{{ documentTraining.completed }}</strong></p>
             <p>Assigned: <strong>{{ documentTraining.assigned }}</strong></p>
             <p>Enrolled: <strong>{{ documentTraining.enrolled }}</strong></p>
@@ -79,7 +85,13 @@
         <!-- External Link Training Card -->
         <div class="stat-cards">
             <h3>External Link Training</h3>
-            <canvas id="linkChart"></canvas>
+
+            <div *ngIf="isLoading" class="loader-container">
+                <div class="loader"></div>
+            </div>
+
+            <canvas *ngIf="!isLoading" id="linkChart"></canvas>
+            
             <p>Completed: <strong>{{ externalTraining.completed }}</strong></p>
             <p>Assigned: <strong>{{ externalTraining.assigned }}</strong></p>
             <p>Enrolled: <strong>{{ externalTraining.enrolled }}</strong></p>
@@ -87,5 +99,47 @@
     </div>
 </div>
 <!-- states end -->
- 
- 
+
+<!-- tab menus start -->
+<div class="dashboard-container">
+    <h2 class="heading">Learning Status</h2>
+
+    <!-- Tabs -->
+    <div class="tab-menu">
+        <span [class.active-tab]="activeTab === 'inProgress'" (click)="changeTab('inProgress')">In Progress</span>
+        <span [class.active-tab]="activeTab === 'notStarted'" (click)="changeTab('notStarted')">Not Started</span>
+    </div>
+
+    <!-- Training Cards -->
+    <div class="card-container">
+        <div class="training-card" *ngFor="let training of filteredTrainings">
+            <div class="card-header">
+                <img [src]="training.image" alt="Training Image" />
+
+            </div>
+
+            <div class="card-body">
+                <span class="badge">{{ training.type }}</span>
+                <h3>{{ training.title }}</h3>
+
+                <div class="info">
+                    <p><i class="fa fa-calendar"></i> Training Code: {{ training.code }}</p>
+                    <p><i class="fa fa-calendar"></i> Due Date: {{ training.dueDate }}</p>
+                    <p><i class="fa fa-user"></i> Required For: {{ training.requiredFor }}</p>
+                    <p><i class="fa fa-users"></i> Group: {{ training.group }}</p>
+                </div>
+                <span class="status" [ngClass]="{'not-started': training.status === 'Not Started', 
+                                 'in-progress': training.status === 'In Progress'}">
+                    {{ training.status }}
+                </span>
+            </div>
+
+            <div class="card-footer">
+                <button class="btn">{{ training.type }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- tab menus end -->

@@ -14,12 +14,15 @@ import { AvatarModule } from '@progress/kendo-angular-layout';
 
 import { ChartsModule } from '@progress/kendo-angular-charts';
 import { HttpClientModule } from '@angular/common/http';
+import { FooterComponent } from './Shared/footer/footer.component';
+ 
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundPageComponent,
-    HomeComponent 
+    HomeComponent,
+    FooterComponent 
   ],
   imports: [
     BrowserModule,

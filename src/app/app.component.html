@@ -99,30 +99,9 @@
     <div class="page-content" *ngIf="!isLoading">
       <router-outlet />
     </div>
+    <app-footer></app-footer>
   </div>
 </div>
 
 
-<!-- 
-<div class="sidebar" [class.collapsed]="isCollapsed">
-   
-  <div class="header">
-    <button class="toggle-btn" (click)="toggleSidebar()">
-      <span class="arrow">&#x276F;</span>
-    </button>
-    <h4>Menu</h4>
-  </div>
-
-  <div class="menu">
-    <ul>
-      <li kendotooltip title="Dashboard" ><span class="icon">🏠</span><span class="text"><a routerLink="/home" routerLinkActive="active" style="text-decoration: none;"> Dashboard</a></span></li>
-      <li kendotooltip title="IDP"><span class="icon">📚</span><span class="text">IDP</span></li>
-      <li kendotooltip title="My Enrollment"><span class="icon">📝</span><span class="text">My Enrollment</span></li>
-      <li kendotooltip title="Training Transcript"><span class="icon">📜</span><span class="text">Training Transcript</span></li>
-      <li kendotooltip title="Course Catalog"><span class="icon">📖</span><span class="text">Course Catalog</span></li>
-    </ul>
-  </div>
-</div>
-
-
-<router-outlet /> -->
+ 

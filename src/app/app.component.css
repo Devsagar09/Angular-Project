@@ -14,14 +14,12 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: #f8f9fa;
-    
-    
+    background-color: #ffffff; 
 }
 
 .container {
     display: flex;
-    height: 100vh;
+    height: 97vh;
   }
 
  
@@ -110,7 +108,7 @@ body {
 .sidebar {
     background-color: #fff;
     border-right: 2px solid #ddd;
-    width: 300px;
+    width: 250px;
     transition: width 0.5s ease;
     display: flex;
     flex-direction: column;
@@ -118,11 +116,11 @@ body {
   }
 
 .sidebar.collapsed {
-    width: 80px;
+    width: 90px;
 }
 /* Sidebar Menu */
 .menu h4 {
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 12px;
     color: #333;
 }
@@ -153,7 +151,7 @@ body {
 }
 
 .icon {
-    font-size: 25px;
+    font-size: 22px;
 }
 
 .text {

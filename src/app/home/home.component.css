@@ -214,6 +214,27 @@
 
 
 /* state card design  */
+/* loader */
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 220px; /* Same height as the chart */
+}
+
+.loader {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
  
  /* Main Container */
@@ -254,8 +275,8 @@ h2 {
   border-radius: 10px;
   padding: 20px;
   text-align: center;
-  width: 100%;
-  max-width: 550px;
+  width: 40%;
+  /* max-width: 550px; */
   transition: transform 0.3s ease;
 }
 
@@ -280,5 +301,159 @@ canvas {
 
   .stat-cards {
       width: 90%;
+  }
+}
+
+
+
+/* tab menu design   */
+/* General Container */
+.dashboard-container {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+}
+
+/* Tab Menu */
+.tab-menu {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #ddd;
+}
+
+.tab-menu span {
+  cursor: pointer;
+  padding: 8px 15px;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+}
+
+.tab-menu span:hover {
+  background: #ececec;
+}
+
+.active-tab {
+  color: white;
+  background: #007bff;
+  border-radius: 6px;
+  padding: 8px 15px;
+  transition: 0.3s;
+}
+
+/* Card Container */
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Smaller Card */
+.training-card {
+  background: white;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  width: 250px;  /* Smaller width */
+  transition: 0.3s;
+}
+
+.training-card:hover {
+  transform: scale(1.02);
+}
+
+/* Header Image */
+.card-header img {
+  margin: 1rem;
+  width: 90%;
+  height: 120px; /* Reduced height */
+  object-fit: cover;
+  border: 2px solid rgb(255, 255, 255);
+}
+
+/* Card Body */
+.card-body {
+  padding: 10px;
+  text-align: left;
+}
+
+.badge {
+  background: #ddd;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 12px; /* Smaller font */
+}
+
+h3 {
+  margin: 5px 0;
+  font-weight: bold;
+  font-size: 14px; /* Smaller text */
+}
+
+.info {
+  font-size: 12px;
+  color: gray;
+  margin-top: 6px;
+}
+
+.status {
+  padding: 5px 10px;
+  display: inline-block;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: bold; 
+}
+
+/* Not Started (Red) */
+.status.not-started {
+  background: #ff4d4d; /* Red */
+  color: white;
+}
+
+/* In Progress (Green) */
+.status.in-progress {
+  background: #28a745; /* Green */
+  color: white;
+}
+
+/* Button */
+.card-footer {
+  padding: 10px;
+  text-align: center;
+}
+
+.btn {
+  background: #3f51b5;
+  color: white;
+  padding: 8px;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.btn:hover {
+  background: #2c3a9a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .training-card {
+    width: 70%;
   }
 }
