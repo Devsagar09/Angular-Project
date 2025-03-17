@@ -30,10 +30,12 @@ export class AppComponent {
  
    viewProfile() {
      console.log('View Profile clicked');
+     this.dropdownVisible = false;
    }
  
    logout() {
      console.log('Logout clicked');
+     this.dropdownVisible = false; 
    }
  
    toggleSidebar() {
@@ -43,15 +45,16 @@ export class AppComponent {
    @HostListener('document:click', ['$event'])
    closeSidebarOnClickOutside(event: Event) {
      const sidebar = document.querySelector('.sidebar');
-     const toggleBtn = document.querySelector('.toggle-btn');
- 
+     const toggleBtn = document.querySelector('.toggle-btn'); 
+  
      if (
        sidebar &&
        !sidebar.contains(event.target as Node) &&
        toggleBtn &&
-       !toggleBtn.contains(event.target as Node)
+       !toggleBtn.contains(event.target as Node)  
      ) {
-       this.isCollapsed = true; 
+       this.isCollapsed = true;   
      }
+ 
    }
 }

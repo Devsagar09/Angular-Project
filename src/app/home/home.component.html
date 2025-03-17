@@ -111,7 +111,7 @@
     </div>
 
     <!-- Training Cards -->
-    <div class="card-container">
+    <div class="cards-container">
         <div class="training-card" *ngFor="let training of filteredTrainings">
             <div class="card-header">
                 <img [src]="training.image" alt="Training Image" />
@@ -120,7 +120,9 @@
 
             <div class="card-body">
                 <span class="badge">{{ training.type }}</span>
-                <h3>{{ training.title }}</h3>
+                <h3 class="title-heading">{{ training.title }}</h3>
+
+                
 
                 <div class="info">
                     <p><i class="fa fa-calendar"></i> Training Code: {{ training.code }}</p>

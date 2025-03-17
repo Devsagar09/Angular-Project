@@ -223,18 +223,97 @@
 }
 
 .loader {
-  border: 5px solid #f3f3f3; /* Light grey */
-  border-top: 5px solid #3498db; /* Blue */
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite;
+  height: 5px;
+  width: 5px;
+  color: #654c4c;
+  box-shadow: -10px -10px 0 5px,
+              -10px -10px 0 5px,
+              -10px -10px 0 5px,
+              -10px -10px 0 5px;
+  animation: loader-38 6s infinite;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes loader-38 {
+  0% {
+    box-shadow: -10px -10px 0 5px,
+                -10px -10px 0 5px,
+                -10px -10px 0 5px,
+                -10px -10px 0 5px;
+  }
+  8.33% {
+    box-shadow: -10px -10px 0 5px,
+                10px -10px 0 5px,
+                10px -10px 0 5px,
+                10px -10px 0 5px;
+  }
+  16.66% {
+    box-shadow: -10px -10px 0 5px,
+                10px -10px 0 5px,
+                10px 10px 0 5px,
+                10px 10px 0 5px;
+  }
+  24.99% {
+    box-shadow: -10px -10px 0 5px,
+                10px -10px 0 5px,
+                10px 10px 0 5px,
+                -10px 10px 0 5px;
+  }
+  33.32% {
+    box-shadow: -10px -10px 0 5px,
+                10px -10px 0 5px,
+                10px 10px 0 5px,
+                -10px -10px 0 5px;
+  }
+  41.65% {
+    box-shadow: 10px -10px 0 5px,
+                10px -10px 0 5px,
+                10px 10px 0 5px,
+                10px -10px 0 5px;
+  }
+  49.98% {
+    box-shadow: 10px 10px 0 5px,
+              10px 10px 0 5px,
+              10px 10px 0 5px,
+              10px 10px 0 5px;
+  }
+  58.31% {
+    box-shadow: -10px 10px 0 5px,
+                -10px 10px 0 5px,
+                10px 10px 0 5px,
+                -10px 10px 0 5px;
+  }
+  66.64% {
+    box-shadow: -10px -10px 0 5px,
+                -10px -10px 0 5px,
+                10px 10px 0 5px,
+                -10px 10px 0 5px;
+  }
+  74.97% {
+    box-shadow: -10px -10px 0 5px,
+                10px -10px 0 5px,
+                10px 10px 0 5px,
+                -10px 10px 0 5px;
+  }
+  83.3% {
+    box-shadow: -10px -10px 0 5px,
+                10px 10px 0 5px,
+                10px 10px 0 5px,
+                -10px 10px 0 5px;
+  }
+  91.63% {
+    box-shadow: -10px -10px 0 5px,
+                -10px 10px 0 5px,
+                -10px 10px 0 5px,
+                -10px 10px 0 5px;
+  }
+  100% {
+    box-shadow: -10px -10px 0 5px,
+                -10px -10px 0 5px,
+                -10px -10px 0 5px,
+                -10px -10px 0 5px;
+  }
 }
+
 
  
  /* Main Container */
@@ -349,21 +428,24 @@ canvas {
 }
 
 /* Card Container */
-.card-container {
-  display: flex;
-  justify-content: center;
+.cards-container {
+  display: inline-flex;
+  justify-content: flex-start; /* Align items to the left */
+  align-items: flex-start; /* Align items to the top */
   gap: 20px;
   flex-wrap: wrap;
 }
+
+ 
 
 /* Smaller Card */
 .training-card {
   background: white;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
-  width: 250px;  /* Smaller width */
-  transition: 0.3s;
+  width: 270px;  /* Smaller width */
+  transition: 0.5s;
 }
 
 .training-card:hover {
@@ -372,11 +454,12 @@ canvas {
 
 /* Header Image */
 .card-header img {
-  margin: 1rem;
+  margin-top: 1rem;
   width: 90%;
   height: 120px; /* Reduced height */
   object-fit: cover;
   border: 2px solid rgb(255, 255, 255);
+  border-radius: 10px;
 }
 
 /* Card Body */
@@ -386,15 +469,18 @@ canvas {
 }
 
 .badge {
-  background: #ddd;
-  padding: 3px 8px;
-  border-radius: 5px;
+  background: #eee7e7;
+  padding: 5px 8px;
+  border-radius: 15px;
   font-size: 12px; /* Smaller font */
+  border: 1px solid blue;
+ 
 }
 
-h3 {
+.title-heading {
   margin: 5px 0;
   font-weight: bold;
+  margin-top: 15px;
   font-size: 14px; /* Smaller text */
 }
 
@@ -405,11 +491,9 @@ h3 {
 }
 
 .status {
-  padding: 5px 10px;
-  display: inline-block;
-  border-radius: 5px;
-  font-size: 10px;
-  font-weight: bold; 
+  padding: 6px 12px;
+  display: inline-block; 
+  font-size: 12px; 
 }
 
 /* Not Started (Red) */
@@ -431,9 +515,9 @@ h3 {
 }
 
 .btn {
-  background: #3f51b5;
+  background: #495fdb;
   color: white;
-  padding: 8px;
+  padding: 10px;
   border: none;
   width: 100%;
   cursor: pointer;
