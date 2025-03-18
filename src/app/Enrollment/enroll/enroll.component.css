@@ -1,0 +1,297 @@
+/* :host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem;
+  } */
+
+  .back-dashboard {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px 18px;
+    color: #1a55d8;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    width: 30%;
+}
+
+.back-dashboard .icon {
+    margin-right: 10px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e1ebfd;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+.back-dashboard .icon svg {
+    fill: #1a55d8;
+    width: 18px;
+    height: 18px;
+}
+
+.back-dashboard:hover .icon {
+    background: white;
+}
+
+.back-dashboard:hover .icon svg {
+    fill: #1a55d8;
+}
+
+.back-dashboard .text {
+    transition: color 0.3s ease;
+}
+
+.page-heading {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a2e;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    flex-wrap: wrap;
+    /* Ensures content wraps on smaller screens */
+}
+
+/* Responsive Font Sizes */
+@media (max-width: 1024px) {
+    .page-heading {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-heading {
+        font-size: 22px;
+        margin-left: 5px;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .back-dashboard{
+        font-size: 12px;
+        width: 90%;
+    }
+    .page-heading {
+        font-size: 18px;
+        flex-direction: column;
+        /* Stack elements on smaller screens */
+        margin-left: 0;
+    }
+}
+
+.hr-line {
+    opacity: 0.4;
+    color: #1a55d8;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    padding: 5px 15px;
+    width: 95%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    background: transparent;
+}
+
+.search-bar input::placeholder {
+    color: #aaa;
+}
+
+.search-icon svg {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    background-color: #9c83e8;
+    border-radius: 50%;
+    padding: 10px;
+    margin-left: 10px;   
+}
+
+.search-icon svg:hover{
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0.8;
+
+}
+
+
+/* Training Card Design  */
+/* Card Container */
+.cards-container {
+    display: flex;
+    justify-content: space-between; /* Adjust spacing for alignment */
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 5%;
+}
+
+
+/* Smaller Card */
+.training-card {
+    background: white;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    width: calc(25% - 15px); /* Ensures max 4 cards per row */
+    transition: 0.5s;
+    min-width: 250px; /* Prevents cards from shrinking too much */
+}
+.training-card:hover {
+    transform: scale(1.02);
+}
+
+/* Header Image */
+.card-header img {
+    display: flex;
+    margin: auto;
+    margin-top: 1rem;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 170px; 
+    object-fit: cover;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 10px;
+}
+
+/* Card Body */
+.card-body {
+    padding: 10px;
+    text-align: left;
+}
+
+.badge {
+    background: #eee7e7;
+    padding: 5px 8px;
+    border-radius: 15px;
+    font-size: 12px;
+    /* Smaller font */
+    border: 1px solid blue;
+
+}
+
+.title-heading {
+    margin: 5px 0;
+    font-weight: bold;
+    margin-top: 15px;
+    font-size: 14px;
+    /* Smaller text */
+}
+
+.info {
+    font-size: 12px;
+    color: gray;
+    margin-top: 6px;
+}
+
+.status {
+    padding: 6px 12px;
+    display: inline-block;
+    font-size: 12px;
+}
+
+/* Not Started (Red) */
+.status.not-started {
+    background: #ff4d4d;
+    /* Red */
+    color: white;
+}
+
+/* In Progress (Green) */
+.status.in-progress {
+    background: #28a745;
+    /* Green */
+    color: white;
+}
+
+.status.pending-request {
+    background: #3e9b2a;
+    color: white;
+}
+
+/* Button */
+.card-footer {
+    padding: 10px;
+    text-align: center;
+}
+
+.btn {
+    background: #495fdb;
+    color: white;
+    padding: 10px;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #2c3a9a;
+}
+
+ /* Responsive - Stack cards on smaller screens */
+ @media (max-width: 1024px) {
+    .training-card {
+        width: calc(33.33% - 15px); /* 3 cards per row */
+    }
+}
+ 
+@media (max-width: 768px) {
+    .training-card {
+        width: calc(50% - 15px); /* 2 cards per row */
+    }
+}
+ 
+@media (max-width: 480px) {
+    .training-card {
+        width: 100%; /* 1 card per row */
+    }
+}
+
+
+/* Pagination Design  */
+
+.training-section {
+    flex-grow: 1;
+    overflow-y: none; /* Enable scrolling only here */
+    max-height: calc(100vh - 150px); /* Adjust based on navbar/footer */
+    padding-bottom: 20px;
+}
+
+.pagination-container {
+    text-align: center;
+    padding: 10px 0;
+    position: relative; /* Prevents unwanted page height expansion */
+}
+
+
+
+

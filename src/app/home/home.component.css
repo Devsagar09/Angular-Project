@@ -87,7 +87,7 @@
 /* sub-card design  */
 
 .quick-links {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
   align-self: flex-start;
   width: 90%;   
   color: #000000;
@@ -156,8 +156,7 @@
 }
 
 .stat-value {
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 0.9rem; 
   margin: 0.5rem 0 0 0;
   display: flex;
   align-items: center;
@@ -325,7 +324,7 @@
 
 /* Title */
 h2 {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
   align-self: flex-start;
   width: 90%;   
   color: #000000;
@@ -535,66 +534,38 @@ canvas {
   background: #2c3a9a;
 }
 
-
-
-
- 
-
-/* Dropdown Button */
-/* .dropdown {
-  position: relative;
-  display: inline-block;
-  width: 100%;
+/* Responsive */
+@media (max-width: 1024px) {
+  .training-card {
+      width: calc(33.33% - 15px); /* 3 cards per row */
+  }
 }
 
-.dropdown-btn {
-  background: #2196f3;
+@media (max-width: 768px) {
+  .training-card {
+      width: calc(50% - 15px); /* 2 cards per row */
+  }
+}
+
+@media (max-width: 480px) {
+  .training-card {
+      width: 100%; /* 1 card per row */
+  }
+}
+
+.no-trainings-card {  
+  border-radius: 10px;
+  overflow: hidden;
+  width: 270px; /* Same width as training cards */
+  height: 240px; /* Same height as training cards */
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
-.dropdown-menu {
-  position: absolute;
-  width: 100%;
-  background: white;
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-}
-
-.dropdown-menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.dropdown-menu li {
-  padding: 10px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.dropdown-menu li:hover {
-  background: #f0f0f0;
-}
- 
-.request-btn {
-  background: #ff9800;
-}
-
-.request-btn:hover {
-  background: #e68a00;
-} */
-
-/* Responsive */
-@media (max-width: 768px) {
-  .card-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .training-card {
-    width: 70%;
-  }
+.no-trainings-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: #666;
 }

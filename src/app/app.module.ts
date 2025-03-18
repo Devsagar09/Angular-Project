@@ -17,13 +17,21 @@ import { ChartsModule } from '@progress/kendo-angular-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './Shared/footer/footer.component';
  
+import {DialogModule } from "@progress/kendo-angular-dialog";
+import {InputsModule} from '@progress/kendo-angular-inputs';
+import {FormsModule} from '@angular/forms';  
+import { IdpModule } from './MenuSection/idp.module';
+import { UserNavigationComponent } from './user-navigation/user-navigation.component'; 
+import { EnrollModule } from './Enrollment/enroll.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundPageComponent,
     HomeComponent,
-    FooterComponent 
+    FooterComponent,
+    UserNavigationComponent 
   ],
   imports: [
     BrowserAnimationsModule,
@@ -34,7 +42,12 @@ import { FooterComponent } from './Shared/footer/footer.component';
     CardModule,
     AvatarModule,
     ChartsModule,
-    HttpClientModule
+    HttpClientModule,
+    DialogModule,
+    InputsModule,
+    FormsModule,
+    IdpModule,
+    EnrollModule
   ],
   providers: [],
   bootstrap: [AppComponent]

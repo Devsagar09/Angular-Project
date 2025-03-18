@@ -95,7 +95,7 @@ export class HomeComponent {
   //Tab menus design 
   trainings = [
     {
-      image: 'https://vspdev.gyrussystems.com/Upload/NewCourseCatalogAvailabilityImage/course_default.png',
+      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
       type: 'External Link',
       title: '##17ELDOCAB',
       code: 'NA',
@@ -106,7 +106,7 @@ export class HomeComponent {
       category: 'inProgress'
     },
     {
-      image: 'https://vspdev.gyrussystems.com/Upload/NewCourseCatalogAvailabilityImage/course_default.png',
+      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
       type: 'Document',
       title: '##001Doc_T12',
       code: '##001Doc_T12',
@@ -117,7 +117,7 @@ export class HomeComponent {
       category: 'inProgress'
     },
     {
-      image: 'https://vspdev.gyrussystems.com/Upload/NewCourseCatalogAvailabilityImage/course_default.png',
+      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
       type: 'Document',
       title: '##11febabdocone',
       code: 'NA',
@@ -128,7 +128,7 @@ export class HomeComponent {
       category: 'inProgress'
     },
     {
-      image: 'https://vspdev.gyrussystems.com/Upload/NewCourseCatalogAvailabilityImage/course_default.png',
+      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
       type: 'External Link',
       title: '##22STARTDOC',
       code: 'NA',
@@ -139,7 +139,7 @@ export class HomeComponent {
       category: 'notStarted'
     },
     {
-      image: 'https://vspdev.gyrussystems.com/Upload/NewCourseCatalogAvailabilityImage/course_default.png',
+      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
       type: 'Document',
       title: '##005NotStarted',
       code: '##005Doc',
