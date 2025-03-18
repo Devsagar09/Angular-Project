@@ -14,7 +14,15 @@ export class HomeComponent {
   public transcriptIcon = "assets/icons/transcript-icon.png";
   isLoading = true; // Initially true
 
-  
+  dropdownVisible = false;
+ 
+ 
+   toggleDropdown() {
+     this.dropdownVisible = !this.dropdownVisible;
+   }
+ 
+
+
   apiUrl = 'https://localhost:7172/api/CountStudentDashboard/getCountStudentDashboard/4';
 
   documentTraining = { completed: 0, assigned: 0, enrolled: 0 };
@@ -24,35 +32,35 @@ export class HomeComponent {
     this.updateFilteredTrainings();
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     setTimeout(() => {
-      this.isLoading = false;  
-      this.fetchTrainingData();  
-  }, 4000);
+      this.isLoading = false;
+      this.fetchTrainingData();
+    }, 4000);
   }
- 
+
   fetchTrainingData() {
     this.http.get<any[]>(this.apiUrl).subscribe(response => {
-        response.forEach(item => {
-            if (item.trainingtype_name === "Document") {
-                this.documentTraining.completed = item.completedTrainingCount;
-                this.documentTraining.assigned = item.assignedTrainingCount;
-                this.documentTraining.enrolled = item.enrollTrainingCount;
-            } else if (item.trainingtype_name === "External Link") {
-                this.externalTraining.completed = item.completedTrainingCount;
-                this.externalTraining.assigned = item.assignedTrainingCount;
-                this.externalTraining.enrolled = item.enrollTrainingCount;
-            }
-        });
+      response.forEach(item => {
+        if (item.trainingtype_name === "Document") {
+          this.documentTraining.completed = item.completedTrainingCount;
+          this.documentTraining.assigned = item.assignedTrainingCount;
+          this.documentTraining.enrolled = item.enrollTrainingCount;
+        } else if (item.trainingtype_name === "External Link") {
+          this.externalTraining.completed = item.completedTrainingCount;
+          this.externalTraining.assigned = item.assignedTrainingCount;
+          this.externalTraining.enrolled = item.enrollTrainingCount;
+        }
+      });
 
-        // Hide loader after data fetch
-        this.isLoading = false;
+      // Hide loader after data fetch
+      this.isLoading = false;
 
-        // Update charts
-        this.createBarChart("docChart", this.documentTraining.completed, this.documentTraining.assigned, this.documentTraining.enrolled, "#4caf50");
-        this.createBarChart("linkChart", this.externalTraining.completed, this.externalTraining.assigned, this.externalTraining.enrolled, "#2196f3");
+      // Update charts
+      this.createBarChart("docChart", this.documentTraining.completed, this.documentTraining.assigned, this.documentTraining.enrolled, "#4caf50");
+      this.createBarChart("linkChart", this.externalTraining.completed, this.externalTraining.assigned, this.externalTraining.enrolled, "#2196f3");
     });
-}
+  }
 
 
   createBarChart(canvasId: string, completed: number, assigned: number, enrolled: number, color: string) {
@@ -72,8 +80,8 @@ export class HomeComponent {
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-          y: { 
-            beginAtZero: true, 
+          y: {
+            beginAtZero: true,
             ticks: { stepSize: 2, precision: 0 } // Force whole numbers (0,1,2...)
           }
         }
@@ -83,7 +91,7 @@ export class HomeComponent {
 
   activeTab: string = 'inProgress'; // Default tab
   filteredTrainings: any[] = [];
- 
+
   //Tab menus design 
   trainings = [
     {
@@ -138,12 +146,24 @@ export class HomeComponent {
       dueDate: '05/12/2025',
       requiredFor: 'DIRECT',
       group: 'NA',
-      status: 'Not Started',
+      status: 'Pending Approval',
       category: 'notStarted'
     }
   ];
+
  
-  
+
+  // onDropdownItemClick(event: any) {
+  //   const selectedAction = event.item.action;
+
+  //   if (selectedAction === 'enroll') {
+  //     console.log('Enrolled Again');
+  //     // Your enroll logic here
+  //   } else if (selectedAction === 'complete') {
+  //     console.log('Training Completed');
+  //     // Your complete logic here
+  //   }
+  // }
   changeTab(tab: string) {
     this.activeTab = tab;
     this.updateFilteredTrainings();
@@ -152,7 +172,24 @@ export class HomeComponent {
   updateFilteredTrainings() {
     this.filteredTrainings = this.trainings.filter(training => training.category === this.activeTab);
   }
+
+  // toggleDropdown(training: any) {
+  //   if (training.showDropdown === undefined) {
+  //     training.showDropdown = false; // Initialize if missing
+  //   }
+  //   training.showDropdown = !training.showDropdown;
+  // }
+
+  // enrollAgain(training: any) {
+  //   console.log("Enrolled again:", training);
+  //   training.showDropdown = false;
+  // }
+
+  // completeTraining(training: any) {
+  //   console.log("Training Completed:", training);
+  //   training.showDropdown = false;
+  // }
+
+ 
 }
-
-
-
+ 

@@ -75,7 +75,7 @@
                 <div class="loader"></div>
             </div>
 
-            <canvas  *ngIf="!isLoading" id="docChart"></canvas>
+            <canvas *ngIf="!isLoading" id="docChart"></canvas>
 
             <p>Completed: <strong>{{ documentTraining.completed }}</strong></p>
             <p>Assigned: <strong>{{ documentTraining.assigned }}</strong></p>
@@ -91,7 +91,7 @@
             </div>
 
             <canvas *ngIf="!isLoading" id="linkChart"></canvas>
-            
+
             <p>Completed: <strong>{{ externalTraining.completed }}</strong></p>
             <p>Assigned: <strong>{{ externalTraining.assigned }}</strong></p>
             <p>Enrolled: <strong>{{ externalTraining.enrolled }}</strong></p>
@@ -122,7 +122,7 @@
                 <span class="badge">{{ training.type }}</span>
                 <h3 class="title-heading">{{ training.title }}</h3>
 
-                
+
 
                 <div class="info">
                     <p><i class="fa fa-calendar"></i> Training Code: {{ training.code }}</p>
@@ -130,14 +130,28 @@
                     <p><i class="fa fa-user"></i> Required For: {{ training.requiredFor }}</p>
                     <p><i class="fa fa-users"></i> Group: {{ training.group }}</p>
                 </div>
-                <span class="status" [ngClass]="{'not-started': training.status === 'Not Started', 
-                                 'in-progress': training.status === 'In Progress'}">
+                <span class="status"
+                    [ngClass]="{'not-started': training.status === 'Not Started', 
+                                 'in-progress': training.status === 'In Progress','pending-request': training.status === 'Pending Approval'}">
                     {{ training.status }}
                 </span>
             </div>
 
             <div class="card-footer">
-                <button class="btn">{{ training.type }}</button>
+
+                <button class="btn" *ngIf="training.status === 'Not Started'">
+                    {{ training.type }}
+                </button>
+                
+                <button class="btn" *ngIf="training.status === 'In Progress'">
+                    {{ training.type }}
+                </button>
+                
+                <!-- Pending Approval (Request for Approval Button) -->
+                <button class="btn pending-btn" *ngIf="training.status === 'Pending Approval'">
+                    Request for Approval
+                </button>
+
             </div>
         </div>
     </div>
