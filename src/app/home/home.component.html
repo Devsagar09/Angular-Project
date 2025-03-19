@@ -24,7 +24,7 @@
         <div class="stat-icon">
             <img src="idp.png" alt="IDP" />
         </div>
-        
+
         <div class="stat-details">
             <p class="stat-title">IDP</p>
             <p class="stat-value">
@@ -33,7 +33,7 @@
             </p>
         </div>
     </div>
-   
+
     <div class="stat-card course-card" [routerLink]="['/coursecatalog']">
         <div class="stat-icon">
             <img src="catalog.png" alt="Course Catalog" />
@@ -99,71 +99,75 @@
     </div>
 </div>
 <!-- states end -->
-  
+
 <!-- tab menus start -->
 <div class="dashboard-container">
-    <h2 class="heading">Learning Status</h2>
+    <div class="learning-status-container">
+        <h2 class="heading">Learning Status</h2>
+    
+        <!-- Tabs -->
+        <div class="tab-menu">
+            <span [class.active-tab]="activeTab === 'inProgress'" (click)="changeTab('inProgress')">
+                In Progress
+            </span>
+            <span [class.active-tab]="activeTab === 'notStarted'" (click)="changeTab('notStarted')">
+                Not Started
+            </span>
+        </div>
+    </div>
 
-   <!-- Tabs -->
-<div class="tab-menu">
-    <span [class.active-tab]="activeTab === 'inProgress'" (click)="changeTab('inProgress')">In Progress</span>
-    <span [class.active-tab]="activeTab === 'notStarted'" (click)="changeTab('notStarted')">Not Started</span>
-</div>
-
-<!-- Training Cards (for both tabs) -->
-<div class="cards-container">
-    <ng-container *ngIf="filteredTrainings.length > 0; else noTrainingsTemplate">
-        <div class="training-card" *ngFor="let training of filteredTrainings">
-            <div class="card-header">
-                <img [src]="training.image" alt="Training Image" />
-            </div>
-
-            <div class="card-body">
-                <span class="badge">{{ training.type }}</span>
-                <h3 class="title-heading">{{ training.title }}</h3>
-
-                <div class="info">
-                    <p><i class="fa fa-calendar"></i> Training Code: {{ training.code }}</p>
-                    <p><i class="fa fa-calendar"></i> Due Date: {{ training.dueDate }}</p>
-                    <p><i class="fa fa-user"></i> Required For: {{ training.requiredFor }}</p>
-                    <p><i class="fa fa-users"></i> Group: {{ training.group }}</p>
+    <!-- Training Cards (for both tabs) -->
+    <div class="cards-container">
+        <ng-container *ngIf="filteredTrainings.length > 0; else noTrainingsTemplate">
+            <div class="training-card" *ngFor="let training of filteredTrainings">
+                <div class="card-header">
+                    <img [src]="training.image" alt="Training Image" />
                 </div>
 
-                <span class="status"
-                    [ngClass]="{'not-started': training.status === 'Not Started', 
+                <div class="card-body">
+                    <span class="badge">{{ training.type }}</span>
+                    <h3 class="title-heading">{{ training.title }}</h3>
+
+                    <div class="info">
+                        <p><i class="fa fa-calendar"></i> Training Code: {{ training.code }}</p>
+                        <p><i class="fa fa-calendar"></i> Due Date: {{ training.dueDate }}</p>
+                        <p><i class="fa fa-user"></i> Required For: {{ training.requiredFor }}</p>
+                        <p><i class="fa fa-users"></i> Group: {{ training.group }}</p>
+                    </div>
+
+                    <span class="status" [ngClass]="{'not-started': training.status === 'Not Started', 
                                 'in-progress': training.status === 'In Progress',
                                 'pending-request': training.status === 'Pending Approval'}">
-                    {{ training.status }}
-                </span>
+                        {{ training.status }}
+                    </span>
+                </div>
+
+                <div class="card-footer">
+                    <button class="btn" *ngIf="training.status === 'Not Started'">
+                        {{ training.type }}
+                    </button>
+
+                    <button class="btn" *ngIf="training.status === 'In Progress'">
+                        {{ training.type }}
+                    </button>
+
+                    <!-- Pending Approval (Request for Approval Button) -->
+                    <button class="btn pending-btn" *ngIf="training.status === 'Pending Approval'">
+                        Request for Approval
+                    </button>
+                </div>
             </div>
+        </ng-container>
 
-            <div class="card-footer">
-                <button class="btn" *ngIf="training.status === 'Not Started'">
-                    {{ training.type }}
-                </button>
+        <!-- No Trainings Available Message (Shown when filteredTrainings is empty) -->
+        <ng-template #noTrainingsTemplate>
+            <div>
 
-                <button class="btn" *ngIf="training.status === 'In Progress'">
-                    {{ training.type }}
-                </button>
-
-                <!-- Pending Approval (Request for Approval Button) -->
-                <button class="btn pending-btn" *ngIf="training.status === 'Pending Approval'">
-                    Request for Approval
-                </button>
-            </div>
-        </div>
-    </ng-container>
-
-    <!-- No Trainings Available Message (Shown when filteredTrainings is empty) -->
-    <ng-template #noTrainingsTemplate>
-        <div class="training-card no-trainings-card">
-            
                 <p class="no-trainings-text">No trainings available</p>
-            
-        </div>
-    </ng-template>
-</div>
 
+            </div>
+        </ng-template>
+    </div>
 </div>
 
 

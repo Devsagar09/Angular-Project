@@ -7,7 +7,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .card-content {
@@ -87,7 +87,6 @@
 /* sub-card design  */
 
 .quick-links {
-  
   align-self: flex-start;
   width: 90%;   
   color: #000000;
@@ -381,61 +380,86 @@ canvas {
       width: 90%;
   }
 }
-
-
-
-/* tab menu design   */
-/* General Container */
+  
+/* tab menu design   */ 
 .dashboard-container {
-  width: 90%;
-  margin: auto;
-  text-align: center;
-  padding: 20px;
-  background: #f9f9f9;
+  width: 95%; 
+  text-align: center; 
+  background: #ffffff00;
   border-radius: 10px;
 }
 
-/* Tab Menu */
+/* Tab Menu */ 
+.learning-status-container {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  margin: 10px 10px; 
+}
+ 
+.heading {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  font-size: 20px;
+  font-weight: bold;
+  color: #1c1c1c;
+  margin: 0;
+}
+ 
 .tab-menu {
   display: flex;
-  justify-content: center;
-  gap: 30px;
+  align-items: center;
+  justify-content: flex-start; /* Align with heading */
+  gap: 30px; /* Space between tabs */
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 20px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #ddd;
-}
-
-.tab-menu span {
-  cursor: pointer;
-  padding: 8px 15px;
-  border-radius: 6px;
-  transition: all 0.3s ease-in-out;
-}
-
-.tab-menu span:hover {
-  background: #ececec;
-}
-
-.active-tab {
-  color: white;
-  background: #007bff;
-  border-radius: 6px;
-  padding: 8px 15px;
-  transition: 0.3s;
-}
-
-/* Card Container */
-.cards-container {
-  display: inline-flex;
-  justify-content: flex-start; /* Align items to the left */
-  align-items: flex-start; /* Align items to the top */
-  gap: 20px;
-  flex-wrap: wrap;
+  color: #666;
 }
 
  
+.tab-menu span {
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+  color: #666;
+  display: inline-block; /* Ensure inline layout */
+  text-align: center;
+  white-space: nowrap; /* Prevent stacking */
+}
+
+.tab-menu span.active-tab {
+  color: #0056b3;
+  font-weight: bold;
+}
+
+/* Underline Effect */
+.tab-menu span.active-tab::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #0056b3;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+}
+
+.cards-container {
+  display: inline-flex;
+  justify-content: flex-start; 
+  align-items: flex-start;  
+  gap: 20px;
+  flex-wrap: wrap; 
+  width: 100%;  
+  height: 400px;  
+  min-height: 400px;   
+  padding: 20px;  
+  overflow-y: auto;  
+  overflow-x: hidden;
+  background-color: #f9f9f9; 
+}
 
 /* Smaller Card */
 .training-card {
@@ -553,19 +577,14 @@ canvas {
   }
 }
 
-.no-trainings-card {  
-  border-radius: 10px;
-  overflow: hidden;
-  width: 270px; /* Same width as training cards */
-  height: 240px; /* Same height as training cards */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
+ 
 .no-trainings-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center; 
   font-size: 16px;
   font-weight: bold;
   color: #666;
+ 
 }

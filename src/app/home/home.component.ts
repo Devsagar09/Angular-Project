@@ -126,29 +126,7 @@ export class HomeComponent {
       group: 'NA',
       status: 'In Progress',
       category: 'inProgress'
-    },
-    {
-      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
-      type: 'External Link',
-      title: '##22STARTDOC',
-      code: 'NA',
-      dueDate: '04/20/2025',
-      requiredFor: 'DIRECT',
-      group: 'NA',
-      status: 'Not Started',
-      category: 'notStarted'
-    },
-    {
-      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
-      type: 'Document',
-      title: '##005NotStarted',
-      code: '##005Doc',
-      dueDate: '05/12/2025',
-      requiredFor: 'DIRECT',
-      group: 'NA',
-      status: 'Pending Approval',
-      category: 'notStarted'
-    }
+    } 
   ];
 
  
