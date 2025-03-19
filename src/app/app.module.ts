@@ -23,6 +23,8 @@ import {FormsModule} from '@angular/forms';
 import { IdpModule } from './MenuSection/idp.module';
 import { UserNavigationComponent } from './user-navigation/user-navigation.component'; 
 import { EnrollModule } from './Enrollment/enroll.module';
+import { CatalogModule } from './Catalog/catalog.module';
+import { LoaderComponent } from './Shared/loader/loader.component';
 
 
 @NgModule({
@@ -31,7 +33,8 @@ import { EnrollModule } from './Enrollment/enroll.module';
     NotFoundPageComponent,
     HomeComponent,
     FooterComponent,
-    UserNavigationComponent 
+    UserNavigationComponent,
+    LoaderComponent 
   ],
   imports: [
     BrowserAnimationsModule,
@@ -47,7 +50,8 @@ import { EnrollModule } from './Enrollment/enroll.module';
     InputsModule,
     FormsModule,
     IdpModule,
-    EnrollModule
+    EnrollModule,
+    CatalogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

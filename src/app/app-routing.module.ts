@@ -4,6 +4,7 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
 import { HomeComponent } from './home/home.component';
 import { IdpComponent } from './MenuSection/idp/idp.component';
 import { EnrollComponent } from './Enrollment/enroll/enroll.component';
+import { CatalogComponent } from './Catalog/catalog/catalog.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'myenrollments',
     component:EnrollComponent
+  }, 
+  {
+    path: 'coursecatalog',
+    component:CatalogComponent
   }, 
   {
     path:'**',

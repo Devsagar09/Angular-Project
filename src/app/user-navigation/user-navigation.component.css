@@ -202,20 +202,19 @@
 
   /* Loader code design */
 
-  .preloader-overlay {
+  /* .preloader-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7); /* Transparent black */
+    background-color: rgba(0, 0, 0, 0.7);  
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* Ensure it's on top */
+    z-index: 9999;  
   }
-  
-  /* Ripple animation */
+   
   .lds-ripple {
     display: inline-block;
     position: relative;
@@ -247,7 +246,7 @@
       height: 72px;
       opacity: 0;
     }
-  }
+  } */
 
   
 /* Mobile View */
