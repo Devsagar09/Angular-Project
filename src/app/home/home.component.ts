@@ -16,12 +16,11 @@ export class HomeComponent {
 
   dropdownVisible = false;
  
- 
    toggleDropdown() {
      this.dropdownVisible = !this.dropdownVisible;
    }
- 
 
+   
 
   apiUrl = 'https://localhost:7172/api/CountStudentDashboard/getCountStudentDashboard/4';
 
@@ -126,7 +125,51 @@ export class HomeComponent {
       group: 'NA',
       status: 'In Progress',
       category: 'inProgress'
-    } 
+    } ,
+    {
+      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
+      type: 'Document',
+      title: '##11febabdocone',
+      code: 'NA',
+      dueDate: '02/11/2025',
+      requiredFor: 'DIRECT',
+      group: 'NA',
+      status: 'In Progress',
+      category: 'inProgress'
+    },
+    {
+      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
+      type: 'Document',
+      title: '##11febabdocone',
+      code: 'NA',
+      dueDate: '02/11/2025',
+      requiredFor: 'DIRECT',
+      group: 'NA',
+      status: 'In Progress',
+      category: 'inProgress'
+    } ,
+    {
+      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
+      type: 'Document',
+      title: '##11febabdocone',
+      code: 'NA',
+      dueDate: '02/11/2025',
+      requiredFor: 'DIRECT',
+      group: 'NA',
+      status: 'In Progress',
+      category: 'inProgress'
+    } ,
+    {
+      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
+      type: 'Document',
+      title: '##11febabdocone',
+      code: 'NA',
+      dueDate: '02/11/2025',
+      requiredFor: 'DIRECT',
+      group: 'NA',
+      status: 'In Progress',
+      category: 'inProgress'
+    }  
   ];
 
  

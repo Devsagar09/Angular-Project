@@ -50,7 +50,7 @@ export class UserNavigationComponent {
   @HostListener('document:click', ['$event'])
   closeSidebarOnClickOutside(event: Event) {
     const sidebar = document.querySelector('.sidebar');
-    const toggleBtn = document.querySelector('.toggle-btn');
+    const toggleBtn = document.querySelector('.toggle-btn'); 
 
     // Close dropdown if click is outside
     // if (this.dropdownVisible && !this.eRef.nativeElement.querySelector('.dropdown-menu')?.contains(event.target)) {
@@ -65,6 +65,7 @@ export class UserNavigationComponent {
     ) {
       this.isCollapsed = true;
     }
+     
 
   }
 }
