@@ -1,33 +1,54 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
-import { SVGIcon, homeIcon, bookIcon } from '@progress/kendo-svg-icons';
 
 @Component({
   selector: 'app-user-navigation',
   standalone: false,
   templateUrl: './user-navigation.component.html',
-  styleUrl: './user-navigation.component.css'
+  styleUrls: ['./user-navigation.component.css']
 })
-export class UserNavigationComponent {
- 
-  isLoading = false;
+export class UserNavigationComponent implements OnInit {
+
+  firstname: string | null = '';
+  lastname: string | null = '';
+  profileImage: string | null = '';
+  isLoading = true;
+  isLoginPage = false;
+
+  dropdownVisible = false;
+  isCollapsed = true;
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        this.isLoading = true; // Show loader on route start
-      } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+        this.isLoading = true;  
+      } 
+      if (event instanceof NavigationEnd) {
+        this.isLoginPage = this.router.url.toLowerCase() === '/login'; // ✅ Properly set login page condition
         setTimeout(() => {
-          this.isLoading = false; // Hide loader after a small delay
+          this.isLoading = false;  
         }, 2000);
       }
     });
   }
- 
-  public HomeSVG: SVGIcon = homeIcon; 
 
-  dropdownVisible = false;
-  isCollapsed = true;
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.loadUserData();
+      }
+    });
+  }
+
+  loadUserData() {
+    this.firstname = localStorage.getItem('firstname');
+    this.lastname = localStorage.getItem('lastname');
+    this.profileImage = localStorage.getItem('profileImage');
+  }
+
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 
   toggleDropdown() {
     this.dropdownVisible = !this.dropdownVisible;
@@ -39,33 +60,22 @@ export class UserNavigationComponent {
   }
 
   logout() {
-    console.log('Logout clicked');
+    this.isLoading = true;
+    this.firstname = '';
+    this.lastname = '';
+    this.profileImage = '';
+    localStorage.clear();
     this.dropdownVisible = false;
-  }
-
-  toggleSidebar() {
-    this.isCollapsed = !this.isCollapsed;
+    window.location.href = '/login';
   }
 
   @HostListener('document:click', ['$event'])
   closeSidebarOnClickOutside(event: Event) {
     const sidebar = document.querySelector('.sidebar');
-    const toggleBtn = document.querySelector('.toggle-btn'); 
+    const toggleBtn = document.querySelector('.toggle-btn');
 
-    // Close dropdown if click is outside
-    // if (this.dropdownVisible && !this.eRef.nativeElement.querySelector('.dropdown-menu')?.contains(event.target)) {
-    //   this.dropdownVisible = false;
-    // }
-
-    if (
-      sidebar &&
-      !sidebar.contains(event.target as Node) &&
-      toggleBtn &&
-      !toggleBtn.contains(event.target as Node)
-    ) {
+    if (sidebar && !sidebar.contains(event.target as Node) && toggleBtn && !toggleBtn.contains(event.target as Node)) {
       this.isCollapsed = true;
     }
-     
-
   }
 }

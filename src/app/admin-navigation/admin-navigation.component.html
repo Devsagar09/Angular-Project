@@ -1,0 +1,85 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<div class="preloader-overlay" *ngIf="isLoading">
+  <div class="lds-ripple">
+    <div></div>
+    <div></div>
+  </div>
+</div>
+
+
+<div class="container" *ngIf="!isLoginPage">
+  <!-- Sidebar -->
+  <div class="sidebar" [class.collapsed]="isCollapsed">
+    <div class="header">
+      <button class="toggle-btn" (click)="toggleSidebar()">
+        <i class="fas fa-angle-double-right arrow icon"></i>
+      </button>
+
+      <h4>Navigation</h4>
+    </div>
+
+    <div class="menu">
+      <ul>
+        <li kendotooltip title="Dashboard" [routerLink]="['/Dashboard']">
+          <i class="fas fa-laptop icon" aria-hidden="true"></i>
+          <span class="text">
+            Dashboard
+          </span>
+        </li>
+        <li kendotooltip title="Trainings" [routerLink]="['/Training']">
+          <i class="fas fa-book icon" aria-hidden="true"></i><span class="text">Trainings</span>
+        </li>
+        <li kendotooltip title="Students">
+          <i class="fas fa-user-graduate icon"></i><span class="text">Students</span>
+        </li>
+        <li kendotooltip title="Configuration">
+          <i class="fas fa-tools icon"></i><span class="text">Configuration</span>
+        </li>
+        <li kendotooltip title="AI Maintenance">
+          <i class="fas fa-lightbulb icon"></i><span class="text">AI Maintenance</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <div class="navbar">
+      <div class="nav-left">
+        <img
+          src="https://logomakr.com/wp-content/uploads/2024/12/ai-logo-generator-space-sample.png"
+          alt="Company Logo" class="company-logo">
+      </div>
+
+      <div class="nav-right">
+        <button kendoButton size="large" themeColor="info" title="Switch to Learner">
+          Admin
+        </button>
+        <div class="user-profile" (click)="toggleDropdown($event)">
+          <img
+            src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764.jpg"
+            alt="User">
+          <span>Drashti Ginoya</span>
+        </div>
+
+        <div *ngIf="dropdownVisible" class="dropdown-menu" [class.show]="dropdownVisible" #dropdown>
+          <ul>
+            <li (click)="viewProfile()"><i class="fas fa-user-tie"></i> View Profile</li>
+            <li (click)="logout()"><i class="fas fa-sign-out"></i> Logout</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Router outlet for page content -->
+    <div class="page-content" *ngIf="!isLoading">
+      <router-outlet />
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isLoginPage">
+  <router-outlet />
+</div>

@@ -25,6 +25,11 @@ import { UserNavigationComponent } from './user-navigation/user-navigation.compo
 import { EnrollModule } from './Enrollment/enroll.module';
 import { CatalogModule } from './Catalog/catalog.module';
 import { LoaderComponent } from './Shared/loader/loader.component';
+import { TranscriptModule } from './Training-Transcript/transcript.module';
+import { LoginModule } from './Login/login.module';
+import { AdminNavigationComponent } from './admin-navigation/admin-navigation.component'; 
+import { AdmindashboardModule } from './AdminDashboard/admindashboard.module';
+import { TraningModule } from './Traning/traning.module';
 
 
 @NgModule({
@@ -34,14 +39,15 @@ import { LoaderComponent } from './Shared/loader/loader.component';
     HomeComponent,
     FooterComponent,
     UserNavigationComponent,
-    LoaderComponent 
+    LoaderComponent,
+    AdminNavigationComponent 
   ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     IconModule,
-    ButtonsModule,
+    ButtonsModule, 
     CardModule,
     AvatarModule,
     ChartsModule,
@@ -51,7 +57,11 @@ import { LoaderComponent } from './Shared/loader/loader.component';
     FormsModule,
     IdpModule,
     EnrollModule,
-    CatalogModule
+    CatalogModule,
+    TranscriptModule,
+    LoginModule,
+    AdmindashboardModule,
+    TraningModule
   ],
   providers: [],
   bootstrap: [AppComponent]

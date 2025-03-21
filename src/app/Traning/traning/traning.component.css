@@ -1,0 +1,138 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 5px;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure full height */
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+   
+  .container {
+    width: 100%;
+    max-width: 100%;
+    background: white;
+    padding: 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow-x: auto; /*  Enable horizontal scrolling */
+  }
+   
+  .navbar {
+    background: white;
+    color: #6091c6;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+   
+  .navbar a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #134c68;
+  }
+   
+  .navbar a i {
+    margin-right: 10px;
+    font-size: 20px;
+  }
+   
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    .navbar {
+      padding: 8px;
+    }
+   
+    .navbar a {
+      font-size: 16px;
+    }
+   
+    .navbar a i {
+      font-size: 18px;
+      margin-right: 5px;
+    }
+  }
+  /* Table Styles */
+  table {
+    width: 95%;
+    border-collapse: collapse;
+    margin: 8px;
+    table-layout: auto; /* Columns adjust dynamically */
+  }
+  /* Define specific width for the checkbox column */
+  th:first-child,
+  td:first-child {
+    width: 50px; /* Adjust this value as needed */
+    text-align: center;
+  }
+  /* Define specific width for the checkbox column */
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: 50px; /* Adjust this value as needed */
+    text-align: center;
+  }
+   
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+   
+  th {
+    background-color: #134c68;
+    color: white;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  input[type="checkbox"] {
+    transform: scale(1.2);
+  }
+  /* .pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .pagination button {
+    margin: 5px;
+    padding: 8px 12px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  } */
+   
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+   
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+   
+    th,
+    td {
+      font-size: 14px;
+      padding: 8px;
+    }
+  }

@@ -1,0 +1,147 @@
+
+<div class="stats-container1">
+
+
+    <div class="stat-card1">
+        <div class="stat-icon1">
+          {{ dashboardData?.total_admins }}
+        </div>
+        <div class="stat-details">
+            <p class="stat-title1">Total Admin</p>
+            <!-- <p class="stat-value">
+                <strong>Add, Update or Delete Training</strong>
+            </p> -->
+        </div>
+    </div>
+  
+    <div class="stat-card1">
+        <div class="stat-icon1">
+        </div>
+        <div class="stat-details">
+            <p class="stat-title1">Total Student</p>
+            <!-- <p class="stat-value1">
+                <strong>Add, Update or Delete Student</strong>
+            </p> -->
+        </div>
+    </div>
+  
+    <div class="stat-card1">
+        <div class="stat-icon1">
+        </div>
+        <div class="stat-details">
+            <p class="stat-title1">Total Training</p>
+            <!-- <p class="stat-value1">
+            </p> -->
+        </div>
+    </div>
+  
+    <div class="stat-card1">
+        <div class="stat-icon1">
+        </div>
+        <div class="stat-details1">
+            <p class="stat-title1">Pending Approval</p>
+            <!-- <p class="stat-value1">
+            </p> -->
+        </div>
+    </div>
+  
+  </div>
+  
+  <!-- Sub card design start -->
+  
+  <h3 class="quick-links">Quick Setups</h3>
+  
+  <div class="stats-container">
+  
+  
+      <div class="stat-card idp-card">
+          <div class="stat-icon">
+              <img src="training.png" alt="IDP" />
+          </div>
+          <div class="stat-details">
+              <p class="stat-title">Training Setup</p>
+              <p class="stat-value">
+                  <strong>Add, Update or Delete Training</strong>
+              </p>
+          </div>
+      </div>
+  
+      <div class="stat-card">
+          <div class="stat-icon">
+              <img src="assets/studd11.jpg" alt="Course Catalog" />
+          </div>
+          <div class="stat-details">
+              <p class="stat-title">Student Management</p>
+              <p class="stat-value">
+                  <strong>Add, Update or Delete Student</strong>
+  
+              </p>
+          </div>
+      </div>
+  
+      <div class="stat-card transcript-card">
+          <div class="stat-icon">
+              <img src="ai1.jpg" alt="Transcript" />
+          </div>
+          <div class="stat-details">
+              <p class="stat-title">AI Maintenance</p>
+              <p class="stat-value">
+                  <strong>Fix the issue of Maintenance</strong>
+  
+              </p>
+          </div>
+      </div>
+  </div>
+  <!-- Sub card design end -->
+  
+  
+  
+  <!-- states start -->
+  <!-- <h2>Training Statistics</h2>
+  <div class="container">
+      <div class="card-container">
+          <div class="stat-cards">
+              <h3>Document Training</h3>
+              <canvas id="docChart"></canvas>
+              <p>Completed: <strong>{{ documentTraining.completed }}</strong></p>
+              <p>Assigned: <strong>{{ documentTraining.assigned }}</strong></p>
+              <p>Enrolled: <strong>{{ documentTraining.enrolled }}</strong></p>
+          </div>
+          <div class="stat-cards">
+              <h3>External Link Training</h3>
+              <canvas id="linkChart"></canvas>
+              <p>Completed: <strong>{{ externalTraining.completed }}</strong></p>
+              <p>Assigned: <strong>{{ externalTraining.assigned }}</strong></p>
+              <p>Enrolled: <strong>{{ externalTraining.enrolled }}</strong></p>
+          </div>
+      </div>
+  </div> -->
+  <!-- states end -->
+  
+  <div class="container">
+    <h2>Admin Dashboard</h2>
+  <p>{{dashboardData?.total_trainings}}</p>
+    <div class="profile">
+      <img [src]="'assets/images/' + dashboardData?.login_image" alt="Profile Image" width="100">
+      <h3>{{ dashboardData?.login_username }}</h3>
+    </div>
+  
+    <table class="table table-bordered">
+      <tr>
+        <th>Total Admins</th>
+        <td>{{ dashboardData?.total_admins }}</td>
+      </tr>
+      <tr>
+        <th>Total Students</th>
+        <td>{{ dashboardData?.total_students }}</td>
+      </tr>
+      <tr>
+        <th>Total Trainings</th>
+        <td>{{ dashboardData?.total_trainings }}</td>
+      </tr>
+      <tr>
+        <th>Pending Approvals</th>
+        <td>{{ dashboardData?.pending_approvals }}</td>
+      </tr>
+    </table>
+  </div>

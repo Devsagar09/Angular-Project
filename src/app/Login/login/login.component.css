@@ -1,0 +1,222 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Prevent extra scrolling */
+  }
+
+  /* Fullscreen background image */
+  .bg-image {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  /* Full height login container (aligned to the left) */
+  .login-container {
+    display: flex;
+    align-items: center;
+    height: 97vh; /* Full height */
+    padding-left: 13%;
+  }
+
+  /* Full height login card */
+  .login-card {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    padding-top: 0;
+    /* border-radius: 10px; */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* margin: 0 auto; */
+    width: 500px; /* Fixed width */
+    min-height: 100%; /* Ensures it stretches */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .logo {
+    width: 100%;
+      float: left;
+      padding: 20px 20px;
+      text-align: center;
+    display: block;
+    margin: 0 auto 15px;
+  }
+
+  .logo img {
+    width: 50%;
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-size: 30px;
+    color: #134c68;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: gray;
+    margin-bottom: 20px;
+  }
+
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .login-btn {
+    width: 100%;
+    padding: 10px;
+    margin: 15px 0;
+    background-color: #134c68;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .login-btn:hover {
+    background-color: #0d3a52;
+  }
+
+  .form-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+
+  .input-label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #888;
+    transition: all 0.3s ease-in-out;
+    pointer-events: none;
+  }
+
+  .input-field:focus + .input-label,
+  .input-field:not(:placeholder-shown) + .input-label {
+    top: 1px;
+    font-size: 15px;
+    color: black;
+  }
+  .links {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+
+  .links a {
+    text-decoration: none;
+    color: #134c68;
+    /* font-weight: bold; */
+  }
+
+
+  ::ng-deep .mat-mdc-snack-bar-container {
+    --mat-mdc-snack-bar-button-color: #ffffff;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+}
+
+::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
+    background-color: #68d96c !important;
+    color: white !important;
+  }
+
+
+::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
+    --mdc-snackbar-container-color: #68d96c;
+}
+
+
+::ng-deep .mat-mdc-snack-bar-container.app-notification {
+    --mdc-snackbar-container-color: rgb(138, 132, 132);
+}
+
+
+
+  /* RESPONSIVE DESIGN */
+  @media (max-width: 768px) {
+    .login-card {
+      width: 90%;
+      max-width: 400px;
+      padding: 20px;
+    }
+
+    .logo img {
+      width: 40%;
+    }
+
+    .title {
+      font-size: 20px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+    }
+
+    .input-field {
+      font-size: 14px;
+    }
+
+    .login-btn {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .login-card {
+      width: 95%;
+      max-width: 350px;
+      padding: 15px;
+    }
+
+    .logo img {
+      width: 35%;
+    }
+
+    .title {
+      font-size: 18px;
+    }
+
+    .subtitle {
+      font-size: 12px;
+    }
+
+    .input-field {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .login-btn {
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    .links {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .links a {
+      margin-bottom: 10px;
+    }
+  }

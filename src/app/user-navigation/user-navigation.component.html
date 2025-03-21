@@ -1,41 +1,5 @@
-<!-- <div class="navbar">
-  <div class="nav-left">
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Spotify_logo_with_text.svg/800px-Spotify_logo_with_text.svg.png"
-      alt="Company Logo" class="company-logo">
-  </div>
-  <div class="nav-right">
-    <button kendoButton size="large" themeColor="info" title="Switch to Admin">
-      Admin
-    </button>
-    <div class="user-profile" (click)="toggleDropdown()">
-      <img
-        src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764.jpg"
-        alt="User">
-      <span>Dev Sagar</span>
-    </div>
-    <div class="dropdown-menu" [class.show]="dropdownVisible">
-      <ul>
-        <li (click)="viewProfile()">👤 View Profile</li>
-        <li (click)="logout()">🚪 Logout</li>
-      </ul>
-    </div>
-  </div>
-</div>
- -->
-
-
-<!-- <div class="preloader-overlay" *ngIf="isLoading">
-    <div class="lds-ripple">
-        <div></div>
-        <div></div>
-    </div>
-</div> -->
-
-
-
-
-<div class="container">
+<!-- Main Container -->
+<div class="container" *ngIf="!isLoginPage">
     <!-- Sidebar -->
     <div class="sidebar" [class.collapsed]="isCollapsed">
         <div class="header">
@@ -47,11 +11,9 @@
 
         <div class="menu">
             <ul>
-                <li kendotooltip title="Dashboard" [routerLink]="['/dashboard']">
+                <li kendotooltip title="Dashboard" [routerLink]="['/studentdashboard']">
                     <span class="icon">🏠</span>
-                    <span class="text">
-                        Dashboard
-                    </span>
+                    <span class="text">Dashboard</span>
                 </li>
                 <li kendotooltip title="IDP" [routerLink]="['/IDP']">
                     <span class="icon">📚</span><span class="text">IDP</span>
@@ -62,47 +24,47 @@
                 <li kendotooltip title="Course Catalog" [routerLink]="['/coursecatalog']">
                     <span class="icon">📖</span><span class="text">Course Catalog</span>
                 </li>
-                <li kendotooltip title="Training Transcript">
+                <li kendotooltip title="Training Transcript" [routerLink]="['/transcript']">
                     <span class="icon">📜</span><span class="text">Training Transcript</span>
                 </li>
             </ul>
         </div>
     </div>
 
-    <!-- Main content -->
+    <!-- Main Content -->
     <div class="main-content">
         <div class="navbar">
             <div class="nav-left">
-                <img src="https://logomakr.com/wp-content/uploads/2024/12/ai-logo-generator-space-sample.png"
-                    alt="Company Logo" class="company-logo">
+                <img src="https://logomakr.com/wp-content/uploads/2024/12/ai-logo-generator-space-sample.png" alt="Company Logo" class="company-logo">
             </div>
 
             <div class="nav-right">
-                <button kendoButton size="large" themeColor="primary" title="Switch to Admin">
-                    Admin
-                </button>
+                <button kendoButton size="large" themeColor="primary" title="Switch to Admin">Admin</button>
                 <div class="user-profile" (click)="toggleDropdown()">
-                    <img src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764.jpg"
-                        alt="User">
-                    <span>Dev Sagar</span>
+                    <img [src]="profileImage">
+                    <span>{{ firstname }} {{ lastname }}</span>
                 </div>
                 <div class="dropdown-menu" [class.show]="dropdownVisible">
                     <ul>
                         <li (click)="viewProfile()">👤 View Profile</li>
                         <li (click)="logout()">🚪 Logout</li>
-
                     </ul>
                 </div>
             </div>
         </div>
-        <app-loader *ngIf="isLoading"></app-loader>
-        <!-- Router outlet for page content -->
-        <div class="page-content"  *ngIf="!isLoading;" >
-            <router-outlet />
 
+        <app-loader *ngIf="isLoading"></app-loader>
+
+        <!-- Page Content -->
+        <div class="page-content" *ngIf="!isLoading">
+            <router-outlet></router-outlet>
         </div>
-        <app-footer  *ngIf="!isLoading;" ></app-footer>
+
+        <app-footer *ngIf="!isLoading"></app-footer>
     </div>
 </div>
 
- 
+<!-- Login Page Content -->
+<div *ngIf="isLoginPage">
+    <router-outlet></router-outlet>
+</div>
