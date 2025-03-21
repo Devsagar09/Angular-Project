@@ -58,9 +58,8 @@
         </button>
         <div class="user-profile" (click)="toggleDropdown($event)">
           <img
-            src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764.jpg"
             alt="User">
-          <span>Drashti Ginoya</span>
+          <span>{{firstname}} {{lastname}}</span>
         </div>
 
         <div *ngIf="dropdownVisible" class="dropdown-menu" [class.show]="dropdownVisible" #dropdown>
