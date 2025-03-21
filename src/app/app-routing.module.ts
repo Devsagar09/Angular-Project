@@ -9,8 +9,8 @@ import { TranscriptComponent } from './Training-Transcript/transcript/transcript
 import { LoginComponent } from './Login/login/login.component';
 import { AuthGuard } from './Login/auth.guard';
 import { AdmindashboardComponent } from './AdminDashboard/admindashboard/admindashboard.component';
-import { TraningComponent } from './Traning/traning/traning.component';
- 
+import { TrainingComponent } from './Training/training/training.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -33,29 +33,29 @@ const routes: Routes = [
   },
   {
     path: 'Training',
-    component: TraningComponent,
+    component: TrainingComponent,
     canActivate: [AuthGuard]
   },
   {
     path: 'IDP',
     component:IdpComponent,
     canActivate: [AuthGuard]
-  }, 
+  },
   {
     path: 'myenrollments',
     component:EnrollComponent,
     canActivate: [AuthGuard]
-  }, 
+  },
   {
     path: 'coursecatalog',
     component:CatalogComponent,
     canActivate: [AuthGuard]
-  }, 
+  },
   {
     path: 'transcript',
     component:TranscriptComponent,
     canActivate: [AuthGuard]
-  }, 
+  },
   {
     path:'**',
     component:NotFoundPageComponent

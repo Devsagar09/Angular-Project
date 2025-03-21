@@ -1,147 +1,202 @@
-
-<div class="stats-container1">
-
-
-    <div class="stat-card1">
-        <div class="stat-icon1">
+<!-- <div class="card-content">
+    <div class="learning-card">
+        <h1 class="card-title">Welcome to Your Learning Journey</h1>
+        <p class="card-description">
+            Empower yourself with knowledge and skills. Explore curated courses, track your progress,
+            <br /> achieve new milestones — all in one place. Your future starts here!
+        </p>
+    </div>
+    <div class="card-icons">
+        <img src="book.png" alt="Book Icon" class="book-icon" />
+        <img src="calpng.png" alt="Calendar Icon" class="calendar-icon" />
+        <img src="ellipse.png" alt="Ellipse Icon" class="ellipse-icon" />
+    </div>
+</div> -->
+<html>
+  <body>
+    <div class="stats-container">
+      <div class="stat-card">
+        <div class="stat-icon">
           {{ dashboardData?.total_admins }}
         </div>
         <div class="stat-details">
-            <p class="stat-title1">Total Admin</p>
-            <!-- <p class="stat-value">
-                <strong>Add, Update or Delete Training</strong>
-            </p> -->
+          <p class="stat-title">Total Admin</p>
+          <!-- <p class="stat-value">
+              <strong>Add, Update or Delete Training</strong>
+          </p> -->
         </div>
-    </div>
-  
-    <div class="stat-card1">
-        <div class="stat-icon1">
-        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"></div>
         <div class="stat-details">
-            <p class="stat-title1">Total Student</p>
-            <!-- <p class="stat-value1">
-                <strong>Add, Update or Delete Student</strong>
-            </p> -->
+          <p class="stat-title">Total Student</p>
+          <!-- <p class="stat-value1">
+              <strong>Add, Update or Delete Student</strong>
+          </p> -->
         </div>
-    </div>
-  
-    <div class="stat-card1">
-        <div class="stat-icon1">
-        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"></div>
         <div class="stat-details">
-            <p class="stat-title1">Total Training</p>
-            <!-- <p class="stat-value1">
-            </p> -->
+          <p class="stat-title">Total Training</p>
+          <!-- <p class="stat-value1">
+          </p> -->
         </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"></div>
+        <div class="stat-details">
+          <p class="stat-title">Pending Approval</p>
+          <!-- <p class="stat-value1">
+          </p> -->
+        </div>
+      </div>
     </div>
-  
-    <div class="stat-card1">
+
+    <!-- Sub card design start -->
+
+    <h3 class="quick-links">Quick Setups</h3>
+
+    <div class="stats-container1">
+      <div class="stat-card1">
         <div class="stat-icon1">
+          <img src="training.png" alt="Training setup" />
         </div>
         <div class="stat-details1">
-            <p class="stat-title1">Pending Approval</p>
-            <!-- <p class="stat-value1">
-            </p> -->
+          <p class="stat-title1" [routerLink]="['/Training']">Training Setup</p>
+          <p class="stat-value1" [routerLink]="['/Training']">
+            <strong>Add, Update or Delete Training</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="stat-card1">
+        <div class="stat-icon1">
+          <img src="studd11.jpg" alt="Student" />
+        </div>
+        <div class="stat-details1">
+          <p class="stat-title1">Student Management</p>
+          <p class="stat-value1">
+            <strong>Add, Update or Delete Student</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="stat-card1">
+        <div class="stat-icon1">
+          <img src="ai1.jpg" alt="AI" />
+        </div>
+        <div class="stat-details1">
+          <p class="stat-title1">AI Maintenance</p>
+          <p class="stat-value1">
+            <strong>Fix the issue of Maintenance</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Sub card design end -->
+
+    <div class="container">
+      <div class="tbl-container">
+        <div class="training-header">
+          <p>Recently Created Training</p>
+          <p class="view-all" [routerLink]="['/Training']">view all</p>
+        </div>
+        <!-- <h2 style="text-align:center;">DataTable with API Data & Pagination</h2> -->
+        <table id="data-table">
+          <thead>
+            <tr>
+              <th>Training Name</th>
+              <th>Training Code</th>
+              <th>Training Type</th>
+              <th>Archive Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let trainingData of trainingDatas">
+              <td>{{ trainingData?.training_name }}</td>
+              <td>{{ trainingData?.training_code }}</td>
+              <td>{{ trainingData?.trainingtype_name }}</td>
+              <td>{{ trainingData?.archive_date | date: 'dd-MM-yyyy' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="welcome-card">
+        <div class="card-header">
+          <h2>Welcome Back!</h2>
+        </div>
+
+        <div class="card-body">
+          <img class="profile-img" src="assets/profile.png" alt="User Profile" />
+          <div class="user-details">
+            <p class="last-login">last login : {{ lastLogin}}</p>
+            <h3 class="username">Drashti Ginoya</h3>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="profile-btn">
+            View profile <span>&#8594;</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
+
+<!-- states start -->
+<!-- <h2>Training Statistics</h2>
+<div class="container">
+
+    <div class="card-container">
+        <div class="stat-cards">
+            <h3>Document Training</h3>
+            <canvas id="docChart"></canvas>
+            <p>Completed: <strong>{{ documentTraining.completed }}</strong></p>
+            <p>Assigned: <strong>{{ documentTraining.assigned }}</strong></p>
+            <p>Enrolled: <strong>{{ documentTraining.enrolled }}</strong></p>
+        </div>
+
+        <div class="stat-cards">
+            <h3>External Link Training</h3>
+            <canvas id="linkChart"></canvas>
+            <p>Completed: <strong>{{ externalTraining.completed }}</strong></p>
+            <p>Assigned: <strong>{{ externalTraining.assigned }}</strong></p>
+            <p>Enrolled: <strong>{{ externalTraining.enrolled }}</strong></p>
         </div>
     </div>
-  
+</div> -->
+<!-- states end -->
+
+<!-- <div class="container">
+  <h2>Admin Dashboard</h2>
+<p>{{dashboardData?.total_trainings}}</p>
+  <div class="profile">
+    <img [src]="'assets/images/' + dashboardData?.login_image" alt="Profile Image" width="100">
+    <h3>{{ dashboardData?.login_username }}</h3>
   </div>
-  
-  <!-- Sub card design start -->
-  
-  <h3 class="quick-links">Quick Setups</h3>
-  
-  <div class="stats-container">
-  
-  
-      <div class="stat-card idp-card">
-          <div class="stat-icon">
-              <img src="training.png" alt="IDP" />
-          </div>
-          <div class="stat-details">
-              <p class="stat-title">Training Setup</p>
-              <p class="stat-value">
-                  <strong>Add, Update or Delete Training</strong>
-              </p>
-          </div>
-      </div>
-  
-      <div class="stat-card">
-          <div class="stat-icon">
-              <img src="assets/studd11.jpg" alt="Course Catalog" />
-          </div>
-          <div class="stat-details">
-              <p class="stat-title">Student Management</p>
-              <p class="stat-value">
-                  <strong>Add, Update or Delete Student</strong>
-  
-              </p>
-          </div>
-      </div>
-  
-      <div class="stat-card transcript-card">
-          <div class="stat-icon">
-              <img src="ai1.jpg" alt="Transcript" />
-          </div>
-          <div class="stat-details">
-              <p class="stat-title">AI Maintenance</p>
-              <p class="stat-value">
-                  <strong>Fix the issue of Maintenance</strong>
-  
-              </p>
-          </div>
-      </div>
-  </div>
-  <!-- Sub card design end -->
-  
-  
-  
-  <!-- states start -->
-  <!-- <h2>Training Statistics</h2>
-  <div class="container">
-      <div class="card-container">
-          <div class="stat-cards">
-              <h3>Document Training</h3>
-              <canvas id="docChart"></canvas>
-              <p>Completed: <strong>{{ documentTraining.completed }}</strong></p>
-              <p>Assigned: <strong>{{ documentTraining.assigned }}</strong></p>
-              <p>Enrolled: <strong>{{ documentTraining.enrolled }}</strong></p>
-          </div>
-          <div class="stat-cards">
-              <h3>External Link Training</h3>
-              <canvas id="linkChart"></canvas>
-              <p>Completed: <strong>{{ externalTraining.completed }}</strong></p>
-              <p>Assigned: <strong>{{ externalTraining.assigned }}</strong></p>
-              <p>Enrolled: <strong>{{ externalTraining.enrolled }}</strong></p>
-          </div>
-      </div>
-  </div> -->
-  <!-- states end -->
-  
-  <div class="container">
-    <h2>Admin Dashboard</h2>
-  <p>{{dashboardData?.total_trainings}}</p>
-    <div class="profile">
-      <img [src]="'assets/images/' + dashboardData?.login_image" alt="Profile Image" width="100">
-      <h3>{{ dashboardData?.login_username }}</h3>
-    </div>
-  
-    <table class="table table-bordered">
-      <tr>
-        <th>Total Admins</th>
-        <td>{{ dashboardData?.total_admins }}</td>
-      </tr>
-      <tr>
-        <th>Total Students</th>
-        <td>{{ dashboardData?.total_students }}</td>
-      </tr>
-      <tr>
-        <th>Total Trainings</th>
-        <td>{{ dashboardData?.total_trainings }}</td>
-      </tr>
-      <tr>
-        <th>Pending Approvals</th>
-        <td>{{ dashboardData?.pending_approvals }}</td>
-      </tr>
-    </table>
-  </div>
+
+  <table class="table table-bordered">
+    <tr>
+      <th>Total Admins</th>
+      <td>{{ dashboardData?.total_admins }}</td>
+    </tr>
+    <tr>
+      <th>Total Students</th>
+      <td>{{ dashboardData?.total_students }}</td>
+    </tr>
+    <tr>
+      <th>Total Trainings</th>
+      <td>{{ dashboardData?.total_trainings }}</td>
+    </tr>
+    <tr>
+      <th>Pending Approvals</th>
+      <td>{{ dashboardData?.pending_approvals }}</td>
+    </tr>
+  </table>
+</div> -->

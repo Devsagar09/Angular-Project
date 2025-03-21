@@ -1,5 +1,6 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router'; 
+import { NavigationEnd, Router } from '@angular/router';
+import { homeIcon, SVGIcon } from '@progress/kendo-svg-icons';
 
 @Component({
   selector: 'app-admin-navigation',
@@ -7,7 +8,8 @@ import { NavigationEnd, Router } from '@angular/router';
   templateUrl: './admin-navigation.component.html',
   styleUrl: './admin-navigation.component.css'
 })
-export class AdminNavigationComponent {  
+export class AdminNavigationComponent {
+  public HomeSVG: SVGIcon = homeIcon;
   title = 'angular-project';
   dropdownVisible = false;
   isCollapsed = true;
@@ -15,11 +17,12 @@ export class AdminNavigationComponent {
   isLoginPage = true;
 
   constructor(private eRef: ElementRef, private router: Router) {
-    this.router.events.subscribe(event=>{
-      if(event instanceof NavigationEnd){
-        this.isLoginPage = this.router.url === '/Login';
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isLoginPage = this.router.url === '/login';
       }
     });
+
     // Simulate loading process
     setTimeout(() => {
       this.isLoading = false;
@@ -27,8 +30,10 @@ export class AdminNavigationComponent {
   }
 
   toggleDropdown(event: Event) {
-    event.stopPropagation(); // Prevent closing when clicking inside the dropdown
+    // Prevent default propagation so document click listener doesn't close it immediately
+    event.stopPropagation();
     this.dropdownVisible = !this.dropdownVisible;
+    console.log('Dropdown toggled:', this.dropdownVisible); // Debug log
   }
 
   toggleSidebar() {
@@ -49,7 +54,11 @@ export class AdminNavigationComponent {
     const toggleBtn = document.querySelector('.toggle-btn');
 
     // Close dropdown if click is outside
-    if (this.dropdownVisible && !this.eRef.nativeElement.querySelector('.dropdown-menu')?.contains(event.target)) {
+    if (
+      this.dropdownVisible &&
+      !this.eRef.nativeElement.querySelector('.dropdown-menu')?.contains(event.target) &&
+      !this.eRef.nativeElement.querySelector('.user-profile')?.contains(event.target)
+    ) {
       this.dropdownVisible = false;
     }
 
@@ -65,4 +74,3 @@ export class AdminNavigationComponent {
     }
   }
 }
-
