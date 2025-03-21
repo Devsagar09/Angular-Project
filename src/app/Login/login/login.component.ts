@@ -38,13 +38,15 @@ export class LoginComponent {
          localStorage.setItem('firstname', response.firstname);
         localStorage.setItem('lastname', response.lastname);
         localStorage.setItem('userRole', response.role);
-        localStorage.setItem('profileImage', response.profile_image);
         localStorage.setItem('studentId', response.studentId);
-        if(response.role=="Admin")
-          this.router.navigate(['/IDP']);
-        else
-          this.router.navigate(['/studentdashboard']);
-        },
+        
+        const route = response.role === 'Admin' ? '/dashboard' : '/studentdashboard'; // Ensure correct route paths
+
+        this.router.navigate([route]).then(() => {
+          window.location.reload();
+        });
+      },
+
         (error: any) => {
           // console.error('Login Error:', error);
           if (error.status === 401) { 

@@ -14,7 +14,7 @@ import { TraningComponent } from './Traning/traning/traning.component';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: AdmindashboardComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -27,7 +27,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'Dashboard',
+    path: 'dashboard',
     component: AdmindashboardComponent,
     canActivate: [AuthGuard]
   },

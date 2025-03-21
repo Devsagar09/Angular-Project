@@ -1,5 +1,9 @@
- 
-<!-- Page Content (Hidden when isLoading is true) -->
-<!-- <app-user-navigation></app-user-navigation> -->
+<ng-container *ngIf="isAdmin()">
+    <app-admin-navigation></app-admin-navigation>
+  </ng-container>
+  
+  <ng-container *ngIf="isStudent()">
+    <app-user-navigation></app-user-navigation>
+  </ng-container>
 
-<app-admin-navigation></app-admin-navigation>
+    <router-outlet></router-outlet>

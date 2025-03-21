@@ -9,6 +9,8 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class AdminNavigationComponent {  
   title = 'angular-project';
+  firstname: string | null = '';
+  lastname: string | null = '';
   dropdownVisible = false;
   isCollapsed = true;
   isLoading = true;
@@ -17,7 +19,7 @@ export class AdminNavigationComponent {
   constructor(private eRef: ElementRef, private router: Router) {
     this.router.events.subscribe(event=>{
       if(event instanceof NavigationEnd){
-        this.isLoginPage = this.router.url === '/Login';
+        this.isLoginPage = this.router.url === '/login';
       }
     });
     // Simulate loading process
@@ -26,10 +28,32 @@ export class AdminNavigationComponent {
     }, 3000);
   }
 
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.loadUserData();
+      }
+    });
+  }
+
+  loadUserData() {
+    this.firstname = localStorage.getItem('firstname');
+    this.lastname = localStorage.getItem('lastname');
+  }
+
+  logout() {
+    this.isLoading = true; 
+    this.firstname = '';
+    this.lastname = '';
+    localStorage.clear();
+        window.location.href = '/login';
+  }
+
   toggleDropdown(event: Event) {
     event.stopPropagation(); // Prevent closing when clicking inside the dropdown
     this.dropdownVisible = !this.dropdownVisible;
   }
+  
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
@@ -37,10 +61,6 @@ export class AdminNavigationComponent {
 
   viewProfile() {
     console.log('View Profile clicked');
-  }
-
-  logout() {
-    console.log('Logout clicked');
   }
 
   @HostListener('document:click', ['$event'])
