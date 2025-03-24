@@ -20,10 +20,11 @@
   html {
   height: 100%;
   }
+
   .container {
     font-family: 'Inter', sans-serif;
     display: flex;
-    height: 100vh;
+    height: 97vh;
   }
   
   
@@ -78,7 +79,6 @@
   
   /* Dropdown Menu */
   .dropdown-menu {
-    display: none;
     position: absolute;
     top: 70px;
     right: 30px;

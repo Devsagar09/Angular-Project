@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+<!-- 
 <div class="preloader-overlay" *ngIf="isLoading">
   <div class="lds-ripple">
     <div></div>
     <div></div>
   </div>
-</div>
+</div> -->
 
 
 <div class="container" *ngIf="!isLoginPage">
@@ -21,7 +21,7 @@
 
     <div class="menu">
       <ul>
-        <li kendotooltip title="Dashboard" [routerLink]="['/Dashboard']">
+        <li kendotooltip title="Dashboard" [routerLink]="['/dashboard']">
           <i class="fas fa-laptop icon" aria-hidden="true"></i>
           <span class="text">
             Dashboard
@@ -30,7 +30,7 @@
         <li kendotooltip title="Trainings" [routerLink]="['/Training']">
           <i class="fas fa-book icon" aria-hidden="true"></i><span class="text">Trainings</span>
         </li>
-        <li kendotooltip title="Students">
+        <li kendotooltip title="Students" [routerLink]="['/Student']">
           <i class="fas fa-user-graduate icon"></i><span class="text">Students</span>
         </li>
         <li kendotooltip title="Configuration">
@@ -57,8 +57,7 @@
           Admin
         </button>
         <div class="user-profile" (click)="toggleDropdown($event)">
-          <img
-            alt="User">
+          <img [src]="profileImage" alt="Profile Image">
           <span>{{firstname}} {{lastname}}</span>
         </div>
 
@@ -71,6 +70,8 @@
 
       </div>
     </div>
+
+    <app-loader *ngIf="isLoading"></app-loader>
 
     <!-- Router outlet for page content -->
     <div class="page-content" *ngIf="!isLoading">

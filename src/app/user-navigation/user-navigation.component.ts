@@ -13,7 +13,7 @@ export class UserNavigationComponent implements OnInit {
   lastname: string | null = '';
   profileImage: string | null = '';
   isLoading = true;
-  isLoginPage = false;
+  isLoginPage = true;
 
   dropdownVisible = false;
   isCollapsed = true;
@@ -41,9 +41,8 @@ export class UserNavigationComponent implements OnInit {
   }
 
   loadUserData() {
-    this.firstname = localStorage.getItem('firstname');
-    this.lastname = localStorage.getItem('lastname');
-    this.profileImage = localStorage.getItem('profileImage');
+    this.firstname = sessionStorage.getItem('firstname');
+    this.lastname = sessionStorage.getItem('lastname');
   }
 
   toggleSidebar() {
@@ -63,8 +62,7 @@ export class UserNavigationComponent implements OnInit {
     this.isLoading = true;
     this.firstname = '';
     this.lastname = '';
-    this.profileImage = '';
-    localStorage.clear();
+    sessionStorage.clear();
     this.dropdownVisible = false;
     window.location.href = '/login';
   }
