@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { AdminNavigationService } from './admin-navigation.service';
 
@@ -9,7 +9,7 @@ import { AdminNavigationService } from './admin-navigation.service';
   styleUrls: ['./admin-navigation.component.css']
 })
 
-export class AdminNavigationComponent implements OnInit {  
+export class AdminNavigationComponent implements OnInit {
   title = 'angular-project';
   firstname: string | null = '';
   lastname: string | null = '';
@@ -19,25 +19,15 @@ export class AdminNavigationComponent implements OnInit {
   isLoading = true;
   isLoginPage = true;
 
-  constructor(private eRef: ElementRef, private router: Router) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this.isLoading = true;
-      }
-      if (event instanceof NavigationEnd) {
-        this.isLoginPage = this.router.url === '/login';
-      }
-    });
-
 
   constructor(private eRef: ElementRef, private router: Router, private adminnavigationService : AdminNavigationService) {
     this.router.events.subscribe(event=>{
        if (event instanceof NavigationStart) {
-              this.isLoading = true;  
-            } 
+              this.isLoading = true;
+            }
       if(event instanceof NavigationEnd){
         this.isLoginPage = this.router.url.toLowerCase()  === '/login';
-     
+
     // Simulate loading process
     setTimeout(() => {
       this.isLoading = false;
@@ -70,38 +60,16 @@ export class AdminNavigationComponent implements OnInit {
         }
       );
     }
-  
+
     logout() {
-      this.isLoading = true;  
-    
+      this.isLoading = true;
+
         this.firstname = '';
         this.lastname = '';
         sessionStorage.clear();
-        window.location.href = '/login'; 
-    }
-    
-    
-
-  ngOnInit() {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.loadUserData();
-      }
-    });
-  }
-
-  loadUserData() {
-    this.firstname = localStorage.getItem('firstname');
-    this.lastname = localStorage.getItem('lastname');
-  }
-
-  logout() {
-    this.isLoading = true;
-    this.firstname = '';
-    this.lastname = '';
-    localStorage.clear();
         window.location.href = '/login';
-  }
+    }
+
 
   toggleDropdown(event: Event) {
     // Prevent default propagation so document click listener doesn't close it immediately
@@ -109,7 +77,7 @@ export class AdminNavigationComponent implements OnInit {
     this.dropdownVisible = !this.dropdownVisible;
     console.log('Dropdown toggled:', this.dropdownVisible); // Debug log
   }
-  
+
 
 
   toggleSidebar() {
