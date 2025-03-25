@@ -9,6 +9,8 @@ import { TranscriptComponent } from './Training-Transcript/transcript/transcript
 import { LoginComponent } from './Login/login/login.component';
 import { AuthGuard } from './Login/auth.guard';
 import { AdmindashboardComponent } from './AdminDashboard/admindashboard/admindashboard.component';
+import { TrainingComponent } from './Training/training/training.component';
+import { PendingApprovalComponent } from './AI-Maintenance/pending-approval/pending-approval.component';
 import { TraningComponent } from './Traning/traning/traning.component';
 import { DisplaystudentComponent } from './Student/displaystudent/displaystudent.component';
 import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent.component';
@@ -44,8 +46,13 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'Training',
-    component: TraningComponent,
+    path: 'training',
+    component: TrainingComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'AI-Maintenance',
+    component: PendingApprovalComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -57,22 +64,22 @@ const routes: Routes = [
     path: 'IDP',
     component:IdpComponent,
     canActivate: [AuthGuard]
-  }, 
+  },
   {
     path: 'myenrollments',
     component:EnrollComponent,
     canActivate: [AuthGuard]
-  }, 
+  },
   {
     path: 'coursecatalog',
     component:CatalogComponent,
     canActivate: [AuthGuard]
-  }, 
+  },
   {
     path: 'transcript',
     component:TranscriptComponent,
     canActivate: [AuthGuard]
-  }, 
+  },
   {
     path:'**',
     component:NotFoundPageComponent

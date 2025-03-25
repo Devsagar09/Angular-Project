@@ -1,9 +1,35 @@
+<!-- <div class="navbar">
+  <div class="nav-left">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Spotify_logo_with_text.svg/800px-Spotify_logo_with_text.svg.png"
+      alt="Company Logo" class="company-logo">
+  </div>
+  <div class="nav-right">
+    <button kendoButton size="large" themeColor="info" title="Switch to Admin">
+      Admin
+    </button>
+    <div class="user-profile" (click)="toggleDropdown()">
+      <img
+        src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764.jpg"
+        alt="User">
+      <span>Dev Sagar</span>
+    </div>
+    <div class="dropdown-menu" [class.show]="dropdownVisible">
+      <ul>
+        <li (click)="viewProfile()">👤 View Profile</li>
+        <li (click)="logout()">🚪 Logout</li>
+      </ul>
+    </div>
+  </div>
+</div>
+ -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- <div class="preloader-overlay" *ngIf="isLoading">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <!-- 
 <div class="preloader-overlay" *ngIf="isLoading">
   <div class="lds-ripple">
-    <div></div>
-    <div></div>
   </div>
 </div> -->
 
@@ -27,7 +53,7 @@
             Dashboard
           </span>
         </li>
-        <li kendotooltip title="Trainings" [routerLink]="['/Training']">
+        <li kendotooltip title="Trainings" [routerLink]="['/training']">
           <i class="fas fa-book icon" aria-hidden="true"></i><span class="text">Trainings</span>
         </li>
         <li kendotooltip title="Students" [routerLink]="['/Student']">
@@ -36,7 +62,7 @@
         <li kendotooltip title="Configuration">
           <i class="fas fa-tools icon"></i><span class="text">Configuration</span>
         </li>
-        <li kendotooltip title="AI Maintenance">
+        <li kendotooltip title="AI Maintenance" [routerLink]="['/AI-Maintenance']">
           <i class="fas fa-lightbulb icon"></i><span class="text">AI Maintenance</span>
         </li>
       </ul>
@@ -54,9 +80,10 @@
 
       <div class="nav-right">
         <button kendoButton size="large" themeColor="info" title="Switch to Learner">
-          Admin
+          Learner
         </button>
         <div class="user-profile" (click)="toggleDropdown($event)">
+         
           <img [src]="profileImage" alt="Profile Image">
           <span>{{firstname}} {{lastname}}</span>
         </div>
@@ -83,3 +110,27 @@
 <div *ngIf="isLoginPage">
   <router-outlet />
 </div>
+
+<!--
+<div class="sidebar" [class.collapsed]="isCollapsed">
+
+  <div class="header">
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <span class="arrow">&#x276F;</span>
+    </button>
+    <h4>Menu</h4>
+  </div>
+
+  <div class="menu">
+    <ul>
+      <li kendotooltip title="Dashboard" ><span class="icon">🏠</span><span class="text"><a routerLink="/home" routerLinkActive="active" style="text-decoration: none;"> Dashboard</a></span></li>
+      <li kendotooltip title="IDP"><span class="icon">📚</span><span class="text">IDP</span></li>
+      <li kendotooltip title="My Enrollment"><span class="icon">📝</span><span class="text">My Enrollment</span></li>
+      <li kendotooltip title="Training Transcript"><span class="icon">📜</span><span class="text">Training Transcript</span></li>
+      <li kendotooltip title="Course Catalog"><span class="icon">📖</span><span class="text">Course Catalog</span></li>
+    </ul>
+  </div>
+</div>
+
+
+<router-outlet /> -->

@@ -9,9 +9,11 @@ export class AuthGuard implements CanActivate {
 
   constructor(private router: Router, private snackBar: MatSnackBar) {}
 
+
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree{
     const studentId = sessionStorage.getItem('studentId');
     const userRole = sessionStorage.getItem('userRole'); 
+
 
     if (studentId) {
       if (state.url === '/') {
