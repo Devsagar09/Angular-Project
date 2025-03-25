@@ -8,13 +8,16 @@ import { AdmindashboardService } from '../admindashboard.service';
   styleUrl: './admindashboard.component.css'
 })
 export class AdmindashboardComponent {
-
+  isLoading = true;
   dashboardData: any;
 
   constructor(private homeService: AdmindashboardService) {}
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.isLoading = false;
     this.loadDashboardCounts();
+    },4000);
   }
 
   loadDashboardCounts(): void {
@@ -26,6 +29,8 @@ export class AdmindashboardComponent {
         console.error('Error fetching dashboard counts:', error);
       }
     });
+    this.isLoading = false;
+
   }
 
 }

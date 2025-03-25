@@ -30,6 +30,7 @@ import { LoginModule } from './Login/login.module';
 import { AdminNavigationComponent } from './admin-navigation/admin-navigation.component'; 
 import { AdmindashboardModule } from './AdminDashboard/admindashboard.module';
 import { TraningModule } from './Traning/traning.module';
+import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { TraningModule } from './Traning/traning.module';
     FooterComponent,
     UserNavigationComponent,
     LoaderComponent,
-    AdminNavigationComponent 
+    AdminNavigationComponent,
+    AddeditstudentComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -61,7 +63,7 @@ import { TraningModule } from './Traning/traning.module';
     TranscriptModule,
     LoginModule,
     AdmindashboardModule,
-    TraningModule
+    TraningModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

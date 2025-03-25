@@ -41,7 +41,7 @@
             <div class="nav-right">
                 <button kendoButton size="large" themeColor="primary" title="Switch to Admin">Admin</button>
                 <div class="user-profile" (click)="toggleDropdown()">
-                    <img [src]="profileImage">
+                    <img [src]="profileImage" alt="Profile Image">
                     <span>{{ firstname }} {{ lastname }}</span>
                 </div>
                 <div class="dropdown-menu" [class.show]="dropdownVisible">
