@@ -22,7 +22,7 @@ export class TranscriptComponent {
     transcriptData: any[] = [];
 
     ngOnInit(): void {
-      const storedStudentId = localStorage.getItem('studentId');
+      const storedStudentId = sessionStorage.getItem('studentId');
       if (storedStudentId) {
         this.studentId = parseInt(storedStudentId, 10);
         this.loadTrainings();

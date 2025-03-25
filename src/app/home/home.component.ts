@@ -30,7 +30,7 @@ export class HomeComponent {
   constructor(private http: HttpClient, private homeService: HomeService) { }
 
   ngOnInit() {
-    const storedStudentId = localStorage.getItem('studentId');
+    const storedStudentId = sessionStorage.getItem('studentId');
     if (storedStudentId) {
       this.studentId = parseInt(storedStudentId, 10);
       console.log("Student ID:", this.studentId);

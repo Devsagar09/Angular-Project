@@ -33,7 +33,7 @@ export class IdpComponent {
   }
 
   ngOnInit(): void {
-    const storedStudentId = localStorage.getItem('studentId');
+    const storedStudentId = sessionStorage.getItem('studentId');
     if (storedStudentId) {
       this.studentId = parseInt(storedStudentId, 10);
       this.loadTrainings();
@@ -65,7 +65,7 @@ export class IdpComponent {
     if (!this.searchQuery.trim()) {
       this.isLoading = true; 
       this.loadTrainings()
-      
+
       setTimeout(() => {
         this.isLoading = false; // Hide loader after delay
       }, 2000);
