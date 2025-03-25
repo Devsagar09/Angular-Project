@@ -32,7 +32,7 @@ import { AdmindashboardModule } from './AdminDashboard/admindashboard.module';
 import { TrainingModule } from './Training/training.module';
 import { PendingApprovalModule } from './AI-Maintenance/pending-approval.module';
 import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent.component';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -58,6 +58,7 @@ import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent
     ChartsModule,
     HttpClientModule,
     DialogModule,
+    FontAwesomeModule,
     InputsModule,
     FormsModule,
     IdpModule,
