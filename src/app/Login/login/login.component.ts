@@ -14,6 +14,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
   errorMessage: string = '';
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -28,26 +29,29 @@ export class LoginComponent {
   }
 
   onLogin() {
+
     // alert("clicked");
     if (this.loginForm.valid) {
+      this.loading = true;
       this.loginService.login(this.loginForm.value).subscribe(
         (response: any) => {
           // console.log('Login Success:', response);
           // this.showSuccessSnackbar('Login successfully.');
-
-         localStorage.setItem('firstname', response.firstname);
-        localStorage.setItem('lastname', response.lastname);
-        localStorage.setItem('userRole', response.role);
-        localStorage.setItem('studentId', response.studentId);
-        
-        const route = response.role === 'Admin' ? '/dashboard' : '/studentdashboard'; // Ensure correct route paths
-
-        this.router.navigate([route]).then(() => {
-          window.location.reload();
+          
+          sessionStorage.setItem('firstname', response.firstname);
+          sessionStorage.setItem('lastname', response.lastname);
+          sessionStorage.setItem('userRole', response.role);
+          sessionStorage.setItem('studentId', response.studentId);
+          
+         this.router.navigate([response.role === 'Admin' ? '/dashboard' : '/studentdashboard']).then(() => {
+            this.loading=true;
+            window.location.reload(); // Reload after a small delay
         });
+        
       },
 
         (error: any) => {
+          this.loading = false;
           // console.error('Login Error:', error);
           if (error.status === 401) { 
             if (error.error.message === "Your Account is archived.") {

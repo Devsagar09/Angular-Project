@@ -1,0 +1,60 @@
+
+    <!-- <div class="loader-container" *ngIf="isLoading">
+        <div class="loader"></div>
+      </div> -->
+      
+    <div class="employee-header">
+        <div class="title">
+            <i class="fas fa-users"></i> Students
+        </div>
+        </div>
+        <br/>
+
+    <div class="container">
+        <!-- Search Bar Section -->
+        <div class="search-container">
+            <label for="search"><strong>Search &nbsp;</strong></label>
+            <div class="search-bar">
+                <i class="fa fa-search"></i>
+                <input type="text" id="search" placeholder="Search Students">
+            </div>
+            <div class="action-buttons">
+                <button class="delete-btn" title="Delete"><i class="fa fa-trash"></i></button>
+                <button class="add-btn" title="Add" onclick="window.location.href='/addStudent';">
+                    <i class="fa fa-plus"></i>
+                  </button>
+               </div>
+        </div>
+
+        <!-- Data Table -->
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Actions</th>
+                    <th>Student No</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Archive Date</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let s of studentDatas | paginate: { itemsPerPage: 7, currentPage: p}">
+                    <td><input type="checkbox" style="accent-color: #134c68;"></td>
+                    <td><i class="fas fa-ellipsis-h" aria-hidden="true" style="color: #134c68;"></i></td>
+                    <td>{{ s?.student_No }}</td>
+                    <td>{{ s?.firstname }}</td>
+                    <td>{{ s?.lastname }}</td>
+                    <td>{{ s?.archive_Date === '9999-12-31' ? '' : s?.archive_Date }}</td>
+                    <td>{{ s?.username }}</td>
+                    <td>{{ s?.role_name }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination-container">
+            <pagination-controls class="page" (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
+          </div>
+    </div>
+

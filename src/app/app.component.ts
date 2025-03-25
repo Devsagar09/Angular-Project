@@ -12,6 +12,7 @@ export class AppComponent implements OnInit{
   // isLoading: boolean = true;  // Add a loading flag
 
 
+
   constructor(private router: Router) {}
 
   ngOnInit() {
@@ -19,6 +20,12 @@ export class AppComponent implements OnInit{
     // setTimeout(() => {
     //    this.isLoading = false;
     // }, 500);
+
+    this.userRole = sessionStorage.getItem('userRole');
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.userRole;  
   }
 
   isAdmin(): boolean {

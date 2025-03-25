@@ -8,6 +8,7 @@ import { TrainingService } from '../../Training/training.service';
   templateUrl: './admindashboard.component.html',
   styleUrl: './admindashboard.component.css'
 })
+
 export class AdmindashboardComponent implements OnInit {
   isLoading = true;
   trainingDatas: any;
@@ -19,11 +20,13 @@ export class AdmindashboardComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     setTimeout(() => {
       this.isLoading = false;
       this.loadDashboardCounts();
       this.loadtraining();
     }, 1000);
+
   }
 
   // for display admin dashboard count
@@ -64,6 +67,7 @@ export class AdmindashboardComponent implements OnInit {
       }
     })
     this.isLoading=false;
+
   }
 
 }

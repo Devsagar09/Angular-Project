@@ -1,18 +1,19 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { homeIcon, SVGIcon } from '@progress/kendo-svg-icons';
+import { AdminNavigationService } from './admin-navigation.service';
 
 @Component({
   selector: 'app-admin-navigation',
   standalone: false,
   templateUrl: './admin-navigation.component.html',
-  styleUrl: './admin-navigation.component.css'
+  styleUrls: ['./admin-navigation.component.css']
 })
-export class AdminNavigationComponent {
-  public HomeSVG: SVGIcon = homeIcon;
+
+export class AdminNavigationComponent implements OnInit {  
   title = 'angular-project';
   firstname: string | null = '';
   lastname: string | null = '';
+  profileImage: string | null = '';
   dropdownVisible = false;
   isCollapsed = true;
   isLoading = true;
@@ -28,11 +29,58 @@ export class AdminNavigationComponent {
       }
     });
 
+
+  constructor(private eRef: ElementRef, private router: Router, private adminnavigationService : AdminNavigationService) {
+    this.router.events.subscribe(event=>{
+       if (event instanceof NavigationStart) {
+              this.isLoading = true;  
+            } 
+      if(event instanceof NavigationEnd){
+        this.isLoginPage = this.router.url.toLowerCase()  === '/login';
+     
     // Simulate loading process
     setTimeout(() => {
       this.isLoading = false;
-    }, 3000);
+    }, 2000);
   }
+});
+  }
+
+  ngOnInit() {
+        this.loadUserData();
+        const studentId = sessionStorage.getItem('studentId');
+        if(studentId){
+          this.fetchProfileImage(studentId);
+        }
+  }
+
+  loadUserData() {
+     this.firstname = sessionStorage.getItem('firstname');
+     this.lastname = sessionStorage.getItem('lastname');
+    }
+
+    fetchProfileImage(studentId: string) {
+      this.adminnavigationService.getStudentProfile(studentId).subscribe(
+        response => {
+          console.log('Image URL:', response.profileImage);
+          this.profileImage=response.profileImage;  // ✅ Log extracted URL
+        },
+        error => {
+          console.error('Error fetching profile image:', error);
+        }
+      );
+    }
+  
+    logout() {
+      this.isLoading = true;  
+    
+        this.firstname = '';
+        this.lastname = '';
+        sessionStorage.clear();
+        window.location.href = '/login'; 
+    }
+    
+    
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -61,6 +109,7 @@ export class AdminNavigationComponent {
     this.dropdownVisible = !this.dropdownVisible;
     console.log('Dropdown toggled:', this.dropdownVisible); // Debug log
   }
+  
 
 
   toggleSidebar() {

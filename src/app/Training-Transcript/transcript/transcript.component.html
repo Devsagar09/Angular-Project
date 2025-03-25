@@ -1,32 +1,33 @@
 <div class="back-dashboard" (click)="goToDashboard()">
-    <span class="icon">
-        <svg viewBox="0 0 512 512">
-            <path d="m353.941 382.059-126.06-126.06 126.06-126.061L320 96 160 255.999 320 416z"></path>
-        </svg>
-    </span>
-    <span class="text">Back to Dashboard</span>
+  <span class="icon">
+    <svg viewBox="0 0 512 512">
+      <path d="m353.941 382.059-126.06-126.06 126.06-126.061L320 96 160 255.999 320 416z"></path>
+    </svg>
+  </span>
+  <span class="text">Back to Dashboard</span>
 </div>
 
 <h2 class="page-heading">
-    Training Transcript
+  Training Transcript
 </h2>
 
 <div class="search-bar">
-    <input type="text" placeholder="Search Training Transcript">
-    <span class="search-icon">
+  <input type="text" placeholder="Search Training Transcript">
+  <span class="search-icon">
 
 
-        <svg viewBox="0 0 512 512">
-            <path fill="white"
-                d="M365.3 320h-22.7l-26.7-26.7C338.5 265.7 352 230.4 352 192c0-88.4-71.6-160-160-160S32 103.6 32 192s71.6 160 160 160c38.4 0 73.7-13.5 101.3-36.1l26.7 26.7v22.7L434.7 480l45.3-45.3zM64 192c0-70.7 57.3-128 128-128s128 57.3 128 128-57.3 128-128 128S64 262.7 64 192">
-            </path>
-        </svg>
-    </span>
+    <svg viewBox="0 0 512 512">
+      <path fill="white"
+        d="M365.3 320h-22.7l-26.7-26.7C338.5 265.7 352 230.4 352 192c0-88.4-71.6-160-160-160S32 103.6 32 192s71.6 160 160 160c38.4 0 73.7-13.5 101.3-36.1l26.7 26.7v22.7L434.7 480l45.3-45.3zM64 192c0-70.7 57.3-128 128-128s128 57.3 128 128-57.3 128-128 128S64 262.7 64 192">
+      </path>
+    </svg>
+  </span>
 </div>
 
 <hr class="hr-line">
 
-<div class="table-container">
+<div *ngIf="transcriptData.length > 0; else noData">
+  <div class="table-container">
     <table class="custom-table">
       <thead>
         <tr>
@@ -41,29 +42,46 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let training of transcriptdata | paginate: { itemsPerPage: 10, currentPage: p }">
+        <tr *ngFor="let training of transcriptData | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
           <td class="action-column" (mouseenter)="hoverIndex = training" (mouseleave)="hoverIndex = null">
             <div class="action-icon"><fa-icon [icon]="faellipsis"></fa-icon></div>
             <div class="action-menu" *ngIf="hoverIndex === training">
               <button class="menu-button"><fa-icon [icon]="faellipsis"></fa-icon></button>
-              <button class="menu-button"><fa-icon [icon]="faLink"></fa-icon></button>
-              <button class="menu-button"><fa-icon [icon]="faList"></fa-icon></button>
+              <button class="menu-button" *ngIf="training.trainingtype_name=='External Link'"
+                title="External Link"><fa-icon [icon]="faLink"></fa-icon></button>
+              <button class="menu-button" title="View Details"><fa-icon [icon]="faList"></fa-icon></button>
             </div>
           </td>
-          <td>{{ training.training_name }}</td>
+          <td class="table-column">{{ training.training_name }}</td>
           <td>{{ training.training_hours }}</td>
           <td>{{ training.training_code }}</td>
           <td>{{ training.trainingtype_name }}</td>
           <td>{{ training.status_name }}</td>
-          <td>{{ training.enroll_date }}</td>
+          <td>{{ training.enroll_date | date:'dd-MM-yyyy'}}</td>
           <td>{{ training.completion_date || '--' }}</td>
         </tr>
       </tbody>
     </table>
-  </div>
-  
+  </div> 
   
   <div class="pagination-container">
+    <!-- Dropdown for selecting items per page -->
+    <div class="items-per-page">
+      <label for="itemsPerPage">Show:</label>
+      <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
+        <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+      </select>
+      <span>entries per page</span>
+    </div>
+
+    <!-- Pagination Controls -->
     <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
   </div>
- 
+</div>
+
+<ng-template #noData>
+  <div class="no-data-container">
+    <img src="assets/nodata.png" alt="No Data" class="no-data-image">
+    <h3>No transcript found.</h3>
+  </div>
+</ng-template>

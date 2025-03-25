@@ -1,0 +1,134 @@
+<div class="employee-header">
+    <div class="title">
+        <i class="fas fa-users"></i> Students
+    </div>
+</div>
+
+<body>
+    <div class="tab-container">
+        <div 
+            class="tab" 
+            [class.active]="isActive('personInfo')" 
+            [class.completed]="isCompleted('personInfo')"
+            (click)="setActiveTab('personInfo')">
+            Person Information
+        </div>
+    
+        <div 
+            class="tab" 
+            [class.active]="isActive('assignTrainings')" 
+            [class.completed]="isCompleted('assignTrainings')"
+            (click)="setActiveTab('assignTrainings')">
+            Assign Trainings
+        </div>
+    
+        <div 
+            class="tab" 
+            [class.active]="isActive('reviewConfirm')" 
+            [class.completed]="isCompleted('reviewConfirm')"
+            (click)="setActiveTab('reviewConfirm')">
+            Review / Confirm
+        </div>
+    </div>
+    
+    <br />
+
+    <div *ngIf="isActive('personInfo')">
+    <div class="form">
+        <div class="form-group">
+            <label>Student Number</label>
+            <input type="text" placeholder="Student unique identifier">
+        </div>
+        <div class="form-group">
+            <label>First Name</label>
+            <input type="text">
+        </div>
+        <div class="form-group">
+            <label>Middle Name</label>
+            <input type="text">
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text">
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email">
+        </div>
+        <div class="form-group">
+            <label>Roles/Permissions</label>
+            <select style="width: 62%;">
+                <option>--Select Role--</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" placeholder="Gyrus LMS username">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password">
+        </div>
+        <div class="form-group">
+            <label>Archive Date</label>
+            <input type="date">
+        </div>
+
+        <!-- Show More / Show Less Button -->
+        <div class="show-more-container">
+            <hr class="line">
+            <button class="show-more-btn" (click)="toggleMoreField()">
+                {{ buttonText }} <i class="fa" [ngClass]="showField ? 'fa-chevron-circle-up' : 'fa-chevron-circle-down'"></i>
+            </button>
+        </div>
+
+        <!-- City Field - Initially Hidden -->
+        
+          
+
+            <div class="form-group" *ngIf="showField">
+                <label>Phone No</label>
+                <input type="text">
+            </div>
+
+            <div class="form-group" *ngIf="showField">
+                <label>Address</label>
+                <textarea rows="5" cols="70"></textarea>
+                </div>
+
+            <div class="form-group" *ngIf="showField">
+            <label>City</label>
+            <input type="text">
+            </div>
+
+            <div class="form-group" *ngIf="showField">
+                <label>Postal Code</label>
+                <input type="text">
+                </div>
+                
+            <div class="form-group" *ngIf="showField">
+                <label>State</label>
+                <input type="text">
+                </div>
+                <div class="form-group" *ngIf="showField">
+                    <label>Country</label>
+                    <input type="text">
+                    </div>
+    </div>
+    </div>
+
+    <div *ngIf="isActive('assignTrainings')">
+        assign trainings
+    </div>
+
+    <div *ngIf="isActive('reviewConfirm')">
+        final data
+    </div>
+</body>
+
+<!-- Buttons -->
+<div class="btn-container">
+    <button class="btn cancel"><i class="fas fa-times"></i> CANCEL</button>
+    <button class="btn next">NEXT <i class="fas fa-chevron-right"></i></button>
+    <button class="btn ready"><i class="fas fa-flag"></i> READY TO FINISH</button>
+</div>

@@ -31,6 +31,8 @@ import { AdminNavigationComponent } from './admin-navigation/admin-navigation.co
 import { AdmindashboardModule } from './AdminDashboard/admindashboard.module';
 import { TrainingModule } from './Training/training.module';
 import { PendingApprovalModule } from './AI-Maintenance/pending-approval.module';
+import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent.component';
+
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { PendingApprovalModule } from './AI-Maintenance/pending-approval.module'
     FooterComponent,
     UserNavigationComponent,
     LoaderComponent,
-    AdminNavigationComponent
+    AdminNavigationComponent,
+    AddeditstudentComponent
+
   ],
   imports: [
     BrowserAnimationsModule,
@@ -64,6 +68,7 @@ import { PendingApprovalModule } from './AI-Maintenance/pending-approval.module'
     AdmindashboardModule,
     TrainingModule,
     PendingApprovalModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
