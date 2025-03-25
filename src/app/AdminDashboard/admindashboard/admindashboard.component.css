@@ -108,16 +108,20 @@ body{
 
 /* Icon styling */
 .stat-icon {
+  font-family: 'Fredoka One', cursive;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 30px;
   width: 60px;
   height: 60px;
   border: 2px dotted #5a60a4;
+  color: #5a60a4;
   border-radius: 50%;
   background: #ffffff;
   margin-right: 1.5rem;
 }
+
 
 .stat-icon img {
   width: 60px;

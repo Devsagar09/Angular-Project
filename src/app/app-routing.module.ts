@@ -10,11 +10,12 @@ import { LoginComponent } from './Login/login/login.component';
 import { AuthGuard } from './Login/auth.guard';
 import { AdmindashboardComponent } from './AdminDashboard/admindashboard/admindashboard.component';
 import { TrainingComponent } from './Training/training/training.component';
+import { PendingApprovalComponent } from './AI-Maintenance/pending-approval/pending-approval.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: AdmindashboardComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -27,13 +28,18 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'Dashboard',
+    path: 'dashboard',
     component: AdmindashboardComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'Training',
+    path: 'training',
     component: TrainingComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'AI-Maintenance',
+    component: PendingApprovalComponent,
     canActivate: [AuthGuard]
   },
   {

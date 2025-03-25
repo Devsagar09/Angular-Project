@@ -11,7 +11,14 @@ export class AdmindashboardService {
 
   constructor(private http: HttpClient) {}
 
-  getCountAdminDashboard(): Observable<any> {
-    return this.http.get<any[]>(this.apiUrl);
+  // getCountAdminDashboard(studentId: string): Observable<any> {
+  //   const url = `${this.apiUrl}?studentId=${studentId}`; // Pass studentId as a query parameter
+  //   //return this.http.get<any[]>(this.apiUrl);
+  //   return this.http.get<any>(url);
+
+  // }
+  getCountAdminDashboard(studentId: string): Observable<any> {
+    const url = `${this.apiUrl}/${studentId}`; // Pass studentId as a route parameter
+    return this.http.get<any>(url);
   }
 }

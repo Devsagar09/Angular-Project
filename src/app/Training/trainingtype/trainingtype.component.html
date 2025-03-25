@@ -1,0 +1,23 @@
+<div class="modal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h2>Select Training Type</h2>
+      <button class="close-btn" (click)="closeModal()">
+        <i class="fas fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <!-- Training Options -->
+      <div class="training-options">
+        <!-- Display each training type with icon and name -->
+        <div class="training-card" *ngFor="let ttdata of trainingtypeDatas">
+          <div class="icon">{{ getIconForType(ttdata.trainingtype_Name) }}</div>
+          <p>{{ ttdata.trainingtype_Name }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

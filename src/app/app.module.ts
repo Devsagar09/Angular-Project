@@ -30,6 +30,7 @@ import { LoginModule } from './Login/login.module';
 import { AdminNavigationComponent } from './admin-navigation/admin-navigation.component';
 import { AdmindashboardModule } from './AdminDashboard/admindashboard.module';
 import { TrainingModule } from './Training/training.module';
+import { PendingApprovalModule } from './AI-Maintenance/pending-approval.module';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { TrainingModule } from './Training/training.module';
     TranscriptModule,
     LoginModule,
     AdmindashboardModule,
-    TrainingModule
+    TrainingModule,
+    PendingApprovalModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { homeIcon, SVGIcon } from '@progress/kendo-svg-icons';
 
 @Component({
@@ -11,6 +11,8 @@ import { homeIcon, SVGIcon } from '@progress/kendo-svg-icons';
 export class AdminNavigationComponent {
   public HomeSVG: SVGIcon = homeIcon;
   title = 'angular-project';
+  firstname: string | null = '';
+  lastname: string | null = '';
   dropdownVisible = false;
   isCollapsed = true;
   isLoading = true;
@@ -18,6 +20,9 @@ export class AdminNavigationComponent {
 
   constructor(private eRef: ElementRef, private router: Router) {
     this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.isLoading = true;
+      }
       if (event instanceof NavigationEnd) {
         this.isLoginPage = this.router.url === '/login';
       }
@@ -29,6 +34,27 @@ export class AdminNavigationComponent {
     }, 3000);
   }
 
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.loadUserData();
+      }
+    });
+  }
+
+  loadUserData() {
+    this.firstname = localStorage.getItem('firstname');
+    this.lastname = localStorage.getItem('lastname');
+  }
+
+  logout() {
+    this.isLoading = true;
+    this.firstname = '';
+    this.lastname = '';
+    localStorage.clear();
+        window.location.href = '/login';
+  }
+
   toggleDropdown(event: Event) {
     // Prevent default propagation so document click listener doesn't close it immediately
     event.stopPropagation();
@@ -36,16 +62,13 @@ export class AdminNavigationComponent {
     console.log('Dropdown toggled:', this.dropdownVisible); // Debug log
   }
 
+
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
   }
 
   viewProfile() {
     console.log('View Profile clicked');
-  }
-
-  logout() {
-    console.log('Logout clicked');
   }
 
   @HostListener('document:click', ['$event'])
