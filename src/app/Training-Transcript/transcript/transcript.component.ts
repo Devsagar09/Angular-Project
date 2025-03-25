@@ -20,12 +20,15 @@ export class TranscriptComponent {
     faellipsis = faEllipsis;
     studentId: number | null = null;
     transcriptData: any[] = [];
+    isLoading: boolean = true;
+    searchQuery: string = '';
 
     ngOnInit(): void {
       const storedStudentId = sessionStorage.getItem('studentId');
       if (storedStudentId) {
         this.studentId = parseInt(storedStudentId, 10);
         this.loadTrainings();
+        this.fetchTranscriptP();
       } else {
         console.error("No student ID found");
       }
@@ -44,6 +47,35 @@ export class TranscriptComponent {
         },
         error: (error) => {
           console.error('Error fetching transcript data:', error);
+        }
+      });
+    }
+
+    fetchTranscriptP(): void {
+      if (!this.searchQuery.trim()) {
+        this.isLoading = true; 
+        this.loadTrainings()
+  
+        setTimeout(() => {
+          this.isLoading = false; // Hide loader after delay
+        }, 2000);
+        return;
+      }
+      this.isLoading = true; 
+  
+      this.TranscriptService.searchTranscript(this.searchQuery, this.studentId ?? 0).subscribe({
+        next: (data) => {
+   
+          setTimeout(() => {
+            console.log("Filtered Search Results:", data);
+            this.transcriptData = data;
+            this.isLoading = false; // Hide skeleton loader after delay
+          }, 2000);
+  
+        },
+        error: (error) => {
+          console.error('Error fetching search results:', error);
+          this.isLoading = false;
         }
       });
     }

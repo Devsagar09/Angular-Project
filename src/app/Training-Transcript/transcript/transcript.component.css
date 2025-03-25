@@ -342,5 +342,40 @@
 }
 
 
+/* loader design  */
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Adjust based on your table row height */
+}
 
+.loader {
+    display: inline-block;
+    position: relative;
+    width: 70px;
+    height: 70px;
+}
 
+.loader::before, 
+.loader::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 10px solid transparent;
+    animation: spin 1.2s linear infinite;
+}
+
+.loader::before {
+    border-top-color: rgb(74, 144, 226);
+}
+ 
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
