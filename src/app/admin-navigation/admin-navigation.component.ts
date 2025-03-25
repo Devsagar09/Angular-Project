@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router'; 
 import { AdminNavigationService } from './admin-navigation.service';
 
@@ -6,9 +6,9 @@ import { AdminNavigationService } from './admin-navigation.service';
   selector: 'app-admin-navigation',
   standalone: false,
   templateUrl: './admin-navigation.component.html',
-  styleUrl: './admin-navigation.component.css'
+  styleUrls: ['./admin-navigation.component.css']
 })
-export class AdminNavigationComponent {  
+export class AdminNavigationComponent implements OnInit {  
   title = 'angular-project';
   firstname: string | null = '';
   lastname: string | null = '';
@@ -25,26 +25,21 @@ export class AdminNavigationComponent {
             } 
       if(event instanceof NavigationEnd){
         this.isLoginPage = this.router.url.toLowerCase()  === '/login';
-        this.loadUserData();
-      }
-    });
+     
     // Simulate loading process
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
   }
+});
+  }
 
   ngOnInit() {
-    // this.router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
         this.loadUserData();
         const studentId = sessionStorage.getItem('studentId');
         if(studentId){
           this.fetchProfileImage(studentId);
         }
-
-    //   }
-    // });
   }
 
   loadUserData() {
@@ -56,7 +51,6 @@ export class AdminNavigationComponent {
       this.adminnavigationService.getStudentProfile(studentId).subscribe(
         response => {
           console.log('Image URL:', response.profileImage);
-        debugger
           this.profileImage=response.profileImage;  // ✅ Log extracted URL
         },
         error => {

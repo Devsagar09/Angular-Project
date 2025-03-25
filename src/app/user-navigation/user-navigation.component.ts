@@ -49,7 +49,7 @@ export class UserNavigationComponent implements OnInit {
   fetchProfileImage(studentId: string) {
     this.usernavigationService.getStudentProfile(studentId).subscribe(
       response => {
-        console.log('Image URL:', response.profileImage);
+        // console.log('Image URL:', response.profileImage);
         this.profileImage=response.profileImage;  // ✅ Log extracted URL
       },
       error => {

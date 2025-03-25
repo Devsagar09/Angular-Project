@@ -11,6 +11,7 @@ import { AuthGuard } from './Login/auth.guard';
 import { AdmindashboardComponent } from './AdminDashboard/admindashboard/admindashboard.component';
 import { TraningComponent } from './Traning/traning/traning.component';
 import { DisplaystudentComponent } from './Student/displaystudent/displaystudent.component';
+import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent.component';
  
 const routes: Routes = [
   {
@@ -21,6 +22,16 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'addStudent',
+    component: AddeditstudentComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'editStudent',
+    component: AddeditstudentComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'studentdashboard',
