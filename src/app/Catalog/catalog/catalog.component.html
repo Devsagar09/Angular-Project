@@ -27,52 +27,58 @@
 <hr class="hr-line">
 
 <!-- Training Cards -->
+<div *ngIf="trainings.length > 0; else noData">
 <div class="training-section">
-    <div class="cards-container">
-        <div class="training-card" *ngFor="let training of trainings  | paginate: { itemsPerPage: 20, currentPage: p }">
-            <div class="card-header">
-                <img [src]="training.image" alt="Training Image" />
-            </div>
-
-            <div class="card-body">
-                <span class="badge">{{ training.type }}</span>
-                <h3 class="title-heading">{{ training.title }}</h3>
-
-
-
-                <div class="info">
-                    <p><i class="fa fa-calendar"></i> Training Code: {{ training.code }}</p>
-                    <p><i class="fa fa-calendar"></i> Due Date: {{ training.dueDate }}</p>
-                    <p><i class="fa fa-user"></i> Required For: {{ training.requiredFor }}</p>
-                    <p><i class="fa fa-users"></i> Group: {{ training.group }}</p>
+        <div class="cards-container">
+            <div class="training-card"
+                *ngFor="let training of trainings | paginate: { itemsPerPage: 4, currentPage: p }">
+                <div class="card-header">
+                    <img [src]="training.thumbnail_image" alt="{{ training.training_name }} Training" />
                 </div>
-                <span class="status"
-                    [ngClass]="{'not-started': training.status === 'Not Started', 
-                                 'in-progress': training.status === 'In Progress','pending-request': training.status === 'Pending Approval'}">
-                    {{ training.status }}
-                </span>
-            </div>
 
-            <div class="card-footer">
+                <div class="card-body">
+                    <span class="badge">{{ training.trainingtype_name }}</span>
+                    <h3 class="title-heading">{{ training.training_name }}</h3>
 
-                <button class="btn" *ngIf="training.status === 'Not Started'">
-                    {{ training.type }}
-                </button>
+                    <div class="info">
+                        <p><i class="fa fa-code"></i> Training Code: {{ training.training_code }}</p>
+                        <!-- <p><i class="fa fa-calendar"></i> Due Date: {{ training.dueDate }}</p> -->
+                        <p><i class="fa fa-user"></i> Summary: {{ training.summary || 'N/A' }}</p>
+                    </div>
 
-                <button class="btn" *ngIf="training.status === 'In Progress'">
-                    {{ training.type }}
-                </button>
+                    <span class="status" [ngClass]="{'not-started': training.status === 'Not Started', 
+                                'in-progress': training.status === 'In Progress',
+                                'pending-request': training.status === 'Pending Approval',
+                                'completed': training.status === 'Completed'}">
+                        {{ training.status }}
+                    </span>
+                </div>
 
-                <!-- Pending Approval (Request for Approval Button) -->
-                <button class="btn pending-btn" *ngIf="training.status === 'Pending Approval'">
-                    Request for Approval
-                </button>
+                <div class="card-footer">
+                    <button class="btn"
+                        *ngIf="training.status === 'Not Started' || training.status === 'In Progress' || training.status === 'Completed'">
+                        {{ training.trainingtype_name }}
+                    </button>
 
+                    <!-- Pending Approval (Request for Approval Button) -->
+                    <button class="btn pending-btn" *ngIf="training.status === 'Pending Approval'">
+                        Request for Approval
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="pagination-container">
         <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
-      </div>
+    </div>
 </div>
+
+ 
+
+<ng-template #noData>
+    <div class="no-data-container">
+        <img src="assets/nodata.png" alt="No Data" class="no-data-image">
+        <h3>No trainings found.</h3>
+    </div>
+</ng-template>
