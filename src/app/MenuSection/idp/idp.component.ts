@@ -1,5 +1,17 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { IdpService } from '../idp.service';
+
+interface Training {
+  student_id: number;
+  training_id: number;
+  thumbnail_image: string;
+  training_name: string;
+  training_code: string;
+  summary: string;
+  trainingtype_name: string;
+  status: string;
+}
 
 @Component({
   selector: 'app-idp',
@@ -9,68 +21,74 @@ import { Router } from '@angular/router';
 })
 export class IdpComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private IDPService: IdpService) { }
   p: number = 1; // Current page
+  trainings: Training[] = [];
+  isLoading: boolean = true;
+  studentId: number | null = null;
+  searchQuery: string = '';
 
   goToDashboard() {
     this.router.navigate(['/dashboard']);
   }
 
-  trainings = [
-    {
-      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
-      type: 'External Link',
-      title: '##17ELDOCAB',
-      code: 'NA',
-      dueDate: '03/10/2025',
-      requiredFor: 'DIRECT',
-      group: 'NA',
-      status: 'In Progress',
-      category: 'inProgress'
-    },
-    {
-      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
-      type: 'Document',
-      title: '##001Doc_T12',
-      code: '##001Doc_T12',
-      dueDate: '01/16/2025',
-      requiredFor: 'DIRECT',
-      group: 'NA',
-      status: 'In Progress',
-      category: 'inProgress'
-    },
-    {
-      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
-      type: 'Document',
-      title: '##11febabdocone',
-      code: 'NA',
-      dueDate: '02/11/2025',
-      requiredFor: 'DIRECT',
-      group: 'NA',
-      status: 'In Progress',
-      category: 'inProgress'
-    },
-    {
-      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
-      type: 'External Link',
-      title: '##22STARTDOC',
-      code: 'NA',
-      dueDate: '04/20/2025',
-      requiredFor: 'DIRECT',
-      group: 'NA',
-      status: 'Not Started',
-      category: 'notStarted'
-    },
-    {
-      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
-      type: 'Document',
-      title: '##005NotStarted',
-      code: '##005Doc',
-      dueDate: '05/12/2025',
-      requiredFor: 'DIRECT',
-      group: 'NA',
-      status: 'Pending Approval',
-      category: 'notStarted'
+  ngOnInit(): void {
+    const storedStudentId = localStorage.getItem('studentId');
+    if (storedStudentId) {
+      this.studentId = parseInt(storedStudentId, 10);
+      this.loadTrainings();
+      this.fetchIDP();
+    } else {
+      console.error("No student ID found in local storage!");
     }
-  ];
+  }
+
+  loadTrainings(): void {
+    this.isLoading = true;
+     
+    if (this.studentId !== null) {
+      this.IDPService.getIDPTrainings(this.studentId).subscribe({
+        next: (data) => {
+          console.log('IDP Trainings Data:', data);
+          this.trainings = data; // No filter, API handles assigned trainings
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Error fetching IDP trainings:', error);
+          this.isLoading = false;
+        }
+      });
+    }
+  }
+
+  fetchIDP(): void {
+    if (!this.searchQuery.trim()) {
+      this.isLoading = true; 
+      this.loadTrainings()
+      
+      setTimeout(() => {
+        this.isLoading = false; // Hide loader after delay
+      }, 2000);
+      return;
+    }
+    this.isLoading = true; 
+
+    this.IDPService.searchIDP(this.searchQuery, this.studentId ?? 0).subscribe({
+      next: (data) => {
+ 
+        setTimeout(() => {
+          console.log("Filtered Search Results:", data);
+          this.trainings = data;
+          this.isLoading = false; // Hide skeleton loader after delay
+        }, 2000);
+
+      },
+      error: (error) => {
+        console.error('Error fetching search results:', error);
+        this.isLoading = false;
+      }
+    });
+  }
+
+
 }

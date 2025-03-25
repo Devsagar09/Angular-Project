@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { faLink,faRectangleList,faEllipsis } from '@fortawesome/free-solid-svg-icons';
-// <i class="fa-solid fa-rectangle-list"></i>
-
+import { TranscriptService } from '../transcript.service';
+ 
 @Component({
   selector: 'app-transcript',
   standalone: false,
@@ -11,55 +11,44 @@ import { faLink,faRectangleList,faEllipsis } from '@fortawesome/free-solid-svg-i
 })
 export class TranscriptComponent {
   
-    constructor(private router: Router) {}
+    constructor(private router: Router, private TranscriptService:TranscriptService) {}
     p: number = 1; // Current page
+    itemsPerPage: number = 10;
+    itemsPerPageOptions: number[] = [2,5, 10, 20, 50];
     faLink = faLink;
     faList = faRectangleList;
     faellipsis = faEllipsis;
- 
+    studentId: number | null = null;
+    transcriptData: any[] = [];
+
+    ngOnInit(): void {
+      const storedStudentId = localStorage.getItem('studentId');
+      if (storedStudentId) {
+        this.studentId = parseInt(storedStudentId, 10);
+        this.loadTrainings();
+      } else {
+        console.error("No student ID found");
+      }
+    }
+    
   
     goToDashboard() {
       this.router.navigate(['/dashboard']);
     }
 
+    loadTrainings():void{
+      this.TranscriptService.getTranscript(this.studentId ?? 0).subscribe({
+        next: (data) => {
+          console.log('Transcript Data:', data);
+          this.transcriptData = data;
+        },
+        error: (error) => {
+          console.error('Error fetching transcript data:', error);
+        }
+      });
+    }
+
     hoverIndex: any = null;
-    transcriptdata = [
-      {
-        "training_name": "DB",
-        "training_hours": 10,
-        "training_code": "NET11",
-        "trainingtype_name": "External Link",
-        "status_name": "In Progress",
-        "enroll_date": "2025-03-03",
-        "completion_date": null
-      },
-      {
-        "training_name": "Homework",
-        "training_hours": 10,
-        "training_code": "NET11",
-        "trainingtype_name": "External Link",
-        "status_name": "Completed",
-        "enroll_date": "2025-03-03",
-        "completion_date": "2025-03-10"
-      },
-      {
-        "training_name": "Homework",
-        "training_hours": 10,
-        "training_code": "NET11",
-        "trainingtype_name": "External Link",
-        "status_name": "Completed",
-        "enroll_date": "2025-03-03",
-        "completion_date": "2025-03-10"
-      },
-      {
-        "training_name": "CSS",
-        "training_hours": 10,
-        "training_code": "CSS12",
-        "trainingtype_name": "Document",
-        "status_name": "Completed",
-        "enroll_date": "2025-03-03",
-        "completion_date": "2025-03-03"
-      }
-    ];
+   
   
 }
