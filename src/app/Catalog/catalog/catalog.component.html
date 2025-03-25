@@ -12,9 +12,8 @@
 </h2>
 
 <div class="search-bar">
-    <input type="text" placeholder="Search Trainings">
-    <span class="search-icon">
-
+    <input type="text" placeholder="Search Trainings" [(ngModel)]="searchQuery">
+    <span class="search-icon" (click)="fetchCatalog()">
 
         <svg viewBox="0 0 512 512">
             <path fill="white"
@@ -28,7 +27,19 @@
 
 <!-- Training Cards -->
 <div *ngIf="trainings.length > 0; else noData">
-<div class="training-section">
+
+    <div class="training-section" *ngIf="isLoading">
+        <div class="cards-container">
+            <div class="training-card skeleton-card" *ngFor="let _ of [1, 2, 3, 4]">
+                <div class="skeleton skeleton-img"></div>
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="training-section" *ngIf="!isLoading">
         <div class="cards-container">
             <div class="training-card"
                 *ngFor="let training of trainings | paginate: { itemsPerPage: 4, currentPage: p }">
@@ -74,11 +85,10 @@
     </div>
 </div>
 
- 
 
 <ng-template #noData>
     <div class="no-data-container">
         <img src="assets/nodata.png" alt="No Data" class="no-data-image">
-        <h3>No trainings found.</h3>
+        <h3>" {{searchQuery}} " No trainings found.</h3>
     </div>
 </ng-template>

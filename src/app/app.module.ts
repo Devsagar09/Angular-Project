@@ -31,7 +31,7 @@ import { AdminNavigationComponent } from './admin-navigation/admin-navigation.co
 import { AdmindashboardModule } from './AdminDashboard/admindashboard.module';
 import { TraningModule } from './Traning/traning.module';
 import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent.component';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -55,6 +55,7 @@ import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent
     ChartsModule,
     HttpClientModule,
     DialogModule,
+    FontAwesomeModule,
     InputsModule,
     FormsModule,
     IdpModule,
