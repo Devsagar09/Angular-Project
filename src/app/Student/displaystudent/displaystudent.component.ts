@@ -6,10 +6,10 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-displaystudent',
-  standalone: true,
+  standalone: false,
   templateUrl: './displaystudent.component.html',
   styleUrl: './displaystudent.component.css',
-
+})
 export class DisplaystudentComponent implements OnInit{
 studentDatas: any[]=[];
 searchValue:string='';
@@ -19,8 +19,8 @@ searchValue:string='';
 
   itemsPerPage: number = 10;
     itemsPerPageOptions: number[] = [2,5, 10, 20, 50];
- 
- 
+
+
   ngOnInit(): void {
     this.loadStudent();
   }

@@ -4,7 +4,6 @@ import { TranscriptComponent } from './transcript/transcript.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -14,8 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     NgxPaginationModule,
     FontAwesomeModule,
-    FormsModule,
-    NgbModule
+    FormsModule
   ]
 })
 export class TranscriptModule { }

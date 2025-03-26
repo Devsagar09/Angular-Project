@@ -25,7 +25,6 @@ import { UserNavigationComponent } from './user-navigation/user-navigation.compo
 import { EnrollModule } from './Enrollment/enroll.module';
 import { CatalogModule } from './Catalog/catalog.module';
 import { LoaderComponent } from './Shared/loader/loader.component';
-import { TranscriptModule } from './Training-Transcript/transcript.module';
 import { LoginModule } from './Login/login.module';
 import { AdminNavigationComponent } from './admin-navigation/admin-navigation.component';
 import { AdmindashboardModule } from './AdminDashboard/admindashboard.module';
@@ -33,6 +32,8 @@ import { TrainingModule } from './Training/training.module';
 import { PendingApprovalModule } from './AI-Maintenance/pending-approval.module';
 import { StudentModule } from './Student/student.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TranscriptModule } from './Training-Transcript/transcript.module';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -56,6 +57,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AvatarModule,
     ChartsModule,
     HttpClientModule,
+    RouterModule,
     DialogModule,
     FontAwesomeModule,
     InputsModule,
