@@ -9,23 +9,23 @@ import { StudentService } from '../student.service';
 })
 export class DisplaystudentComponent implements OnInit{
 students: any[]=[];
-p: number = 1; 
+p: number = 1;
 itemsPerPage: number = 10;
 itemsPerPageOptions: number[] = [2,5, 10, 20, 50];
 searchValue: string = '';
 sortColumn: string = '';
 sortDirection: 'asc' | 'desc' = 'asc';
- 
+
 
 
   constructor(private studentService: StudentService){}
- 
+
 
   ngOnInit(): void {
-    this.loadStudent(); 
+    this.loadStudent();
   }
 
-  loadStudent(): void {  
+  loadStudent(): void {
     this.studentService.getStudent().subscribe({
       next: (data) => {
         this.students = data ?? [];  // Ensures it's always an array
@@ -35,7 +35,7 @@ sortDirection: 'asc' | 'desc' = 'asc';
       },
     });
   }
-  
+
   searchStudent(): void {
     if (!this.searchValue.trim()) {
       this.loadStudent(); // Reload all students if search is empty
@@ -70,5 +70,5 @@ sortDirection: 'asc' | 'desc' = 'asc';
   }
 }
 
-}
+
 

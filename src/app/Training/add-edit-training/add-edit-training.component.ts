@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { KENDO_EDITOR } from '@progress/kendo-angular-editor';
 import { StudentService } from '../../Student/student.service';
 import { TrainingService } from '../training.service';
 import { ActivatedRoute } from '@angular/router';
