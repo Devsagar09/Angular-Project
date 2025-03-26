@@ -17,7 +17,7 @@ body {
     text-align: center;
     font-size: 16px;
     cursor: pointer;
-    transition: background 0.3s ease; 
+    transition: background 0.3s ease;
     color: #333;
 }
 .tab.active {
@@ -319,3 +319,4 @@ input:checked + .slider:before {
     margin-top: 5px;
   }
   
+

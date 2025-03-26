@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError, timeout } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,9 @@ export class TrainingService {
 
   private TTapiUrl = 'https://localhost:7172/api/TrainingType/getTrainingType'; // Update with your API URL
 
-  private searchApiUrl = 'https://localhost:7172/api/Training/searchTraining'; // Adjust endpoint
+  private SearchapiUrl = 'https://localhost:7172/api/Training/searchTraining'; // Update with your API URL
+
+  private addTrainingapiUrl = 'https://localhost:7172/api/Training';
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +26,20 @@ export class TrainingService {
   }
 
   searchTraining(searchValue: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.searchApiUrl}?searchValue=${searchValue}`);
+    return this.http.get<any[]>(`${this.SearchapiUrl}?searchValue=${searchValue}`);
+  }
+
+  // Add training
+  addTraining(trainingData: any): Observable<any> {
+    const url = `${this.addTrainingapiUrl}/addTraining`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.post(url, trainingData, { headers }).pipe(
+      timeout(30000), // 30 seconds timeout
+      catchError((error) => {
+        console.error('API Timeout or Error:', error);
+        return throwError(error);
+      })
+    );
   }
 }

@@ -6,31 +6,31 @@
 
 <body>
     <div class="tab-container">
-        <div 
-            class="tab" 
-            [class.active]="isActive('personInfo')" 
+        <div
+            class="tab"
+            [class.active]="isActive('personInfo')"
             [class.completed]="isCompleted('personInfo')"
             (click)="setActiveTab('personInfo')">
             Person Information
         </div>
-    
-        <div 
-            class="tab" 
-            [class.active]="isActive('assignTrainings')" 
+
+        <div
+            class="tab"
+            [class.active]="isActive('assignTrainings')"
             [class.completed]="isCompleted('assignTrainings')"
             (click)="setActiveTab('assignTrainings')">
            Advanced Assign Trainings
         </div>
-    
-        <div 
-            class="tab" 
-            [class.active]="isActive('reviewConfirm')" 
+
+        <div
+            class="tab"
+            [class.active]="isActive('reviewConfirm')"
             [class.completed]="isCompleted('reviewConfirm')"
             (click)="setActiveTab('reviewConfirm')">
             Review / Confirm
         </div>
     </div>
-    
+
     <br />
 
     <div *ngIf="isActive('personInfo')">
@@ -103,7 +103,7 @@
                 <label>Postal Code</label>
                 <input type="text" [(ngModel)]="studentData.postal_Code">
                 </div>
-                
+
             <div class="form-group" *ngIf="showField">
                 <label>State</label>
                 <input type="text" [(ngModel)]="studentData.state">

@@ -34,4 +34,5 @@ private baseUrl='https://localhost:7172/api';
     return this.http.post(`${this.baseUrl}/AssignTrainings/AssignTrainings`, assignData);
   }
   
+
 }

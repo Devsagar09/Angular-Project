@@ -13,7 +13,7 @@
       <!-- Training Options -->
       <div class="training-options">
         <!-- Display each training type with icon and name -->
-        <div class="training-card" *ngFor="let ttdata of trainingtypeDatas">
+        <div class="training-card" *ngFor="let ttdata of trainingtypeDatas"  (click)="redirectToAddTraining(ttdata.id)">
           <div class="icon">{{ getIconForType(ttdata.trainingtype_Name) }}</div>
           <p>{{ ttdata.trainingtype_Name }}</p>
         </div>

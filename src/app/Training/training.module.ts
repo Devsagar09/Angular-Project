@@ -4,18 +4,20 @@ import { TrainingComponent } from './training/training.component';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TrainingtypeComponent } from './trainingtype/trainingtype.component';
-
+import { AddEditTrainingComponent } from './add-edit-training/add-edit-training.component';
 
 
 @NgModule({
   declarations: [
     TrainingComponent,
-    TrainingtypeComponent
+    TrainingtypeComponent,
+    AddEditTrainingComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule ,
+    
   ]
 })
 export class TrainingModule { }

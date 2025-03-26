@@ -1,6 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { UserNavigationService } from './user-navigation.service';
+import { faArrowRightFromBracket,faUser } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-user-navigation',
@@ -15,6 +17,8 @@ export class UserNavigationComponent implements OnInit {
   profileImage: string | null = '';
   isLoading = true;
   isLoginPage = true;
+  faArrowRightFromBracket = faArrowRightFromBracket;
+  faUser = faUser
 
   dropdownVisible = false;
   isCollapsed = true;

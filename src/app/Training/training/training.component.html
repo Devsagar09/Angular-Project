@@ -1,102 +1,105 @@
-  <!-- <div *ngFor="let trainingData of trainingDatas">
-  <p>{{trainingData?.training_name}}</p>
-  <p>{{trainingData?.training_code}}</p>
-  <p>{{trainingData?.trainingtype_name}}</p>
-  <p>{{trainingData?.archive_date}}</p>
-  </div> -->
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trainings</title>
 </head>
 <body>
   <div class="navbar">
-    <a href="#"><i class="fa fa-arrow-alt-circle-left"></i>Back to Dashboard</a>
+    <a href="#"><i class="fa fa-arrow-alt-circle-left"></i> Back to Dashboard</a>
   </div>
-    <div class="training-header">
-      <div class="title">
-          <i class="fas fa-laptop-house"></i> Trainings
+
+  <div class="training-header">
+    <div class="title">
+      <i class="fas fa-laptop-house"></i> Trainings
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="container">
+    <!-- Search Bar Section -->
+    <div class="search-container">
+      <label for="search"><strong>Search</strong></label>
+      <div class="search-bar">
+        <i class="fa fa-search"></i>
+        <input
+        type="text"
+        id="search"
+        [(ngModel)]="searchValue"
+        (input)="searchTraining()"
+        placeholder="Enter training name"
+      />
+
+      </div>
+      <div class="action-buttons">
+        <button class="add-btn" title="Add" (click)="openModal()">
+          <i class="fa fa-plus"></i>
+        </button>
+
+        <app-trainingtype
+          *ngIf="isModalOpen"
+          (closeModalEvent)="closeModal()">
+        </app-trainingtype>
+
+        <button class="delete-btn" title="Delete">
+          <i class="fa fa-trash"></i>
+        </button>
       </div>
     </div>
-      <br/>
-    <div class="container">
-        <!-- Search Bar Section -->
-        <div class="search-container">
-            <label for="search"><strong>Search </strong></label>
-            <div class="search-bar">
-                <i class="fa fa-search"></i>
-                <input type="text" id="search" placeholder="Search Students">
+
+    <!-- Data Table Section -->
+    <table id="data-table" *ngIf="trainingDatas.length > 0">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Actions</th>
+          <th>Training Name</th>
+          <th>Training Code</th>
+          <th>Training Type</th>
+          <th>Archive Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trainingData of trainingDatas | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+          <td><input type="checkbox"></td>
+          <td class="dot">
+            <div class="action-menu">
+              <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+              <div class="action-icons">
+                <i class="fas fa-list" title="Details"></i>
+                <i class="fas fa-edit" title="Edit"></i>
+                <i class="fas fa-trash" title="Delete"></i>
+              </div>
             </div>
-            <div class="action-buttons">
-                <button class="add-btn" title="Add" (click)="openModal()"><i class="fa fa-plus"></i></button>
-                <!-- Add the modal component -->
+          </td>
+          <td>{{ trainingData?.training_name }}</td>
+          <td>{{ trainingData?.training_code }}</td>
+          <td>{{ trainingData?.trainingtype_name }}</td>
+          <td>{{ trainingData?.archive_date | date: 'dd/MM/yyyy' }}</td>
+        </tr>
 
-                <!-- Modal -->
-                <app-trainingtype
-                  *ngIf="isModalOpen"
-                  (closeModalEvent)="closeModal()">
-                </app-trainingtype>
-                <button class="delete-btn" title="Delete"><i class="fa fa-trash"></i></button>
-            </div>
-        </div>
+      </tbody>
+    </table>
+        <p *ngIf="trainingDatas.length === 0 && searchValue.trim().length > 0">
+            No results found.
+        </p>
 
-        <!-- <h2 style="text-align:center;">DataTable with API Data & Pagination</h2> -->
-        <table id="data-table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Actions</th>
-                    <th>Training Name</th>
-                    <th>Training Code</th>
-                    <th>Training Type</th>
-                    <th>Archive Date</th>
-                </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let trainingData of trainingDatas | paginate: { itemsPerPage: 5, currentPage: p}">
-                  <td><input type="checkbox"></td>
 
-                  <td class="dot"><div class="action-menu">
-                    <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
-                    <!-- Action Icons -->
-                    <div class="action-icons">
-                      <i class="fas fa-list" title="Details" ></i>
-                      <i class="fas fa-edit" title="Edit"></i>
-                      <!-- <i class="fas fa-check-square" title="Approve"></i> -->
-                      <i class="fas fa-trash" title="Delete" ></i>
-                    </div>
-                    </div>
-                  </td>
-                  <td>{{ trainingData?.training_name }}</td>
-                  <td>{{ trainingData?.training_code }}</td>
-                  <td>{{ trainingData?.trainingtype_name }}</td>
-                  <td>{{ trainingData?.archive_date | date: 'dd/MM/yyyy' }}</td>
-              </tr>
-          </tbody>
-        </table>
-        <!-- <div class="pagination-controls">
-          <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">
-            <i class="fas fa-arrow-left"></i>
-          </button>
-          <span>Page {{ currentPage }} of {{ totalPages }}</span>
-          <button (click)="goToNextPage()" [disabled]="currentPage === totalPages">
-            Next
-          </button>
-
-          <div class="items-per-page">
-            <label for="itemsPerPage">Show</label>
-            <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange()">
-              <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
-            </select>
-            <span>records</span>
-          </div>
-        </div> -->
-        <div class="pagination-container">
-          <pagination-controls class="page" (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
-        </div>
+    <!-- Pagination Section -->
+    <div class="pagination-container">
+      <div class="items-per-page">
+        <label for="itemsPerPage">Show:</label>
+        <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
+          <option *ngFor="let option of itemsPerPageOptions" [value]="option">
+            {{ option }}
+          </option>
+        </select>
+        <span>entries per page</span>
+      </div>
+      <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
     </div>
-
+  </div>
 </body>
 </html>

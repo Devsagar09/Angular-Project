@@ -8,6 +8,8 @@ import { PendingApprovalService } from '../pending-approval.service';
   styleUrl: './pending-approval.component.css'
 })
 export class PendingApprovalComponent {
+  itemsPerPage: number = 10;
+  itemsPerPageOptions: number[] = [2,5, 10, 20, 50];
   isLoading=true
  pendingapprovalDatas: any[] = []; // Original training data
 

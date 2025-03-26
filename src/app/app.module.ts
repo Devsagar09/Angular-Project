@@ -35,7 +35,6 @@ import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent
 import { StudentModule } from './Student/student.module';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +44,6 @@ import { StudentModule } from './Student/student.module';
     UserNavigationComponent,
     LoaderComponent,
     AdminNavigationComponent,
-
   ],
   imports: [
     BrowserAnimationsModule,
@@ -58,6 +56,7 @@ import { StudentModule } from './Student/student.module';
     ChartsModule,
     HttpClientModule,
     DialogModule,
+    FontAwesomeModule,
     InputsModule,
     FormsModule,
     IdpModule,

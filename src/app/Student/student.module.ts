@@ -16,9 +16,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   ],
   imports: [
     CommonModule,NgxPaginationModule,FormsModule,RouterModule, MatSnackBarModule,
+  
   ],
   exports: [
-    RouterModule 
+    RouterModule
   ]
 })
 export class StudentModule { }

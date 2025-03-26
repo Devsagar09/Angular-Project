@@ -97,10 +97,12 @@
   font-size: 2rem;
   color: #00bfa5;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .option p {
   margin: 0;
   font-size: 0.9rem;
   font-weight: 500;
+  cursor: pointer;
 }

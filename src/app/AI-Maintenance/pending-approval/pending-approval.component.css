@@ -155,10 +155,28 @@ input[type="checkbox"] {
 
 /* Pagination */
 .pagination-container {
-  text-align: center;
-  padding: 10px 0;
-  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-radius: 5px;
 }
+
+.items-per-page {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 10px;
+}
+
+.items-per-page select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
 
 .training-header {
   background-color: #134c68; /* Teal background */
