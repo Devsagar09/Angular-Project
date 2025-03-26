@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdmindashboardService } from '../admindashboard.service';
 import { TrainingService } from '../../Training/training.service';
+import { AdminNavigationService } from '../../admin-navigation/admin-navigation.service';
 
 @Component({
   selector: 'app-admindashboard',
@@ -14,9 +15,9 @@ export class AdmindashboardComponent implements OnInit {
   trainingDatas: any;
   dashboardData: any;
   lastLogin: string = new Date().toLocaleString(); // Example last login time
+  profileImage: string | null = '';
 
-
-  constructor(private admindashboardService: AdmindashboardService, private trainingService: TrainingService) {}
+  constructor(private admindashboardService: AdmindashboardService, private trainingService: TrainingService,private adminNavigationService: AdminNavigationService) { }
 
   ngOnInit(): void {
 
@@ -25,9 +26,29 @@ export class AdmindashboardComponent implements OnInit {
       this.isLoading = false;
       this.loadDashboardCounts();
       this.loadtraining();
+      const studentId = sessionStorage.getItem('studentId'); // Get studentId from sessionStorage
+    if (studentId) {
+      this.fetchProfileImage(studentId); // ✅ Fetch profile image
+    } else {
+      console.error('Student ID not found in SessionStorage.');
+    }
     }, 1000);
 
   }
+
+  fetchProfileImage(studentId: string) {
+    this.adminNavigationService.getStudentProfile(studentId).subscribe({
+      next: (response) => {
+        // console.log('Image URL:', response.profileImage);
+        this.profileImage = response.profileImage;
+      },
+      error: (error) => {
+        console.error('Error fetching profile image:', error);
+      }
+    });
+  }
+
+
 
   // for display admin dashboard count
   loadDashboardCounts(): void {

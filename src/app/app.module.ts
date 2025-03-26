@@ -31,9 +31,8 @@ import { AdminNavigationComponent } from './admin-navigation/admin-navigation.co
 import { AdmindashboardModule } from './AdminDashboard/admindashboard.module';
 import { TrainingModule } from './Training/training.module';
 import { PendingApprovalModule } from './AI-Maintenance/pending-approval.module';
+import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent.component';
 import { StudentModule } from './Student/student.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
 
 
 @NgModule({
