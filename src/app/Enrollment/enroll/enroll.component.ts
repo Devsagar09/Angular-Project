@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { EnrollmentService } from '../enrollment.service';
 
 @Component({
   selector: 'app-enroll',
@@ -9,68 +10,76 @@ import { Router } from '@angular/router';
 })
 export class EnrollComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private EnrollmenstService:EnrollmentService) {}
+
   p: number = 1; // Current page
+  isLoading: boolean = true;
+  studentId: number | null = null;
+  EnrollmentData: any[] = [];
+  searchQuery: string = '';
 
   goToDashboard() {
     this.router.navigate(['/dashboard']);
   }
 
-  trainings = [
-    {
-      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
-      type: 'External Link',
-      title: '##17ELDOCAB',
-      code: 'NA',
-      dueDate: '03/10/2025',
-      requiredFor: 'DIRECT',
-      group: 'NA',
-      status: 'In Progress',
-      category: 'inProgress'
-    },
-    {
-      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
-      type: 'Document',
-      title: '##001Doc_T12',
-      code: '##001Doc_T12',
-      dueDate: '01/16/2025',
-      requiredFor: 'DIRECT',
-      group: 'NA',
-      status: 'In Progress',
-      category: 'inProgress'
-    },
-    {
-      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
-      type: 'Document',
-      title: '##11febabdocone',
-      code: 'NA',
-      dueDate: '02/11/2025',
-      requiredFor: 'DIRECT',
-      group: 'NA',
-      status: 'In Progress',
-      category: 'inProgress'
-    },
-    {
-      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
-      type: 'External Link',
-      title: '##22STARTDOC',
-      code: 'NA',
-      dueDate: '04/20/2025',
-      requiredFor: 'DIRECT',
-      group: 'NA',
-      status: 'In Progress',
-      category: 'inProgress'
-    },
-    {
-      image: 'https://academylms.net/wp-content/uploads/2022/09/Structure-of-Online-Courses.png',
-      type: 'Document',
-      title: '##005NotStarted',
-      code: '##005Doc',
-      dueDate: '05/12/2025',
-      requiredFor: 'DIRECT',
-      group: 'NA',
-      status: 'In Progress',
-      category: 'inProgress'
+  ngOnInit(): void {
+    const storedStudentId = sessionStorage.getItem('studentId');
+    if (storedStudentId) {
+      this.studentId = parseInt(storedStudentId, 10);
+      this.loadTrainings(); 
+      this.fetchEnrollment();
+    } else {
+      console.error("No student ID found in local storage!");
     }
-  ];
+  }
+
+  
+  loadTrainings(): void {
+    this.isLoading = true;
+     
+    if (this.studentId !== null) {
+      this.EnrollmenstService.getEnrollment(this.studentId).subscribe({
+        next: (data) => { 
+          this.EnrollmentData = data; // No filter, API handles assigned trainings
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Error fetching IDP trainings:', error);
+          this.isLoading = false;
+        }
+      });
+    }
+  }
+
+  
+  fetchEnrollment(): void {
+    if (!this.searchQuery.trim()) {
+      this.isLoading = true; 
+      this.loadTrainings()
+
+      setTimeout(() => {
+        this.isLoading = false; // Hide loader after delay
+      }, 2000);
+      return;
+    }
+    this.isLoading = true; 
+
+    this.EnrollmenstService.searchEnrollment(this.searchQuery, this.studentId ?? 0).subscribe({
+      next: (data) => {
+ 
+        setTimeout(() => {
+          console.log("Filtered Search Results:", data);
+          this.EnrollmentData = data;
+          this.isLoading = false; // Hide skeleton loader after delay
+        }, 2000);
+
+      },
+      error: (error) => {
+        console.error('Error fetching search results:', error);
+        this.isLoading = false;
+      }
+    });
+  }
+
+ 
 }

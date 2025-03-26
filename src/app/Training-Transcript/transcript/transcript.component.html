@@ -56,9 +56,14 @@
               <div class="action-icon"><fa-icon [icon]="faellipsis"></fa-icon></div>
               <div class="action-menu" *ngIf="hoverIndex === training">
                 <button class="menu-button"><fa-icon [icon]="faellipsis"></fa-icon></button>
-                <button class="menu-button" *ngIf="training.trainingtype_name=='External Link'"
-                  title="External Link"><fa-icon [icon]="faLink"></fa-icon></button>
-                <button class="menu-button" title="View Details"><fa-icon [icon]="faList"></fa-icon></button>
+                <button class="menu-button" *ngIf="training.trainingtype_name=='External Link'" title="External Link"
+                  style="cursor: pointer;"><fa-icon [icon]="faLink"></fa-icon></button>
+
+                <button class="menu-button" title="View Details" (click)="viewTranscript(training.transcript_id)"
+                  style="cursor: pointer;">
+
+                  <fa-icon [icon]="faList"></fa-icon>
+                </button>
               </div>
             </td>
             <td class="table-column">{{ training.training_name }}</td>
@@ -72,6 +77,28 @@
       </tbody>
 
     </table>
+  </div>
+
+  <div *ngIf="isModalOpen" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h3>Transcript Details</h3>
+      </div>
+
+      <div class="modal-body" >
+        <p><strong>Training Name :</strong> {{ selectedTranscript?.training_name }}</p>
+        <p><strong>Training Code :</strong> {{ selectedTranscript?.training_code }}</p> 
+        <p><strong>Training Type :</strong> {{ selectedTranscript?.trainingtype_name }}</p>
+        <p><strong>Summary :</strong> {{ selectedTranscript?.summary }}</p>
+        <p><strong>Status :</strong> {{ selectedTranscript?.status_name }}</p>
+        <p><strong>Completion Date :</strong> {{ selectedTranscript?.completion_date | date:'dd-MM-yyyy' }}</p>
+      </div>
+
+      <div class="modal-footer">
+        <button (click)="closeModal()" class="btn-close">Close</button>
+      </div>
+    </div>
   </div>
 
   <div class="pagination-container">
