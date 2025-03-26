@@ -19,7 +19,6 @@ export class AdminNavigationComponent implements OnInit {
   isLoading = true;
   isLoginPage = true;
 
-
   constructor(private eRef: ElementRef, private router: Router, private adminnavigationService : AdminNavigationService) {
     this.router.events.subscribe(event=>{
        if (event instanceof NavigationStart) {
@@ -52,8 +51,8 @@ export class AdminNavigationComponent implements OnInit {
     fetchProfileImage(studentId: string) {
       this.adminnavigationService.getStudentProfile(studentId).subscribe(
         response => {
-          console.log('Image URL:', response.profileImage);
-          this.profileImage=response.profileImage;  // ✅ Log extracted URL
+          // console.log('Image URL:', response.profileImage);
+          this.profileImage=response.profileImage; 
         },
         error => {
           console.error('Error fetching profile image:', error);
@@ -69,7 +68,6 @@ export class AdminNavigationComponent implements OnInit {
         sessionStorage.clear();
         window.location.href = '/login';
     }
-
 
   toggleDropdown(event: Event) {
     // Prevent default propagation so document click listener doesn't close it immediately

@@ -73,8 +73,8 @@
           <img src="training.png" alt="Training setup" />
         </div>
         <div class="stat-details1">
-          <p class="stat-title1" [routerLink]="['/Training']">Training Setup</p>
-          <p class="stat-value1" [routerLink]="['/Training']">
+          <p class="stat-title1" [routerLink]="['/training']">Training Setup</p>
+          <p class="stat-value1" [routerLink]="['/training']">
             <strong>Add, Update or Delete Training</strong>
           </p>
         </div>
@@ -85,8 +85,8 @@
           <img src="studd11.jpg" alt="Student" />
         </div>
         <div class="stat-details1">
-          <p class="stat-title1">Student Management</p>
-          <p class="stat-value1">
+          <p class="stat-title1" [routerLink]="['/Student']">Student Management</p>
+          <p class="stat-value1" [routerLink]="['/Student']">
             <strong>Add, Update or Delete Student</strong>
           </p>
         </div>
@@ -139,7 +139,7 @@
 
         <div class="card-body">
           <img
-            [src]="'assets/' + dashboardData.login_image"
+            [src]="profileImage"
             alt="User Image"
             class="profile-img"
             *ngIf="dashboardData.login_image;"
