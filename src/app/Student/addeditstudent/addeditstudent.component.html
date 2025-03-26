@@ -34,45 +34,50 @@
     <br />
 
     <div *ngIf="isActive('personInfo')">
+        <form #studentForm="ngForm" (ngSubmit)="addOrUpdateStudent(studentForm)">
     <div class="form">
         <div class="form-group">
             <label>Student Number</label>
-            <input type="text" placeholder="Student unique identifier" [(ngModel)]="studentData.student_No" required>
+            <input type="text" name="student_No" placeholder="Student unique identifier" [(ngModel)]="studentData.student_No" required>
         </div>
         <div class="form-group">
             <label>First Name</label>
-            <input type="text" [(ngModel)]="studentData.firstname" required>
+            <input type="text" name="firstname" [(ngModel)]="studentData.firstname" (input)="generateUsernameAndPassword()" required>
         </div>
         <div class="form-group">
             <label>Middle Name</label>
-            <input type="text"  [(ngModel)]="studentData.middlename">
+            <input type="text" name="middlename" [(ngModel)]="studentData.middlename">
         </div>
         <div class="form-group">
             <label>Last Name</label>
-            <input type="text" [(ngModel)]="studentData.lastname">
+            <input type="text" name="lastname" [(ngModel)]="studentData.lastname" (input)="generateUsernameAndPassword()" required>
         </div>
         <div class="form-group">
             <label>Email</label>
-            <input type="email" [(ngModel)]="studentData.email">
+            <input type="email" name="email" [(ngModel)]="studentData.email">
         </div>
         <div class="form-group">
             <label>Roles/Permissions</label>
-            <select [(ngModel)]="studentData.role_Id" class="form-control" style="width: 62%;">
+            <select name="role_Id" [(ngModel)]="studentData.role_Id" class="form-control" style="width: 62%;">
                 <option value="" disabled>-- Select Role --</option>
                 <option *ngFor="let role of roles" [value]="role.role_Id">{{ role.role_Name }}</option>
             </select>
           </div>
         <div class="form-group">
             <label>Username</label>
-            <input type="text" [(ngModel)]="studentData.username">
+            <input type="text" name="username" [(ngModel)]="studentData.username">
         </div>
         <div class="form-group">
             <label>Password</label>
-            <input type="password" [(ngModel)]="studentData.password">
+            <div class="form-group password-container" style="width: 62%;">
+                <input [type]="showPassword ? 'text' : 'password'" name="password" [(ngModel)]="studentData.password">
+                <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility()"></i>
+            </div>
         </div>
+        
         <div class="form-group">
             <label>Archive Date</label>
-            <input type="date" [(ngModel)]="studentData.archive_Date">
+            <input type="date" name="archive_Date" [(ngModel)]="studentData.archive_Date">
         </div>
 
         <!-- Show More / Show Less Button -->
@@ -83,36 +88,36 @@
             </button>
         </div>
 
-
             <div class="form-group" *ngIf="showField">
                 <label>Phone No</label>
-                <input type="text" [(ngModel)]="studentData.phone_No">
+                <input type="text" name="phone_No" [(ngModel)]="studentData.phone_No">
             </div>
 
             <div class="form-group" *ngIf="showField">
                 <label>Address</label>
-                <textarea rows="5" [(ngModel)]="studentData.address"></textarea>
+                <textarea rows="5" name="address" [(ngModel)]="studentData.address"></textarea>
                 </div>
 
             <div class="form-group" *ngIf="showField">
             <label>City</label>
-            <input type="text" [(ngModel)]="studentData.city">
+            <input type="text" name="city" [(ngModel)]="studentData.city">
             </div>
 
             <div class="form-group" *ngIf="showField">
                 <label>Postal Code</label>
-                <input type="text" [(ngModel)]="studentData.postal_Code">
+                <input type="text" name="postal_Code" [(ngModel)]="studentData.postal_Code">
                 </div>
 
             <div class="form-group" *ngIf="showField">
                 <label>State</label>
-                <input type="text" [(ngModel)]="studentData.state">
+                <input type="text" name="state" [(ngModel)]="studentData.state">
                 </div>
                 <div class="form-group" *ngIf="showField">
                     <label>Country</label>
-                    <input type="text" [(ngModel)]="studentData.country"> 
+                    <input type="text" name="country" [(ngModel)]="studentData.country"> 
                     </div>
     </div>
+    </form>
     </div>
 
     <div *ngIf="isActive('assignTrainings')">
@@ -146,6 +151,7 @@
                     <td><input type="checkbox" type="checkbox" 
                         [(ngModel)]="training.selected"
                         (change)="updateSelectAll()"></td>
+                        <td hidden>{{training.training_id}}</td>
                     <td>{{ training.training_name }}</td>
                     <td>{{ training.training_code }}</td>
                     <td>{{ training.trainingtype_name }}</td>
