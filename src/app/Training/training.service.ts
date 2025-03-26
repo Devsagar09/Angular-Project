@@ -11,6 +11,8 @@ export class TrainingService {
 
   private TTapiUrl = 'https://localhost:7172/api/TrainingType/getTrainingType'; // Update with your API URL
 
+  private searchApiUrl = 'https://localhost:7172/api/Training/searchTraining'; // Adjust endpoint
+
   constructor(private http: HttpClient) { }
 
   getTraining():Observable<any>{
@@ -19,5 +21,9 @@ export class TrainingService {
 
   getTrainingType():Observable<any>{
     return this.http.get<any[]>(this.TTapiUrl)
+  }
+
+  searchTraining(searchValue: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.searchApiUrl}?searchValue=${searchValue}`);
   }
 }

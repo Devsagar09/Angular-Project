@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { AdminNavigationService } from './admin-navigation.service';
 
@@ -18,17 +18,6 @@ export class AdminNavigationComponent implements OnInit {
   isCollapsed = true;
   isLoading = true;
   isLoginPage = true;
-
-  constructor(private eRef: ElementRef, private router: Router) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this.isLoading = true;
-      }
-      if (event instanceof NavigationEnd) {
-        this.isLoginPage = this.router.url === '/login';
-      }
-    });
-
 
   constructor(private eRef: ElementRef, private router: Router, private adminnavigationService : AdminNavigationService) {
     this.router.events.subscribe(event=>{
@@ -62,8 +51,8 @@ export class AdminNavigationComponent implements OnInit {
     fetchProfileImage(studentId: string) {
       this.adminnavigationService.getStudentProfile(studentId).subscribe(
         response => {
-          console.log('Image URL:', response.profileImage);
-          this.profileImage=response.profileImage;  // ✅ Log extracted URL
+          // console.log('Image URL:', response.profileImage);
+          this.profileImage=response.profileImage; 
         },
         error => {
           console.error('Error fetching profile image:', error);
@@ -80,29 +69,7 @@ export class AdminNavigationComponent implements OnInit {
         window.location.href = '/login'; 
     }
     
-    
-
-  ngOnInit() {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.loadUserData();
-      }
-    });
-  }
-
-  loadUserData() {
-    this.firstname = localStorage.getItem('firstname');
-    this.lastname = localStorage.getItem('lastname');
-  }
-
-  logout() {
-    this.isLoading = true;
-    this.firstname = '';
-    this.lastname = '';
-    localStorage.clear();
-        window.location.href = '/login';
-  }
-
+  
   toggleDropdown(event: Event) {
     // Prevent default propagation so document click listener doesn't close it immediately
     event.stopPropagation();

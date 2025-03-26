@@ -19,7 +19,7 @@
             [class.active]="isActive('assignTrainings')" 
             [class.completed]="isCompleted('assignTrainings')"
             (click)="setActiveTab('assignTrainings')">
-            Assign Trainings
+           Advanced Assign Trainings
         </div>
     
         <div 
@@ -37,41 +37,42 @@
     <div class="form">
         <div class="form-group">
             <label>Student Number</label>
-            <input type="text" placeholder="Student unique identifier">
+            <input type="text" placeholder="Student unique identifier" [(ngModel)]="studentData.student_No" required>
         </div>
         <div class="form-group">
             <label>First Name</label>
-            <input type="text">
+            <input type="text" [(ngModel)]="studentData.firstname" required>
         </div>
         <div class="form-group">
             <label>Middle Name</label>
-            <input type="text">
+            <input type="text"  [(ngModel)]="studentData.middlename">
         </div>
         <div class="form-group">
             <label>Last Name</label>
-            <input type="text">
+            <input type="text" [(ngModel)]="studentData.lastname">
         </div>
         <div class="form-group">
             <label>Email</label>
-            <input type="email">
+            <input type="email" [(ngModel)]="studentData.email">
         </div>
         <div class="form-group">
             <label>Roles/Permissions</label>
-            <select style="width: 62%;">
-                <option>--Select Role--</option>
+            <select [(ngModel)]="studentData.role_Id" class="form-control" style="width: 62%;">
+                <option value="" disabled>-- Select Role --</option>
+                <option *ngFor="let role of roles" [value]="role.role_Id">{{ role.role_Name }}</option>
             </select>
-        </div>
+          </div>
         <div class="form-group">
             <label>Username</label>
-            <input type="text" placeholder="Gyrus LMS username">
+            <input type="text" [(ngModel)]="studentData.username">
         </div>
         <div class="form-group">
             <label>Password</label>
-            <input type="password">
+            <input type="password" [(ngModel)]="studentData.password">
         </div>
         <div class="form-group">
             <label>Archive Date</label>
-            <input type="date">
+            <input type="date" [(ngModel)]="studentData.archive_Date">
         </div>
 
         <!-- Show More / Show Less Button -->
@@ -82,43 +83,94 @@
             </button>
         </div>
 
-        <!-- City Field - Initially Hidden -->
-        
-          
 
             <div class="form-group" *ngIf="showField">
                 <label>Phone No</label>
-                <input type="text">
+                <input type="text" [(ngModel)]="studentData.phone_No">
             </div>
 
             <div class="form-group" *ngIf="showField">
                 <label>Address</label>
-                <textarea rows="5" cols="70"></textarea>
+                <textarea rows="5" [(ngModel)]="studentData.address"></textarea>
                 </div>
 
             <div class="form-group" *ngIf="showField">
             <label>City</label>
-            <input type="text">
+            <input type="text" [(ngModel)]="studentData.city">
             </div>
 
             <div class="form-group" *ngIf="showField">
                 <label>Postal Code</label>
-                <input type="text">
+                <input type="text" [(ngModel)]="studentData.postal_Code">
                 </div>
                 
             <div class="form-group" *ngIf="showField">
                 <label>State</label>
-                <input type="text">
+                <input type="text" [(ngModel)]="studentData.state">
                 </div>
                 <div class="form-group" *ngIf="showField">
                     <label>Country</label>
-                    <input type="text">
+                    <input type="text" [(ngModel)]="studentData.country"> 
                     </div>
     </div>
     </div>
 
     <div *ngIf="isActive('assignTrainings')">
-        assign trainings
+
+        <div class="assign-trainings-container">
+        <div class="search-bar">
+            <label for="search">Search</label>
+            <input type="text"
+            id="search"
+            [(ngModel)]="searchValue"
+            (input)="searchTraining()"
+             placeholder="Search Training">
+            <label class="toggle-switch">
+                <input type="checkbox" [(ngModel)]="showSelectedOnly" (change)="toggleShowSelected()"> Show Selected
+            </label>
+        </div>
+    
+        <table class="training-table">
+            <thead>
+                <tr>
+                        <th><input type="checkbox"
+                            [(ngModel)]="selectAll" 
+                            (change)="toggleSelectAll()"></th>
+                    <th>Training Names</th>
+                    <th>Training Code</th>
+                    <th>Training Type</th>
+                </tr>
+            </thead>
+            <tbody  *ngIf="!noDataFound">
+                <tr *ngFor="let training of filteredTrainings  | paginate: { itemsPerPage: itemsPerPage, currentPage: p }" >
+                    <td><input type="checkbox" type="checkbox" 
+                        [(ngModel)]="training.selected"
+                        (change)="updateSelectAll()"></td>
+                    <td>{{ training.training_name }}</td>
+                    <td>{{ training.training_code }}</td>
+                    <td>{{ training.trainingtype_name }}</td>
+                  </tr>
+            </tbody>
+        </table>
+        <div *ngIf="noDataFound" class="no-data-message">
+            <span style="display: flex; justify-content: center;margin-top: 30px;">No Training found.</span>
+          </div>
+  
+          
+        <div class="pagination-container">
+            <!-- Flex container to align dropdown and pagination in one row -->
+            <div class="pagination-controls">
+              <div class="items-per-page">
+                <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
+                  <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+                </select>
+                <span> entries per page</span>
+              </div>
+              
+              <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
+            </div>
+          </div>          
+    </div>
     </div>
 
     <div *ngIf="isActive('reviewConfirm')">
@@ -128,7 +180,15 @@
 
 <!-- Buttons -->
 <div class="btn-container">
-    <button class="btn cancel"><i class="fas fa-times"></i> CANCEL</button>
-    <button class="btn next">NEXT <i class="fas fa-chevron-right"></i></button>
-    <button class="btn ready"><i class="fas fa-flag"></i> READY TO FINISH</button>
+    <button class="btn cancel" onclick="window.location.href='/Student';"><i class="fas fa-times" ></i> CANCEL</button>
+    <button class="btn prev" *ngIf="activeTab !== 'personInfo'" (click)="prevStep()">
+        <i class="fas fa-chevron-left"></i> PREV
+    </button>
+    <button class="btn next" (click)="nextStep()">
+        NEXT <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <button class="btn ready">
+        <i class="fas fa-flag"></i> READY TO FINISH
+    </button>
 </div>

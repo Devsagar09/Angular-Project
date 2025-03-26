@@ -5,6 +5,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { AddeditstudentComponent } from './addeditstudent/addeditstudent.component';
 import { RouterModule } from '@angular/router';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -14,7 +15,7 @@ import { RouterModule } from '@angular/router';
     AddeditstudentComponent
   ],
   imports: [
-    CommonModule,NgxPaginationModule,FormsModule,RouterModule
+    CommonModule,NgxPaginationModule,FormsModule,RouterModule, MatSnackBarModule,
   ],
   exports: [
     RouterModule 

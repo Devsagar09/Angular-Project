@@ -2,8 +2,11 @@
     <!-- <div class="loader-container" *ngIf="isLoading">
         <div class="loader"></div>
       </div> -->
-      
-    <div class="employee-header">
+      <div class="navbar">
+        <a href=""><i class="fa fa-arrow-alt-circle-left"></i>Back to Dashboard</a>
+      </div>
+
+    <div class="stud-header">
         <div class="title">
             <i class="fas fa-users"></i> Students
         </div>
@@ -13,10 +16,15 @@
     <div class="container">
         <!-- Search Bar Section -->
         <div class="search-container">
-            <label for="search"><strong>Search &nbsp;</strong></label>
+            <label for="search"><strong>Search </strong></label>
             <div class="search-bar">
                 <i class="fa fa-search"></i>
-                <input type="text" id="search" placeholder="Search Students">
+                <input type="text"
+                id="search"
+                placeholder="Search Students"
+                [(ngModel)]="searchValue"
+                (input)="searchStudent()"
+                 placeholder="Search Students">
             </div>
             <div class="action-buttons">
                 <button class="delete-btn" title="Delete"><i class="fa fa-trash"></i></button>
@@ -29,21 +37,29 @@
         <!-- Data Table -->
         <table id="data-table">
             <thead>
-                <tr>
-                    <th></th>
-                    <th>Actions</th>
-                    <th>Student No</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Archive Date</th>
-                    <th>Username</th>
-                    <th>Role</th>
-                </tr>
+              <tr>
+                <th></th>
+                <th>Actions</th>
+                <th (click)="sortData('student_No')">Student No</th>
+                <th (click)="sortData('firstname')">Firstname</th>
+                <th (click)="sortData('lastname')">Lastname</th>
+                <th (click)="sortData('archive_Date')">Archive Date</th>
+                <th (click)="sortData('username')">Username</th>
+                <th (click)="sortData('role_name')">Role</th>
+            </tr>
+            
             </thead>
             <tbody>
-                <tr *ngFor="let s of studentDatas | paginate: { itemsPerPage: 7, currentPage: p}">
+                <tr *ngFor="let s of students | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                     <td><input type="checkbox" style="accent-color: #134c68;"></td>
-                    <td><i class="fas fa-ellipsis-h" aria-hidden="true" style="color: #134c68;"></i></td>
+                    <td class="dot"><div class="action-menu">
+                        <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+                        <!-- Action Icons -->
+                        <div class="action-icons">
+                          <i class="fas fa-edit" title="Edit"></i>
+                          <i class="fas fa-trash" title="Delete" ></i>
+                        </div>
+                        </div>
                     <td>{{ s?.student_No }}</td>
                     <td>{{ s?.firstname }}</td>
                     <td>{{ s?.lastname }}</td>
@@ -53,8 +69,20 @@
                 </tr>
             </tbody>
         </table>
+        <p *ngIf="students.length === 0 && searchValue.trim().length >0">
+            <span style="display: flex; justify-content: center;margin-top: 30px;">No Student found.</span>
+         </p>
         <div class="pagination-container">
-            <pagination-controls class="page" (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
+            <!-- Dropdown for selecting items per page -->
+            <div class="items-per-page">
+              <!-- <label for="itemsPerPage">Show:</label> -->
+              <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
+                <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+              </select>
+              <span>entries per page</span>
+            </div>
+
+            <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
           </div>
     </div>
 
