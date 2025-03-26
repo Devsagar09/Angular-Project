@@ -11,14 +11,14 @@ import { AuthGuard } from './Login/auth.guard';
 import { AdmindashboardComponent } from './AdminDashboard/admindashboard/admindashboard.component';
 import { TrainingComponent } from './Training/training/training.component';
 import { PendingApprovalComponent } from './AI-Maintenance/pending-approval/pending-approval.component';
-import { TraningComponent } from './Traning/traning/traning.component';
 import { DisplaystudentComponent } from './Student/displaystudent/displaystudent.component';
 import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent.component';
- 
+import { AddEditTrainingComponent } from './Training/add-edit-training/add-edit-training.component';
+
 const routes: Routes = [
   {
     path: '',
-    canActivate: [AuthGuard], 
+    canActivate: [AuthGuard],
     children: []
   },
   {
@@ -48,6 +48,16 @@ const routes: Routes = [
   {
     path: 'training',
     component: TrainingComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'add-training',
+    component: AddEditTrainingComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'edit-training',
+    component: AddEditTrainingComponent,
     canActivate: [AuthGuard]
   },
   {

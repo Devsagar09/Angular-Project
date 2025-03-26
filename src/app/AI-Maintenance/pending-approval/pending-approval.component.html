@@ -47,7 +47,7 @@
                 </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let trainingData of pendingapprovalDatas | paginate: { itemsPerPage: 5, currentPage: p}">
+              <tr *ngFor="let trainingData of pendingapprovalDatas |  paginate:{ itemsPerPage: itemsPerPage, currentPage: p }">
                   <td><input type="checkbox"></td>
                   <!-- <td><i class="fas fa-ellipsis-h" aria-hidden="true"></i></td> -->
                   <td>{{ trainingData?.student_name }}</td>
@@ -75,7 +75,17 @@
           </div>
         </div> -->
         <div class="pagination-container">
-          <pagination-controls class="page" (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
+          <!-- Dropdown for selecting items per page -->
+          <div class="items-per-page">
+            <label for="itemsPerPage">Show:</label>
+            <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
+              <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+            </select>
+            <span>entries per page</span>
+          </div>
+
+          <!-- Pagination Controls -->
+          <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
         </div>
     </div>
 </body>

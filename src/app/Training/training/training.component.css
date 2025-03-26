@@ -12,7 +12,7 @@ body {
 
   .container {
     width: 100%;
-    max-width: 95.5%;
+    max-width: 98.5%;
     background: white;
     padding: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -143,10 +143,28 @@ body {
 
   /* Pagination */
   .pagination-container {
-    text-align: center;
-    padding: 10px 0;
-    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border-radius: 5px;
   }
+
+  .items-per-page {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 10px;
+  }
+
+  .items-per-page select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+
 
   .training-header {
     background-color: #134c68; /* Teal background */

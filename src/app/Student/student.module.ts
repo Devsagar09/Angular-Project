@@ -14,10 +14,13 @@ import { RouterModule } from '@angular/router';
     AddeditstudentComponent
   ],
   imports: [
-    CommonModule,NgxPaginationModule,FormsModule,RouterModule
+    CommonModule,
+    NgxPaginationModule,
+    FormsModule,
+    RouterModule
   ],
   exports: [
-    RouterModule 
+    RouterModule
   ]
 })
 export class StudentModule { }

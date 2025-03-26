@@ -5,23 +5,22 @@ import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-displaystudent',
-  standalone: true,
+  standalone: false,
   templateUrl: './displaystudent.component.html',
   styleUrl: './displaystudent.component.css',
-  imports: [CommonModule,NgxPaginationModule] 
 })
 export class DisplaystudentComponent implements OnInit{
 studentDatas: any[]=[];
 
   constructor(private studentService: StudentService){}
-  p: number = 1; 
- 
- 
+  p: number = 1;
+
+
   ngOnInit(): void {
-    this.loadStudent(); 
+    this.loadStudent();
   }
 
-  loadStudent(): void {  
+  loadStudent(): void {
     this.studentService.getStudent().subscribe({
       next: (data) => {
         this.studentDatas = data ?? [];  // Ensures it's always an array
@@ -31,5 +30,5 @@ studentDatas: any[]=[];
       },
     });
   }
-  
+
 }

@@ -31,7 +31,7 @@ import { AdminNavigationComponent } from './admin-navigation/admin-navigation.co
 import { AdmindashboardModule } from './AdminDashboard/admindashboard.module';
 import { TrainingModule } from './Training/training.module';
 import { PendingApprovalModule } from './AI-Maintenance/pending-approval.module';
-import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent.component';
+import { StudentModule } from './Student/student.module';
 
 
 
@@ -44,8 +44,6 @@ import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent
     UserNavigationComponent,
     LoaderComponent,
     AdminNavigationComponent,
-    AddeditstudentComponent
-
   ],
   imports: [
     BrowserAnimationsModule,
@@ -67,8 +65,8 @@ import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent
     LoginModule,
     AdmindashboardModule,
     TrainingModule,
-    PendingApprovalModule
-
+    PendingApprovalModule,
+    StudentModule
   ],
   providers: [],
   bootstrap: [AppComponent]

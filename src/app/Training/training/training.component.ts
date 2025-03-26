@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TrainingService } from '../training.service';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-training',
@@ -8,12 +9,9 @@ import { TrainingService } from '../training.service';
   styleUrl: './training.component.css'
 })
 export class TrainingComponent {
-  // paginatedTrainingDatas: any[] = []; // Data for the current page
-  // itemsPerPage: number = 5; // Default items per page
-  // currentPage: number = 1; // Current page
-  // totalPages: number = 0; // Total pages
-  // pageSizes: number[] = [5, 10, 20]; // Options for items per page
-  // isLoading = true;
+  searchValue: string = '';
+  itemsPerPage: number = 10;
+  itemsPerPageOptions: number[] = [2,5, 10, 20, 50];
   isModalOpen = false;
 
   trainingDatas: any[] = []; // Original training data
@@ -23,7 +21,6 @@ export class TrainingComponent {
 
   ngOnInit(): void {
     this.loadTrainingData();
-
     // setTimeout(()=>{
     //   // this.isLoading=false;
     // }, 2000);
@@ -54,38 +51,21 @@ export class TrainingComponent {
     // console.log('isModalOpen:', this.isModalOpen); // Debug log to ensure it updates
   }
 
-  // // Update pagination details
-  // updatePagination(): void {
-  //   this.totalPages = Math.ceil(this.trainingDatas.length / this.itemsPerPage);
-  //   this.updatePaginatedData();
-  // }
+  // Search training data
+  searchTraining(): void {
+    if (!this.searchValue.trim()) {
+      this.loadTrainingData(); // Reload all training data if the search is empty
+      return;
+    }
+    this.trainingService.searchTraining(this.searchValue).subscribe({
+      next: (data) => {
+        this.trainingDatas = data ?? [];
+      },
+      error: (error) => {
+        console.error('Error searching training data', error);
+        this.trainingDatas = [];
+      },
+    });
+  }
 
-  // // Get the current page's data
-  // updatePaginatedData(): void {
-  //   const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-  //   const endIndex = startIndex + this.itemsPerPage;
-  //   this.paginatedTrainingDatas = this.trainingDatas.slice(startIndex, endIndex);
-  // }
-
-  // // Handle items per page change
-  // onItemsPerPageChange(): void {
-  //   this.currentPage = 1; // Reset to the first page
-  //   this.updatePagination();
-  // }
-
-  // // Navigate to the previous page
-  // goToPreviousPage(): void {
-  //   if (this.currentPage > 1) {
-  //     this.currentPage--;
-  //     this.updatePaginatedData();
-  //   }
-  // }
-
-  // // Navigate to the next page
-  // goToNextPage(): void {
-  //   if (this.currentPage < this.totalPages) {
-  //     this.currentPage++;
-  //     this.updatePaginatedData();
-  //   }
-  // }
 }
