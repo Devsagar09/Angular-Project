@@ -13,7 +13,7 @@ export class TrainingService {
 
   private SearchapiUrl = 'https://localhost:7172/api/Training/searchTraining'; // Update with your API URL
 
-  private addTrainingapiUrl = 'https://localhost:7172/api/Training';
+  private addTrainingapiUrl = 'https://localhost:7172/api';
 
   constructor(private http: HttpClient) { }
 
@@ -31,15 +31,7 @@ export class TrainingService {
 
   // Add training
   addTraining(trainingData: any): Observable<any> {
-    const url = `${this.addTrainingapiUrl}/addTraining`;
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(`${this.addTrainingapiUrl}/Training/addTraining`, trainingData);
 
-    return this.http.post(url, trainingData, { headers }).pipe(
-      timeout(30000), // 30 seconds timeout
-      catchError((error) => {
-        console.error('API Timeout or Error:', error);
-        return throwError(error);
-      })
-    );
   }
 }

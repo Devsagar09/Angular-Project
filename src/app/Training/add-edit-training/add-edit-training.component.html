@@ -193,8 +193,14 @@
           <label for="search"><strong>Search </strong></label>
           <div class="search-bar">
               <i class="fa fa-search"></i>
-              <input type="text" id="search" placeholder="Search Students">
-          </div>
+              <input
+              type="text"
+              id="search"
+              [(ngModel)]="searchValue"
+              (input)="searchTraining()"
+              placeholder="Enter training name"
+            />
+                </div>
           <div class="action-buttons">
             <label class="toggle-switch">
               <input type="checkbox">

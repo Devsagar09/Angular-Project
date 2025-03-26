@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 export class AddEditTrainingComponent {
   itemsPerPage: number = 10;
   itemsPerPageOptions: number[] = [2,5, 10, 20, 50];
+  searchValue: string = '';
   showField: boolean = false;
   buttonText: string = 'SHOW MORE';
   activeTab: string = 'personInfo';
@@ -20,6 +21,7 @@ export class AddEditTrainingComponent {
   // add training
   trainingTypeId: number | null = null;
   trainingData: any = {
+    trainingId: '',
     trainingName: '',
     trainingCode: '',
     trainingTypeId: null,
@@ -58,6 +60,7 @@ export class AddEditTrainingComponent {
 
   saveTraining(): void {
     this.trainingService.addTraining(this.trainingData).subscribe(
+
       (response) => {
         console.log('Training added successfully', response);
       },
@@ -200,9 +203,6 @@ triggerFileInput(fileInput: HTMLInputElement): void {
 
   p: number = 1;
 
-
-
-
   loadStudent(): void {
     this.studentService.getStudent().subscribe({
       next: (data) => {
@@ -210,6 +210,23 @@ triggerFileInput(fileInput: HTMLInputElement): void {
       },
       error: (error) => {
         console.error('Error fetching student data', error);
+      },
+    });
+  }
+
+   // Search training data
+   searchTraining(): void {
+    if (!this.searchValue.trim()) {
+      this.loadStudent(); // Reload all training data if the search is empty
+      return;
+    }
+    this.trainingService.searchTraining(this.searchValue).subscribe({
+      next: (data) => {
+        this.studentDatas = data ?? [];
+      },
+      error: (error) => {
+        console.error('Error searching training data', error);
+        this.studentDatas = [];
       },
     });
   }

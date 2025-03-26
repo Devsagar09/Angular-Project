@@ -15,10 +15,12 @@ itemsPerPageOptions: number[] = [2,5, 10, 20, 50];
 searchValue: string = '';
 sortColumn: string = '';
 sortDirection: 'asc' | 'desc' = 'asc';
+ 
 
 
   constructor(private studentService: StudentService){}
  
+
   ngOnInit(): void {
     this.loadStudent(); 
   }
@@ -66,5 +68,7 @@ sortDirection: 'asc' | 'desc' = 'asc';
       return 0;
     });
   }
+}
+
 }
 
