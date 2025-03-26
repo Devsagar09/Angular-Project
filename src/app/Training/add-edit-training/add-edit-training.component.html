@@ -1,0 +1,256 @@
+<div class="training-header">
+  <div class="title">
+      <i class="fas fa-users"></i> Students
+  </div>
+</div>
+
+<body>
+  <div class="tab-container">
+      <div
+          class="tab"
+          [class.active]="isActive('personInfo')"
+          [class.completed]="isCompleted('personInfo')"
+          (click)="setActiveTab('personInfo')">
+          Person Information
+      </div>
+
+      <div
+          class="tab"
+          [class.active]="isActive('assignTrainings')"
+          [class.completed]="isCompleted('assignTrainings')"
+          (click)="setActiveTab('assignTrainings')">
+          Assign Students
+      </div>
+
+      <div
+          class="tab"
+          [class.active]="isActive('reviewConfirm')"
+          [class.completed]="isCompleted('reviewConfirm')"
+          (click)="setActiveTab('reviewConfirm')">
+          Review / Confirm
+      </div>
+  </div>
+
+  <br />
+
+  <div *ngIf="isActive('personInfo')">
+  <form (ngSubmit)="saveTraining()">
+
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-header" (click)="toggleAccordion('information')">
+          <span>Information</span>
+          <i class="fas" [ngClass]="accordionState['information'] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        </div>
+
+          <div class="container" *ngIf="accordionState['information']">
+            <!-- Place your form fields here -->
+            <div class="form-group">
+              <label> Name</label>
+              <input type="text"  placeholder="Training Name is Required"
+              [(ngModel)]="trainingData.trainingName" name="trainingName" required />
+            </div>
+            <div class="form-group">
+              <label> Code</label>
+              <input type="text" placeholder="Training Code"
+              [(ngModel)]="trainingData.trainingCode" name="trainingCode" required />
+            </div>
+            <div class="form-group">
+              <label>Training Hours</label>
+              <input type="number" placeholder="Number of Training Hour Credits"
+              [(ngModel)]="trainingData.trainingHours" name="trainingHours" />
+            </div>
+            <div class="form-group">
+              <label>Require Approval</label>
+              <div class="custom-checkbox">
+                <input type="checkbox" id="exampleCheckbox"
+                [(ngModel)]="trainingData.requiresApproval" name="requiresApproval" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Document</label>
+              <div class="file-upload-container">
+                <table class="file-table">
+                  <thead>
+                    <tr>
+                      <th>Action</th>
+                      <th>Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let file of uploadedFiles; let i = index">
+                      <td>
+                        <button class="delete-btn" (click)="deleteFile(i)">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </td>
+                      <td>{{ file.name }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button class="upload-btn" alt="Only pdf allow" (click)="triggerFileUpload()">+</button>
+                <input
+                  type="file"
+                  #fileInput
+                  accept=".pdf"
+                  (change)="onFileSelected($event)"
+                  style="display: none"
+                  (change)="handleFileInput($event, 'document')"
+                  />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Archive Date</label>
+              <input type="date" placeholder="Date this training is no longer valid"
+              [(ngModel)]="trainingData.archiveDate" name="archiveDate"/>
+            </div>
+            <div class="form-group">
+              <label>Summary</label>
+              <textarea rows="5" cols="70"
+              [(ngModel)]="trainingData.summary" name="summary"></textarea>
+            </div>
+          </div>
+
+        </div>
+        </div>
+      <div class="accordion">
+        <div class="accordion-item">
+          <div class="accordion-header" (click)="toggleAccordion('resources')">
+            <span>Would you like to display this training in the Course Catalog?</span>
+            <i class="fas" [ngClass]="accordionState['resources'] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+          </div>
+          <div class="container" *ngIf="accordionState['resources']">
+
+            <!-- Resource-related content -->
+            <div class="form-group">
+              <label>Display this training in Course Catalog?</label>
+              <div class="custom-checkbox">
+                <input type="checkbox" id="exampleCheckbox"
+                [(ngModel)]="trainingData.courseCatalog" name="courseCatalog" />
+                <label for="exampleCheckbox"></label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Start Date to Display</label>
+              <input type="date" placeholder="Date this training is no longer valid"
+              [(ngModel)]="trainingData.cStartDate" name="cStartDate"/>
+            </div>
+            <div class="form-group">
+              <label>End Date to Display</label>
+              <input type="date" placeholder="Date this training is no longer valid"
+              [(ngModel)]="trainingData.cEndDate" name="cEndDate"/>
+            </div>
+            <div class="upload-container">
+              <!-- Label and input aligned horizontally -->
+              <div class="upload-label-container">
+                <label>Upload an Image to Display this Training</label>
+                <input
+                  type="file"
+                  #fileInput
+                  class="file-input"
+                  (change)="onFileUpload($event)"
+                  accept="image/jpeg, image/png, image/jpg"
+                  (change)="handleFileInput($event, 'thumbnail')"
+                  />
+              </div>
+
+              <!-- Drag-and-drop area -->
+              <div class="upload-box" [class.has-preview]="previewUrl">
+                <div *ngIf="!previewUrl" class="drag-text">
+                  Drag And Drop File Here
+                </div>
+                <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview" class="preview-image" />
+              </div>
+            </div>
+            <!-- File actions -->
+            <div class="file-actions">
+              <button color="primary" class="select-file-btn" (click)="triggerFileInput(fileInput)">
+                <i class="fas fa-file-upload"></i>
+                Select File to Upload
+              </button>
+
+              <button class="delete-button" color="warn" *ngIf="previewUrl" (click)="clearFile()">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <button (ngSubmit)="saveTraining()">Save</button>
+    </form>
+
+  </div>
+
+  <div *ngIf="isActive('assignTrainings')">
+
+    <div class="container">
+      <!-- Search Bar Section -->
+      <div class="search-container">
+          <label for="search"><strong>Search </strong></label>
+          <div class="search-bar">
+              <i class="fa fa-search"></i>
+              <input type="text" id="search" placeholder="Search Students">
+          </div>
+          <div class="action-buttons">
+            <label class="toggle-switch">
+              <input type="checkbox">
+              <span class="slider"></span>
+            </label>
+            <span class="toggle-label">Show Selected</span>
+
+          </div>
+      </div>
+
+      <!-- Data Table -->
+      <table id="data-table">
+          <thead>
+              <tr>
+                  <th></th>
+                  <th>Actions</th>
+                  <th>Student Number</th>
+                  <th>Name</th>
+                  <th>Archive Date</th>
+
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let s of studentDatas | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+                  <td><input type="checkbox" style="accent-color: #134c68;"></td>
+                  <td><i class="fas fa-ellipsis-h" aria-hidden="true" style="color: #134c68;"></i></td>
+                  <td>{{ s?.student_No }}</td>
+                  <td>{{ s?.firstname }} {{ s?.lastname }}</td>
+                  <td>{{ s?.archive_Date === '9999-12-31' ? '' : s?.archive_Date }}</td>
+              </tr>
+          </tbody>
+      </table>
+      <div class="pagination-container">
+        <!-- Dropdown for selecting items per page -->
+        <div class="items-per-page">
+          <label for="itemsPerPage">Show:</label>
+          <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
+            <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+          </select>
+          <span>entries per page</span>
+        </div>
+
+        <!-- Pagination Controls -->
+        <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isActive('reviewConfirm')">
+      final data
+  </div>
+</body>
+
+<!-- Buttons -->
+<div class="btn-container">
+  <button class="btn cancel"><i class="fas fa-times"></i> CANCEL</button>
+  <button class="btn next">NEXT <i class="fas fa-chevron-right"></i></button>
+  <button class="btn ready"><i class="fas fa-flag"></i> READY TO FINISH</button>
+</div>

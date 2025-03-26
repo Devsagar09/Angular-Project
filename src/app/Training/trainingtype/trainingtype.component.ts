@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TrainingService } from '../training.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trainingtype',
@@ -13,7 +14,7 @@ export class TrainingtypeComponent{
   trainingOptions: any[] = [];
   defaultIcon = '📁'; // Default icon for new or unspecified training types
 
-  constructor(private trainingService: TrainingService) {}
+  constructor(private trainingService: TrainingService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadTrainingType();
@@ -27,6 +28,7 @@ export class TrainingtypeComponent{
           if (data && Array.isArray(data)) {
             this.trainingtypeDatas = data; // Assign data if it's an array
             this.trainingOptions = this.trainingtypeDatas.map((item) => ({
+              id: item.trainingtype_id,
               icon: this.getIconForType(item.trainingtype_Name),
               label: this.capitalizeFirstLetter(item.trainingtype_Name || 'Undefined'),
             }));
@@ -85,5 +87,10 @@ getIconForType(trainingtype_Name: string | undefined): string {
     this.closeModalEvent.emit();
   }
 
-
+  // Redirect to the Add Training page with the selected training type ID
+  redirectToAddTraining(trainingTypeId: number): void {
+    this.router.navigate(['/add-training'], {
+      queryParams: { trainingTypeId },
+    });
+  }
 }

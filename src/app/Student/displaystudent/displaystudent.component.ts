@@ -9,23 +9,23 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   templateUrl: './displaystudent.component.html',
   styleUrl: './displaystudent.component.css',
-  imports: [CommonModule,NgxPaginationModule,FormsModule] 
-})
+
 export class DisplaystudentComponent implements OnInit{
 studentDatas: any[]=[];
 searchValue:string='';
 
   constructor(private studentService: StudentService){}
-  p: number = 1; 
+  p: number = 1;
+
   itemsPerPage: number = 10;
     itemsPerPageOptions: number[] = [2,5, 10, 20, 50];
  
  
   ngOnInit(): void {
-    this.loadStudent(); 
+    this.loadStudent();
   }
 
-  loadStudent(): void {  
+  loadStudent(): void {
     this.studentService.getStudent().subscribe({
       next: (data) => {
         this.studentDatas = data ?? [];  // Ensures it's always an array
@@ -35,6 +35,7 @@ searchValue:string='';
       },
     });
   }
+
 
   searchStudent():void {
     if(!this.searchValue.trim()){
