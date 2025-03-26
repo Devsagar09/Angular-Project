@@ -24,6 +24,7 @@
     "@fortawesome/angular-fontawesome": "^1.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@ng-bootstrap/ng-bootstrap": "^18.0.0",
     "@progress/kendo-angular-buttons": "18.1.1",
     "@progress/kendo-angular-charts": "^18.1.1",
     "@progress/kendo-angular-common": "18.1.1",

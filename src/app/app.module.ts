@@ -32,6 +32,7 @@ import { AdmindashboardModule } from './AdminDashboard/admindashboard.module';
 import { TrainingModule } from './Training/training.module';
 import { PendingApprovalModule } from './AI-Maintenance/pending-approval.module';
 import { StudentModule } from './Student/student.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -56,6 +57,7 @@ import { StudentModule } from './Student/student.module';
     ChartsModule,
     HttpClientModule,
     DialogModule,
+    FontAwesomeModule,
     InputsModule,
     FormsModule,
     IdpModule,

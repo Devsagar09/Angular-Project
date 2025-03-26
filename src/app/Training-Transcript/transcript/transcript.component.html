@@ -12,9 +12,8 @@
 </h2>
 
 <div class="search-bar">
-  <input type="text" placeholder="Search Training Transcript">
-  <span class="search-icon">
-
+  <input type="text" placeholder="Search Training Transcript" [(ngModel)]="searchQuery">
+  <span class="search-icon" (click)="fetchTranscriptP()">
 
     <svg viewBox="0 0 512 512">
       <path fill="white"
@@ -37,33 +36,71 @@
           <th>Training Code</th>
           <th>Training Type</th>
           <th>Status</th>
-          <th>Enroll Date</th>
           <th>Completion Date</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let training of transcriptData | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-          <td class="action-column" (mouseenter)="hoverIndex = training" (mouseleave)="hoverIndex = null">
-            <div class="action-icon"><fa-icon [icon]="faellipsis"></fa-icon></div>
-            <div class="action-menu" *ngIf="hoverIndex === training">
-              <button class="menu-button"><fa-icon [icon]="faellipsis"></fa-icon></button>
-              <button class="menu-button" *ngIf="training.trainingtype_name=='External Link'"
-                title="External Link"><fa-icon [icon]="faLink"></fa-icon></button>
-              <button class="menu-button" title="View Details"><fa-icon [icon]="faList"></fa-icon></button>
+        <!-- Show Loader While Data is Loading -->
+        <tr *ngIf="isLoading">
+          <td colspan="7">
+            <div class="loader-container">
+              <span class="loader"></span>
             </div>
           </td>
-          <td class="table-column">{{ training.training_name }}</td>
-          <td>{{ training.training_hours }}</td>
-          <td>{{ training.training_code }}</td>
-          <td>{{ training.trainingtype_name }}</td>
-          <td>{{ training.status_name }}</td>
-          <td>{{ training.enroll_date | date:'dd-MM-yyyy'}}</td>
-          <td>{{ training.completion_date || '--' }}</td>
         </tr>
+
+        <!-- Show Data When Loading is Complete -->
+        <ng-container *ngIf="!isLoading">
+          <tr *ngFor="let training of transcriptData | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+            <td class="action-column" (mouseenter)="hoverIndex = training" (mouseleave)="hoverIndex = null">
+              <div class="action-icon"><fa-icon [icon]="faellipsis"></fa-icon></div>
+              <div class="action-menu" *ngIf="hoverIndex === training">
+                <button class="menu-button"><fa-icon [icon]="faellipsis"></fa-icon></button>
+                <button class="menu-button" *ngIf="training.trainingtype_name=='External Link'" title="External Link"
+                  style="cursor: pointer;"><fa-icon [icon]="faLink"></fa-icon></button>
+
+                <button class="menu-button" title="View Details" (click)="viewTranscript(training.transcript_id)"
+                  style="cursor: pointer;">
+
+                  <fa-icon [icon]="faList"></fa-icon>
+                </button>
+              </div>
+            </td>
+            <td class="table-column">{{ training.training_name }}</td>
+            <td>{{ training.training_hours}}</td>
+            <td>{{ training.training_code }}</td>
+            <td>{{ training.trainingtype_name }}</td>
+            <td>{{ training.status_name }}</td>
+            <td>{{ training.completion_date | date:'dd-MM-yyyy'}}</td>
+          </tr>
+        </ng-container>
       </tbody>
+
     </table>
-  </div> 
-  
+  </div>
+
+  <div *ngIf="isModalOpen" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h3>Transcript Details</h3>
+      </div>
+
+      <div class="modal-body" >
+        <p><strong>Training Name :</strong> {{ selectedTranscript?.training_name }}</p>
+        <p><strong>Training Code :</strong> {{ selectedTranscript?.training_code }}</p> 
+        <p><strong>Training Type :</strong> {{ selectedTranscript?.trainingtype_name }}</p>
+        <p><strong>Summary :</strong> {{ selectedTranscript?.summary }}</p>
+        <p><strong>Status :</strong> {{ selectedTranscript?.status_name }}</p>
+        <p><strong>Completion Date :</strong> {{ selectedTranscript?.completion_date | date:'dd-MM-yyyy' }}</p>
+      </div>
+
+      <div class="modal-footer">
+        <button (click)="closeModal()" class="btn-close">Close</button>
+      </div>
+    </div>
+  </div>
+
   <div class="pagination-container">
     <!-- Dropdown for selecting items per page -->
     <div class="items-per-page">

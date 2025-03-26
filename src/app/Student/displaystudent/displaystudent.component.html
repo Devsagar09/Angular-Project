@@ -16,7 +16,12 @@
             <label for="search"><strong>Search &nbsp;</strong></label>
             <div class="search-bar">
                 <i class="fa fa-search"></i>
-                <input type="text" id="search" placeholder="Search Students">
+                <input type="text"
+                id="search"
+                placeholder="Search Students"
+                [(ngModel)]="searchValue"
+                (input)="searchStudent()"
+                placeholder="Search Students">
             </div>
             <div class="action-buttons">
                 <button class="delete-btn" title="Delete"><i class="fa fa-trash"></i></button>
@@ -41,7 +46,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let s of studentDatas | paginate: { itemsPerPage: 7, currentPage: p}">
+                <tr *ngFor="let s of studentDatas | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
                     <td><input type="checkbox" style="accent-color: #134c68;"></td>
                     <td><i class="fas fa-ellipsis-h" aria-hidden="true" style="color: #134c68;"></i></td>
                     <td>{{ s?.student_No }}</td>
@@ -54,6 +59,13 @@
             </tbody>
         </table>
         <div class="pagination-container">
+            <div class="items-per-page">
+                <!-- <label for="itemsPerPage">Show:</label> -->
+                <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
+                  <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+                </select>
+                <span>entries per page</span>
+              </div>
             <pagination-controls class="page" (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
           </div>
     </div>

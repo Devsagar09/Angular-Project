@@ -22,7 +22,7 @@ body {
     padding: 15px 20px;
     font-size: 20px;
     font-weight: bold;
-    width: 100%;
+    width: 97%;
     margin: 0; 
     display: flex;
     align-items: center;
@@ -273,4 +273,27 @@ input[type="checkbox"] {
         font-size: 10px;
         padding: 4px;
     }
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+.items-per-page {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.items-per-page select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
 }

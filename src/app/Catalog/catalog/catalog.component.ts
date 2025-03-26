@@ -25,7 +25,8 @@ export class CatalogComponent {
     p: number = 1; // Current page
     trainings: Training[] = [];
     isLoading: boolean = true;
-    studentId: number | null = null;
+    studentId: number | null = null; 
+    searchQuery: string = '';
   
     goToDashboard() {
       this.router.navigate(['/dashboard']);
@@ -33,9 +34,12 @@ export class CatalogComponent {
   
     ngOnInit(): void {
       const storedStudentId = sessionStorage.getItem('studentId');
+      this.isLoading = true;
       if (storedStudentId) {
         this.studentId = parseInt(storedStudentId, 10);
         this.loadTrainings();
+        this.fetchCatalog();
+        this.isLoading = false;
       } else {
         console.error("No student ID found in local storage!");
       }
@@ -56,5 +60,34 @@ export class CatalogComponent {
         });
       }
     }
+
+    fetchCatalog(): void {
+      if (!this.searchQuery.trim()) {
+        this.isLoading = true; 
+        this.loadTrainings()
+  
+        setTimeout(() => {
+          this.isLoading = false; // Hide loader after delay
+        }, 2000);
+        return;
+      }
+      this.isLoading = true; 
+  
+      this.CatalogService.searchCC( this.studentId ?? 0,this.searchQuery).subscribe({
+        next: (data) => {
+          setTimeout(() => {
+            console.log("Filtered Search Results:", data);
+            this.trainings = data;
+            this.isLoading = false; // Hide skeleton loader after delay
+          }, 2000);
+  
+        },
+        error: (error) => {
+          console.error('Error fetching search results:', error);
+          this.isLoading = false;
+        }
+      });
+    }
+  
      
 }
