@@ -28,6 +28,7 @@ body {
     border-radius: 8px;
     /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
     width: 100%;
+  }
 
     .employee-header {
     background-color: #134c68; /* Teal background */
@@ -371,4 +372,4 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
-  }
+  

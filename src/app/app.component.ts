@@ -9,7 +9,7 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 })
 export class AppComponent implements OnInit{
   private inactivityTimer: any;
-  private inactivityLimit = 2 * 60 * 1000; // 2 minutes
+  private inactivityLimit = 60 * 60 * 1000; // 2 minutes
   userRole: string | null = null;
   // isLoading: boolean = true;  // Add a loading flag
 
@@ -17,12 +17,14 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
     this.resetInactivityTimer();
-        this.userRole = localStorage.getItem('userRole');
+    this.userRole = sessionStorage.getItem('userRole');
+        this.router.events.subscribe(() => {
+          this.resetInactivityTimer();
+        });
     // setTimeout(() => {
     //    this.isLoading = false;
     // }, 500);
 
-    this.userRole = sessionStorage.getItem('userRole');
   }
 
   @HostListener('document:mousemove')
