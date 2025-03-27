@@ -27,9 +27,10 @@ export class IdpComponent {
   isLoading: boolean = true;
   studentId: number | null = null;
   searchQuery: string = '';
+  isModalOpen: boolean = false;
 
   goToDashboard() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/']);
   }
 
   ngOnInit(): void {
@@ -60,6 +61,16 @@ export class IdpComponent {
       });
     }
   }
+
+
+  OpenModelBox():void{
+    this.isModalOpen = true
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
 
   fetchIDP(): void {
     if (!this.searchQuery.trim()) {
