@@ -29,7 +29,7 @@ export class CatalogComponent {
     searchQuery: string = '';
   
     goToDashboard() {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/']);
     }
   
     ngOnInit(): void {

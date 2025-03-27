@@ -39,7 +39,7 @@
             </div>
 
             <div class="nav-right">
-                <button kendoButton size="large" themeColor="primary" title="Switch to Admin">Admin</button>
+                <button kendoButton size="large" themeColor="primary" title="Switch to Admin" *ngIf="userRole=='Admin'">Admin</button>
                 <div class="user-profile" (click)="toggleDropdown()">
                     <img [src]="profileImage" alt="Profile Image">
                     <span>{{ firstname }} {{ lastname }}</span>

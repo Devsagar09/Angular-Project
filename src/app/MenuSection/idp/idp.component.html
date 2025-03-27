@@ -71,14 +71,38 @@
 
                 <div class="card-footer">
                     <button class="btn"
-                        *ngIf="training.status === 'Not Started' || training.status === 'In Progress' || training.status === 'Completed'">
+                        *ngIf="training.status === 'Not Started' || training.status === 'Completed'">
                         {{ training.trainingtype_name }}
+                    </button>
+
+                    <button class="btn"
+                        *ngIf="training.status === 'In Progress'" (click)="OpenModelBox()">
+                        Join
                     </button>
 
                     <!-- Pending Approval (Request for Approval Button) -->
                     <button class="btn pending-btn" *ngIf="training.status === 'Pending Approval'">
                         Request for Approval
                     </button>
+                </div>
+
+                
+            </div>
+
+            <div *ngIf="isModalOpen" class="modal">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <span class="close" (click)="closeModal()">&times;</span>
+                        <h3 class="model-title">Confirmation</h3>
+                    </div>
+            
+               
+                    <!-- Modal Footer with Aligned Buttons -->
+                    <div class="modal-footer">
+                        <button (click)="closeModal()" class="btn-yes">Re-Join Training</button>
+                        <button (click)="closeModal()" class="btn-no">Request for Complete</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -90,10 +114,9 @@
 </div>
 
 
-
 <ng-template #noData>
     <div class="no-data-container">
         <img src="assets/nodata.png" alt="No Data" class="no-data-image">
-        <h3>" {{searchQuery}} " No trainings found.</h3>
+        <h3>No trainings found.</h3>
     </div>
 </ng-template>
