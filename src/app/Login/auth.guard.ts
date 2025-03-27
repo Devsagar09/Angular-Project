@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
 
 
     if (studentId) {
-      if (state.url === '/') {
+      if (state.url === '/' || state.url === '/login') {
         if (userRole === 'Admin') {
           return this.router.parseUrl('/dashboard');
         } else if (userRole === 'Student') {

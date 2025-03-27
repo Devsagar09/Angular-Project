@@ -38,8 +38,14 @@
     <div class="form">
         <div class="form-group">
             <label>Student Number</label>
-            <input type="text" name="student_No" placeholder="Student unique identifier" [(ngModel)]="studentData.student_No" required>
+                <input type="text" name="student_No" placeholder="Student unique identifier"
+                       [(ngModel)]="studentData.student_No" #studentNo="ngModel" required
+                       [ngClass]="{'invalid-input': studentNo?.invalid && studentNo?.touched}">
+                <span *ngIf="studentNo?.invalid && studentNo?.touched" class="error-message">
+                    Student Number is required.
+                </span>                   
         </div>
+        
         <div class="form-group">
             <label>First Name</label>
             <input type="text" name="firstname" [(ngModel)]="studentData.firstname" (input)="generateUsernameAndPassword()" required>
