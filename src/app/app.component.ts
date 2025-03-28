@@ -16,11 +16,14 @@ export class AppComponent implements OnInit{
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.resetInactivityTimer();
     this.userRole = sessionStorage.getItem('userRole');
-        this.router.events.subscribe(() => {
-          this.resetInactivityTimer();
-        });
+    this.resetInactivityTimer();
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.resetInactivityTimer();
+      }
+    });
     // setTimeout(() => {
     //    this.isLoading = false;
     // }, 500);
@@ -30,6 +33,8 @@ export class AppComponent implements OnInit{
   @HostListener('document:mousemove')
   @HostListener('document:keydown')
   @HostListener('document:click')
+  @HostListener('document:scroll')
+  @HostListener('document:touchstart')
   resetInactivityTimer() {
     clearTimeout(this.inactivityTimer); // Clear previous timer
     this.inactivityTimer = setTimeout(() => {

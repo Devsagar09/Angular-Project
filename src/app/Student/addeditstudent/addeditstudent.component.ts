@@ -25,6 +25,9 @@ import { NgForm } from '@angular/forms';
     itemsPerPage: number = 10;
     itemsPerPageOptions: number[] = [2,5, 10, 20, 50];
     showPassword: boolean = false;
+    studentNumberExists: boolean = false; 
+    studentEmailExists: boolean = false; 
+    studentsList: any[] = []; // Store students data
 
     roles: any[] = [];
     studentData: any = { role_Id: "",username: "", password: "", };
@@ -38,18 +41,66 @@ import { NgForm } from '@angular/forms';
 
     generateUsernameAndPassword() {
       if (this.studentData.firstname && this.studentData.lastname) {
-
-        const baseUsername = this.studentData.firstname.charAt(0).toLowerCase() + this.studentData.lastname.toLowerCase();
-  
-        this.studentData.username = baseUsername;
-        
-        this.studentData.password = baseUsername;
-  
-        console.log("Generated Username:", this.studentData.username);
-        console.log("Generated Password:", this.studentData.password);
+        const baseUsername = this.studentData.firstname.charAt(0) + this.studentData.lastname;
+                this.ensureUniqueUsername(baseUsername);
       }
     }
+    
+    ensureUniqueUsername(baseUsername: string) {
+      let newUsername = baseUsername;
+      let existingCount = 0;
+    
+      this.studentService.getStudent().subscribe({
+        next: (students) => {
+          while (students.some((student: { username: string; }) => student.username === newUsername)) {
+            existingCount++;
+            newUsername = baseUsername + existingCount; 
+          }
+    
+          this.studentData.username = newUsername;
+          this.studentData.password = newUsername;
+          },
+        error: (err: any) => {
+          console.error('Error fetching students:', err);
+        }
+      });
+    }
+    
+  
+    checkStudentNumber() {
+      if (!this.studentData.student_No) {  
+        this.studentNumberExists = false;
+        return;
+    }
+      this.studentService.getStudent().subscribe({
+          next: (students) => {
+              this.studentNumberExists = students.some(
+                  (student: { student_No: any; }) => student.student_No === this.studentData.student_No
+              );
+          },
+          error: (err: any) => { 
+              console.error('Error fetching students:', err);
+          }
+      });
+  }
 
+  checkEmail() {
+    if (!this.studentData.email) {  
+      this.studentEmailExists = false;
+      return;
+  }
+    this.studentService.getStudent().subscribe({
+        next: (students) => {
+            this.studentEmailExists = students.some(
+                (student: { email: any; }) => student.email === this.studentData.email
+            );
+        },
+        error: (err: any) => { 
+            console.error('Error fetching students:', err);
+        }
+    });
+}
+  
     getRoles() {
       this.studentService.getRoles().subscribe({
         next: (data) => {
@@ -113,29 +164,49 @@ import { NgForm } from '@angular/forms';
   }
   
     setActiveTab(tab: string) {
-      console.log(`Switching to tab: ${tab}, Student ID: ${this.studentData.student_Id}`);
-
+      // console.log(`Switching to tab: ${tab}, Student ID: ${this.studentData.student_Id}`);
     const tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
-
     const currentIndex = tabOrder.indexOf(this.activeTab);
     const nextIndex = tabOrder.indexOf(tab);
 
     if (nextIndex > currentIndex && !this.completedTabs.includes(this.activeTab)) {
+      if (this.activeTab === 'personInfo' && (!this.studentData.student_No || !this.studentData.firstname || 
+        !this.studentData.lastname || !this.studentData.email || !this.studentData.role_Id)) {
+      return; 
+    }
+    for (let i = currentIndex; i < nextIndex; i++) {
+      if (!this.completedTabs.includes(tabOrder[i])) {
+          this.completedTabs.push(tabOrder[i]);
+      }
+  }
       this.completedTabs.push(this.activeTab);
+      
     }
 
     if (nextIndex < currentIndex) {
-      const resetTabs = tabOrder.slice(nextIndex + 1);
-      resetTabs.forEach((tab) => {
-        const index = this.completedTabs.indexOf(tab);
-        if (index > -1) {
-          this.completedTabs.splice(index, 1);
-        }
+      this.completedTabs = this.completedTabs.filter((completedTab) => {
+          return tabOrder.indexOf(completedTab) <= nextIndex;
       });
-    }
+  }
 
     this.activeTab = tab;
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 50);
   }
+
+  getRoleNameById(roleId: any): string {
+  
+    if (!roleId) {
+        console.warn('Role ID is undefined or empty.');
+        return 'NA';
+    }
+
+    const role = this.roles.find(r => r.role_Id == roleId);
+    return role ? role.role_Name : 'NA';
+}
+
+
     isActive(tab: string): boolean {
       return this.activeTab === tab;
     }
@@ -155,14 +226,22 @@ import { NgForm } from '@angular/forms';
       const currentIndex = tabOrder.indexOf(this.activeTab);
     
       if (this.activeTab === 'personInfo') {
+        if (!this.studentData.student_No || !this.studentData.firstname || !this.studentData.lastname || 
+          !this.studentData.email || !this.studentData.role_Id) {
+        
+            this.studentData.touchedFields = true; // Add a flag to trigger validation in the template
+            this.showErrorSnackbar("Please fill all required fields.");
+        return; // Stop navigation if required fields are missing
+      }
         this.addOrUpdateStudent(); 
       } else if (this.activeTab === 'assignTrainings') {
-        this.assignTrainings(); 
+        this.setActiveTab('reviewConfirm');
       } else if (currentIndex < tabOrder.length - 1) {
         this.setActiveTab(tabOrder[currentIndex + 1]);
       }
     }
-    
+
+
     prevStep() {
       const tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
       const currentIndex = tabOrder.indexOf(this.activeTab);
@@ -172,20 +251,64 @@ import { NgForm } from '@angular/forms';
       }
     }
 
+    saveReview() {
+      this.addOrUpdateStudent(); 
+      this.assignTrainings();
+    }
+    
+    saveAndExit() {
+      this.addOrUpdateStudent(); 
+      this.assignTrainings();
+      window.location.href = '/Student'; // Redirect to another page
+    }
+
+    readyToFinish() {
+      if (!this.studentData.student_No || !this.studentData.firstname || 
+          !this.studentData.lastname || !this.studentData.email || !this.studentData.role_Id) {
+          
+          this.studentData.touchedFields = true; 
+          this.showErrorSnackbar("Please fill all required fields.");
+          return; 
+      }
+  
+      this.addOrUpdateStudent(); 
+
+      if (!this.completedTabs.includes('assignTrainings')) {
+        this.completedTabs.push('personInfo')
+        this.completedTabs.push('assignTrainings');
+    }
+      // Use a small delay to ensure all operations complete before changing tabs
+      setTimeout(() => {
+          this.activeTab = 'reviewConfirm'; // Ensure tab is set correctly
+      }, 50); 
+  }
+  
+  
+    
+
     addOrUpdateStudent(studentForm?: NgForm) {
+      console.log("Submitting student data:", this.studentData);
+    
       this.studentService.addEditStudent(this.studentData).subscribe({
         next: (response) => {
           this.studentData = { ...this.studentData, student_Id: response.studentId }; 
-          console.log('Student added/updated:', response);
+          // console.log('Student added/updated:', response);
           this.showSuccessSnackbar('Student Added Successfully.');
           if (studentForm) studentForm.resetForm();
-          this.setActiveTab('assignTrainings');
+          if (this.activeTab !== 'reviewConfirm') {
+            this.setActiveTab('assignTrainings'); 
+        }
         },
         error: (error) => {
-          console.error('Error adding/updating student:', error);
+          console.error("API Error:", error);
+          if (error.error) {
+            console.error("Error Details:", error.error); 
+          }
+          this.showErrorSnackbar('Failed to add student.');
         }
       });
     }
+    
 
     assignTrainings() {
       console.log("Assigning trainings for student ID:", this.studentData.student_Id);
@@ -199,11 +322,7 @@ import { NgForm } from '@angular/forms';
         .filter(training => training.selected)
         .map(training => training.training_id).join(",");
         
-      if (selectedTrainingIds.length === 0) {
-        this.showErrorSnackbar("No trainings selected.");
-        return;
-      }
-    
+     
       const requestPayload = {
         studentId: this.studentData.student_Id,
         trainingIds: selectedTrainingIds 
@@ -212,7 +331,7 @@ import { NgForm } from '@angular/forms';
       this.studentService.assignTrainings(requestPayload).subscribe({
         next: (response) => {
           console.log("API Response:", response);
-          this.showSuccessSnackbar('Trainings assigned successfully.');
+          // this.showSuccessSnackbar('Trainings assigned successfully.');
           this.setActiveTab('reviewConfirm'); 
         },
         error: (error) => {
