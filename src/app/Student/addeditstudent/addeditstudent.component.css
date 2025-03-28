@@ -20,7 +20,7 @@ body {
 }
 
 .tab-content {
-    margin-top: 100px; /* Increased to prevent overlap */
+    margin-top: 90px; /* Increased to prevent overlap */
     padding: 20px;
     overflow-y: auto; /* Enables scrolling inside the content */
 }

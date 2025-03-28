@@ -170,10 +170,10 @@ import { NgForm } from '@angular/forms';
     const nextIndex = tabOrder.indexOf(tab);
 
     if (nextIndex > currentIndex && !this.completedTabs.includes(this.activeTab)) {
-      if (this.activeTab === 'personInfo' && (!this.studentData.student_No || !this.studentData.firstname || 
-        !this.studentData.lastname || !this.studentData.email || !this.studentData.role_Id)) {
-      return; 
-    }
+    //   if (this.activeTab === 'personInfo' && (!this.studentData.student_No || !this.studentData.firstname || 
+    //     !this.studentData.lastname || !this.studentData.email || !this.studentData.role_Id)) {
+    //   return; 
+    // }
     for (let i = currentIndex; i < nextIndex; i++) {
       if (!this.completedTabs.includes(tabOrder[i])) {
           this.completedTabs.push(tabOrder[i]);
@@ -231,7 +231,7 @@ import { NgForm } from '@angular/forms';
         
             this.studentData.touchedFields = true; // Add a flag to trigger validation in the template
             this.showErrorSnackbar("Please fill all required fields.");
-        return; // Stop navigation if required fields are missing
+        return; 
       }
         this.addOrUpdateStudent(); 
       } else if (this.activeTab === 'assignTrainings') {
@@ -287,7 +287,7 @@ import { NgForm } from '@angular/forms';
     
 
     addOrUpdateStudent(studentForm?: NgForm) {
-      console.log("Submitting student data:", this.studentData);
+      // console.log("Submitting student data:", this.studentData);
     
       this.studentService.addEditStudent(this.studentData).subscribe({
         next: (response) => {
@@ -331,7 +331,7 @@ import { NgForm } from '@angular/forms';
       this.studentService.assignTrainings(requestPayload).subscribe({
         next: (response) => {
           console.log("API Response:", response);
-          // this.showSuccessSnackbar('Trainings assigned successfully.');
+          this.showSuccessSnackbar('Trainings assigned successfully.');
           this.setActiveTab('reviewConfirm'); 
         },
         error: (error) => {

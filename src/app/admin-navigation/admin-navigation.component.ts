@@ -70,13 +70,32 @@ export class AdminNavigationComponent implements OnInit {
     }
 
   toggleDropdown(event: Event) {
-    // Prevent default propagation so document click listener doesn't close it immediately
     event.stopPropagation();
     this.dropdownVisible = !this.dropdownVisible;
     console.log('Dropdown toggled:', this.dropdownVisible); // Debug log
   }
-
-
+  
+  switchToLearner() {
+    if (this.isAdmin()) {  
+      sessionStorage.setItem('newRole', 'Student');  // Temporary role for UI behavior
+      this.router.navigateByUrl('/studentdashboard').then(() => {
+        location.reload();  // Ensure the UI updates after navigation
+      });
+    }
+  }
+  
+  getDisplayedRole(): string {
+    return sessionStorage.getItem('newRole') || sessionStorage.getItem('userRole') || '';
+  }
+  
+  isAdmin(): boolean {
+    return this.getDisplayedRole() === 'Admin';
+  }
+  
+  isStudent(): boolean {
+    return this.getDisplayedRole() === 'Student';
+  }
+  
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;

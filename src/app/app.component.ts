@@ -11,11 +11,13 @@ export class AppComponent implements OnInit{
   private inactivityTimer: any;
   private inactivityLimit = 60 * 60 * 1000; // 2 minutes
   userRole: string | null = null;
+  newRole: string | null = null;
   // isLoading: boolean = true;  // Add a loading flag
 
   constructor(private router: Router) {}
 
   ngOnInit() {
+    this.newRole=sessionStorage.getItem('newRole');
     this.userRole = sessionStorage.getItem('userRole');
     this.resetInactivityTimer();
 
@@ -52,11 +54,16 @@ export class AppComponent implements OnInit{
     return !!this.userRole;  
   }
 
+  getUserRole(): string {
+    return sessionStorage.getItem('newRole') || sessionStorage.getItem('userRole') || '';
+  }
+  
   isAdmin(): boolean {
-    return this.userRole === 'Admin';
+    return this.getUserRole() === 'Admin';
   }
-
+  
   isStudent(): boolean {
-    return this.userRole === 'Student';
+    return this.getUserRole() === 'Student';
   }
+  
 }
