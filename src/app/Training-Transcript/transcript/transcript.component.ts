@@ -38,7 +38,7 @@ export class TranscriptComponent {
 
 
     goToDashboard() {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/']);
     }
 
     loadTrainings():void{

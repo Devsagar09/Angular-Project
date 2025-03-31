@@ -20,6 +20,7 @@ export class UserNavigationComponent implements OnInit {
   isLoginPage = true;
   faArrowRightFromBracket = faArrowRightFromBracket;
   faUser = faUser
+  userRole = sessionStorage.getItem('userRole');
 
   dropdownVisible = false;
   isCollapsed = true;
@@ -42,6 +43,7 @@ export class UserNavigationComponent implements OnInit {
       this.userRole =sessionStorage.getItem('userRole');
         this.loadUserData();
         const studentId = sessionStorage.getItem('studentId');
+      
         if(studentId){
           this.fetchProfileImage(studentId);
         }
