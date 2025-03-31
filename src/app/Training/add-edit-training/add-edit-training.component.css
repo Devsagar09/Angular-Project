@@ -193,6 +193,7 @@ body {
   align-items: center;
   margin-bottom: 15px;
   margin-left: 120px;
+  position: relative; /* Enable relative positioning for absolute positioning of the error */
 }
 
 .container .form-group label {
@@ -204,15 +205,37 @@ body {
   color: #333;
 }
 
-.container .form-group input,
-.container .form-group select,
-.container .form-group textarea {
+.container .form-group input {
   width: 40%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
 }
+
+/* Error message styles start */
+.container .form-group small.text-danger {
+  color: red;
+  font-size: 14px;
+  flex-direction: row;
+  /* position: absolute; */
+  white-space: nowrap;/* Absolute positioning */
+  /* right: 270px; Position the error message to the right of the input */
+  /* top: 50%; Vertically center the error message */
+  /* transform: translateY(-50%); Adjust centering */
+  /* white-space: nowrap; Prevent the message from wrapping */
+}
+
+.container .form-group input.is-invalid {
+  border: 1px solid red; /* Apply red border for invalid inputs */
+  background-color: #ffe6e6; /* Optional: Add a light red background */
+}
+
+.container .form-group .file-upload-container.is-invalid {
+  border-color: red; /* Highlight the border in red */
+  background-color: #ffe6e6; /* Optional: Light red background for error */
+}
+/* error msg :end */
 
 .container .form-group input:focus,
 .container .form-group select:focus,
@@ -420,7 +443,7 @@ body {
 
 /* assign students */
 
-.container {
+.assign-container {
   width: 100%;
   max-width: 98.5%;
   background: white;
@@ -509,12 +532,6 @@ table {
 /* Define specific width for the checkbox column */
 th:first-child,
 td:first-child {
-  width: 50px; /* Adjust this value as needed */
-  text-align: center;
-}
-/* Define specific width for the checkbox column */
-th:nth-child(2),
-td:nth-child(2) {
   width: 50px; /* Adjust this value as needed */
   text-align: center;
 }
@@ -667,8 +684,8 @@ box-shadow: 0 4px  8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
 }
 
 .delete-btn {
-  background-color: #134c68;
-  color: white;
+  /* background-color: #134c68; */
+  color: rgb(224, 99, 99);
 }
 
 .add-btn {
@@ -775,3 +792,6 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(18px);
 }
+
+
+

@@ -5,20 +5,31 @@ import { catchError, Observable, throwError, timeout } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class TrainingService {
 
-  private apiUrl = 'https://localhost:7172/api/Training/getTraining'; // Update with your API URL
+  private studapiUrl = 'https://localhost:7172/api/Student/GetStudents';
 
-  private TTapiUrl = 'https://localhost:7172/api/TrainingType/getTrainingType'; // Update with your API URL
+  private apiUrl = 'https://localhost:7172/api/Training/getTraining';
 
-  private SearchapiUrl = 'https://localhost:7172/api/Training/searchTraining'; // Update with your API URL
+  private TTapiUrl = 'https://localhost:7172/api/TrainingType/getTrainingType';
 
-  private addTrainingapiUrl = 'https://localhost:7172/api';
+  private SearchapiUrl = 'https://localhost:7172/api/Training/searchTraining';
+
+  private addTrainingapiUrl = 'https://localhost:7172/api/Training/addTraining';
+
+  private SearchStudUrl = 'https://localhost:7172/api/Student/searchStudent';
+
+  private assignStudentUrl = 'https://localhost:7172/api/AssignStudents/AssignStudents';
 
   constructor(private http: HttpClient) { }
 
   getTraining():Observable<any>{
     return this.http.get<any[]>(this.apiUrl)
+  }
+
+  getStudent():Observable<any>{
+    return this.http.get<any[]>(this.studapiUrl)
   }
 
   getTrainingType():Observable<any>{
@@ -29,9 +40,16 @@ export class TrainingService {
     return this.http.get<any[]>(`${this.SearchapiUrl}?searchValue=${searchValue}`);
   }
 
-  // Add training
-  addTraining(trainingData: any): Observable<any> {
-    return this.http.post(`${this.addTrainingapiUrl}/Training/addTraining`, trainingData);
+  searchStudent(searchValue: string): Observable<any> {
+    return this.http.get<any[]>(`${this.SearchStudUrl}?searchValue=${searchValue}`);
+  }
 
+  // Add new training
+  addTraining(formData: FormData): Observable<any> {
+    return this.http.post<any>(this.addTrainingapiUrl, formData); // Use POST for FormData
+  }
+
+  assignStudents(payload: any): Observable<any> {
+    return this.http.post(`${this.assignStudentUrl}`, payload);
   }
 }

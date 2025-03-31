@@ -9,7 +9,7 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 })
 export class AppComponent implements OnInit{
   private inactivityTimer: any;
-  private inactivityLimit = 2 * 60 * 1000; // 2 minutes
+  private inactivityLimit = 20 * 60 * 1000; // 2 minutes
   userRole: string | null = null;
   // isLoading: boolean = true;  // Add a loading flag
 
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit{
   }
 
   isLoggedIn(): boolean {
-    return !!this.userRole;  
+    return !!this.userRole;
   }
 
   isAdmin(): boolean {
