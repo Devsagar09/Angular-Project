@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { TrainingService } from '../training.service';
 import { Router } from '@angular/router';
+import { TrainingService } from '../training.service';
 
 @Component({
   selector: 'app-trainingtype',
@@ -88,9 +88,12 @@ getIconForType(trainingtype_Name: string | undefined): string {
   }
 
   // Redirect to the Add Training page with the selected training type ID
-  redirectToAddTraining(trainingTypeId: number): void {
+  redirectToAddTraining(trainingtype_id: number, trainingtype_Name: string): void {
     this.router.navigate(['/add-training'], {
-      queryParams: { trainingTypeId },
+      queryParams: {
+        trainingtype_id,
+        trainingtype_Name, // Pass the training type name
+      },
     });
   }
 }
