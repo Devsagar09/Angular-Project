@@ -15,10 +15,12 @@ export class UserNavigationComponent implements OnInit {
   firstname: string | null = '';
   lastname: string | null = '';
   profileImage: string | null = '';
+  userRole: string | null = '';
   isLoading = true;
   isLoginPage = true;
   faArrowRightFromBracket = faArrowRightFromBracket;
   faUser = faUser
+  userRole = sessionStorage.getItem('userRole');
 
   dropdownVisible = false;
   isCollapsed = true;
@@ -38,12 +40,22 @@ export class UserNavigationComponent implements OnInit {
   }
 
   ngOnInit() {
+      this.userRole =sessionStorage.getItem('userRole');
         this.loadUserData();
         const studentId = sessionStorage.getItem('studentId');
+      
         if(studentId){
           this.fetchProfileImage(studentId);
         }
   }
+  
+  
+  switchToAdmin() {
+    sessionStorage.removeItem('newRole');  // Remove the new role
+    this.router.navigate(['/dashboard']).then(() => {
+        window.location.href = '/dashboard';
+    });
+}
 
   loadUserData() {
     this.firstname = sessionStorage.getItem('firstname');

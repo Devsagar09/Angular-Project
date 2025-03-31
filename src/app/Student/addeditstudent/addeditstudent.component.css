@@ -1,16 +1,30 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding-bottom: 50px;
+    padding-bottom: 0; /* Remove extra bottom padding */
     background-color: #f5f5f5;
+    overflow: scroll; /* Allow scrolling when needed */
 }
-
+::-webkit-scrollbar {
+    display: none; 
+}
 
 .tab-container {
+    position: fixed;
+    top: 120px; /* Position below header */
+    width: 100%;
+    background-color: #f5f5f5;
     display: flex;
     border-bottom: 2px solid #ddd;
-    background-color: #f5f5f5;
+    z-index: 999;
 }
+
+.tab-content {
+    margin-top: 90px; /* Increased to prevent overlap */
+    padding: 20px;
+    overflow-y: auto; /* Enables scrolling inside the content */
+}
+
 .tab {
     flex: 1;
     padding: 15px;
@@ -20,6 +34,13 @@ body {
     transition: background 0.3s ease;
     color: #333;
 }
+
+.tab:hover {
+    background-color: #b2b5b8; /* Light blue background */
+    color: #134c68; /* Dark blue text */
+  }
+  
+
 .tab.active {
     border-bottom: 3px solid #134c68;
     color: #134c68;
@@ -36,49 +57,54 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    padding-bottom: 40px;
 }
 
 .form-group {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 60%; /* Adjust width as needed */
+    width: 63%; /* Adjust width as needed */
     margin-bottom: 15px;
+    position: relative; /* Needed for error message positioning */
+    gap: 5px;
 }
 
 .form-group label {
-    width: 25%; /* Set width for labels */
+    width: 20%; /* Set width for labels */
     text-align: right; /* Align text to the right */
     font-size: 13px;
-    margin-bottom: 3px;
     margin-right: 15px; /* Space between label and input */
 }
 
-.form-group textarea {
-    width: 60%;  /* Fixed width */
-    min-height: 80px; /* Set a minimum height */
-    resize: vertical; /* Allows only vertical resizing */
+.form-group input,
+.form-group select {
+    width: 60%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    transition: border 0.3s ease;
 }
 
-.form-group input,
-.form-group select,
 .form-group textarea {
-    width: 60%; /* Adjust input width */
-    padding: 8px;
+    width: 61%;
+    height: auto; /* Allow height to be changeable */
+    min-height: 50px; /* Set a reasonable minimum height */
+    max-height: 200px; /* Set a reasonable maximum height */
+    resize: vertical; /* Allow resizing only in the vertical direction */
     border: 1px solid #ccc;
     border-radius: 4px;
+    transition: border 0.3s ease;
 }
+
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border: 1px solid #134c68 !important; /* Add !important to override other styles */
-    outline: none; /* Remove default browser outline */
+    border: 1px solid #134c68 !important; /* Highlight input field when focused */
+    outline: none;
 }
-
 
 .btn-container {
     position: fixed;  /* Keeps the buttons fixed at the bottom */
@@ -100,7 +126,6 @@ body {
     gap: 8px;
     padding: 8px 16px;
     font-size: 16px;
-    font-weight: bold;
     border: 2px solid;
     border-radius: 50px;
     cursor: pointer;
@@ -156,15 +181,19 @@ body {
 }
 
 .employee-header {
-    background-color: #134c68; /* Teal background */
-    color: white; /* White text */
+    position: fixed;
+    width: 99%;
+    top:65px;
+    background-color: #134c68;
+    color: white;
     padding: 15px 20px;
     font-size: 20px;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 2px solid #138496; /* Slightly darker border */
+    border-bottom: 2px solid #138496;
+    z-index: 1000; 
 }
 
 .employee-header .title {
@@ -176,6 +205,7 @@ body {
 .employee-header .title i {
     font-size: 24px; /* Icon size */
 }
+
 .show-more-container {
     display: flex;
     align-items: center;
@@ -184,6 +214,33 @@ body {
     width: 100%;
     margin: 20px 0;
 }
+
+.show-more-fields {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.show-more-fields {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.show-more-fields .form-group {
+    width: 63%;
+}
+
+/* 🔹 Fix "Show More" Button Position */
+.show-more-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0;
+}
+
+
 
 .line {
     flex-grow: 1;
@@ -214,6 +271,8 @@ body {
 
 .assign-trainings-container {
     padding: 20px;
+   margin-top: -45px;
+   margin-bottom: 50px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -313,10 +372,76 @@ input:checked + .slider:before {
     position: relative;
   }
 
+
   .error-message {
     color: red;
     font-size: 12px;
-    margin-top: 5px;
+    white-space: nowrap;
+}
+
+/* Red border for invalid fields */
+.invalid-input {
+    border: 1px solid red !important;
+}
+
+  ::ng-deep .app-notification-success {
+    background-color: rgb(75, 207, 75) !important;
+    color: white !important;
+  }
+  
+  ::ng-deep .app-notification-error {
+    background-color: rgb(223, 85, 85) !important;
+    color: white !important;
   }
   
 
+  .password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input {
+    flex: 1;
+    padding-right: 30px; /* Space for the eye icon */
+}
+
+.password-container i {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #134c68;
+}
+.review-box {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    text-align: center;
+}
+
+.review-box .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
+    width: 100%;
+}
+
+.review-box .label {
+    text-align: right;
+    flex: 1; /* Makes all labels equal width */
+    padding-right: 10px;
+    font-size: 14px;
+}
+
+.review-box .value {
+    text-align: left;
+    flex: 1; /* Ensures text is aligned properly */
+    font-size: 14px;
+
+}

@@ -9,25 +9,34 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 })
 export class AppComponent implements OnInit{
   private inactivityTimer: any;
-  private inactivityLimit = 20 * 60 * 1000; // 2 minutes
+  private inactivityLimit = 60 * 60 * 1000; // 60 minutes
   userRole: string | null = null;
+  newRole: string | null = null;
   // isLoading: boolean = true;  // Add a loading flag
 
   constructor(private router: Router) {}
 
   ngOnInit() {
+    this.newRole=sessionStorage.getItem('newRole');
+    this.userRole = sessionStorage.getItem('userRole');
     this.resetInactivityTimer();
-        this.userRole = localStorage.getItem('userRole');
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.resetInactivityTimer();
+      }
+    });
     // setTimeout(() => {
     //    this.isLoading = false;
     // }, 500);
 
-    this.userRole = sessionStorage.getItem('userRole');
   }
 
   @HostListener('document:mousemove')
   @HostListener('document:keydown')
   @HostListener('document:click')
+  @HostListener('document:scroll')
+  @HostListener('document:touchstart')
   resetInactivityTimer() {
     clearTimeout(this.inactivityTimer); // Clear previous timer
     this.inactivityTimer = setTimeout(() => {
@@ -45,11 +54,16 @@ export class AppComponent implements OnInit{
     return !!this.userRole;
   }
 
+  getUserRole(): string {
+    return sessionStorage.getItem('newRole') || sessionStorage.getItem('userRole') || '';
+  }
+  
   isAdmin(): boolean {
-    return this.userRole === 'Admin';
+    return this.getUserRole() === 'Admin';
   }
-
+  
   isStudent(): boolean {
-    return this.userRole === 'Student';
+    return this.getUserRole() === 'Student';
   }
+  
 }

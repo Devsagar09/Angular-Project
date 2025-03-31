@@ -33,85 +33,147 @@
 
     <br />
 
+    <div class="tab-content">
     <div *ngIf="isActive('personInfo')">
+        <form #studentForm="ngForm" (ngSubmit)="addOrUpdateStudent(studentForm)">
     <div class="form">
         <div class="form-group">
             <label>Student Number</label>
-            <input type="text" placeholder="Student unique identifier" [(ngModel)]="studentData.student_No" required>
+            <input type="text" name="student_No" placeholder="Student unique identifier"
+            [(ngModel)]="studentData.student_No" #studentNo="ngModel" required
+            [ngClass]="{'invalid-input': (!studentData.student_No && studentData.touchedFields) || (studentNo?.invalid && studentNo?.touched) || studentNumberExists}"
+            (input)="checkStudentNumber()" (blur)="checkStudentNumber()">
+                <span *ngIf="studentNo?.invalid && studentNo?.touched" class="error-message">
+                    Student Number is required.
+                </span>  
+                <span *ngIf="studentNumberExists" class="error-message">
+                    Already exists.
+                </span>                   
         </div>
+        
         <div class="form-group">
             <label>First Name</label>
-            <input type="text" [(ngModel)]="studentData.firstname" required>
+            <input type="text" name="firstname" [(ngModel)]="studentData.firstname" 
+            (keyup)="generateUsernameAndPassword()"
+            [(ngModel)]="studentData.firstname" #firstname="ngModel" required
+            [ngClass]="{'invalid-input': (!studentData.student_No && studentData.touchedFields) || (firstname?.invalid && firstname?.touched)}">
+            <span *ngIf="firstname.invalid && firstname.touched" class="error-message">
+                Firstname is required.
+            </span>  
         </div>
+        
         <div class="form-group">
             <label>Middle Name</label>
-            <input type="text"  [(ngModel)]="studentData.middlename">
+            <input type="text" name="middlename" [(ngModel)]="studentData.middlename">
         </div>
+
         <div class="form-group">
             <label>Last Name</label>
-            <input type="text" [(ngModel)]="studentData.lastname">
+            <input type="text" name="lastname" [(ngModel)]="studentData.lastname" 
+            (keyup)="generateUsernameAndPassword()"
+            [(ngModel)]="studentData.lastname" #lastname="ngModel" required
+            [ngClass]="{'invalid-input': (!studentData.student_No && studentData.touchedFields) || (lastname?.invalid && lastname?.touched)}">
+            <span *ngIf="lastname.invalid && lastname.touched" class="error-message">
+                Lastname is required.
+            </span> 
         </div>
+
         <div class="form-group">
             <label>Email</label>
-            <input type="email" [(ngModel)]="studentData.email">
+            <input type="email" name="email" [(ngModel)]="studentData.email"
+                #email="ngModel" required email pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                [ngClass]="{'invalid-input': (!studentData.student_No && studentData.touchedFields) || (email?.invalid && email?.touched) || studentEmailExists}"
+                (input)="checkEmail()" (blur)="checkEmail()">
+        
+            <!-- Show "Email is required" only when the field is empty -->
+            <span *ngIf="email.errors?.['required'] && email.touched" class="error-message">
+                Email is required.
+            </span>
+        
+            <!-- Show "Not valid" only when the email is not empty but has an invalid format -->
+            <span *ngIf="!email.errors?.['required'] && email.errors?.['pattern'] && email.touched" class="error-message">
+                Not valid.
+            </span>
+        
+            <span *ngIf="studentEmailExists" class="error-message">
+                Already exists.
+            </span>   
         </div>
+        
+
         <div class="form-group">
             <label>Roles/Permissions</label>
-            <select [(ngModel)]="studentData.role_Id" class="form-control" style="width: 62%;">
+            <select name="role_Id" [(ngModel)]="studentData.role_Id" #role_Id="ngModel" required
+                class="form-control" style="width: 62%;"
+                [ngClass]="{'invalid-input': (role_Id.invalid && role_Id.touched) || (!studentData.role_Id && studentData.touchedFields)}">
+                
                 <option value="" disabled>-- Select Role --</option>
                 <option *ngFor="let role of roles" [value]="role.role_Id">{{ role.role_Name }}</option>
             </select>
-          </div>
+                    <span *ngIf="role_Id.invalid && role_Id.touched" class="error-message">
+                Role is required.
+            </span>
+        </div>
+        
         <div class="form-group">
             <label>Username</label>
-            <input type="text" [(ngModel)]="studentData.username">
+            <input type="text" name="username" [(ngModel)]="studentData.username">
         </div>
+        
         <div class="form-group">
-            <label>Password</label>
-            <input type="password" [(ngModel)]="studentData.password">
+            <label style="margin-bottom: 12px;">Password</label>
+            <div class="form-group password-container" style="width: 62%;">
+                <input [type]="showPassword ? 'text' : 'password'" name="password" [(ngModel)]="studentData.password">
+                <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility()"></i>
+            </div>
         </div>
+        
         <div class="form-group">
             <label>Archive Date</label>
-            <input type="date" [(ngModel)]="studentData.archive_Date">
+            <input type="date" name="archive_Date" [(ngModel)]="studentData.archive_Date">
         </div>
 
         <!-- Show More / Show Less Button -->
         <div class="show-more-container">
             <hr class="line">
-            <button class="show-more-btn" (click)="toggleMoreField()">
+            <button type="button" class="show-more-btn" (click)="toggleMoreField()">
                 {{ buttonText }} <i class="fa" [ngClass]="showField ? 'fa-chevron-circle-up' : 'fa-chevron-circle-down'"></i>
             </button>
         </div>
 
-
-            <div class="form-group" *ngIf="showField">
+        <div  *ngIf="showField" class="show-more-fields">
+            <div class="form-group">
                 <label>Phone No</label>
-                <input type="text" [(ngModel)]="studentData.phone_No">
+                <input type="text" name="phone_No" [(ngModel)]="studentData.phone_No">
             </div>
 
-            <div class="form-group" *ngIf="showField">
+            <div class="form-group">
                 <label>Address</label>
-                <textarea rows="5" [(ngModel)]="studentData.address"></textarea>
+                <textarea rows="5" name="address" [(ngModel)]="studentData.address"></textarea>
                 </div>
 
-            <div class="form-group" *ngIf="showField">
+            <div class="form-group">
             <label>City</label>
-            <input type="text" [(ngModel)]="studentData.city">
+            <input type="text" name="city" [(ngModel)]="studentData.city">
             </div>
 
-            <div class="form-group" *ngIf="showField">
+            <div class="form-group">
                 <label>Postal Code</label>
-                <input type="text" [(ngModel)]="studentData.postal_Code">
+                <input type="text" name="postal_Code" [(ngModel)]="studentData.postal_Code">
                 </div>
 
-            <div class="form-group" *ngIf="showField">
+            <div class="form-group">
                 <label>State</label>
-                <input type="text" [(ngModel)]="studentData.state">
+                <input type="text" name="state" [(ngModel)]="studentData.state">
                 </div>
-                <div class="form-group" *ngIf="showField">
+
+                <div class="form-group">
                     <label>Country</label>
-                    <input type="text" [(ngModel)]="studentData.country"> 
+                    <input type="text" name="country" [(ngModel)]="studentData.country"> 
                     </div>
+                </div>
+    </div>
+    </form>
     </div>
     </div>
 
@@ -146,6 +208,7 @@
                     <td><input type="checkbox" type="checkbox" 
                         [(ngModel)]="training.selected"
                         (change)="updateSelectAll()"></td>
+                        <td hidden>{{training.training_id}}</td>
                     <td>{{ training.training_name }}</td>
                     <td>{{ training.training_code }}</td>
                     <td>{{ training.trainingtype_name }}</td>
@@ -174,21 +237,52 @@
     </div>
 
     <div *ngIf="isActive('reviewConfirm')">
-        final data
+        <div class="review-box">
+            <div class="row">
+                <div class="label">Student Number :</div>
+                <div class="value">{{ studentData.student_No || 'NA' }}</div>
+            </div>
+            <div class="row">
+                <div class="label">Username :</div>
+                <div class="value">{{ studentData.username || 'NA' }}</div>
+            </div>
+            <div class="row">
+                <div class="label">Email :</div>
+                <div class="value">{{ studentData.email || 'NA' }}</div>
+            </div>
+            <div class="row">
+                <div class="label">Role :</div>
+                <div class="value">{{ getRoleNameById(studentData.role_Id) || 'NA' }}</div>
+            </div>
+            </div>
     </div>
 </body>
 
-<!-- Buttons -->
 <div class="btn-container">
-    <button class="btn cancel" onclick="window.location.href='/Student';"><i class="fas fa-times" ></i> CANCEL</button>
+    <button class="btn cancel" onclick="window.location.href='/Student';">
+        <i class="fas fa-times"></i> CANCEL
+    </button>
+    
     <button class="btn prev" *ngIf="activeTab !== 'personInfo'" (click)="prevStep()">
         <i class="fas fa-chevron-left"></i> PREV
     </button>
-    <button class="btn next" (click)="nextStep()">
+
+    <!-- Show Save and Save & Exit buttons only on reviewConfirm tab -->
+    <ng-container *ngIf="activeTab === 'reviewConfirm'">
+        <button class="btn save" (click)="saveReview()">
+            <i class="fas fa-save"></i> SAVE
+        </button>
+        <button class="btn save-exit" (click)="saveAndExit()">
+            <i class="fas fa-sign-out-alt"></i> SAVE & EXIT
+        </button>
+    </ng-container>
+
+    <button class="btn next" *ngIf="activeTab !== 'reviewConfirm'" (click)="nextStep()">
         NEXT <i class="fas fa-chevron-right"></i>
     </button>
 
-    <button class="btn ready">
+    <button class="btn ready" *ngIf="activeTab !== 'reviewConfirm'" (click)="readyToFinish()">
         <i class="fas fa-flag"></i> READY TO FINISH
     </button>
 </div>
+
