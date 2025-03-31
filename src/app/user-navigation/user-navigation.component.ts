@@ -19,8 +19,7 @@ export class UserNavigationComponent implements OnInit {
   isLoading = true;
   isLoginPage = true;
   faArrowRightFromBracket = faArrowRightFromBracket;
-  faUser = faUser
-  userRole = sessionStorage.getItem('userRole');
+  faUser = faUser 
 
   dropdownVisible = false;
   isCollapsed = true;

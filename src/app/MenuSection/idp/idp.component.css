@@ -6,7 +6,7 @@
     padding: 2rem;
   } */
 
-  .back-dashboard {
+.back-dashboard {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -78,10 +78,11 @@
 }
 
 @media (max-width: 480px) {
-    .back-dashboard{
+    .back-dashboard {
         font-size: 12px;
         width: 90%;
     }
+
     .page-heading {
         font-size: 18px;
         flex-direction: column;
@@ -130,15 +131,15 @@
     background-color: #9c83e8;
     border-radius: 50%;
     padding: 10px;
-    margin-left: 10px;   
+    margin-left: 10px;
 }
 
-.search-icon svg:hover{
+.search-icon svg:hover {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     opacity: 0.8;
 
 }
- 
+
 
 /* skeleton view desing  */
 /* Skeleton Loader */
@@ -150,8 +151,13 @@
 }
 
 @keyframes skeleton-loading {
-    0% { background-position: 100% 0; }
-    100% { background-position: -100% 0; }
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: -100% 0;
+    }
 }
 
 /* Skeleton Card Layout */
@@ -160,7 +166,7 @@
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     overflow: hidden;
-    width: calc(25% - 15px);  
+    width: calc(25% - 15px);
     transition: 0.5s;
     min-width: 250px;
 }
@@ -190,7 +196,8 @@
 /* Card Container */
 .cards-container {
     display: flex;
-    justify-content: flex-start; /* Aligns items to the left */
+    justify-content: flex-start;
+    /* Aligns items to the left */
     align-items: flex-start;
     gap: 20px;
     flex-wrap: wrap;
@@ -203,10 +210,12 @@
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     overflow: hidden;
-    width: calc(25% - 15px);  
+    width: calc(25% - 15px);
     transition: 0.5s;
-    min-width: 250px;  
+    min-width: 250px;
+    min-height: 435px;
 }
+
 .training-card:hover {
     transform: scale(1.02);
 }
@@ -219,7 +228,7 @@
     justify-content: center;
     align-items: center;
     width: 90%;
-    height: 170px; 
+    height: 170px;
     object-fit: cover;
     border: 2px solid rgb(255, 255, 255);
     border-radius: 10px;
@@ -247,9 +256,9 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%; 
-  }
-   
+    max-width: 100%;
+}
+
 .info {
     font-size: 12px;
     color: gray;
@@ -289,6 +298,11 @@
     color: white;
 }
 
+.rejected {
+    background: #e60000;
+    color: white;
+}
+
 /* Button */
 .card-footer {
     padding: 10px;
@@ -311,22 +325,25 @@
     background: #2c3a9a;
 }
 
- /* Responsive - Stack cards on smaller screens */
- @media (max-width: 1024px) {
+/* Responsive - Stack cards on smaller screens */
+@media (max-width: 1024px) {
     .training-card {
-        width: calc(33.33% - 15px); /* 3 cards per row */
+        width: calc(33.33% - 15px);
+        /* 3 cards per row */
     }
 }
- 
+
 @media (max-width: 768px) {
     .training-card {
-        width: calc(50% - 15px); /* 2 cards per row */
+        width: calc(50% - 15px);
+        /* 2 cards per row */
     }
 }
- 
+
 @media (max-width: 480px) {
     .training-card {
-        width: 100%; /* 1 card per row */
+        width: 100%;
+        /* 1 card per row */
     }
 }
 
@@ -335,15 +352,18 @@
 
 .training-section {
     flex-grow: 1;
-    overflow-y: none; /* Enable scrolling only here */
-    max-height: calc(100vh - 150px); /* Adjust based on navbar/footer */
+    overflow-y: none;
+    /* Enable scrolling only here */
+    max-height: calc(100vh - 150px);
+    /* Adjust based on navbar/footer */
     padding-bottom: 20px;
 }
 
 .pagination-container {
     text-align: center;
     padding: 10px 0;
-    position: relative; /* Prevents unwanted page height expansion */
+    position: relative;
+    /* Prevents unwanted page height expansion */
 }
 
 .no-data-container {
@@ -351,19 +371,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;  
+    text-align: center;
     border-radius: 10px;
     padding: 40px;
-    width: 90%; 
-    min-height: 200px;  
+    width: 90%;
+    min-height: 200px;
 }
 
 .no-data-image {
-    width: 300px;  
+    width: 300px;
     margin-bottom: 10px;
 }
 
- 
+
 .no-data-container h3 {
     font-size: 18px;
     color: #333;
@@ -380,7 +400,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Soft dark overlay */
+    background: rgba(0, 0, 0, 0.5);
+    /* Soft dark overlay */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -402,12 +423,13 @@
 .modal-header {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center align the header */
+    justify-content: center;
+    /* Center align the header */
     position: relative;
     font-size: 18px;
     font-weight: 600;
     color: #333;
-    padding: 15px;
+    padding: 5px;
     border-bottom: 2px solid #f0f0f0;
 }
 
@@ -416,7 +438,8 @@
     position: absolute;
     right: 15px;
     top: 50%;
-    transform: translateY(-50%); /* Align vertically */
+    transform: translateY(-50%);
+    /* Align vertically */
     font-size: 20px;
     color: #555;
     cursor: pointer;
@@ -424,14 +447,15 @@
     border: none;
     transition: 0.3s ease-in-out;
     padding: 5px;
-    border-radius: 50%; /* Circular design */
+    border-radius: 50%;
+    /* Circular design */
 }
 
 /* Close Button Hover Effect */
 .close:hover {
     opacity: 0.6;
 }
- 
+
 /* Modal Body */
 .modal-body {
     padding: 15px 0;
@@ -481,6 +505,202 @@
 
 /* Fade In Animation */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
+/* model box design for display trainign data */
+/* Full-Screen Modal Overlay */
+.modals-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease-in-out;
+    padding: 15px;
+  }
+  
+  /* Modern Glassmorphism Modal */
+  .modals {
+    background: rgba(255, 255, 255, 0.95);
+    width: 600px;
+    max-width: 95%;
+    border-radius: 15px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+    padding: 25px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    animation: slideDown 0.4s ease-in-out;
+  }
+  
+  /* Modal Header */
+  .modals-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .modals-header h2 {
+    color: #222;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  /* Close Button */
+  .close-btn {
+    font-size: 26px;
+    cursor: pointer;
+    color: #888;
+    transition: 0.3s;
+    padding: 5px;
+  }
+  
+  .close-btn:hover {
+    color: red;
+  }
+  
+  /* Responsive Training Image */
+  .modals-image {
+    margin: 20px auto;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 3px solid #ddd;
+  }
+  
+  .modals-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Modal Body */
+  .modals-body {
+    text-align: left;
+    padding: 20px;
+    font-size: 16px;
+  }
+  
+  .modals-body p {
+    margin: 10px 0;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  /* Modal Footer Buttons */
+  .modals-footer {
+    padding-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  /* Responsive Buttons */
+  .btn-join, .btn-complete {
+    flex: 1;
+    min-width: 140px;
+    padding: 12px 16px;
+    font-size: 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+  }
+  
+  /* Join Training Button */
+  .btn-join {
+    background: #6d2dda;
+    color: white;
+    border: none;
+    box-shadow: 3px 3px 10px #b6b6b6, -3px -3px 10px #ffffff;
+  }
+  
+  .btn-join:hover {
+    opacity: 0.7;
+  }
+  
+  /* Mark as Completed Button */
+  .btn-complete {
+    background:  #d31807;
+    color: white;
+    border: none;
+    box-shadow: 3px 3px 10px #b6b6b6, -3px -3px 10px #ffffff;
+  }
+  
+  .btn-complete:hover {
+    background: linear-gradient(145deg, #2980b9, #2471a3);
+  }
+  
+  /* Fade-in Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Slide Down Animation */
+  @keyframes slideDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Responsive Design for Smaller Screens */
+  @media (max-width: 768px) {
+    .modals {
+      width: 100%;
+      max-width: 90%;
+      padding: 20px;
+    }
+  
+    .modals-header h2 {
+      font-size: 20px;
+    }
+  
+    .modals-body {
+      font-size: 14px;
+    }
+  
+    .modals-footer {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .btn-join, .btn-complete {
+      width: 100%;
+      min-width: auto;
+      padding: 10px;
+    }
+  }
+  
