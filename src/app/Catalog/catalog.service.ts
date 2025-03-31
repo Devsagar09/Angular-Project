@@ -9,6 +9,8 @@ export class CatalogService {
 
   private apiBase = "https://localhost:7172/api/DisplayData/DisplayCourseCatalog";
   private searchapi = "https://localhost:7172/api/Search/SearchCC";
+  private startCCTraining = "https://localhost:7172/api/ManageEnrollment" 
+  private gettrainingdata = "https://localhost:7172/api/DisplayData/GetTrainingDataByID";
 
   constructor(private http: HttpClient) { }
 
@@ -19,5 +21,22 @@ export class CatalogService {
   searchCC(studentId: number, query: string): Observable<any> {
     return this.http.get(`${this.searchapi}?studentID=${studentId}&searchValue=${encodeURIComponent(query)}`);
   }
+
+  startTraining(request: { studentId: number; trainingId: number }): Observable<string> {
+    return this.http.post(`${this.startCCTraining}/StartTrainingDirect`, request, {
+      responseType: 'text' // Correct response type for plain text
+    }) as Observable<string>;
+  }
+
+  requestTrainingApproval(request: { studentId: number; trainingId: number }): Observable<string> {
+    return this.http.post(`${this.startCCTraining}/RequestTrainingApproval`, request, {
+      responseType: 'text' // Correct response type for plain text
+    }) as Observable<string>;
+  }
+
+  getTrainingByID(trainingid:number):Observable<any>{
+    return this.http.get<any>(`${this.gettrainingdata}/${trainingid}`);
+  }
+
 
 }
