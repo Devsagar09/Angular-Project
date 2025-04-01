@@ -19,7 +19,7 @@ export class UserNavigationComponent implements OnInit {
   isLoading = true;
   isLoginPage = true;
   faArrowRightFromBracket = faArrowRightFromBracket;
-  faUser = faUser
+  faUser = faUser 
   dropdownVisible = false;
   isCollapsed = true;
 

@@ -13,6 +13,7 @@
 body{
   font-family: 'Inter', sans-serif;
   overflow: hidden;
+  height: auto;
 }
 
 /* .card-content {
@@ -448,7 +449,7 @@ tr:nth-child(even) {
 }
 
 .tbl-container {
-  width: 880px; /* Adjust to the content width */
+  width: 927px; /* Adjust to the content width */
   max-width: 100%; /* Allow it to fit within the container */
   background: white;
   padding: 15px;
