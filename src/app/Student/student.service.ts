@@ -11,6 +11,8 @@ private searchUrl = 'https://localhost:7172/api/Student/searchStudent';
 private addeditUrl = 'https://localhost:7172/api/Student/AddEditStudent';
 private roleUrl ='https://localhost:7172/api/Role/GetRoles';
 private baseUrl='https://localhost:7172/api';
+private getstudUrl = 'https://localhost:7172/api/Student/GetStudentDetails';
+private deleteUrl = 'https://localhost:7172/api/Student/DeleteStudents';
 
   constructor(private http: HttpClient) { }
 
@@ -34,5 +36,15 @@ private baseUrl='https://localhost:7172/api';
     return this.http.post(`${this.baseUrl}/AssignTrainings/AssignTrainings`, assignData);
   }
   
+  getStudentById(studentId: number): Observable<any> {
+    return this.http.get<any>(`${this.getstudUrl}/${studentId}`);
+  }
 
+  getAssignedTrainings(studentId: number): Observable<number[]> {
+    return this.http.get<number[]>(`${this.baseUrl}/AssignTrainings/GetTrainingIds/${studentId}`);
+  }
+
+  deleteStudents(studentIds: number[]): Observable<any> {
+    return this.http.delete(`${this.deleteUrl}`, { body: studentIds });
+  }
 }

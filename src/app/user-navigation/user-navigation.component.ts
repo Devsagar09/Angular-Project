@@ -72,7 +72,6 @@ export class UserNavigationComponent implements OnInit {
     );
   }
 
-
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
   }
