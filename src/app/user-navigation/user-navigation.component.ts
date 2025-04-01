@@ -29,7 +29,7 @@ export class UserNavigationComponent implements OnInit {
         this.isLoading = true;  
       } 
       if (event instanceof NavigationEnd) {
-        this.isLoginPage = this.router.url.toLowerCase() === '/login'; // ✅ Properly set login page condition
+        this.isLoginPage = this.router.url.toLowerCase() === '/login'; 
         setTimeout(() => {
           this.isLoading = false;  
         }, 2000);
@@ -61,7 +61,7 @@ export class UserNavigationComponent implements OnInit {
   }
 
   fetchProfileImage(studentId: string) {
-    this.usernavigationService.getStudentProfile(studentId).subscribe(
+    this.usernavigationService.GetProfileImage(studentId).subscribe(
       response => {
         // console.log('Image URL:', response.profileImage);
         this.profileImage=response.profileImage;  // ✅ Log extracted URL

@@ -14,6 +14,7 @@ import { PendingApprovalComponent } from './AI-Maintenance/pending-approval/pend
 import { DisplaystudentComponent } from './Student/displaystudent/displaystudent.component';
 import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent.component';
 import { AddEditTrainingComponent } from './Training/add-edit-training/add-edit-training.component';
+import { ViewprofileComponent } from './Student/viewprofile/viewprofile.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,11 @@ const routes: Routes = [
   {
     path: 'editStudent/:studentId',
     component: AddeditstudentComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'viewProfile',
+    component: ViewprofileComponent,
     canActivate: [AuthGuard],
   },
   {

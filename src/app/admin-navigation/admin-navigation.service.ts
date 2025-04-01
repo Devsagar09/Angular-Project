@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AdminNavigationService {
-  private apiUrl = 'https://localhost:7172/api/Profile/GetStudentProfile'; 
+  private apiUrl = 'https://localhost:7172/api/Profile/GetProfileImage'; 
 
   constructor(private http: HttpClient) {}
 
-  getStudentProfile(studentId: string | null): Observable<any> {
+  getProfileImage(studentId: string | null): Observable<any> {
     if (!studentId) {
       console.error('Student ID is missing from session storage.');
       return new Observable(); 

@@ -49,7 +49,7 @@ export class AdminNavigationComponent implements OnInit {
     }
 
     fetchProfileImage(studentId: string) {
-      this.adminnavigationService.getStudentProfile(studentId).subscribe(
+      this.adminnavigationService.getProfileImage(studentId).subscribe(
         response => {
           // console.log('Image URL:', response.profileImage);
           this.profileImage=response.profileImage; 
@@ -99,10 +99,6 @@ export class AdminNavigationComponent implements OnInit {
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
-  }
-
-  viewProfile() {
-    console.log('View Profile clicked');
   }
 
   @HostListener('document:click', ['$event'])

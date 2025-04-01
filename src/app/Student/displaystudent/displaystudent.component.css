@@ -31,18 +31,6 @@ body {
     width: 100%;
   }
 
-    .employee-header {
-    background-color: #134c68; /* Teal background */
-    color: white; /* White text */
-    padding: 15px 20px;
-    font-size: 20px;
-    font-weight: bold;
-    width: 97%;
-    margin: 0; 
-    display: flex;
-    align-items: center;
-  }
-
   .navbar a {
     display: flex;
     align-items: center;
