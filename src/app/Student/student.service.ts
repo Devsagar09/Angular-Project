@@ -13,6 +13,10 @@ private roleUrl ='https://localhost:7172/api/Role/GetRoles';
 private baseUrl='https://localhost:7172/api';
 private getstudUrl = 'https://localhost:7172/api/Student/GetStudentDetails';
 private deleteUrl = 'https://localhost:7172/api/Student/DeleteStudents';
+private updateProfileImageUrl = 'https://localhost:7172/api/Profile/EditStudentProfileImage';
+private getEditProfile = 'https://localhost:7172/api/Profile/GetStudentProfile';
+private editprofile = 'https://localhost:7172/api/Profile/EditStudentProfile'
+
 
   constructor(private http: HttpClient) { }
 
@@ -47,4 +51,21 @@ private deleteUrl = 'https://localhost:7172/api/Student/DeleteStudents';
   deleteStudents(studentIds: number[]): Observable<any> {
     return this.http.delete(`${this.deleteUrl}`, { body: studentIds });
   }
+
+  updateProfileImage(studentId: number, profileImage: File, originalFilename: string): Observable<any> {
+    const formData = new FormData();
+    formData.append('profileImage', profileImage);
+    formData.append('studentId', studentId.toString());
+    formData.append('originalFilename', originalFilename); 
+
+    return this.http.post<any>(this.updateProfileImageUrl, formData);
+}
+
+getStudentProfile(studentId: number): Observable<any> {
+  return this.http.get<any>(`${this.getEditProfile}?studentId=${studentId}`);
+}
+
+editStudentProfile(studentData: any): Observable<any> {
+  return this.http.post(`${this.editprofile}`, studentData);
+}
 }

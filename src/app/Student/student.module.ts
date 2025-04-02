@@ -9,7 +9,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ViewprofileComponent } from './viewprofile/viewprofile.component';
 
 
-
 @NgModule({
   declarations: [
     DisplaystudentComponent,
@@ -17,7 +16,7 @@ import { ViewprofileComponent } from './viewprofile/viewprofile.component';
     ViewprofileComponent
   ],
   imports: [
-    CommonModule,NgxPaginationModule,FormsModule,RouterModule, MatSnackBarModule,
+    CommonModule,NgxPaginationModule,FormsModule,RouterModule, MatSnackBarModule 
   
   ],
   exports: [

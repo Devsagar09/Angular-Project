@@ -1,48 +1,91 @@
 <div class="acc-header">
-    <div class="title">
-      <i class="fas fa-users"></i> Account Settings
-    </div>
+  <div class="title">
+    <i class="fa fa-cogs"></i> Account Settings
   </div>
-  <br />
-  <div class="profile-container">
-    <div class="profile-content">
-      <div class="profile-left">
-        <div class="user-info">
-          <div class="avatar">
-            <img src="idp.png" alt="User Avatar" id="profile-pic">
-            <div class="avatar-overlay">
-              <i class="fas fa-camera"></i>
-              <span>Change Profile</span>
-              <input type="file" id="profile-pic-input" (change)="onFileSelected($event)" accept="image/*">
-            </div>
+</div>
+
+<br />
+
+<div class="profile-container">
+  <div class="profile-content">
+    
+    <!-- Left Section: Profile Picture & Name -->
+    <div class="profile-left">
+      <div class="user-info">
+        <div class="avatar">
+          <img [src]="imagePreview || profileImage" alt="User profile">
+          <div class="avatar-overlay">
+            <span style="font-size: 25px;">📷</span>
+            <span>Change Profile</span>
+            <input type="file" id="profile-pic-input" (change)="onFileSelected($event)" accept="image/*">
           </div>
-          <h3>p17 admin 01 p17 admin 01</h3>
         </div>
-        <button class="save-btn">Upload</button>
+        <br/>
+        <h3>{{ firstname }} {{ lastname }}</h3>
+        <button class="save-btn" (click)="uploadProfileImage()">SAVE</button>
+
+      </div>
     </div>
+
+    <!-- Right Section: Tabs & Forms -->
     <div class="profile-right">
-        <nav class="profile-tabs">
-          <a (click)="setActiveTab('security')" [ngClass]="{'active': activeTab === 'security'}">SECURITY</a>
-          <a (click)="setActiveTab('user-profile')" [ngClass]="{'active': activeTab === 'user-profile'}">USER PROFILE</a>
-        </nav>
-        <div class="tab-content">
-          <div id="security" class="section" [ngClass]="{'active': activeTab === 'security'}">
-            <h4>Reset Password</h4>
-            <form>
-              <label>Current Password</label>
-              <input type="password" placeholder="Current Password">
-              <label>New Password</label>
-              <input type="password" placeholder="New Password">
-              <label>Confirm Password</label>
-              <input type="password" placeholder="Confirm Password">
-              <button class="save-btn">SAVE CHANGES</button>
-            </form>
-          </div>
-          <div id="user-profile" class="section" [ngClass]="{'active': activeTab === 'user-profile'}">
-            <h4>User Profile</h4>
-            <p>This is the User Profile section. Add your content here.</p>
-          </div>
+      <nav class="profile-tabs">
+        <a (click)="setActiveTab('user-profile')" [ngClass]="{'active': activeTab === 'user-profile'}">USER PROFILE</a>
+        <a (click)="setActiveTab('security')" [ngClass]="{'active': activeTab === 'security'}">SECURITY</a>
+      </nav>
+      
+      <div class="tab-content">
+        <!-- User Profile Section -->
+        <div id="user-profile" class="section" [ngClass]="{'active': activeTab === 'user-profile'}">
+          <form>
+            <label>Email</label>
+            <input type="email" [(ngModel)]="studentData.email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            name="email" #emailInput="ngModel">
+            <span *ngIf="emailInput.invalid && emailInput.touched" class="error-message">
+              Please enter a valid email address.
+            </span>
+
+            <label>Phone No</label>
+            <input type="text" [(ngModel)]="studentData.phoneno" name="phoneno">
+
+            <label>Address</label>
+            <textarea rows="5" [(ngModel)]="studentData.address" name="address"></textarea>
+
+            <label>City</label>
+            <input type="text" [(ngModel)]="studentData.city" name="city">
+
+            <label>Postal Code</label>
+            <input type="text" [(ngModel)]="studentData.postalcode" name="postalcode">
+
+            <label>State</label>
+            <input type="text" [(ngModel)]="studentData.state" name="state">
+
+            <label>Country</label>
+            <input type="text" [(ngModel)]="studentData.country" name="country">
+
+            <button class="save-btn" (click)="updateStudentProfile()">SAVE CHANGES</button>  
+
+          </form>
         </div>
+
+        <!-- Security Section -->
+        <div id="security" class="section" [ngClass]="{'active': activeTab === 'security'}">
+          <h4>Reset Password</h4>
+          <form>
+            <label>Current Password</label>
+            <input type="password" placeholder="Current Password" required>
+
+            <label>New Password</label>
+            <input type="password" placeholder="New Password" required>
+
+            <label>Confirm Password</label>
+            <input type="password" placeholder="Confirm Password" required>
+
+            <button class="save-btn">SAVE CHANGES</button>
+          </form>
+        </div>
+
       </div>
     </div>
   </div>
+</div>

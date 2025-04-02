@@ -73,9 +73,7 @@
   <div class="main-content">
     <div class="navbar">
       <div class="nav-left">
-        <img
-          src="https://logomakr.com/wp-content/uploads/2024/12/ai-logo-generator-space-sample.png"
-          alt="Company Logo" class="company-logo">
+        <img [src]="companyimage" alt="Company Logo" class="company-logo">
       </div>
 
       <div class="nav-right">
@@ -84,7 +82,7 @@
         </button>
         <div class="user-profile" (click)="toggleDropdown($event)">
          
-          <img [src]="profileImage" alt="Profile Image">
+          <img [src]="profileImage" alt="Profile Image" [routerLink]="['/dashboard']">
           <span>{{firstname}} {{lastname}}</span>
         </div>
 

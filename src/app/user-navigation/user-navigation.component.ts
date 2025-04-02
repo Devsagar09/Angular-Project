@@ -19,7 +19,8 @@ export class UserNavigationComponent implements OnInit {
   isLoading = true;
   isLoginPage = true;
   faArrowRightFromBracket = faArrowRightFromBracket;
-  faUser = faUser 
+  faUser = faUser
+
   dropdownVisible = false;
   isCollapsed = true;
 
@@ -29,7 +30,7 @@ export class UserNavigationComponent implements OnInit {
         this.isLoading = true;  
       } 
       if (event instanceof NavigationEnd) {
-        this.isLoginPage = this.router.url.toLowerCase() === '/login'; 
+        this.isLoginPage = this.router.url.toLowerCase() === '/login'; // ✅ Properly set login page condition
         setTimeout(() => {
           this.isLoading = false;  
         }, 2000);

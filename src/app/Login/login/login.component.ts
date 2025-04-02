@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
+import { AdminNavigationComponent } from '../../admin-navigation/admin-navigation.component';
+import { AdminNavigationService } from '../../admin-navigation/admin-navigation.service';
 
 @Component({
   selector: 'app-login',
@@ -10,17 +12,19 @@ import { LoginService } from '../login.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   errorMessage: string = '';
   loading: boolean = false;
+  companyimage :string | null = '';
 
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
     private router: Router,
-    private snackBar: MatSnackBar 
+    private snackBar: MatSnackBar ,
+    private adminnavigationService:AdminNavigationService
   ) {
     this.loginForm = this.fb.group({
       logintext: ['', Validators.required],
@@ -28,8 +32,23 @@ export class LoginComponent {
     });
   }
 
-  onLogin() {
 
+  ngOnInit(): void {
+    this.displayLogo();
+  }
+  
+  displayLogo() {
+    this.adminnavigationService.displayLogo().subscribe(
+      (response: any) => {
+        this.companyimage = response.companylogo; 
+      },
+      error => {
+        console.error('Error fetching company logo:', error);
+      }
+    );
+  }
+
+  onLogin() {
     // alert("clicked");
     if (this.loginForm.valid) {
       this.loading = true;
