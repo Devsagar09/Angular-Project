@@ -24,7 +24,7 @@ height: 100%;
 .container {
   font-family: 'Inter', sans-serif;
   display: flex;
-  height: 100vh;
+  height: 97vh;
   z-index: 2000;
 }
 
@@ -116,10 +116,13 @@ height: 100%;
   background-color: #fff;
   border-right: 2px solid #ddd;
   width: 200px;
+  height:100vh;
   transition: width 0.5s ease;
   display: flex;
   flex-direction: column;
   padding: 10px;
+  z-index: 2000; /* Places it above footer */
+
 }
 
 .sidebar.collapsed {
