@@ -38,5 +38,9 @@ export class CatalogService {
     return this.http.get<any>(`${this.gettrainingdata}/${trainingid}`);
   }
 
+  getTrainingDocument(fileName: string): Observable<Blob> {
+    return this.http.get(`${this.startCCTraining}/GetTrainingDocument/${fileName}`, { responseType: 'blob' });
+  }
+
 
 }

@@ -14,6 +14,7 @@ import { PendingApprovalComponent } from './AI-Maintenance/pending-approval/pend
 import { DisplaystudentComponent } from './Student/displaystudent/displaystudent.component';
 import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent.component';
 import { AddEditTrainingComponent } from './Training/add-edit-training/add-edit-training.component';
+import { DocumentViewerComponent } from './Catalog/document-viewer/document-viewer.component';
 
 const routes: Routes = [
   {
@@ -84,6 +85,10 @@ const routes: Routes = [
     path: 'coursecatalog',
     component:CatalogComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'documentpdfviewer',
+    component:DocumentViewerComponent 
   },
   {
     path: 'transcript',

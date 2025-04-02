@@ -172,6 +172,7 @@ export class EnrollComponent {
           }
         } else if (training.trainingtype_name === "Document" && training.document_file) {
           window.open(training.document_file, "_blank");
+          window.location.reload();
         }
       },
       error: (error) => {

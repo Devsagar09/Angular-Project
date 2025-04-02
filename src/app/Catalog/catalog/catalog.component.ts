@@ -183,7 +183,15 @@ export class CatalogComponent {
             window.location.reload();
           }
         } else if (training.trainingtype_name === "Document" && training.document_file) {
-          window.open(training.document_file, "_blank");
+          this.CatalogService.getTrainingDocument(training.document_file).subscribe((response: Blob) => {
+            const fileURL = URL.createObjectURL(response);
+            window.open(fileURL, "_blank");
+            //this.router.navigate(['/documentpdfviewer'], { queryParams: { url: encodeURIComponent(fileURL) } });
+            window.location.reload();
+          }, error => {
+            console.error('Error fetching document:', error);
+          });
+        
         }
       },
       error: (error) => {
