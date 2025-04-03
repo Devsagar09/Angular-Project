@@ -16,7 +16,8 @@ private deleteUrl = 'https://localhost:7172/api/Student/DeleteStudents';
 private updateProfileImageUrl = 'https://localhost:7172/api/Profile/EditStudentProfileImage';
 private getEditProfile = 'https://localhost:7172/api/Profile/GetStudentProfile';
 private editprofile = 'https://localhost:7172/api/Profile/EditStudentProfile'
-
+private resetpasswordurl='https://localhost:7172/api/Auth/ResetPassword';
+private checkcurrentpassword = 'https://localhost:7172/api/Auth/check-password';
 
   constructor(private http: HttpClient) { }
 
@@ -67,5 +68,18 @@ getStudentProfile(studentId: number): Observable<any> {
 
 editStudentProfile(studentData: any): Observable<any> {
   return this.http.post(`${this.editprofile}`, studentData);
+}
+
+resetPassword(studentId: number,data: any): Observable<any> {
+  return this.http.post(this.resetpasswordurl, {
+    student_Id : studentId,
+    current_Password: data.currentPassword,
+    new_Password: data.newPassword,
+    confirm_Password: data.confirmPassword
+  });
+}
+
+checkPassword(studentId: number, password: string): Observable<any> {
+  return this.http.post(this.checkcurrentpassword, { studentId, password });
 }
 }

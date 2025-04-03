@@ -88,7 +88,7 @@
 
         <div *ngIf="dropdownVisible" class="dropdown-menu" [class.show]="dropdownVisible" #dropdown>
           <ul>
-            <li onclick="window.location.href='/viewProfile'"><i class="fas fa-user-tie"></i> View Profile</li>
+            <li [routerLink]="['/viewProfile']"><i class="fas fa-user-tie"></i> View Profile</li>
             <li (click)="logout()"><i class="fas fa-sign-out"></i> Logout</li>
           </ul>
         </div>

@@ -320,6 +320,7 @@ export class AddeditstudentComponent implements OnInit {
   }
 
   saveReview() {
+    this.showSuccessSnackbar("Data saved.");
     this.addOrUpdateStudent(); // Save student first
     setTimeout(() => {
       this.assignTrainings(); // Then assign trainings
@@ -327,6 +328,7 @@ export class AddeditstudentComponent implements OnInit {
   }
 
   saveAndExit() {
+    this.showSuccessSnackbar("Data saved.");
     this.addOrUpdateStudent(); // Save student first
     setTimeout(() => {
       this.assignTrainings(); // Assign trainings
@@ -372,7 +374,7 @@ export class AddeditstudentComponent implements OnInit {
             this.loadStudentData(this.studentData.student_Id);
   
             this.setActiveTab(this.activeTab === 'personInfo' ? 'assignTrainings' : 'reviewConfirm');
-            this.showSuccessSnackbar("student Updated.");
+            // this.showSuccessSnackbar("student Updated.");
             studentForm?.resetForm();
           }
         },
@@ -394,7 +396,7 @@ export class AddeditstudentComponent implements OnInit {
             console.log("New Student ID:", this.studentData.student_Id);
   
             this.setActiveTab(this.activeTab === 'personInfo' ? 'assignTrainings' : 'reviewConfirm');
-            this.showSuccessSnackbar("student Added.");
+            // this.showSuccessSnackbar("student Added.");
 
             studentForm?.resetForm();
           } 
@@ -434,7 +436,7 @@ export class AddeditstudentComponent implements OnInit {
     this.studentService.assignTrainings(requestPayload).subscribe({
       next: (response) => {
         console.log("API Response:", response);
-        this.showSuccessSnackbar('Trainings assigned.');
+        // this.showSuccessSnackbar('Trainings assigned.');
         this.setActiveTab('reviewConfirm');
       },
       error: (error) => {
@@ -464,8 +466,8 @@ export class AddeditstudentComponent implements OnInit {
   showSuccessSnackbar(message: string) {
     this.snackBar.open(message, 'X', {
       duration: 3000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
       panelClass: ['app-notification-success']
     });
   }
@@ -473,8 +475,8 @@ export class AddeditstudentComponent implements OnInit {
   showErrorSnackbar(message: string) {
     this.snackBar.open(message, 'X', {
       duration: 3000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
       panelClass: ['app-notification-error']
     });
   }

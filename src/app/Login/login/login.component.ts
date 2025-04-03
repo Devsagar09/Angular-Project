@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
   errorMessage: string = '';
   loading: boolean = false;
   companyimage :string | null = '';
+  showPassword: boolean = false;
+
 
   constructor(
     private fb: FormBuilder,
@@ -46,6 +48,11 @@ export class LoginComponent implements OnInit {
         console.error('Error fetching company logo:', error);
       }
     );
+  }
+
+  togglePasswordVisibility() {
+    debugger
+    this.showPassword = !this.showPassword;
   }
 
   onLogin() {

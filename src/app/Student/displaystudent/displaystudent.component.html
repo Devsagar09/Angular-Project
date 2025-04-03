@@ -28,7 +28,7 @@
             </div>
             <div class="action-buttons">
                 <button class="delete-btn" title="Delete" (click)="deleteSelectedStudents()"><i class="fa fa-trash"></i></button>
-                <button class="add-btn" title="Add" onclick="window.location.href='/addStudent';">
+                <button class="add-btn" title="Add" [routerLink]="['/addStudent']">
                     <i class="fa fa-plus"></i>
                   </button>
                </div>

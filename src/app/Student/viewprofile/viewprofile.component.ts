@@ -3,6 +3,7 @@ import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { UserNavigationService } from '../../user-navigation/user-navigation.service';
 import { StudentService } from '../student.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-viewprofile',
@@ -20,6 +21,11 @@ export class ViewprofileComponent implements OnInit {
   studentId: number = 0;
   isLoading = true;
   isLoginPage = true;
+  message: string = '';
+  showCurrentPassword: boolean = false;
+  showNewPassword: boolean = false;
+  showConfirmPassword: boolean = false;
+
   studentData: any = {
     student_Id: 0,
     email: null,
@@ -30,6 +36,12 @@ export class ViewprofileComponent implements OnInit {
     state: null,
     country: null
   };
+  resetData = {
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  };
+  
 
   constructor(private router: Router, private usernavigationService: UserNavigationService, private studentService: StudentService, private snackBar: MatSnackBar) {
     this.router.events.subscribe(event => {
@@ -179,6 +191,53 @@ dataURLtoFile(dataurl: string, filename: string): File {
         console.error('Error fetching profile image:', error);
       }
     );
+  }
+
+
+  resetPassword(form: NgForm) {
+    const formData = form.value;
+  
+    if (formData.newPassword !== formData.confirmPassword) {
+      this.message = 'New Password and Confirm Password do not match.';
+      return;
+    }
+  
+    this.studentService.checkPassword(this.studentId, formData.currentPassword).subscribe(
+      (response: any) => {
+        if (formData.currentPassword === formData.newPassword) {
+          this.message = 'New password cannot be the same as the current password.';
+          return;
+        }
+  
+        this.studentService.resetPassword(this.studentId, formData).subscribe(
+          (resetResponse: any) => {
+            this.showSuccessSnackbar('Password reset successfully.');
+            form.reset();
+          },
+          (error) => {
+            console.error('API Error:', error);
+            this.message = 'Password reset failed.';
+          }
+        );
+      },
+      (error) => {
+        console.error('Password Check Failed:', error);
+        this.message = 'Incorrect current password.';
+      }
+    );
+  }
+  
+  
+  toggleCurrentPassword() {
+    this.showCurrentPassword = !this.showCurrentPassword;
+    }
+
+  toggleNewPassword() {
+    this.showNewPassword = !this.showNewPassword;
+  }
+
+  toggleConfirmPassword() {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 
   showSuccessSnackbar(message: string) {

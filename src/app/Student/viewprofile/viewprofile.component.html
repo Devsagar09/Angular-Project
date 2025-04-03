@@ -71,20 +71,46 @@
         <!-- Security Section -->
         <div id="security" class="section" [ngClass]="{'active': activeTab === 'security'}">
           <h4>Reset Password</h4>
-          <form>
+          <form #resetForm="ngForm" (ngSubmit)="resetPassword(resetForm)">
             <label>Current Password</label>
-            <input type="password" placeholder="Current Password" required>
-
+            <div class="password-container">
+              <input [type]="showCurrentPassword ? 'text' : 'password'"
+                     name="currentPassword" 
+                     [(ngModel)]="resetData.currentPassword" 
+                     required 
+                     placeholder="Current Password">
+              <i class="fa" [ngClass]="showCurrentPassword ? 'fa-eye' : 'fa-eye-slash'" 
+                 (click)="toggleCurrentPassword()"></i>
+            </div>
+            
             <label>New Password</label>
-            <input type="password" placeholder="New Password" required>
-
+            <div class="password-container">
+              <input [type]="showNewPassword ? 'text' : 'password'" 
+                     name="newPassword" 
+                     [(ngModel)]="resetData.newPassword" 
+                     required 
+                     placeholder="New Password">
+              <i class="fa" [ngClass]="showNewPassword ? 'fa-eye' : 'fa-eye-slash'" 
+                 (click)="toggleNewPassword()"></i>
+            </div>
+            
             <label>Confirm Password</label>
-            <input type="password" placeholder="Confirm Password" required>
+            <div class="password-container">
+              <input [type]="showConfirmPassword ? 'text' : 'password'"
+                     name="confirmPassword" 
+                     [(ngModel)]="resetData.confirmPassword" 
+                     required 
+                     placeholder="Confirm Password">
+              <i class="fa" [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'" 
+                 (click)="toggleConfirmPassword()"></i>
+            </div>
+            <p *ngIf="message" class="error-message">{{ message }}</p>
 
-            <button class="save-btn">SAVE CHANGES</button>
+            <button type="submit" class="save-btn" [disabled]="resetForm.invalid">SAVE CHANGES</button>
           </form>
+          
         </div>
-
+                
       </div>
     </div>
   </div>
