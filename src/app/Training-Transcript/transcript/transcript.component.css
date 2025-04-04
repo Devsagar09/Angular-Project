@@ -136,7 +136,11 @@
 /* Table container for responsiveness */
 .table-container {
     width: 100%;
-    overflow-x: auto;
+    max-height: 300px; /* Set a max height for scroll control */
+   
+    overflow-y: auto; /* Enable vertical scrolling for the table only */
+    overflow-x: hidden;
+    border: 1px solid #ddd; /* Optional: Add border to define table area */
 }
 
 /* Custom Table */
@@ -146,15 +150,18 @@
     background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
 }
 
 /* Header Row */
 .custom-table thead {
+    position: sticky;
+    top: 0;
     background: #4a90e2;
     color: white;
     text-align: left;
+    z-index: 10; /* Ensure header stays above other content */
 }
+
 
 .custom-table th,
 .custom-table td {
@@ -170,14 +177,7 @@
 }
 
 /* Action Column */
-.custom-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
+ 
 
 .table-column {
     max-width: 150px;
@@ -407,30 +407,37 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.3s ease-in-out;
 }
-
-/* Modal Header */
+ 
 .modal-header {
     font-size: 18px;
-    font-weight: bold;
-    padding: 5px;
+    font-weight: bold;  
+    padding: 10px 15px; 
     border-bottom: 1px solid #ddd;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; 
     align-items: center;
 }
+ 
+.modal-header h3 {
+    margin: 0; 
+    flex-grow: 1;  
+    text-align: left;
+    color: #222;
+}
 
-/* Close Button */
+/* Close Button Styling */
 .modal-header .close {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     cursor: pointer;
     border: none;
     background: #d0dae6;
-    padding: 4px 10px;
+    padding: 6px 12px;
     border-radius: 50%;
     color: #333;
-    transition: color 0.3s;
+    transition: background 0.3s ease-in-out;
 }
+
 
 .modal-header .close:hover {
     background: #ececec; 
@@ -464,13 +471,18 @@
 .btn-close {
     background-color: #007bff;
     color: white;
-    padding: 8px 16px;
+    padding: 12px 16px;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 8px;
+    font-size: 16px;
     cursor: pointer;
     transition: background 0.3s ease-in-out;
+    width: 100%;  
+    text-align: center;
+    display: block;  
+    margin-top: 5px;
 }
+
 
 .btn-close:hover {
     background-color: #0056b3;

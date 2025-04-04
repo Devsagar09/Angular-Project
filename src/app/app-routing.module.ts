@@ -17,6 +17,7 @@ import { AddEditTrainingComponent } from './Training/add-edit-training/add-edit-
 import { ViewprofileComponent } from './Student/viewprofile/viewprofile.component';
 import { ForgetpasswordComponent } from './Login/forgetpassword/forgetpassword.component';
 import { RegisterComponent } from './Login/register/register.component';
+import { DocumentViewerComponent } from './Catalog/document-viewer/document-viewer.component';
 
 const routes: Routes = [
   {
@@ -100,6 +101,10 @@ const routes: Routes = [
     path: 'coursecatalog',
     component:CatalogComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'documentpdfviewer',
+    component:DocumentViewerComponent 
   },
   {
     path: 'transcript',

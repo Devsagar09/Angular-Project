@@ -103,7 +103,14 @@ export class TranscriptComponent {
       });
     }
 
-
+    openExternalLink(url: string) {
+      
+      if (url) {
+        window.open(url, "_blank");  
+      } else {
+        console.error("Invalid external link");
+      }
+    }
 
 
     // openModal(content: any, transcriptId: number) {
