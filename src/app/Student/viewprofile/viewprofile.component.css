@@ -20,7 +20,7 @@ body {
 /* Account Header (acc-header) */
 .acc-header {
   position: fixed;
-  top: 65px;
+  top: 70px;
   width: 100%;
   z-index: 1000;
   background-color: #134c68;
@@ -100,6 +100,8 @@ body {
   justify-content: center;
 }
 
+
+
 /* Avatar Styling with Hover Overlay */
 .avatar {
   position: relative;
@@ -173,6 +175,7 @@ body {
 
 /* Profile Tabs (Navigation) */
 .profile-tabs {
+  cursor: pointer;
   display: flex;
   gap: 20px;
   border-bottom: 2px solid #ddd;
@@ -288,6 +291,54 @@ textarea {
 
 .save-btn:hover {
   background: #6485a7;
+}
+
+.saveimg-btn {
+  background: #134c68;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-end;
+  transition: background 0.3s ease;
+}
+
+.saveimg-btn:hover {
+  background: #6485a7;
+}
+
+
+.img-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.reset-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-end;
+  transition: background 0.3s ease;
+}
+
+.reset-btn:hover {
+  background-color: #d97b7b;
 }
 
 .password-container {

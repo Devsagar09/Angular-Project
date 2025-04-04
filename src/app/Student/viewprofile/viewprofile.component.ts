@@ -142,6 +142,11 @@ export class ViewprofileComponent implements OnInit {
     }
   }
 
+  resetImagePreview() {
+    this.imagePreview = null;
+  }
+  
+
   uploadProfileImage() {
     debugger
     if (this.imagePreview && this.imagePreview !== this.profileImage) {

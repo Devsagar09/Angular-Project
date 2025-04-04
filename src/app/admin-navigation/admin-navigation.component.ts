@@ -51,6 +51,8 @@ export class AdminNavigationComponent implements OnInit {
      this.lastname = sessionStorage.getItem('lastname');
     }
 
+    
+
     displayLogo() {
       this.adminnavigationService.displayLogo().subscribe(
         (response: any) => {
@@ -62,9 +64,7 @@ export class AdminNavigationComponent implements OnInit {
       );
     }
     
-    
-    
-
+  
     fetchProfileImage(studentId: string) {
       this.adminnavigationService.getProfileImage(studentId).subscribe(
         response => {

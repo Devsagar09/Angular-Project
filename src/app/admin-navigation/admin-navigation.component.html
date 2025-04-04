@@ -82,13 +82,13 @@
         </button>
         <div class="user-profile" (click)="toggleDropdown($event)">
          
-          <img [src]="profileImage" alt="Profile Image" [routerLink]="['/dashboard']">
+          <img [src]="profileImage" alt="Profile Image" class="profile-Image">
           <span>{{firstname}} {{lastname}}</span>
         </div>
 
         <div *ngIf="dropdownVisible" class="dropdown-menu" [class.show]="dropdownVisible" #dropdown>
           <ul>
-            <li [routerLink]="['/viewProfile']"><i class="fas fa-user-tie"></i> View Profile</li>
+            <li [routerLink]="['/viewProfile']" (click)="dropdownVisible = false"><i class="fas fa-user-tie"></i> View Profile</li>
             <li (click)="logout()"><i class="fas fa-sign-out"></i> Logout</li>
           </ul>
         </div>
