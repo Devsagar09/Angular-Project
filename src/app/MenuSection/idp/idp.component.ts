@@ -30,9 +30,9 @@ export class IdpComponent {
   trainingId: number | any
   searchQuery: string = '';
   isModalOpen: boolean = false;
-  isModalOpens:boolean = false;
+  isModalOpens: boolean = false;
   requiresApproval: boolean = false
-  selectedTraining: any = null; 
+  selectedTraining: any = null;
 
   goToDashboard() {
     this.router.navigate(['/']);
@@ -113,27 +113,27 @@ export class IdpComponent {
   requestTrainingApprovalOrView(trainingId: number) {
     console.log("Checking Training ID:", trainingId);
     console.log("Student ID:", this.studentId);
-  
+
     if (!trainingId || !this.studentId) {
       alert("Invalid training or student ID. Please try again.");
       return;
     }
-  
+
     this.IDPService.getTrainingByID(trainingId).subscribe({
       next: (trainingArray) => {
         console.log("Fetched Training Data:", trainingArray);
-  
+
         if (!trainingArray || trainingArray.length === 0) {
           alert("Training details not found. Please try again.");
           return;
         }
-  
+
         // Get the first object from the array
         const training = trainingArray[0];
-  
+
         if (training.requires_approval) {
           this.IDPService.requestTrainingApproval({
-            studentId: this.studentId ?? 0 ,
+            studentId: this.studentId ?? 0,
             trainingId: trainingId,
           }).subscribe({
             next: (response: string) => {
@@ -163,22 +163,22 @@ export class IdpComponent {
       console.error("Invalid training data.");
       return;
     }
-  
+
     const studentId = sessionStorage.getItem('studentId');
     if (!studentId) {
       console.error("Student ID not found in sessionStorage.");
       return;
     }
-  
+
     const request = { studentId: +studentId, trainingId: training.training_id };
-  
+
     this.IDPService.startTraining(request).subscribe({
       next: (response) => {
-        console.log("Training started successfully:", response); 
-  
+        console.log("Training started successfully:", response);
+
         //  Update status in UI without refreshing the page
         training.status = "In Progress"; // Manually update UI status
-  
+
         // Open external link or document AFTER status update
         if (training.trainingtype_name === "External Link" && training.external_link_URL) {
           const confirmExternal = confirm("This training is an external link. Do you want to continue?");
@@ -187,7 +187,15 @@ export class IdpComponent {
             window.location.reload();
           }
         } else if (training.trainingtype_name === "Document" && training.document_file) {
-          window.open(training.document_file, "_blank");
+          this.IDPService.getTrainingDocument(training.document_file).subscribe((response: Blob) => {
+            const fileURL = URL.createObjectURL(response);
+            window.open(fileURL, "_blank");
+            //this.router.navigate(['/documentpdfviewer'], { queryParams: { url: encodeURIComponent(fileURL) } });
+            window.location.reload();
+          }, error => {
+            console.error('Error fetching document:', error);
+          });
+
         }
       },
       error: (error) => {
@@ -196,7 +204,78 @@ export class IdpComponent {
       }
     });
   }
-   
+
+  completedTraining(training: any){
+    if (!training) {
+      console.error("Invalid training data.");
+      return;
+    } 
+
+    const studentId = sessionStorage.getItem('studentId');
+    if (!studentId) {
+      console.error("Student ID not found in sessionStorage.");
+      return;
+    }
+
+    const request = { studentId: +studentId, trainingId: training.training_id };
+
+    this.IDPService.completeTraining(request).subscribe({
+      next: (response) => {
+        console.log("Training Completed successfully:", response);
+        alert(response);  // Correctly displays the API message
+        window.location.reload();
+      }
+    })
+
+  }
+
+
+  //Request again for the training 
+
+  requestAgain(trainingId: number) {
+    console.log("Checking Training ID:", trainingId);
+    console.log("Student ID:", this.studentId);
+
+    if (!trainingId || !this.studentId) {
+      alert("Invalid training or student ID. Please try again.");
+      return;
+    }
+
+    this.IDPService.getTrainingByID(trainingId).subscribe({
+      next: (trainingArray) => {
+        console.log("Fetched Training Data:", trainingArray);
+
+        if (!trainingArray || trainingArray.length === 0) {
+          alert("Training details not found. Please try again.");
+          return;
+        }
+
+        // Get the first object from the array 
+ 
+          this.IDPService.requestAgainForApproval({
+            studentId: this.studentId ?? 0,
+            trainingId: trainingId,
+          }).subscribe({
+            next: (response: string) => {
+              console.log("Approval Request Response:", response);
+              alert(response);
+              window.location.reload();
+            },
+            error: (error) => {
+              console.error("Error:", error);
+              alert("Failed to request training approval.");
+            },
+          });
+       
+      },
+      error: (error) => {
+        console.error("Error fetching training details:", error);
+        alert("Failed to fetch training details.");
+      },
+    });
+  }
+
+
 
   startTrainingOrRequestApproval(trainingId: number) {
     console.log('Received Training ID:', trainingId);
@@ -225,12 +304,12 @@ export class IdpComponent {
 
   // startTrainingDirectly(trainingId: number) {
   //   console.log('Starting Training:', trainingId);
-    
+
   //   if (!trainingId || !this.studentId) {
   //     alert('Invalid training or student ID. Please try again.');
   //     return;
   //   }
-  
+
   //   this.IDPService.startTraining(this.studentId, trainingId).subscribe({
   //     next: (response: string) => {
   //       console.log('Training Started Response:', response);
@@ -261,5 +340,5 @@ export class IdpComponent {
       console.error("API Error:", error);
     });
   }
- 
+
 }

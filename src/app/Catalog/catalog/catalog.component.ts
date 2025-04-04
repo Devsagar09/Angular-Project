@@ -183,7 +183,15 @@ export class CatalogComponent {
             window.location.reload();
           }
         } else if (training.trainingtype_name === "Document" && training.document_file) {
-          window.open(training.document_file, "_blank");
+          this.CatalogService.getTrainingDocument(training.document_file).subscribe((response: Blob) => {
+            const fileURL = URL.createObjectURL(response);
+            window.open(fileURL, "_blank");
+            //this.router.navigate(['/documentpdfviewer'], { queryParams: { url: encodeURIComponent(fileURL) } });
+            window.location.reload();
+          }, error => {
+            console.error('Error fetching document:', error);
+          });
+        
         }
       },
       error: (error) => {
@@ -193,7 +201,31 @@ export class CatalogComponent {
     });
   }
 
+  completedTraining(training: any){
+    if (!training) {
+      console.error("Invalid training data.");
+      return;
+    } 
 
+    const studentId = sessionStorage.getItem('studentId');
+    if (!studentId) {
+      console.error("Student ID not found in sessionStorage.");
+      return;
+    }
+
+    const request = { studentId: +studentId, trainingId: training.training_id };
+
+    this.CatalogService.completeTraining(request).subscribe({
+      next: (response) => {
+        console.log("Training Completed successfully:", response);
+        alert(response);  // Correctly displays the API message
+        window.location.reload();
+      }
+    })
+
+  }
+
+  
   viewTraining(trainingtId: number) {
     console.log("Transcript ID:", trainingtId);
 

@@ -13,8 +13,8 @@
   border-radius: 1.5rem;
   padding: 3rem;
   color: #ffffff;
-  width: 90%;
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1300px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   position: relative;
   overflow: hidden;
@@ -86,15 +86,14 @@
 
 .quick-links {
   align-self: flex-start;
-  width: 90%;   
+  width: 100%;   
   color: #000000;
   font-weight: 700;
   font-size: 1.2rem; /* Keep size readable */
   text-transform: uppercase;
   letter-spacing: 1px;
   padding: 0.8rem; 
-  margin-bottom: 0;
-  margin-left: 2%;
+  margin-bottom: 0; 
 }
  
 
@@ -104,7 +103,7 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem;
-  width: 95%;
+  width: 100%;
   cursor: pointer;
 }
 
