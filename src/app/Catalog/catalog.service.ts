@@ -9,8 +9,9 @@ export class CatalogService {
 
   private apiBase = "https://localhost:7172/api/DisplayData/DisplayCourseCatalog";
   private searchapi = "https://localhost:7172/api/Search/SearchCC";
-  private startCCTraining = "https://localhost:7172/api/ManageEnrollment" 
+  private startCCTraining = "https://localhost:7172/api/ManageEnrollment"
   private gettrainingdata = "https://localhost:7172/api/DisplayData/GetTrainingDataByID";
+
 
   constructor(private http: HttpClient) { }
 
@@ -28,13 +29,19 @@ export class CatalogService {
     }) as Observable<string>;
   }
 
+  completeTraining(request: { studentId: number; trainingId: number }): Observable<string> {
+    return this.http.post(`${this.startCCTraining}/CompletedTraining`, request, {
+      responseType: 'text' // Correct response type for plain text
+    }) as Observable<string>;
+  }
+
   requestTrainingApproval(request: { studentId: number; trainingId: number }): Observable<string> {
     return this.http.post(`${this.startCCTraining}/RequestTrainingApproval`, request, {
       responseType: 'text' // Correct response type for plain text
     }) as Observable<string>;
   }
 
-  getTrainingByID(trainingid:number):Observable<any>{
+  getTrainingByID(trainingid: number): Observable<any> {
     return this.http.get<any>(`${this.gettrainingdata}/${trainingid}`);
   }
 

@@ -201,7 +201,31 @@ export class CatalogComponent {
     });
   }
 
+  completedTraining(training: any){
+    if (!training) {
+      console.error("Invalid training data.");
+      return;
+    } 
 
+    const studentId = sessionStorage.getItem('studentId');
+    if (!studentId) {
+      console.error("Student ID not found in sessionStorage.");
+      return;
+    }
+
+    const request = { studentId: +studentId, trainingId: training.training_id };
+
+    this.CatalogService.completeTraining(request).subscribe({
+      next: (response) => {
+        console.log("Training Completed successfully:", response);
+        alert(response);  // Correctly displays the API message
+        window.location.reload();
+      }
+    })
+
+  }
+
+  
   viewTraining(trainingtId: number) {
     console.log("Transcript ID:", trainingtId);
 
