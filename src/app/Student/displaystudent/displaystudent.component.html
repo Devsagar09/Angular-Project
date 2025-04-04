@@ -27,7 +27,7 @@
                  placeholder="Search Students">
             </div>
             <div class="action-buttons">
-                <button class="delete-btn" title="Delete" (click)="deleteSelectedStudents()"><i class="fa fa-trash"></i></button>
+                <button class="delete-btn" title="Delete" (click)="confirmDelete()"><i class="fa fa-trash"></i></button>
                 <button class="add-btn" title="Add" [routerLink]="['/addStudent']">
                     <i class="fa fa-plus"></i>
                   </button>
@@ -57,7 +57,7 @@
                         <!-- Action Icons -->
                         <div class="action-icons">
                           <i class="fas fa-edit" title="Edit" (click)="editStudent(s.student_Id)"></i>
-                          <i class="fas fa-trash" title="Delete" (click)="deleteStudent(s.student_Id)"></i>
+                          <i class="fas fa-trash" title="Delete" (click)="confirmDelete(s.student_Id)"></i>
                         </div>
                         </div>
                     <td>{{ s?.student_No }}</td>
@@ -73,7 +73,6 @@
             <span style="display: flex; justify-content: center;margin-top: 30px;">No Student found.</span>
          </p>
         <div class="pagination-container">
-            <!-- Dropdown for selecting items per page -->
             <div class="items-per-page">
               <!-- <label for="itemsPerPage">Show:</label> -->
               <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
@@ -85,4 +84,13 @@
             <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
           </div>
     </div>
-
+    <div class="popup-overlay" *ngIf="showPopup">
+      <div class="popup-box">
+        <h3>Confirm Deletion</h3>
+        <p>{{ deleteMessage }}</p>
+        <div class="button-group">
+          <button (click)="deleteStudents()">Yes, Delete</button>
+          <button (click)="closePopup()">Cancel</button>
+        </div>
+      </div>
+    </div>

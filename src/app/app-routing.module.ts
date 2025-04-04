@@ -15,6 +15,8 @@ import { DisplaystudentComponent } from './Student/displaystudent/displaystudent
 import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent.component';
 import { AddEditTrainingComponent } from './Training/add-edit-training/add-edit-training.component';
 import { ViewprofileComponent } from './Student/viewprofile/viewprofile.component';
+import { ForgetpasswordComponent } from './Login/forgetpassword/forgetpassword.component';
+import { RegisterComponent } from './Login/register/register.component';
 
 const routes: Routes = [
   {
@@ -40,6 +42,14 @@ const routes: Routes = [
     path: 'viewProfile',
     component: ViewprofileComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'ForgetPassword',
+    component: ForgetpasswordComponent,
+  },
+  {
+    path: 'SelfRegister',
+    component: RegisterComponent,
   },
   {
     path: 'studentdashboard',

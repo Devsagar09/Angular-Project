@@ -130,7 +130,7 @@
   .links a {
     text-decoration: none;
     color: #134c68;
-    /* font-weight: bold; */
+    font-weight: bold;
   }
 
   .fa {

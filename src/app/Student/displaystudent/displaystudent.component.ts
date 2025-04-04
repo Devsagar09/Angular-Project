@@ -19,6 +19,8 @@ sortColumn: string = '';
 sortDirection: 'asc' | 'desc' = 'asc';
 selectedStudent: any = null;
 selectedStudentIds: number[] = []; // Array to store selected student IDs
+  showPopup: boolean = false;
+  deleteMessage: string = '';
 
 
   constructor(private studentService: StudentService,private router :Router,private snackBar :MatSnackBar){}
@@ -71,22 +73,46 @@ selectedStudentIds: number[] = []; // Array to store selected student IDs
     });
   }
 
-  deleteStudent(studentId: number) {
-    if (confirm('Are you sure you want to delete this student?')) {
-        this.studentService.deleteStudents([studentId]).subscribe(
-            (response) => {
-                this.students = this.students.filter(
-                    (student) => student.student_Id !== studentId
-                );
-                alert('Student deleted successfully!');
-            },
-            (error) => {
-                console.error('Error deleting student', error);
-                alert('An error occurred while deleting the student.');
-            }
-        );
+  confirmDelete(studentId?: number) {
+    if (studentId) {
+      // Single student delete
+      this.selectedStudentIds = [studentId];
+      this.deleteMessage = 'Are you sure you want to delete this student?';
+    } else {
+      // Multiple students delete
+      this.selectedStudentIds = this.students.filter((student) => student.selected).map((student) => student.student_Id);
+      if (this.selectedStudentIds.length === 0) {
+        this.showErrorSnackbar('Please select at least one student to delete.');
+        return;
+      }
+      this.deleteMessage = `Are you sure you want to delete ${this.selectedStudentIds.length} students?`;
     }
-}
+    this.showPopup = true;
+  }
+
+  deleteStudents() {
+    if (this.selectedStudentIds.length === 0) return;
+
+    this.studentService.deleteStudents(this.selectedStudentIds).subscribe(
+      () => {
+        this.students = this.students.filter(
+          (student) => !this.selectedStudentIds.includes(student.student_Id)
+        );
+        this.showSuccessSnackbar('Students deleted successfully!');
+        this.closePopup();
+      },
+      (error) => {
+        console.error('Error deleting students', error);
+        this.showErrorSnackbar('An error occurred while deleting students.');
+      }
+    );
+  }
+
+  closePopup() {
+    this.showPopup = false;
+    this.selectedStudentIds = [];
+  }
+
 
 toggleStudentSelection(student: any) {
   if (student.selected) {
@@ -96,32 +122,31 @@ toggleStudentSelection(student: any) {
   }
 }
 
-deleteSelectedStudents() {
-  this.selectedStudentIds = this.students
-    .filter(student => student.selected)
-    .map(student => student.student_Id);
+// deleteSelectedStudents() {
+//   this.selectedStudentIds = this.students
+//     .filter(student => student.selected)
+//     .map(student => student.student_Id);
 
-  if (this.selectedStudentIds.length === 0) {
-    alert('Please select at least one student to delete.');
-    return;
-  }
+//   if (this.selectedStudentIds.length === 0) {
+//     alert('Please select at least one student to delete.');
+//     return;
+//   }
 
-  if (confirm(`Are you sure you want to delete ${this.selectedStudentIds.length} students?`)) {
-    this.studentService.deleteStudents(this.selectedStudentIds).subscribe(
-      () => {
-        this.students = this.students.filter(
-          (student) => !this.selectedStudentIds.includes(student.student_Id)
-        );
-        alert('Students deleted successfully!');
-      },
-      (error) => {
-        console.error('Error deleting students', error);
-        alert('An error occurred while deleting students.');
-      }
-    );
-  }
-}
-
+//   if (confirm(`Are you sure you want to delete ${this.selectedStudentIds.length} students?`)) {
+//     this.studentService.deleteStudents(this.selectedStudentIds).subscribe(
+//       () => {
+//         this.students = this.students.filter(
+//           (student) => !this.selectedStudentIds.includes(student.student_Id)
+//         );
+//         alert('Students deleted successfully!');
+//       },
+//       (error) => {
+//         console.error('Error deleting students', error);
+//         alert('An error occurred while deleting students.');
+//       }
+//     );
+//   }
+// }
 
 
    sortData(column: string = this.sortColumn): void {
