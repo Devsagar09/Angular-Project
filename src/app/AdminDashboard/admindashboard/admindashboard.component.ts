@@ -37,7 +37,7 @@ export class AdmindashboardComponent implements OnInit {
   }
 
   fetchProfileImage(studentId: string) {
-    this.adminNavigationService.getStudentProfile(studentId).subscribe({
+    this.adminNavigationService.getProfileImage(studentId).subscribe({
       next: (response) => {
         // console.log('Image URL:', response.profileImage);
         this.profileImage = response.profileImage;

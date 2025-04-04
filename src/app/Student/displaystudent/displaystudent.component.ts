@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentService } from '../student.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-displaystudent',
@@ -15,10 +17,13 @@ itemsPerPageOptions: number[] = [2,5, 10, 20, 50];
 searchValue: string = '';
 sortColumn: string = '';
 sortDirection: 'asc' | 'desc' = 'asc';
+selectedStudent: any = null;
+selectedStudentIds: number[] = []; // Array to store selected student IDs
+  showPopup: boolean = false;
+  deleteMessage: string = '';
 
 
-
-  constructor(private studentService: StudentService){}
+  constructor(private studentService: StudentService,private router :Router,private snackBar :MatSnackBar){}
 
 
   ngOnInit(): void {
@@ -51,6 +56,99 @@ sortDirection: 'asc' | 'desc' = 'asc';
     });
   }
 
+  editStudent(studentId: number) {
+    
+    console.log('Fetching Student ID:', studentId);
+    
+    this.studentService.getStudentById(studentId).subscribe({
+      next: (studentData) => {
+        this.selectedStudent = studentData; // Store fetched student data
+        console.log('Selected Student Data:', this.selectedStudent);
+        this.router.navigate(['/editStudent', studentId]);
+
+      },
+      error: (error) => {
+        console.error('Error fetching student details', error);
+      },
+    });
+  }
+
+  confirmDelete(studentId?: number) {
+    if (studentId) {
+      // Single student delete
+      this.selectedStudentIds = [studentId];
+      this.deleteMessage = 'Are you sure you want to delete this student?';
+    } else {
+      // Multiple students delete
+      this.selectedStudentIds = this.students.filter((student) => student.selected).map((student) => student.student_Id);
+      if (this.selectedStudentIds.length === 0) {
+        this.showErrorSnackbar('Please select at least one student to delete.');
+        return;
+      }
+      this.deleteMessage = `Are you sure you want to delete ${this.selectedStudentIds.length} students?`;
+    }
+    this.showPopup = true;
+  }
+
+  deleteStudents() {
+    if (this.selectedStudentIds.length === 0) return;
+
+    this.studentService.deleteStudents(this.selectedStudentIds).subscribe(
+      () => {
+        this.students = this.students.filter(
+          (student) => !this.selectedStudentIds.includes(student.student_Id)
+        );
+        this.showSuccessSnackbar('Students deleted successfully!');
+        this.closePopup();
+      },
+      (error) => {
+        console.error('Error deleting students', error);
+        this.showErrorSnackbar('An error occurred while deleting students.');
+      }
+    );
+  }
+
+  closePopup() {
+    this.showPopup = false;
+    this.selectedStudentIds = [];
+  }
+
+
+toggleStudentSelection(student: any) {
+  if (student.selected) {
+    this.selectedStudentIds.push(student.student_Id);
+  } else {
+    this.selectedStudentIds = this.selectedStudentIds.filter(id => id !== student.student_Id);
+  }
+}
+
+// deleteSelectedStudents() {
+//   this.selectedStudentIds = this.students
+//     .filter(student => student.selected)
+//     .map(student => student.student_Id);
+
+//   if (this.selectedStudentIds.length === 0) {
+//     alert('Please select at least one student to delete.');
+//     return;
+//   }
+
+//   if (confirm(`Are you sure you want to delete ${this.selectedStudentIds.length} students?`)) {
+//     this.studentService.deleteStudents(this.selectedStudentIds).subscribe(
+//       () => {
+//         this.students = this.students.filter(
+//           (student) => !this.selectedStudentIds.includes(student.student_Id)
+//         );
+//         alert('Students deleted successfully!');
+//       },
+//       (error) => {
+//         console.error('Error deleting students', error);
+//         alert('An error occurred while deleting students.');
+//       }
+//     );
+//   }
+// }
+
+
    sortData(column: string = this.sortColumn): void {
     if (this.sortColumn === column) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
@@ -68,6 +166,26 @@ sortDirection: 'asc' | 'desc' = 'asc';
       return 0;
     });
   }
+
+  showSuccessSnackbar(message: string) {
+    this.snackBar.open(message, 'X', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: ['app-notification-success'],
+    });
+  }
+
+  // Show error snackbar
+  showErrorSnackbar(message: string) {
+    this.snackBar.open(message, 'X', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: ['app-notification-error'],
+    });
+  }
+
 }
 
 

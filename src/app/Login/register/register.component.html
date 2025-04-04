@@ -1,0 +1,76 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<body>
+    <img src="assets/background.jpg" class="bg-image" />
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo">
+                <img [src]="companyimage" alt="Logo" />
+            </div>
+
+            <h2 class="title">Register</h2>
+            <p class="subtitle">Create your account below</p>
+
+            <form #studentForm="ngForm" (ngSubmit)="onRegister(studentForm)">
+                <!-- First Name -->
+                <div class="form-group">
+                  <input type="text" name="firstName" required [(ngModel)]="studentData.firstname"
+                         #firstName="ngModel" class="input-field"
+                         [ngClass]="{'invalid': firstName.invalid && firstName.touched}" placeholder=" " />
+                  <label for="firstName" class="input-label">First Name</label>
+                  <!-- <div *ngIf="firstName.invalid && firstName.touched" class="error-msg">First Name is required.</div> -->
+                </div>
+              
+                <!-- Last Name -->
+                <div class="form-group">
+                  <input type="text" name="lastName" required [(ngModel)]="studentData.lastname"
+                         #lastName="ngModel" (keyup)="generateUsernameAndPassword()"
+                         class="input-field" [ngClass]="{'invalid': lastName.invalid && lastName.touched}" placeholder=" " />
+                  <label for="lastName" class="input-label">Last Name</label>
+                  <!-- <div *ngIf="lastName.invalid && lastName.touched" class="error-msg">Last Name is required.</div> -->
+                </div>
+              
+                <!-- Email -->
+                <div class="form-group">
+                  <input type="email" name="email" required [(ngModel)]="studentData.email"
+                         #email="ngModel" class="input-field"
+                         [ngClass]="{'invalid': email.invalid && email.touched}" placeholder=" " />
+                  <label for="email" class="input-label">Email</label>
+                  <!-- <div *ngIf="email.invalid && email.touched" class="error-msg">Valid Email is required.</div> -->
+                </div>
+              
+                <!-- Username -->
+                <div class="form-group">
+                  <input type="text" name="username" required [(ngModel)]="studentData.username"
+                         #username="ngModel" class="input-field"
+                         [ngClass]="{'invalid': username.invalid && username.touched}" placeholder=" " />
+                  <label for="username" class="input-label">Username</label>
+                  <!-- <div *ngIf="username.invalid && username.touched" class="error-msg">Username is required.</div> -->
+                </div>
+              
+                <!-- Password -->
+                <div class="form-group">
+                  <input [type]="showPassword ? 'text' : 'password'" name="password" required
+                         [(ngModel)]="studentData.password" #password="ngModel"
+                         class="input-field" [ngClass]="{'invalid': password.invalid && password.touched}" placeholder=" " />
+                  <label for="password" class="input-label">Password</label>
+                  <!-- <div *ngIf="password.invalid && password.touched" class="error-msg">Password is required.</div> -->
+                  <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility()"></i>
+                </div>
+              
+                <button class="login-btn" type="submit">SIGN UP</button>
+              </form>
+              
+
+
+              <div>
+                Already have an account?
+                <a [routerLink]="['/login']" class="highlight-login">
+                   Login
+                </a>
+              </div>
+              
+        </div>
+    </div>
+</body>

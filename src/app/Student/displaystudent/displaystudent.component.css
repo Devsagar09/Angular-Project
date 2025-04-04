@@ -31,18 +31,6 @@ body {
     width: 100%;
   }
 
-    .employee-header {
-    background-color: #134c68; /* Teal background */
-    color: white; /* White text */
-    padding: 15px 20px;
-    font-size: 20px;
-    font-weight: bold;
-    width: 97%;
-    margin: 0; 
-    display: flex;
-    align-items: center;
-  }
-
   .navbar a {
     display: flex;
     align-items: center;
@@ -328,6 +316,51 @@ body {
 .action-icons i:hover {
   color: #007bff;
 }
+
+/* Popup Background */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Popup Box */
+.popup-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+}
+
+/* Buttons */
+.button-group {
+  margin-top: 20px;
+}
+
+.button-group button {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.button-group button:first-child {
+  background: red;
+  color: white;
+}
+
+.button-group button:last-child {
+  background: gray;
+  color: white;
+}
+
 
 @media (max-width: 480px) {
     .container {

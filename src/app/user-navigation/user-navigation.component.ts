@@ -19,7 +19,7 @@ export class UserNavigationComponent implements OnInit {
   isLoading = true;
   isLoginPage = true;
   faArrowRightFromBracket = faArrowRightFromBracket;
-  faUser = faUser 
+  faUser = faUser
 
   dropdownVisible = false;
   isCollapsed = true;
@@ -62,7 +62,7 @@ export class UserNavigationComponent implements OnInit {
   }
 
   fetchProfileImage(studentId: string) {
-    this.usernavigationService.getStudentProfile(studentId).subscribe(
+    this.usernavigationService.GetProfileImage(studentId).subscribe(
       response => {
         // console.log('Image URL:', response.profileImage);
         this.profileImage=response.profileImage;  // ✅ Log extracted URL
@@ -72,7 +72,6 @@ export class UserNavigationComponent implements OnInit {
       }
     );
   }
-
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;

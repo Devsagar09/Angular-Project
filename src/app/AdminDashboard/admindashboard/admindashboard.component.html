@@ -141,9 +141,8 @@
           <img
             [src]="profileImage"
             alt="User Image"
-            class="profile-img"
-            *ngIf="dashboardData.login_image;"
-          />
+            class="profile-img" />
+          
           <div class="user-details">
             <p class="last-login">last login : {{ lastLogin}}</p>
             <h3 class="username">{{ dashboardData.login_username }}</h3>
@@ -151,7 +150,7 @@
         </div>
 
         <div class="card-footer">
-          <button class="profile-btn">
+          <button class="profile-btn" onclick="window.location.href='viewProfile'">
             View profile <span>&#8594;</span>
           </button>
         </div>
