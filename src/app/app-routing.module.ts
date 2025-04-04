@@ -15,6 +15,7 @@ import { DisplaystudentComponent } from './Student/displaystudent/displaystudent
 import { AddeditstudentComponent } from './Student/addeditstudent/addeditstudent.component';
 import { AddEditTrainingComponent } from './Training/add-edit-training/add-edit-training.component';
 import { ViewprofileComponent } from './Student/viewprofile/viewprofile.component';
+import { DocumentViewerComponent } from './Catalog/document-viewer/document-viewer.component';
 
 const routes: Routes = [
   {
@@ -90,6 +91,10 @@ const routes: Routes = [
     path: 'coursecatalog',
     component:CatalogComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'documentpdfviewer',
+    component:DocumentViewerComponent 
   },
   {
     path: 'transcript',
