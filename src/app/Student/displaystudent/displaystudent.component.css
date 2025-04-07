@@ -38,7 +38,7 @@ body {
     font-size: 20px;
     font-weight: bold;
     width: 97%;
-    margin: 0; 
+    margin: 0;
     display: flex;
     align-items: center;
   }
@@ -75,7 +75,7 @@ body {
 .fas fa-sort{
   font-size:medium;
 }
-  
+
 
   .pagination-container {
     display: flex;
@@ -159,7 +159,7 @@ body {
   }
 
 
-   .pagination-controls {
+   /* .pagination-controls {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -177,7 +177,7 @@ body {
     padding: 5px;
     border: 1px solid #ddd;
     border-radius: 4px;
-  }
+  } */
 
   /* Pagination */
   .pagination-container {
@@ -190,7 +190,7 @@ body {
     position: fixed;
     top:65px;
     width: 98%;
-    z-index: 1000; 
+    z-index: 1000;
     background-color: #134c68; /* Teal background */
     color: white; /* White text */
     padding: 15px 20px;
@@ -377,4 +377,4 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
-  
+

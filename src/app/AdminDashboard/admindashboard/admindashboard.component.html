@@ -141,9 +141,8 @@
           <img
             [src]="profileImage"
             alt="User Image"
-            class="profile-img"
-            *ngIf="dashboardData.login_image;"
-          />
+            class="profile-img"/>
+            <!-- *ngIf="dashboardData.login_image;" -->
           <div class="user-details">
             <p class="last-login">last login : {{ lastLogin}}</p>
             <h3 class="username">{{ dashboardData.login_username }}</h3>

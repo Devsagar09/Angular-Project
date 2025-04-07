@@ -43,7 +43,7 @@
           (closeModalEvent)="closeModal()">
         </app-trainingtype>
 
-        <button class="delete-btn" title="Delete">
+        <button class="delete-btn" title="Delete" (click)="deleteSelectedTrainings()">
           <i class="fa fa-trash"></i>
         </button>
       </div>
@@ -53,7 +53,7 @@
     <table id="data-table" *ngIf="trainingDatas.length > 0">
       <thead>
         <tr>
-          <th></th>
+          <th><input type="checkbox" (change)="toggleSelectAll($event)"></th>
           <th>Actions</th>
           <th>Training Name</th>
           <th>Training Code</th>
@@ -63,25 +63,29 @@
       </thead>
       <tbody>
         <tr *ngFor="let trainingData of trainingDatas | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-          <td><input type="checkbox"></td>
+          <td>
+            <input type="checkbox" [checked]="selectedTrainings.includes(trainingData.training_id)"
+                   (change)="toggleSelection(trainingData.training_id, $event)">
+          </td>
           <td class="dot">
             <div class="action-menu">
               <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
               <div class="action-icons">
                 <i class="fas fa-list" title="Details"></i>
-                <i class="fas fa-edit" title="Edit"></i>
-                <i class="fas fa-trash" title="Delete"></i>
+                <i class="fas fa-edit" title="Edit" [routerLink]="['/edit-training', trainingData.training_id]"></i>
+                <i class="fas fa-trash" title="Delete" (click)="deleteSingleTraining(trainingData.training_id)"></i>
               </div>
             </div>
           </td>
+          <!-- <td>{{trainingData?.training_id}}</td> -->
           <td>{{ trainingData?.training_name }}</td>
           <td>{{ trainingData?.training_code }}</td>
           <td>{{ trainingData?.trainingtype_name }}</td>
           <td>{{ trainingData?.archive_date | date: 'dd/MM/yyyy' }}</td>
         </tr>
-
       </tbody>
     </table>
+
         <p *ngIf="trainingDatas.length === 0 && searchValue.trim().length > 0">
             No results found.
         </p>
