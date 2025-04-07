@@ -186,6 +186,7 @@ export class AddeditstudentComponent implements OnInit {
           ...training,
           selected: false  // Ensure all checkboxes are initialized as unchecked
         }));
+        this.selectAll = false; // Reset select all state
         this.updateFilteredTrainings(); // Ensure filtered data is initialized
       },
       error: (err) => {
@@ -452,7 +453,8 @@ export class AddeditstudentComponent implements OnInit {
  
   toggleSelectAll() {
     this.trainings.forEach(training => training.selected = this.selectAll);
-  }
+    this.updateFilteredTrainings();
+    }
  
   updateSelectAll() {
     this.selectAll = this.trainings.every(training => training.selected);
@@ -460,6 +462,7 @@ export class AddeditstudentComponent implements OnInit {
  
   toggleShowSelected() {
     this.updateFilteredTrainings();
+    this.updateSelectAll(); // <-- make sure selectAll reflects the updated list
   }
  
  

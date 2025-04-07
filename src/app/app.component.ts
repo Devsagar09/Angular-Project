@@ -12,7 +12,7 @@ export class AppComponent implements OnInit{
   private inactivityLimit = 60 * 60 * 1000; // 60 minutes
   userRole: string | null = null;
   newRole: string | null = null;
-  // isLoading: boolean = true;  // Add a loading flag
+  isLoading: boolean = true;  // Add a loading flag
 
   constructor(private router: Router) {}
 
@@ -26,10 +26,9 @@ export class AppComponent implements OnInit{
         this.resetInactivityTimer();
       }
     });
-    // setTimeout(() => {
-    //    this.isLoading = false;
-    // }, 500);
-
+    setTimeout(() => {
+       this.isLoading = false;
+    }, 300);
   }
 
   @HostListener('document:mousemove')
