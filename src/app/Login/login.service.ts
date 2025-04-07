@@ -14,13 +14,7 @@ private selfregurl='https://localhost:7172/api/Student/selfRegister';
   constructor(private http : HttpClient) { }
 
   login(credentials: any): Observable<any> {
-    return this.http.post(this.apiUrl, credentials)  
-      .pipe(
-        catchError(error => {
-          // console.error('Login error:', error);
-          return throwError(error);
-        })
-      );
+    return this.http.post(this.apiUrl, credentials) ;
   }
 
   checkUserExists(emailOrUsername: string): Observable<any> {
@@ -28,13 +22,13 @@ private selfregurl='https://localhost:7172/api/Student/selfRegister';
 
     return this.http.post(
       `${this.forgetpasswordurl}/CheckUserExists`,
-      JSON.stringify(emailOrUsername), // ✅ Send as JSON string
+      JSON.stringify(emailOrUsername), 
       { headers }
     );
   }
 
   forgetPassword(data: any): Observable<any> {
-    return this.http.post(`${this.forgetpasswordurl}/ForgetPassword`, data); // ✅ Correct endpoint
+    return this.http.post(`${this.forgetpasswordurl}/ForgetPassword`, data); 
   }
 
   

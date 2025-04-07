@@ -35,6 +35,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranscriptModule } from './Training-Transcript/transcript.module';
 import { RouterModule } from '@angular/router';
 import { ConfigurationModule } from './Configuration/configuration.module';
+import { UnauthorizedpageComponent } from './not-found-page/unauthorizedpage/unauthorizedpage.component';
 
 
 
@@ -46,8 +47,9 @@ import { ConfigurationModule } from './Configuration/configuration.module';
     FooterComponent,
     UserNavigationComponent,
     LoaderComponent,
-    AdminNavigationComponent
-  ],
+    AdminNavigationComponent,
+    UnauthorizedpageComponent
+    ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,

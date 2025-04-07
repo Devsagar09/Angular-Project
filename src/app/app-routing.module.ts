@@ -20,6 +20,7 @@ import { ViewprofileComponent } from './Student/viewprofile/viewprofile.componen
 import { ForgetpasswordComponent } from './Login/forgetpassword/forgetpassword.component';
 import { RegisterComponent } from './Login/register/register.component';
 import { DocumentViewerComponent } from './Catalog/document-viewer/document-viewer.component';
+import { UnauthorizedpageComponent } from './not-found-page/unauthorizedpage/unauthorizedpage.component';
 
 const routes: Routes = [
   {
@@ -35,16 +36,19 @@ const routes: Routes = [
     path: 'addStudent',
     component: AddeditstudentComponent,
     canActivate: [AuthGuard],
+    data: { roles: ['Admin'] } 
   },
   {
     path: 'editStudent/:studentId',
     component: AddeditstudentComponent,
     canActivate: [AuthGuard],
+    data: { roles: ['Admin'] } 
   },
   {
     path: 'viewProfile',
     component: ViewprofileComponent,
     canActivate: [AuthGuard],
+    data: { roles: ['Admin', 'Student'] } 
   },
   {
     path: 'ForgetPassword',
@@ -57,72 +61,93 @@ const routes: Routes = [
   {
     path: 'studentdashboard',
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['Student'] } 
+
   },
   {
     path: 'dashboard',
     component: AdmindashboardComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['Admin'] } 
+
   },
   {
     path: 'training',
     component: TrainingComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['Admin'] } 
   },
   {
     path: 'add-training',
     component: AddEditTrainingComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['Admin'] } 
   },
   {
     path: 'edit-training/:id',
     component: EditTrainingComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['Admin'] } 
   },
   {
     path: 'AI-Maintenance',
     component: PendingApprovalComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['Admin'] } 
   },
   {
     path: 'Configuration',
     component: ConfigurationComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['Admin'] } 
   },
   {
     path: 'Student',
     component: DisplaystudentComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['Admin'] } 
   },
   {
     path: 'IDP',
     component:IdpComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['Student'] } 
+
   },
   {
     path: 'myenrollments',
     component:EnrollComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['Student'] } 
   },
   {
     path: 'coursecatalog',
     component:CatalogComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['Student'] } 
   },
   {
     path: 'documentpdfviewer',
-    component:DocumentViewerComponent 
+    component:DocumentViewerComponent ,
+    data: { roles: ['Student'] } 
   },
   {
     path: 'transcript',
     component:TranscriptComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['Student'] } 
+  },
+  {
+    path:'unauthorized',
+    component: UnauthorizedpageComponent
   },
   {
     path:'**',
-    component:NotFoundPageComponent
+    component:NotFoundPageComponent,
+    data: { roles: ['Admin','Student'] } 
   }
-
+  
 ];
 
 @NgModule({

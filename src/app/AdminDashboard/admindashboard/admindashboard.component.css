@@ -160,7 +160,7 @@ body{
 }
 
 .stat-card:hover .stat-icon {
-  background: #7685de;
+  background: #4D7D9B;
   color: white;
 }
 
@@ -582,5 +582,5 @@ tr:nth-child(even) {
 }
 
 .profile-btn:hover {
-  background: #6ba6e0;
+  background: #4D7D9B;
 }

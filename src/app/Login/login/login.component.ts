@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit {
   }
 
   togglePasswordVisibility() {
-    debugger
     this.showPassword = !this.showPassword;
   }
 
@@ -71,7 +70,6 @@ export class LoginComponent implements OnInit {
           
           setTimeout(() => {
             this.router.navigate([response.role === 'Admin' ? '/dashboard' : '/studentdashboard']).then(() => {
-              this.loading=false;
               window.location.reload(); // Reload after a small delay
           }); 
           }, 300); 

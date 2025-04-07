@@ -257,7 +257,7 @@ body {
 }
 
 .action-buttons button:hover {
-  background-color: #0056b3; /* Darker background color on hover */
+  background-color: #4D7D9B; /* Darker background color on hover */
   color: #f8f9fa; /* Slightly lighter text color on hover */
   transform: scale(1.05); /* Slightly enlarge the button */
   box-shadow: 0 4px  8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
@@ -318,7 +318,7 @@ body {
 } */
 
 .action-icons i:hover {
-  color: #007bff;
+  color: #4D7D9B;
 }
 
 /* Popup Background */
@@ -418,17 +418,18 @@ body {
 
 ::ng-deep .mat-mdc-snack-bar-container {
   --mat-mdc-snack-bar-button-color: #ffffff;
-  --mdc-snackbar-supporting-text-color: #ffffff;
+  --mdc-snackbar-supporting-text-color: black;
 }
 
 ::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
-  background-color: rgb(19, 139, 19) !important;
-  color: white !important;
+  background-color: #fff !important;
+  color: black !important;
+  z-index: 3000;
   --mdc-snackbar-container-color: #rgb(19, 139, 19);
 }
 
 ::ng-deep .mat-mdc-snack-bar-container.app-notification-error {
-  background-color: rgb(225, 71, 71) !important;
+  background-color: rgb(220, 127, 127) !important;
   color: white !important;
-  --mdc-snackbar-container-color: rgb(225, 71, 71)    ;
+  --mdc-snackbar-container-color: rgb(220, 127, 127)     ;
 }
