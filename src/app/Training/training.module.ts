@@ -5,19 +5,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TrainingtypeComponent } from './trainingtype/trainingtype.component';
 import { AddEditTrainingComponent } from './add-edit-training/add-edit-training.component';
+import { EditTrainingComponent } from './edit-training/edit-training.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
   declarations: [
     TrainingComponent,
     TrainingtypeComponent,
-    AddEditTrainingComponent
+    AddEditTrainingComponent,
+    EditTrainingComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     NgxPaginationModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ]
 })
 export class TrainingModule { }

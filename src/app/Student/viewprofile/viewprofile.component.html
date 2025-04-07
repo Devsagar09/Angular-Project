@@ -22,8 +22,11 @@
         </div>
         <br/>
         <h3>{{ firstname }} {{ lastname }}</h3>
-        <button class="save-btn" (click)="uploadProfileImage()">UPLOAD</button>
-
+        <div class="img-btn-group">
+          <button class="saveimg-btn" (click)="uploadProfileImage()">UPLOAD</button>
+          <button class="reset-btn" (click)="resetImagePreview()" [disabled]="!imagePreview">RESET</button>
+        </div>
+        
       </div>
     </div>
 

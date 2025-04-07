@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { UserNavigationService } from './user-navigation.service';
 import { faArrowRightFromBracket,faUser } from '@fortawesome/free-solid-svg-icons';
+import { AdminNavigationService } from '../admin-navigation/admin-navigation.service';
 
 
 @Component({
@@ -20,35 +21,51 @@ export class UserNavigationComponent implements OnInit {
   isLoginPage = true;
   faArrowRightFromBracket = faArrowRightFromBracket;
   faUser = faUser
+  companyimage : string | null = '';
+
 
   dropdownVisible = false;
   isCollapsed = true;
 
-  constructor(private router: Router,private usernavigationService:UserNavigationService) {
+  constructor(private router: Router,private usernavigationService:UserNavigationService,private adminnavigationService:AdminNavigationService) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        this.isLoading = true;  
-      } 
+        this.isLoading = true;
+      }
       if (event instanceof NavigationEnd) {
         this.isLoginPage = this.router.url.toLowerCase() === '/login'; // ✅ Properly set login page condition
         setTimeout(() => {
-          this.isLoading = false;  
+          this.isLoading = false;
         }, 2000);
       }
     });
   }
 
   ngOnInit() {
+    this.displayLogo();
       this.userRole =sessionStorage.getItem('userRole');
         this.loadUserData();
         const studentId = sessionStorage.getItem('studentId');
-      
+
         if(studentId){
           this.fetchProfileImage(studentId);
         }
   }
+
   
   
+  displayLogo() {
+    this.adminnavigationService.displayLogo().subscribe(
+      (response: any) => {
+        this.companyimage = response.companylogo; 
+      },
+      error => {
+        console.error('Error fetching company logo:', error);
+      }
+    );
+  }
+  
+
   switchToAdmin() {
     sessionStorage.removeItem('newRole');  // Remove the new role
     this.router.navigate(['/dashboard']).then(() => {
@@ -77,7 +94,10 @@ export class UserNavigationComponent implements OnInit {
     this.isCollapsed = !this.isCollapsed;
   }
 
-  toggleDropdown() {
+  toggleDropdown(event?: MouseEvent) {
+    if (event) {
+      event.stopPropagation(); // Prevent triggering document click
+    }
     this.dropdownVisible = !this.dropdownVisible;
   }
 
@@ -99,9 +119,20 @@ export class UserNavigationComponent implements OnInit {
   closeSidebarOnClickOutside(event: Event) {
     const sidebar = document.querySelector('.sidebar');
     const toggleBtn = document.querySelector('.toggle-btn');
+    const dropdown = document.querySelector('.dropdown-menu');
+    const profileToggle = document.querySelector('.dropdown-toggle');
 
-    if (sidebar && !sidebar.contains(event.target as Node) && toggleBtn && !toggleBtn.contains(event.target as Node)) {
-      this.isCollapsed = true;
-    }
+    const clickedInsideSidebar = sidebar && sidebar.contains(event.target as Node);
+  const clickedToggleBtn = toggleBtn && toggleBtn.contains(event.target as Node);
+  const clickedInsideDropdown = dropdown && dropdown.contains(event.target as Node);
+  const clickedProfileToggle = profileToggle && profileToggle.contains(event.target as Node);
+
+   if (!clickedInsideSidebar && !clickedToggleBtn) {
+    this.isCollapsed = true;
   }
+
+  if (!clickedInsideDropdown && !clickedProfileToggle) {
+    this.dropdownVisible = false;
+  }
+}
 }

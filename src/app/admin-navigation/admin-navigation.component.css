@@ -223,6 +223,10 @@ height: 100%;
   font-weight: bold;
 }
 
+.profile-Image {
+  object-fit: cover;
+}
+
 
 
 /* Loader code design */
