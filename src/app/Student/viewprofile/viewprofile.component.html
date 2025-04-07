@@ -1,0 +1,120 @@
+<div class="acc-header">
+  <div class="title">
+    <i class="fa fa-cogs"></i> Account Settings
+  </div>
+</div>
+
+<br />
+
+<div class="profile-container">
+  <div class="profile-content">
+    
+    <!-- Left Section: Profile Picture & Name -->
+    <div class="profile-left">
+      <div class="user-info">
+        <div class="avatar">
+          <img [src]="imagePreview || profileImage" alt="User profile">
+          <div class="avatar-overlay">
+            <span style="font-size: 25px;">📷</span>
+            <span>Change Profile</span>
+            <input type="file" id="profile-pic-input" (change)="onFileSelected($event)" accept="image/*">
+          </div>
+        </div>
+        <br/>
+        <h3>{{ firstname }} {{ lastname }}</h3>
+        <div class="img-btn-group">
+          <button class="saveimg-btn" (click)="uploadProfileImage()">UPLOAD</button>
+          <button class="reset-btn" (click)="resetImagePreview()" [disabled]="!imagePreview">RESET</button>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- Right Section: Tabs & Forms -->
+    <div class="profile-right">
+      <nav class="profile-tabs">
+        <a (click)="setActiveTab('user-profile')" [ngClass]="{'active': activeTab === 'user-profile'}">USER PROFILE</a>
+        <a (click)="setActiveTab('security')" [ngClass]="{'active': activeTab === 'security'}">SECURITY</a>
+      </nav>
+      
+      <div class="tab-content">
+        <!-- User Profile Section -->
+        <div id="user-profile" class="section" [ngClass]="{'active': activeTab === 'user-profile'}">
+          <form>
+            <label>Email</label>
+            <input type="email" [(ngModel)]="studentData.email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            name="email" #emailInput="ngModel">
+            <span *ngIf="emailInput.invalid && emailInput.touched" class="error-message">
+              Please enter a valid email address.
+            </span>
+
+            <label>Phone No</label>
+            <input type="text" [(ngModel)]="studentData.phoneno" name="phoneno">
+
+            <label>Address</label>
+            <textarea rows="5" [(ngModel)]="studentData.address" name="address"></textarea>
+
+            <label>City</label>
+            <input type="text" [(ngModel)]="studentData.city" name="city">
+
+            <label>Postal Code</label>
+            <input type="text" [(ngModel)]="studentData.postalcode" name="postalcode">
+
+            <label>State</label>
+            <input type="text" [(ngModel)]="studentData.state" name="state">
+
+            <label>Country</label>
+            <input type="text" [(ngModel)]="studentData.country" name="country">
+
+            <button class="save-btn" (click)="updateStudentProfile()">SAVE CHANGES</button>  
+
+          </form>
+        </div>
+
+        <!-- Security Section -->
+        <div id="security" class="section" [ngClass]="{'active': activeTab === 'security'}">
+          <h4>Reset Password</h4>
+          <form #resetForm="ngForm" (ngSubmit)="resetPassword(resetForm)">
+            <label>Current Password</label>
+            <div class="password-container">
+              <input [type]="showCurrentPassword ? 'text' : 'password'"
+                     name="currentPassword" 
+                     [(ngModel)]="resetData.currentPassword" 
+                     required 
+                     placeholder="Current Password">
+              <i class="fa" [ngClass]="showCurrentPassword ? 'fa-eye' : 'fa-eye-slash'" 
+                 (click)="toggleCurrentPassword()"></i>
+            </div>
+            
+            <label>New Password</label>
+            <div class="password-container">
+              <input [type]="showNewPassword ? 'text' : 'password'" 
+                     name="newPassword" 
+                     [(ngModel)]="resetData.newPassword" 
+                     required 
+                     placeholder="New Password">
+              <i class="fa" [ngClass]="showNewPassword ? 'fa-eye' : 'fa-eye-slash'" 
+                 (click)="toggleNewPassword()"></i>
+            </div>
+            
+            <label>Confirm Password</label>
+            <div class="password-container">
+              <input [type]="showConfirmPassword ? 'text' : 'password'"
+                     name="confirmPassword" 
+                     [(ngModel)]="resetData.confirmPassword" 
+                     required 
+                     placeholder="Confirm Password">
+              <i class="fa" [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'" 
+                 (click)="toggleConfirmPassword()"></i>
+            </div>
+            <p *ngIf="message" class="error-message">{{ message }}</p>
+
+            <button type="submit" class="save-btn" [disabled]="resetForm.invalid">SAVE CHANGES</button>
+          </form>
+          
+        </div>
+                
+      </div>
+    </div>
+  </div>
+</div>

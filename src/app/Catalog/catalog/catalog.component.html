@@ -42,9 +42,10 @@
     <div class="training-section" *ngIf="!isLoading">
         <div class="cards-container">
             <div class="training-card"
-                *ngFor="let training of trainings | paginate: { itemsPerPage: 4, currentPage: p }">
+                *ngFor="let training of trainings | paginate: { itemsPerPage: 20, currentPage: p }">
                 <div class="card-header">
-                    <img [src]="training.thumbnail_image" alt="{{ training.training_name }} Training" />
+                    <img [src]="training.trainingtype_name === 'Document' ? 'Doc_Image.jpeg' : training.thumbnail_image"
+                    alt="{{ training.training_name }} Training" />
                 </div>
 
                 <div class="card-body">
@@ -66,23 +67,61 @@
                 </div>
 
                 <div class="card-footer">
-                    <button class="btn"
-                        *ngIf="training.status === 'Not Started' || training.status === 'In Progress' || training.status === 'Completed'">
+                    <button class="btn" (click)="requestTrainingApprovalOrView(training.training_id)"
+                        *ngIf="training.status === 'Not Started'">
                         {{ training.trainingtype_name }}
                     </button>
 
+                    
+                    <button class="btn" *ngIf="training.status === 'In Progress' || training.status === 'Completed'"
+                        (click)="viewTraining(training.training_id)">
+                        Action
+                    </button> 
+                    
                     <!-- Pending Approval (Request for Approval Button) -->
-                    <button class="btn pending-btn" *ngIf="training.status === 'Pending Approval'">
+                    <button class="btn pending-btn" *ngIf="training.status === 'Pending Approval'" (click)="showApprovalAlert()">
                         Request for Approval
                     </button>
                 </div>
             </div>
         </div>
+
+        <div class="modals-overlay" *ngIf="isModalOpens">
+            <div class="modals">
+                <div class="modals-header">
+                    <h2>Training Details</h2>
+                    <span class="close-btn" (click)="closeModal()">&times;</span>
+                </div>
+
+                <div class="modals-image">
+                    <img [src]="selectedTraining?.trainingtype_name === 'Document' ? 'Doc_Image.jpeg' : selectedTraining.thumbnail_image"
+                    alt="{{ selectedTraining.training_name }} Training" />
+                </div>
+
+                <div class="modals-body">
+                    <p><strong>Training Name:</strong> {{ selectedTraining?.training_name }}</p>
+                    <p><strong>Training Code:</strong> {{ selectedTraining?.training_code }}</p>
+                    <p><strong>Training Type:</strong> {{ selectedTraining?.trainingtype_name }}</p>
+                    <p><strong>Training Hours:</strong> {{ selectedTraining?.training_hours }}</p>
+                    <p><strong>Summary:</strong> {{ selectedTraining?.summary || 'N/A' }}</p>
+                </div>
+
+                <div class="modals-footer">
+                    <button class="btn-join" (click)="startTraining(selectedTraining)">Join Training</button>
+
+                    <button class="btn-complete" (click)="completedTraining(selectedTraining)">
+                        Mark as Completed
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination-container">
+            <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
+        </div>
     </div>
 
-    <div class="pagination-container">
-        <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
-    </div>
+  
 </div>
 
 

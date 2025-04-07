@@ -14,6 +14,7 @@ export class AdminNavigationComponent implements OnInit {
   firstname: string | null = '';
   lastname: string | null = '';
   profileImage: string | null = '';
+  companyimage : string | null = '';
   dropdownVisible = false;
   isCollapsed = true;
   isLoading = true;
@@ -36,10 +37,12 @@ export class AdminNavigationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.displayLogo();
         this.loadUserData();
         const studentId = sessionStorage.getItem('studentId');
         if(studentId){
           this.fetchProfileImage(studentId);
+          
         }
   }
 
@@ -48,8 +51,22 @@ export class AdminNavigationComponent implements OnInit {
      this.lastname = sessionStorage.getItem('lastname');
     }
 
+    
+
+    displayLogo() {
+      this.adminnavigationService.displayLogo().subscribe(
+        (response: any) => {
+          this.companyimage = response.companylogo; 
+        },
+        error => {
+          console.error('Error fetching company logo:', error);
+        }
+      );
+    }
+    
+  
     fetchProfileImage(studentId: string) {
-      this.adminnavigationService.getStudentProfile(studentId).subscribe(
+      this.adminnavigationService.getProfileImage(studentId).subscribe(
         response => {
           // console.log('Image URL:', response.profileImage);
           this.profileImage=response.profileImage; 
@@ -99,10 +116,6 @@ export class AdminNavigationComponent implements OnInit {
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
-  }
-
-  viewProfile() {
-    console.log('View Profile clicked');
   }
 
   @HostListener('document:click', ['$event'])
