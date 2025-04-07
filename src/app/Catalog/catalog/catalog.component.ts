@@ -244,6 +244,10 @@ export class CatalogComponent {
     });
   }
 
+  getThumbnailUrl(fileName: string, type: string): string {
+    return this.CatalogService.getTrainingThumbnail(fileName, type);
+  }
+
 
 
   startTrainingOrRequestApproval(trainingId: number) {

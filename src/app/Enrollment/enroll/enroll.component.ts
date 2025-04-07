@@ -231,6 +231,9 @@ export class EnrollComponent {
     });
   }
 
+  getThumbnailUrl(fileName: string, type: string): string {
+      return this.EnrollmenstService.getTrainingThumbnail(fileName, type);
+    }
 
 
 }

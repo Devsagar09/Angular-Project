@@ -56,8 +56,8 @@
               <div class="action-icon"><fa-icon [icon]="faellipsis"></fa-icon></div>
               <div class="action-menu" *ngIf="hoverIndex === training">
                 <button class="menu-button"><fa-icon [icon]="faellipsis"></fa-icon></button>
-                <button class="menu-button" *ngIf="training.trainingtype_name=='External Link'" title="External Link"
-                  style="cursor: pointer;"><fa-icon [icon]="faLink" (click)="openExternalLink(training.external_link_URL)"></fa-icon></button>
+                <!-- <button class="menu-button" *ngIf="training.trainingtype_name=='External Link'" title="External Link"
+                  style="cursor: pointer;"><fa-icon [icon]="faLink" (click)="openExternalLink(training.external_link_URL)"></fa-icon></button> -->
 
                 <button class="menu-button" title="View Details" (click)="viewTranscript(training.transcript_id)"
                   style="cursor: pointer;">
@@ -86,7 +86,7 @@
         <span class="close" (click)="closeModal()">&times;</span>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body"  *ngIf="!isLoading">
         <p><strong>Training Name :</strong> {{ selectedTranscript?.training_name }}</p>
         <p><strong>Training Code :</strong> {{ selectedTranscript?.training_code }}</p>
         <p><strong>Training Type :</strong> {{ selectedTranscript?.trainingtype_name }}</p> 
