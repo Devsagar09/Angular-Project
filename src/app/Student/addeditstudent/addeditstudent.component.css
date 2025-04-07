@@ -180,7 +180,7 @@ body {
     font-size: 14px;
 }
 
-.employee-header {
+.stud-header {
     position: fixed;
     width: 99%;
     top:65px;
@@ -196,16 +196,20 @@ body {
     z-index: 1000; 
 }
 
-.employee-header .title {
+.stud-header .title {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.employee-header .title i {
+.stud-header .title i {
     font-size: 24px; /* Icon size */
 }
 
+.stud-header .title a {
+    text-decoration: none;
+    color: #fff;
+  }
 .show-more-container {
     display: flex;
     align-items: center;
@@ -384,16 +388,22 @@ input:checked + .slider:before {
     border: 1px solid red !important;
 }
 
-  ::ng-deep .app-notification-success {
-    background-color: rgb(75, 207, 75) !important;
-    color: white !important;
+::ng-deep .mat-mdc-snack-bar-container {
+    --mat-mdc-snack-bar-button-color: #ffffff;
+    --mdc-snackbar-supporting-text-color: #ffffff;
   }
   
-  ::ng-deep .app-notification-error {
-    background-color: rgb(223, 85, 85) !important;
+  ::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
+    background-color: rgb(19, 139, 19) !important;
     color: white !important;
+    --mdc-snackbar-container-color: #rgb(19, 139, 19);
   }
   
+  ::ng-deep .mat-mdc-snack-bar-container.app-notification-error {
+    background-color: rgb(225, 71, 71) !important;
+    color: white !important;
+    --mdc-snackbar-container-color: rgb(225, 71, 71)    ;
+  }
 
   .password-container {
     position: relative;

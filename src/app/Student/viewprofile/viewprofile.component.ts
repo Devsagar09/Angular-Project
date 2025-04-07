@@ -132,6 +132,16 @@ export class ViewprofileComponent implements OnInit {
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
+      const validImageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+
+  if (!validImageTypes.includes(file.type)) {
+    this.showErrorSnackbar('Only PNG, JPG or JPEG images are allowed.');
+    this.originalFilename = null;
+    this.imagePreview = null;
+    return;
+  }
+
+      
       this.originalFilename = file.name; // Store the original filename
       const reader = new FileReader();
       reader.onload = (e: any) => {

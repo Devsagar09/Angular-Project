@@ -69,11 +69,12 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('userRole', response.role);
           sessionStorage.setItem('studentId', response.studentId);
           
-         this.router.navigate([response.role === 'Admin' ? '/dashboard' : '/studentdashboard']).then(() => {
-            this.loading=true;
-            window.location.reload(); // Reload after a small delay
-        });
-        
+          setTimeout(() => {
+            this.router.navigate([response.role === 'Admin' ? '/dashboard' : '/studentdashboard']).then(() => {
+              this.loading=false;
+              window.location.reload(); // Reload after a small delay
+          }); 
+          }, 300); 
       },
 
         (error: any) => {
@@ -98,8 +99,8 @@ export class LoginComponent implements OnInit {
   showSuccessSnackbar(message: string) {
     this.snackBar.open(message, 'X', {
       duration: 3000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
       panelClass: ['app-notification-success']
     });
   }
@@ -107,8 +108,8 @@ export class LoginComponent implements OnInit {
   showErrorSnackbar(message: string) {
     this.snackBar.open(message, 'X', {
       duration: 3000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
       panelClass: ['app-notification-error']
     });
   }
@@ -116,8 +117,8 @@ export class LoginComponent implements OnInit {
   showSnackbar(message: string) {
     this.snackBar.open(message, 'X', {
       duration: 3000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
       panelClass: ['app-notification']
     });
   }

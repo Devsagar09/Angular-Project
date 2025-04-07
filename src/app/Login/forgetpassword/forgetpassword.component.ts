@@ -17,8 +17,6 @@ export class ForgetpasswordComponent {
 showConfirmPassword = false;
 
 
-
-
   constructor(private fb: FormBuilder, private loginService: LoginService, private snackBar:MatSnackBar) {
     this.forgetPasswordForm = this.fb.group({
       UsernameAndEmail: this.fb.control({ value: '', disabled: false }, [Validators.required, Validators.email]),
