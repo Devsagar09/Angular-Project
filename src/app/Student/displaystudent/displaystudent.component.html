@@ -1,96 +1,94 @@
-
-    <!-- <div class="loader-container" *ngIf="isLoading">
+<!-- <div class="loader-container" *ngIf="isLoading">
         <div class="loader"></div>
       </div> -->
-      <!-- <div class="navbar">
+<!-- <div class="navbar">
         <a href=""><i class="fa fa-arrow-alt-circle-left"></i>Back to Dashboard</a>
       </div> -->
 
-    <div class="stud-header">
-        <div class="title">
-            <i class="fas fa-users"></i> Students
-        </div>
-        </div>
-        <br/>
+<div class="stud-header">
+  <div class="title">
+    <i class="fas fa-users"></i>
+    <a href="/dashboard">Dashboard</a>/ Students
+  </div>
+</div>
+<br />
 
-    <div class="container">
-        <!-- Search Bar Section -->
-        <div class="search-container">
-            <label for="search"><strong>Search </strong></label>
-            <div class="search-bar">
-                <i class="fa fa-search"></i>
-                <input type="text"
-                id="search"
-                placeholder="Search Students"
-                [(ngModel)]="searchValue"
-                (input)="searchStudent()"
-                 placeholder="Search Students">
+<div class="container">
+  <!-- Search Bar Section -->
+  <div class="search-container">
+    <label for="search"><strong>Search </strong></label>
+    <div class="search-bar">
+      <i class="fa fa-search"></i>
+      <input type="text" id="search" placeholder="Search Students" [(ngModel)]="searchValue" (input)="searchStudent()"
+        placeholder="Search Students">
+    </div>
+    <div class="action-buttons">
+      <button class="delete-btn" title="Delete" (click)="confirmDelete()"><i class="fa fa-trash"></i></button>
+      <button class="add-btn" title="Add" [routerLink]="['/addStudent']">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Data Table -->
+  <table id="data-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Actions</th>
+        <th (click)="sortData('student_No')">Student No</th>
+        <th (click)="sortData('firstname')">Firstname</th>
+        <th (click)="sortData('lastname')">Lastname</th>
+        <th (click)="sortData('archive_Date')">Archive Date</th>
+        <th (click)="sortData('username')">Username</th>
+        <th (click)="sortData('role_name')">Role</th>
+      </tr>
+
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of students | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+        <td><input type="checkbox" style="accent-color: #134c68;" [(ngModel)]="s.selected"
+            (change)="toggleStudentSelection(s)"></td>
+        <td class="dot">
+          <div class="action-menu">
+            <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+            <!-- Action Icons -->
+            <div class="action-icons">
+              <i class="fas fa-edit" title="Edit" (click)="editStudent(s.student_Id)"></i>
+              <i class="fas fa-trash" title="Delete" (click)="confirmDelete(s.student_Id)"></i>
             </div>
-            <div class="action-buttons">
-                <button class="delete-btn" title="Delete" (click)="confirmDelete()"><i class="fa fa-trash"></i></button>
-                <button class="add-btn" title="Add" [routerLink]="['/addStudent']">
-                    <i class="fa fa-plus"></i>
-                  </button>
-               </div>
-        </div>
-
-        <!-- Data Table -->
-        <table id="data-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Actions</th>
-                <th (click)="sortData('student_No')">Student No</th>
-                <th (click)="sortData('firstname')">Firstname</th>
-                <th (click)="sortData('lastname')">Lastname</th>
-                <th (click)="sortData('archive_Date')">Archive Date</th>
-                <th (click)="sortData('username')">Username</th>
-                <th (click)="sortData('role_name')">Role</th>
-            </tr>
-
-            </thead>
-            <tbody>
-                <tr *ngFor="let s of students | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-                    <td><input type="checkbox" style="accent-color: #134c68;" [(ngModel)]="s.selected" (change)="toggleStudentSelection(s)"></td>
-                    <td class="dot"><div class="action-menu">
-                        <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
-                        <!-- Action Icons -->
-                        <div class="action-icons">
-                          <i class="fas fa-edit" title="Edit" (click)="editStudent(s.student_Id)"></i>
-                          <i class="fas fa-trash" title="Delete" (click)="confirmDelete(s.student_Id)"></i>
-                        </div>
-                        </div>
-                    <td>{{ s?.student_No }}</td>
-                    <td>{{ s?.firstname }}</td>
-                    <td>{{ s?.lastname }}</td>
-                    <td>{{ s?.archive_Date === '9999-12-31' ? '' : s?.archive_Date }}</td>
-                    <td>{{ s?.username }}</td>
-                    <td>{{ s?.role_name }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <p *ngIf="students.length === 0 && searchValue.trim().length >0">
-            <span style="display: flex; justify-content: center;margin-top: 30px;">No Student found.</span>
-         </p>
-        <div class="pagination-container">
-            <div class="items-per-page">
-              <!-- <label for="itemsPerPage">Show:</label> -->
-              <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
-                <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
-              </select>
-              <span>entries per page</span>
-            </div>
-
-            <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
           </div>
+        <td>{{ s?.student_No ? s.student_No : '' }}</td>
+        <td>{{ s?.firstname }}</td>
+        <td>{{ s?.lastname }}</td>
+        <td>{{ s?.archive_Date === '9999-12-31' ? '' : s?.archive_Date }}</td>
+        <td>{{ s?.username }}</td>
+        <td>{{ s?.role_name }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="students.length === 0 && searchValue.trim().length >0">
+    <span style="display: flex; justify-content: center;margin-top: 30px;">No Student found.</span>
+  </p>
+  <div class="pagination-container">
+    <div class="items-per-page">
+      <!-- <label for="itemsPerPage">Show:</label> -->
+      <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
+        <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+      </select>
+      <span>entries per page</span>
     </div>
-    <div class="popup-overlay" *ngIf="showPopup">
-      <div class="popup-box">
-        <h3>Confirm Deletion</h3>
-        <p>{{ deleteMessage }}</p>
-        <div class="button-group">
-          <button (click)="deleteStudents()">Yes, Delete</button>
-          <button (click)="closePopup()">Cancel</button>
-        </div>
-      </div>
+
+    <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
+  </div>
+</div>
+<div class="popup-overlay" *ngIf="showPopup">
+  <div class="popup-box">
+    <h3>Confirm Deletion</h3>
+    <p>{{ deleteMessage }}</p>
+    <div class="button-group">
+      <button (click)="deleteStudents()">Yes, Delete</button>
+      <button (click)="closePopup()">Cancel</button>
     </div>
+  </div>
+</div>

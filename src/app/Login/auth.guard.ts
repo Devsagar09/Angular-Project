@@ -9,12 +9,13 @@ export class AuthGuard implements CanActivate {
 
   constructor(private router: Router, private snackBar: MatSnackBar) {}
 
+  
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree{
     const studentId = sessionStorage.getItem('studentId');
     const userRole = sessionStorage.getItem('userRole'); 
     const newRole = sessionStorage.getItem('newRole');
-
+  
     if (studentId) {
       if (state.url === '/' || state.url === '/login') {
         if (userRole === 'Admin' || newRole==='Admin') {

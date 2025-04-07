@@ -91,7 +91,10 @@ selectedStudentIds: number[] = []; // Array to store selected student IDs
   }
 
   deleteStudents() {
-    if (this.selectedStudentIds.length === 0) return;
+    if (this.selectedStudentIds.length === 0) 
+      {
+        this.showErrorSnackbar("First select any student");
+      };
 
     this.studentService.deleteStudents(this.selectedStudentIds).subscribe(
       () => {
@@ -122,32 +125,6 @@ toggleStudentSelection(student: any) {
   }
 }
 
-// deleteSelectedStudents() {
-//   this.selectedStudentIds = this.students
-//     .filter(student => student.selected)
-//     .map(student => student.student_Id);
-
-//   if (this.selectedStudentIds.length === 0) {
-//     alert('Please select at least one student to delete.');
-//     return;
-//   }
-
-//   if (confirm(`Are you sure you want to delete ${this.selectedStudentIds.length} students?`)) {
-//     this.studentService.deleteStudents(this.selectedStudentIds).subscribe(
-//       () => {
-//         this.students = this.students.filter(
-//           (student) => !this.selectedStudentIds.includes(student.student_Id)
-//         );
-//         alert('Students deleted successfully!');
-//       },
-//       (error) => {
-//         console.error('Error deleting students', error);
-//         alert('An error occurred while deleting students.');
-//       }
-//     );
-//   }
-// }
-
 
    sortData(column: string = this.sortColumn): void {
     if (this.sortColumn === column) {
@@ -170,8 +147,8 @@ toggleStudentSelection(student: any) {
   showSuccessSnackbar(message: string) {
     this.snackBar.open(message, 'X', {
       duration: 3000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
       panelClass: ['app-notification-success'],
     });
   }
@@ -180,8 +157,8 @@ toggleStudentSelection(student: any) {
   showErrorSnackbar(message: string) {
     this.snackBar.open(message, 'X', {
       duration: 3000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
       panelClass: ['app-notification-error'],
     });
   }

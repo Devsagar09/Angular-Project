@@ -35,7 +35,7 @@
     <div class="main-content">
         <div class="navbar">
             <div class="nav-left">
-                <img [src]="companyimage" alt="Company Logo" class="company-logo">
+                <a href="/studentdashboard" title="Return to Dashboard"><img [src]="companyimage" alt="Company Logo" class="company-logo"></a>
             </div>
 
             <div class="nav-right">
@@ -44,6 +44,7 @@
                 <button kendoButton size="large" themeColor="primary" title="Switch to Admin"  *ngIf="userRole=='Admin'" (click)="switchToAdmin()">Admin</button>
  
                 <div class="user-profile" (click)="toggleDropdown($event)">
+
                     <img [src]="profileImage" alt="Profile Image" class="profile-Image">
                     <span>{{ firstname }} {{ lastname }}</span>
                 </div>

@@ -17,7 +17,7 @@ private updateProfileImageUrl = 'https://localhost:7172/api/Profile/EditStudentP
 private getEditProfile = 'https://localhost:7172/api/Profile/GetStudentProfile';
 private editprofile = 'https://localhost:7172/api/Profile/EditStudentProfile'
 private resetpasswordurl='https://localhost:7172/api/Auth/ResetPassword';
-private checkcurrentpassword = 'https://localhost:7172/api/Auth/check-password';
+private checkcurrentpassword = 'https://localhost:7172/api/Auth/checkPassword';
 
   constructor(private http: HttpClient) { }
 

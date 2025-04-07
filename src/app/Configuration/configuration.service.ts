@@ -11,6 +11,11 @@ export class ConfigurationService {
 
   private addorupdateCon = 'https://localhost:7172/api/Configuration/updateConfiguration';
 
+  private displaylogo = 'https://localhost:7172/api/Profile/DisplayCompanyLogo';
+
+  private setlogo = 'https://localhost:7172/api/Profile/SetCompanyLogo';
+
+
   constructor(private http: HttpClient) { }
 
   getConfig():Observable<any>{
@@ -20,4 +25,11 @@ export class ConfigurationService {
     return this.http.post(`${this.addorupdateCon}`, data);
   }
 
+  displayLogo(): Observable<any> {
+    return this.http.get<any>(`${this.displaylogo}`); 
+  }
+
+  uploadLogo(data: FormData): Observable<any> {
+    return this.http.post<any>(this.setlogo, data);
+  }
 }

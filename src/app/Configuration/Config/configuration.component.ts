@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigurationService } from '../configuration.service';
+import { AdminNavigationService } from '../../admin-navigation/admin-navigation.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface Config {
   config_id: number;
@@ -13,13 +15,89 @@ interface Config {
   templateUrl: './configuration.component.html',
   styleUrls: ['./configuration.component.css'] // Fixed property name (was `styleUrl`)
 })
+
+
 export class ConfigurationComponent implements OnInit {
+  companyimage : string | null = '';
+  selectedFile: File | null = null;
+previewUrl: string | null = null;
+logoChanged = false;
   configData: Config[] = []; // Explicitly define the type as an array of Config
 
-  constructor(private configService: ConfigurationService) {}
+  constructor(private configService: ConfigurationService, private adminnavigationService:AdminNavigationService,private snackBar:MatSnackBar) {}
 
   ngOnInit(): void {
     this.displayConfig();
+    this.  displayLogo();
+  }
+
+  displayLogo() {
+    this.adminnavigationService.displayLogo().subscribe(
+      (response: any) => {
+        this.companyimage = response.companylogo; 
+      },
+      error => {
+        console.error('Error fetching company logo:', error);
+      }
+    );
+  }
+  
+  onFileSelected(event: any): void {
+    debugger
+    const file = event.target.files[0];
+    if (file) {
+      const validImageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+
+  if (!validImageTypes.includes(file.type)) {
+    this.showErrorSnackbar('Only PNG, JPG or JPEG images are allowed.');
+    this.selectedFile = null;
+    this.previewUrl = null;
+    return;
+  }
+
+      this.selectedFile = file;
+  
+      // Preview image
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+    this.logoChanged = true;
+
+  }
+
+  uploadLogo(): void {
+    debugger
+    if (!this.logoChanged || !this.selectedFile) return;
+  
+    const formData = new FormData();
+    formData.append('file', this.selectedFile); // Don't forget to append the actual file!
+
+    this.configService.uploadLogo(formData).subscribe({
+      next: (res) => {
+      
+        this.selectedFile = null;
+        this.previewUrl = null;
+        this.displayLogo(); // Refresh logo from server
+        this.logoChanged = false;
+        this.showSuccessSnackbar('Company Logo Changed.');
+                setTimeout(() => {
+                  location.reload(); 
+              }, 1000);      
+
+      },
+      error: (err) => {
+        console.error('Logo upload failed:', err);
+        this.showErrorSnackbar('Failed to upload logo.');
+      }
+    });
+  }
+  
+  resetLogo(): void {
+    this.selectedFile = null;
+    this.previewUrl = null;
   }
 
   displayConfig(): void {
@@ -58,6 +136,24 @@ export class ConfigurationComponent implements OnInit {
         console.error('Update failed:', err);
         alert('Failed to update configuration.');
       }
+    });
+  }
+
+  showSuccessSnackbar(message: string) {
+    this.snackBar.open(message, 'X', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      panelClass: ['app-notification-success']
+    });
+  }
+
+  showErrorSnackbar(message: string) {
+    this.snackBar.open(message, 'X', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      panelClass: ['app-notification-error']
     });
   }
 
