@@ -62,7 +62,7 @@ const routes: Routes = [
     path: 'studentdashboard',
     component: HomeComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Student'] } 
+    data: { roles: ['Student','Admin']} 
 
   },
   {
@@ -112,31 +112,31 @@ const routes: Routes = [
     path: 'IDP',
     component:IdpComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Student'] } 
+    data: { roles: ['Student','Admin'] } 
 
   },
   {
     path: 'myenrollments',
     component:EnrollComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Student'] } 
+    data: { roles: ['Student','Admin'] } 
   },
   {
     path: 'coursecatalog',
     component:CatalogComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Student'] } 
+    data: { roles: ['Student','Admin'] } 
   },
   {
     path: 'documentpdfviewer',
     component:DocumentViewerComponent ,
-    data: { roles: ['Student'] } 
+    data: { roles: ['Student','Admin'] } 
   },
   {
     path: 'transcript',
     component:TranscriptComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Student'] } 
+    data: { roles: ['Student','Admin'] } 
   },
   {
     path:'unauthorized',

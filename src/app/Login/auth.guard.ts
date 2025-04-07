@@ -9,8 +9,6 @@ export class AuthGuard implements CanActivate {
 
   constructor(private router: Router, private snackBar: MatSnackBar) {}
 
-  
-
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree{
     const studentId = sessionStorage.getItem('studentId');
     const userRole = sessionStorage.getItem('userRole'); 
@@ -20,7 +18,7 @@ export class AuthGuard implements CanActivate {
     if (studentId) {
       if (allowedRoles && !allowedRoles.includes(userRole!)) {
         this.snackBar.open('Access Denied: Insufficient Permissions', 'Close', {
-          duration: 5000
+          duration: 3000
         });
         return this.router.parseUrl('/unauthorized');
       }
