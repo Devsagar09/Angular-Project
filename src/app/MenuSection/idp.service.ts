@@ -11,6 +11,7 @@ export class IdpService {
   private searchapi = "https://localhost:7172/api/Search/SearchIDP";
   private startIDPTraining = "https://localhost:7172/api/ManageEnrollment"
   private gettrainingdata = "https://localhost:7172/api/DisplayData/GetTrainingDataByID";
+  private getThumbnailImage = "https://localhost:7172/api/DisplayData";
 
 
   // https://localhost:7172/api/ManageEnrollment/StartTraining 
@@ -57,6 +58,10 @@ export class IdpService {
 
   getTrainingDocument(fileName: string): Observable<Blob> {
     return this.http.get(`${this.startIDPTraining}/GetTrainingDocument/${fileName}`, { responseType: 'blob' });
+  }
+
+  getTrainingThumbnail(fileName: string, type: string) {
+    return `${this.getThumbnailImage}/GetThumbnail?fileName=${fileName}&type=${type}`;
   }
 
  

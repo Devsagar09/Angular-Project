@@ -341,4 +341,8 @@ export class IdpComponent {
     });
   }
 
+  getThumbnailUrl(fileName: string, type: string): string {
+    return this.IDPService.getTrainingThumbnail(fileName, type);
+  }
+
 }

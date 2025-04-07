@@ -11,6 +11,7 @@ export class EnrollmentService {
   private searchapi = "https://localhost:7172/api/Search/SearchEnroll"
   private startEnrollTraining = "https://localhost:7172/api/ManageEnrollment"
   private gettrainingdata = "https://localhost:7172/api/DisplayData/GetTrainingDataByID";
+  private getThumbnailImage = "https://localhost:7172/api/DisplayData";
 
   constructor(private http: HttpClient) { }
 
@@ -47,6 +48,10 @@ export class EnrollmentService {
       return this.http.post(`${this.startEnrollTraining}/CompletedTraining`, request, {
         responseType: 'text' // Correct response type for plain text
       }) as Observable<string>;
+    }
+
+    getTrainingThumbnail(fileName: string, type: string) {
+      return `${this.getThumbnailImage}/GetThumbnail?fileName=${fileName}&type=${type}`;
     }
 
 }

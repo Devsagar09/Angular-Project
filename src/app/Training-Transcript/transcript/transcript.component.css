@@ -221,12 +221,12 @@
 /* Updated Hover Action Menu */
 .action-menu {
     position: absolute;
-    top: 0;
+    top: 4px;
     left: 0;
     width: 90px;
     background: linear-gradient(to right, #4a90e2, #3a7bd5);
     border-radius: 6px;
-    padding: 6px;
+    padding: 5px;
     display: flex;
     gap: 8px;
     justify-content: center;
@@ -242,7 +242,7 @@
 .action-column:hover .action-menu {
     opacity: 1;
     visibility: visible;
-    transform: translateX(40px);
+    transform: translateX(20px);
     transition: opacity 0.3s ease-in-out;
 }
 
@@ -448,8 +448,10 @@
     padding: 20px;
     font-size: 15px;
     color: #333;
-    line-height: 1.6; 
+    line-height: 1.6;
     border-radius: 8px;
+    
+
 }
 
 /* Styling for labels */
@@ -460,6 +462,14 @@
     justify-content: space-between;
     border-bottom: 1px solid #ddd; /* Subtle separator */
     padding-bottom: 5px;
+
+    overflow-wrap: break-word;    
+    word-wrap: break-word;      
+    word-break: break-word;    
+    white-space: normal;          
+    overflow: auto;               
+    max-width: 100%;             
+    box-sizing: border-box; 
 }
 
 /* Styling for labels */

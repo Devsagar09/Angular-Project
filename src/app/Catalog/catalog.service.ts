@@ -11,6 +11,7 @@ export class CatalogService {
   private searchapi = "https://localhost:7172/api/Search/SearchCC";
   private startCCTraining = "https://localhost:7172/api/ManageEnrollment"
   private gettrainingdata = "https://localhost:7172/api/DisplayData/GetTrainingDataByID";
+  private getThumbnailImage = "https://localhost:7172/api/DisplayData";
 
 
   constructor(private http: HttpClient) { }
@@ -49,5 +50,8 @@ export class CatalogService {
     return this.http.get(`${this.startCCTraining}/GetTrainingDocument/${fileName}`, { responseType: 'blob' });
   }
 
+  getTrainingThumbnail(fileName: string, type: string) {
+    return `${this.getThumbnailImage}/GetThumbnail?fileName=${fileName}&type=${type}`;
+  }
 
 }
