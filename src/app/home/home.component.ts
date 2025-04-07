@@ -164,6 +164,10 @@ export class HomeComponent {
     });
   }
 
+  getThumbnailUrl(fileName: string, type: string): string {
+    return this.homeService.getTrainingThumbnail(fileName, type);
+  }
+
 
   //training 
 
