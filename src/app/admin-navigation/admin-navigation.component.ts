@@ -79,7 +79,6 @@ export class AdminNavigationComponent implements OnInit {
 
     logout() {
       this.isLoading = true;
-
         this.firstname = '';
         this.lastname = '';
         sessionStorage.clear();

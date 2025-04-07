@@ -1,10 +1,8 @@
-<div class="navbar">
-  <a href="#"><i class="fas fa-arrow-circle-left"></i> Back to Dashboard</a>
-</div>
-
 <div class="training-header">
   <div class="title">
-      <i class="fas fa-gear"></i> AI Maintenance
+      <i class="fas fa-gear"></i>
+      <a href="/dashboard">Dashboard</a>/ Configuration
+      
   </div>
 </div>
 
@@ -35,4 +33,45 @@
           </div>
       </div>
   </div>
+
 </div>
+<br/>
+<!-- Company Logo Section -->
+<!-- Logo Upload Section -->
+<div class="logo-container">
+    <div class="header">
+      <i class="fas fa-image"></i> Company Logo
+    </div>
+  
+    <div class="content" style="flex-direction: column; align-items: flex-start; gap: 20px;">
+      <!-- Logo Preview -->
+      <div class="logo-box-wrapper">
+        <!-- Hidden File Input -->
+        <input type="file" id="logoInput" hidden (change)="onFileSelected($event)" accept="image/png, image/jpeg, image/jpg" />
+      
+        <!-- Label wraps the image to trigger file input -->
+        <label for="logoInput" class="logo-hover-container">
+          <img [src]="previewUrl || companyimage" alt="Company Logo" class="companylogo" />
+          
+          <!-- Hover overlay -->
+          <div class="overlay">
+            <i class="fas fa-camera"></i>
+            <span>Change Logo</span>
+          </div>
+        </label>
+      </div>
+      
+      <!-- Buttons -->
+      <div class="buttons">
+        <button class="save-btn" (click)="uploadLogo()">
+            💾 Save
+          </button>
+          
+      
+        <button class="reset-btn" (click)="resetLogo()">
+          🔄 Reset
+        </button>
+      </div>
+    </div>
+  </div>
+  

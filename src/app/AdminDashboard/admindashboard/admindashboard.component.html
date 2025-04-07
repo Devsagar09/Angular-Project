@@ -68,31 +68,31 @@
     <h3 class="quick-links">Quick Setups</h3>
 
     <div class="stats-container1">
-      <div class="stat-card1">
+      <div class="stat-card1" [routerLink]="['/training']">
         <div class="stat-icon1">
           <img src="training.png" alt="Training setup" />
         </div>
         <div class="stat-details1">
-          <p class="stat-title1" [routerLink]="['/training']">Training Setup</p>
-          <p class="stat-value1" [routerLink]="['/training']">
+          <p class="stat-title1">Training Setup</p>
+          <p class="stat-value1">
             <strong>Add, Update or Delete Training</strong>
           </p>
         </div>
       </div>
 
-      <div class="stat-card1">
+      <div class="stat-card1" [routerLink]="['/Student']">
         <div class="stat-icon1">
           <img src="studd11.jpg" alt="Student" />
         </div>
         <div class="stat-details1">
-          <p class="stat-title1" [routerLink]="['/Student']">Student Management</p>
-          <p class="stat-value1" [routerLink]="['/Student']">
+          <p class="stat-title1">Student Management</p>
+          <p class="stat-value1">
             <strong>Add, Update or Delete Student</strong>
           </p>
         </div>
       </div>
 
-      <div class="stat-card1">
+      <div class="stat-card1" [routerLink]="['/AI-Maintenance']">
         <div class="stat-icon1">
           <img src="ai1.jpg" alt="AI" />
         </div>
@@ -110,7 +110,7 @@
       <div class="tbl-container">
         <div class="training-header">
           <p>Recently Created Training</p>
-          <p class="view-all" [routerLink]="['/Training']">view all</p>
+          <p class="view-all" [routerLink]="['/training']">view all</p>
         </div>
         <!-- <h2 style="text-align:center;">DataTable with API Data & Pagination</h2> -->
         <table id="data-table">

@@ -52,14 +52,14 @@
   .logo {
     width: 100%;
       float: left;
-      padding: 20px 20px;
+      padding: 10px 10px;
       text-align: center;
     display: block;
     /* margin: 0 auto 15px; */
   }
 
   .logo img {
-    width: 50%;
+    width: 35%;
     margin-bottom: 20px;
   }
 
@@ -152,19 +152,26 @@
     --mdc-snackbar-supporting-text-color: #ffffff;
 }
 
-::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
-    background-color: #68d96c !important;
-    color: white !important;
-  }
+::ng-deep .mat-mdc-snack-bar-container {
+  --mat-mdc-snack-bar-button-color: #ffffff;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+}
 
-
 ::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
-    --mdc-snackbar-container-color: #68d96c;
+  background-color: rgb(19, 139, 19) !important;
+  color: white !important;
+  --mdc-snackbar-container-color: #rgb(19, 139, 19);
+}
+
+::ng-deep .mat-mdc-snack-bar-container.app-notification-error {
+  background-color: rgb(225, 71, 71) !important;
+  color: white !important;
+  --mdc-snackbar-container-color: rgb(225, 71, 71)    ;
 }
 
 
 ::ng-deep .mat-mdc-snack-bar-container.app-notification {
-    --mdc-snackbar-container-color: rgb(138, 132, 132);
+    --mdc-snackbar-container-color: rgb(84, 84, 84);
 }
 
 

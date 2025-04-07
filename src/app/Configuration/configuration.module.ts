@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfigurationComponent } from './Config/configuration.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -9,7 +10,7 @@ import { ConfigurationComponent } from './Config/configuration.component';
     ConfigurationComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,MatSnackBarModule
   ]
 })
 export class ConfigurationModule { }
