@@ -1,0 +1,38 @@
+<div class="navbar">
+  <a href="#"><i class="fas fa-arrow-circle-left"></i> Back to Dashboard</a>
+</div>
+
+<div class="training-header">
+  <div class="title">
+      <i class="fas fa-gear"></i> AI Maintenance
+  </div>
+</div>
+
+<div class="config">
+  <div *ngFor="let config of configData">
+      <div class="container" *ngIf="config.config_key === 'Requires Approval'">
+          <div class="header"><i class="fas fa-gear"></i> Do you need approval for training?</div>
+          <div class="content">
+              <span class="toggle-label">{{ config?.config_key }}</span>
+              <label class="switch">
+                  <input type="checkbox" [checked]="config?.config_value" (change)="toggleApproval(config)">
+                  <span class="slider"></span>
+              </label>
+
+              <!-- <button (click)="updateConfiguration(config)">Update</button> -->
+
+          </div>
+      </div>
+
+      <div class="container" *ngIf="config.config_key === 'Course Catalog'">
+          <div class="header"><i class="fas fa-check-circle"></i> Is the training shown in the course catalog?</div>
+          <div class="content">
+              <span class="toggle-label">{{ config?.config_key }}</span>
+              <label class="switch">
+                  <input type="checkbox" [checked]="config?.config_value" (change)="toggleApproval(config)">
+                  <span class="slider"></span>
+              </label>
+          </div>
+      </div>
+  </div>
+</div>

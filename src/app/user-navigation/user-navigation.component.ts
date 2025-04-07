@@ -23,18 +23,19 @@ export class UserNavigationComponent implements OnInit {
   faUser = faUser
   companyimage : string | null = '';
 
+
   dropdownVisible = false;
   isCollapsed = true;
 
   constructor(private router: Router,private usernavigationService:UserNavigationService,private adminnavigationService:AdminNavigationService) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        this.isLoading = true;  
-      } 
+        this.isLoading = true;
+      }
       if (event instanceof NavigationEnd) {
         this.isLoginPage = this.router.url.toLowerCase() === '/login'; // ✅ Properly set login page condition
         setTimeout(() => {
-          this.isLoading = false;  
+          this.isLoading = false;
         }, 2000);
       }
     });
@@ -45,11 +46,12 @@ export class UserNavigationComponent implements OnInit {
       this.userRole =sessionStorage.getItem('userRole');
         this.loadUserData();
         const studentId = sessionStorage.getItem('studentId');
-      
+
         if(studentId){
           this.fetchProfileImage(studentId);
         }
   }
+
   
   
   displayLogo() {
@@ -63,6 +65,7 @@ export class UserNavigationComponent implements OnInit {
     );
   }
   
+
   switchToAdmin() {
     sessionStorage.removeItem('newRole');  // Remove the new role
     this.router.navigate(['/dashboard']).then(() => {

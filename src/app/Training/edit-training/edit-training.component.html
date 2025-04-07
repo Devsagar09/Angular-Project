@@ -1,0 +1,92 @@
+<div class="container">
+  <h2>Edit Training</h2>
+  <form [formGroup]="trainingForm">
+    <div>
+      <label>Training Name:</label>
+      <input type="text" formControlName="trainingName" />
+    </div>
+    <div>
+      <label>Training Code:</label>
+      <input type="text" formControlName="trainingCode" />
+    </div>
+    <div>
+      <label>Training Type:</label>
+      <input type="text" formControlName="trainingTypeName" readonly />
+    </div>
+    <!-- Document Upload -->
+    <div class="form-group">
+      <label>Document</label>
+      <div class="file-upload-container"
+      [ngClass]="{ 'is-invalid': trainingForm.get('document')?.invalid && trainingForm.get('document')?.touched }"
+      >
+        <table class="file-table">
+          <thead>
+            <tr>
+              <th>Action</th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let file of uploadedFiles; let i = index">
+              <td>
+                <button type="button" class="delete-btn" (click)="deleteFile(i)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+              <td>{{ file.name }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <button mat-raised-button type="button" class="upload-btn" (click)="triggerFileUpload()">+</button>
+        <input
+          type="file"
+          #fileInput
+
+          style="display: none"
+          name="documentFile"
+          accept=".pdf"
+        />
+         <!-- Validation Message -->
+        <small
+        *ngIf="trainingForm.get('document')?.invalid && trainingForm.get('document')?.touched"
+        class="text-danger"
+        >
+        Document File is required.
+        </small>
+      </div>
+    </div>
+
+    <div>
+      <label>External Link:</label>
+      <input type="url" formControlName="externalLinkUrl" />
+    </div>
+    <div>
+      <label>Training Hours:</label>
+      <input type="text" formControlName="trainingHours" />
+    </div>
+    <div>
+      <label>Requires Approval:</label>
+      <input type="checkbox" formControlName="requiresApproval" />
+    </div>
+    <div>
+      <label>Archive Date:</label>
+      <input type="date" formControlName="archiveDate" />
+    </div>
+    <div>
+      <label>Summary:</label>
+      <textarea formControlName="summary"></textarea>
+    </div>
+    <div>
+      <label>Course Catalog:</label>
+      <input type="checkbox" formControlName="courseCatalog" />
+    </div>
+    <div>
+      <label>Start Date:</label>
+      <input type="date" formControlName="cstartDate" />
+    </div>
+    <div>
+      <label>End Date:</label>
+      <input type="date" formControlName="cendDate" />
+    </div>
+  </form>
+</div>

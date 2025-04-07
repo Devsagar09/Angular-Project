@@ -4,7 +4,7 @@ import { StudentService } from '../student.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-
+ 
 @Component({
   selector: 'app-addeditstudent',
   standalone: false,
@@ -29,7 +29,7 @@ export class AddeditstudentComponent implements OnInit {
   studentNumberExists: boolean = false;
   studentEmailExists: boolean = false;
   studentsList: any[] = []; // Store students data
-
+ 
   roles: any[] = [];
   studentData: any = {
     student_Id: 0,
@@ -50,12 +50,12 @@ export class AddeditstudentComponent implements OnInit {
     state: null,
     country: null
   };
-
+ 
   isEditMode = false;
-
+ 
   constructor(private trainingService: TrainingService, private studentService: StudentService, private snackBar: MatSnackBar, private route: ActivatedRoute
   ) { }
-
+ 
   ngOnInit(): void {
     this.loadTrainings();
     this.getRoles();
@@ -70,7 +70,7 @@ export class AddeditstudentComponent implements OnInit {
       }
     });
   }
-
+ 
   loadStudentData(studentId: number): void {
     this.studentService.getStudentById(studentId).subscribe({
       next: (studentData) => {
@@ -88,7 +88,7 @@ export class AddeditstudentComponent implements OnInit {
       }
     });
   }
-
+ 
   fetchAssignedTrainings(studentId: number): void {
     this.studentService.getAssignedTrainings(studentId).subscribe({
       next: (assignedIds: number[]) => {
@@ -104,26 +104,26 @@ export class AddeditstudentComponent implements OnInit {
       }
     });
   }
-  
-
+ 
+ 
   generateUsernameAndPassword() {
     if (this.studentData.firstname && this.studentData.lastname) {
       const baseUsername = this.studentData.firstname.charAt(0) + this.studentData.lastname;
       this.ensureUniqueUsername(baseUsername);
     }
   }
-
+ 
   ensureUniqueUsername(baseUsername: string) {
     let newUsername = baseUsername;
     let existingCount = 0;
-
+ 
     this.studentService.getStudent().subscribe({
       next: (students) => {
         while (students.some((student: { username: string; }) => student.username === newUsername)) {
           existingCount++;
           newUsername = baseUsername + existingCount;
         }
-
+ 
         this.studentData.username = newUsername;
         this.studentData.password = newUsername;
       },
@@ -132,8 +132,8 @@ export class AddeditstudentComponent implements OnInit {
       }
     });
   }
-
-
+ 
+ 
   checkStudentNumber() {
     if (!this.studentData.student_No) {
       this.studentNumberExists = false;
@@ -150,7 +150,7 @@ export class AddeditstudentComponent implements OnInit {
       }
     });
   }
-
+ 
   checkEmail() {
     if (!this.studentData.email) {
       this.studentEmailExists = false;
@@ -167,7 +167,7 @@ export class AddeditstudentComponent implements OnInit {
       }
     });
   }
-
+ 
   getRoles() {
     this.studentService.getRoles().subscribe({
       next: (data) => {
@@ -178,7 +178,7 @@ export class AddeditstudentComponent implements OnInit {
       }
     });
   }
-
+ 
   loadTrainings() {
     this.trainingService.getTraining().subscribe({
       next: (data) => {
@@ -193,14 +193,14 @@ export class AddeditstudentComponent implements OnInit {
       }
     });
   }
-
+ 
   searchTraining(): void {
     if (!this.searchValue.trim()) {
       this.loadTrainings(); // Reload all training data if search is empty
       this.noDataFound = false; // Reset "No data found" message
       return;
     }
-
+ 
     this.trainingService.searchTraining(this.searchValue).subscribe({
       next: (data: any[]) => {
         if (data && data.length > 0) {
@@ -218,24 +218,24 @@ export class AddeditstudentComponent implements OnInit {
       }
     });
   }
-
-
+ 
+ 
   updateFilteredTrainings() {
     if (this.showSelectedOnly) {
       this.filteredTrainings = this.trainings.filter(training => training.selected);
     } else if (!this.searchValue.trim()) {
       this.filteredTrainings = [...this.trainings];
     }
-
+ 
     this.noDataFound = this.filteredTrainings.length === 0;
   }
-
+ 
   setActiveTab(tab: string) {
     // console.log(`Switching to tab: ${tab}, Student ID: ${this.studentData.student_Id}`);
     const tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
     const currentIndex = tabOrder.indexOf(this.activeTab);
     const nextIndex = tabOrder.indexOf(tab);
-
+ 
     if (nextIndex > currentIndex && !this.completedTabs.includes(this.activeTab)) {
       if (this.activeTab === 'personInfo' && (!this.studentData.student_No || !this.studentData.firstname ||
         !this.studentData.lastname || !this.studentData.email || !this.studentData.role_Id)) {
@@ -247,55 +247,55 @@ export class AddeditstudentComponent implements OnInit {
         }
       }
       this.completedTabs.push(this.activeTab);
-
+ 
     }
-
+ 
     if (nextIndex < currentIndex) {
       this.completedTabs = this.completedTabs.filter((completedTab) => {
         return tabOrder.indexOf(completedTab) <= nextIndex;
       });
     }
-
+ 
     this.activeTab = tab;
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 50);
   }
-
+ 
   getRoleNameById(roleId: any): string {
-
+ 
     if (!roleId) {
       console.warn('Role ID is undefined or empty.');
       return 'NA';
     }
-
+ 
     const role = this.roles.find(r => r.role_Id == roleId);
     return role ? role.role_Name : 'NA';
   }
-
-
+ 
+ 
   isActive(tab: string): boolean {
     return this.activeTab === tab;
   }
-
+ 
   isCompleted(tab: string): boolean {
     return this.completedTabs.includes(tab);
   }
-
+ 
   toggleMoreField() {
     this.showField = !this.showField;
     this.buttonText = this.showField ? "SHOW LESS" : "SHOW MORE";
   }
-
+ 
   nextStep() {
     const tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
-
+ 
     const currentIndex = tabOrder.indexOf(this.activeTab);
-
+ 
     if (this.activeTab === 'personInfo') {
       if (!this.studentData.student_No || !this.studentData.firstname || !this.studentData.lastname ||
         !this.studentData.email || !this.studentData.role_Id) {
-
+ 
         this.studentData.touchedFields = true; // Add a flag to trigger validation in the template
         this.showErrorSnackbar("Please fill all required fields.");
         return;
@@ -308,17 +308,17 @@ export class AddeditstudentComponent implements OnInit {
       this.setActiveTab(tabOrder[currentIndex + 1]);
     }
   }
-
-
+ 
+ 
   prevStep() {
     const tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
     const currentIndex = tabOrder.indexOf(this.activeTab);
-
+ 
     if (currentIndex > 0) {
       this.setActiveTab(tabOrder[currentIndex - 1]);
     }
   }
-
+ 
   saveReview() {
     this.showSuccessSnackbar("Data saved.");
     this.addOrUpdateStudent(); // Save student first
@@ -326,7 +326,7 @@ export class AddeditstudentComponent implements OnInit {
       this.assignTrainings(); // Then assign trainings
     }, 200);
   }
-
+ 
   saveAndExit() {
     this.showSuccessSnackbar("Data saved.");
     this.addOrUpdateStudent(); // Save student first
@@ -337,19 +337,19 @@ export class AddeditstudentComponent implements OnInit {
       }, 300);
     }, 200);
   }
-
-
+ 
+ 
   readyToFinish() {
     if (!this.studentData.student_No || !this.studentData.firstname ||
       !this.studentData.lastname || !this.studentData.email || !this.studentData.role_Id) {
-
+ 
       this.studentData.touchedFields = true;
       this.showErrorSnackbar("Please fill all required fields.");
       return;
     }
-
+ 
     this.addOrUpdateStudent(); // Ensure student is saved first
-
+ 
     if (!this.completedTabs.includes('assignTrainings')) {
       this.completedTabs.push('personInfo');
       this.completedTabs.push('assignTrainings');
@@ -358,21 +358,21 @@ export class AddeditstudentComponent implements OnInit {
       this.activeTab = 'reviewConfirm'; // Ensure tab is set correctly
     }, 100);
   }
-
-
+ 
+ 
   addOrUpdateStudent(studentForm?: NgForm) {  
     if (this.studentData.student_Id && this.studentData.student_Id > 0) {
       console.log("Updating student...");
-  
+ 
       this.studentService.addEditStudent(this.studentData).subscribe({
         next: (response) => {
           console.log("Full API Response (Update):", response);
-  
+ 
           if (response?.studentId) {
             this.studentData.student_Id = response.studentId;
             console.log("Updated Student ID:", this.studentData.student_Id);
             this.loadStudentData(this.studentData.student_Id);
-  
+ 
             this.setActiveTab(this.activeTab === 'personInfo' ? 'assignTrainings' : 'reviewConfirm');
             // this.showSuccessSnackbar("student Updated.");
             studentForm?.resetForm();
@@ -383,23 +383,23 @@ export class AddeditstudentComponent implements OnInit {
           this.showErrorSnackbar('Failed to update student.');
         }
       });
-  
+ 
     } else {
       console.log("Adding new student...");
-  
+ 
       this.studentService.addEditStudent(this.studentData).subscribe({
         next: (response) => {
           console.log("Full API Response (Add):", response);
-  
+ 
           if (response?.studentId) {
             this.studentData.student_Id = response.studentId;
             console.log("New Student ID:", this.studentData.student_Id);
-  
+ 
             this.setActiveTab(this.activeTab === 'personInfo' ? 'assignTrainings' : 'reviewConfirm');
             // this.showSuccessSnackbar("student Added.");
-
+ 
             studentForm?.resetForm();
-          } 
+          }
         },
         error: (error) => {
           console.error("API Error (Add):", error);
@@ -408,31 +408,31 @@ export class AddeditstudentComponent implements OnInit {
       });
     }
   }
-  
-
-
+ 
+ 
+ 
   assignTrainings() {
     console.log("Assigning trainings for student ID:", this.studentData.student_Id);
-
+ 
     if (!this.studentData.student_Id) {
       this.showErrorSnackbar("Student not found. Please add student first.");
       return;
     }
-
+ 
     const selectedTrainingIds = this.trainings
       .filter(training => {
         return training.selected && training.training_id;
       })
       .map(training => training.training_id)
       .join(",");
-
+ 
     const requestPayload = {
       studentId: this.studentData.student_Id,
       trainingIds: selectedTrainingIds
     };
-
+ 
     console.log("payload:", requestPayload);
-
+ 
     this.studentService.assignTrainings(requestPayload).subscribe({
       next: (response) => {
         console.log("API Response:", response);
@@ -445,24 +445,24 @@ export class AddeditstudentComponent implements OnInit {
       }
     });
   }
-
+ 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
-
+ 
   toggleSelectAll() {
     this.trainings.forEach(training => training.selected = this.selectAll);
   }
-
+ 
   updateSelectAll() {
     this.selectAll = this.trainings.every(training => training.selected);
   }
-
+ 
   toggleShowSelected() {
     this.updateFilteredTrainings();
   }
-
-
+ 
+ 
   showSuccessSnackbar(message: string) {
     this.snackBar.open(message, 'X', {
       duration: 3000,
@@ -471,7 +471,7 @@ export class AddeditstudentComponent implements OnInit {
       panelClass: ['app-notification-success']
     });
   }
-
+ 
   showErrorSnackbar(message: string) {
     this.snackBar.open(message, 'X', {
       duration: 3000,
@@ -481,4 +481,6 @@ export class AddeditstudentComponent implements OnInit {
     });
   }
 }
-
+ 
+ 
+ 

@@ -22,23 +22,32 @@
     </div>
       <br/>
     <div class="container">
+      <!-- Display error message if any -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
         <!-- Search Bar Section -->
         <div class="search-container">
             <label for="search"><strong>Search</strong></label>
             <div class="search-bar">
                 <i class="fa fa-search"></i>
-                <input type="text" id="search" placeholder="Search Pending Approval">
+                <input type="text" id="search"
+                [(ngModel)]="searchValue"
+                (input)="searchPendingApproval()"
+                placeholder="Search Pending Approval">
             </div>
             <div class="action-buttons">
-                <button class="add-btn" title="Delete"><i class="fa fa-check-circle"></i> APPROVE</button>
-                <button class="delete-btn" title="Add"><i class="fa fa-xmark-circle"></i>DENIED</button>
+                <button (click)="approveSelectedTrainings()" class="add-btn" title="Approve"><i class="fa fa-check-circle"></i> APPROVE</button>
+                <button (click)="denySelectedTrainings()" class="delete-btn" title="Denied"><i class="fa fa-xmark-circle"></i>DENIED</button>
             </div>
         </div>
 
         <table id="data-table">
             <thead>
                 <tr>
-                    <th></th>
+                    <th><input type="checkbox" [checked]="allSelected"
+                      (change)="toggleSelectAll($event)"
+                      ></th>
                     <!-- <th>Actions</th> -->
                     <th>Student Name</th>
                     <th>Training Name</th>
@@ -48,8 +57,12 @@
             </thead>
             <tbody>
               <tr *ngFor="let trainingData of pendingapprovalDatas |  paginate:{ itemsPerPage: itemsPerPage, currentPage: p }">
-                  <td><input type="checkbox"></td>
+                  <td><input type="checkbox"
+                    (change)="toggleSelection(trainingData, $event)"
+                    ></td>
                   <!-- <td><i class="fas fa-ellipsis-h" aria-hidden="true"></i></td> -->
+                   <td hidden>{{ trainingData?.student_id}}</td>
+                   <td hidden>{{ trainingData?.training_id}}</td>
                   <td>{{ trainingData?.student_name }}</td>
                   <td>{{ trainingData?.training_name }}</td>
                   <td>{{ trainingData?.trainingtype_name }}</td>
@@ -57,6 +70,9 @@
               </tr>
           </tbody>
         </table>
+        <p *ngIf="pendingapprovalDatas.length === 0 && searchValue.trim().length > 0">
+          No results found.
+      </p>
         <!-- <div class="pagination-controls">
           <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">
             <i class="fas fa-arrow-left"></i>

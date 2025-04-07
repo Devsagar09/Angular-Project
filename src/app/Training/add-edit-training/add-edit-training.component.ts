@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TrainingService } from '../training.service';
+import { ConfigurationService } from '../../Configuration/configuration.service';
 
 @Component({
   selector: 'app-add-edit-training',
@@ -11,7 +12,7 @@ import { TrainingService } from '../training.service';
 })
 export class AddEditTrainingComponent {
   itemsPerPage: number = 10;
-  itemsPerPageOptions: number[] = [2,5, 10, 20, 50];
+  itemsPerPageOptions: number[] = [2, 5, 10, 20, 50];
   searchValue: string = '';
   showField: boolean = false;
   buttonText: string = 'SHOW MORE';
@@ -22,22 +23,27 @@ export class AddEditTrainingComponent {
   selectAll: boolean = false;
   showSelectedOnly: boolean = false;
   filteredStudents: any[] = [];
-  noDataFound: boolean = true;;
+  noDataFound: boolean = true;
+  trainingId: any;
 
   // add training
   trainingForm: FormGroup;
   thumbnailImage: File | null = null;
-  documentFile: File | null = null ;
+  documentFile: File | null = null;
   trainingTypeId: number | null = null;
   trainingtype_name: string | null = null;
-  uploadedFiles: File[] = [];  // document file upload
-  TrainingId: number | null = null;
+  uploadedFiles: File[] = []; // document file upload
+  // TrainingId: number | null = null;
+  latestTraining: any = {};
+
+  configData: any[] = []; // Store API response
 
   constructor(
     private fb: FormBuilder,
     private trainingService: TrainingService,
-    private route: ActivatedRoute
-    ) {
+    private route: ActivatedRoute,
+    private configService: ConfigurationService
+  ) {
     this.trainingForm = this.fb.group({
       trainingName: ['', Validators.required],
       trainingCode: ['', Validators.required],
@@ -45,7 +51,7 @@ export class AddEditTrainingComponent {
       thumbnailImage: [''],
       documentFile: [''],
       trainingHours: [''],
-      requiresApproval: [false],
+      requiresApproval: [''],
       archiveDate: [''],
       summary: [''],
       courseCatalog: [''],
@@ -61,11 +67,24 @@ export class AddEditTrainingComponent {
       console.log(params); // Debug query parameters
       this.trainingTypeId = params['trainingtype_id'];
       this.trainingtype_name = params['trainingtype_Name'];
-
-
     });
-  }
 
+     // Fetch Configurations (Assuming TrainingService fetches it)
+  this.configService.getConfig().subscribe((data) => {
+    this.configData = data;
+
+    //this code for set config value in add training cc and requireapproval
+    // Find specific config values and set them in the form
+    const requiresApprovalConfig = this.configData.find(config => config.config_key === 'Requires Approval');
+    const courseCatalogConfig = this.configData.find(config => config.config_key === 'Course Catalog');
+
+    // Set the form values
+    this.trainingForm.patchValue({
+      requiresApproval: requiresApprovalConfig ? requiresApprovalConfig.config_value : false,
+      courseCatalog: courseCatalogConfig ? courseCatalogConfig.config_value : false
+    });
+  });
+  }
 
   addTraining(): void {
     this.trainingForm.markAllAsTouched(); //when click on save btn so display error in require field.
@@ -100,19 +119,29 @@ export class AddEditTrainingComponent {
       // Submit form data to the API
       this.trainingService.addTraining(formData).subscribe(
         (response) => {
-         // Fetch the training ID using the exact field name from the response for assign
-          this.TrainingId = response.trainingid;
-          console.log('Created Training ID:', this.TrainingId);
+          // Fetch the training ID using the exact field name from the response for assign
+          // this.trainingForm = { ...this.trainingForm, Training_Id: response.TrainingId}
+          // ✅ Correctly extract training ID (Check exact field name)
+
+          // Ensure TrainingId is properly extracted
+          if (response && response.trainingId) {
+            this.trainingId = response.trainingId; // Ensure this assignment is correct
+          }
+
+          //this.TrainingId = Number(response.TrainingId);
 
           // Optionally, patch it into the form if necessary
           //this.trainingForm.patchValue({ training_Id: this.TrainingId });
 
-          this.showNotification('Training added successfully','success');
+          this.showNotification('Training added successfully', 'success');
           console.log(response, this.trainingForm.value);
           this.setActiveTab('assignTrainings'); // Move to next step
         },
         (error) => {
-          this.showNotification('Error occurred while adding training', 'error');
+          this.showNotification(
+            'Error occurred while adding training',
+            'error'
+          );
           console.error(error);
         }
       );
@@ -131,7 +160,10 @@ export class AddEditTrainingComponent {
       if (fileType === 'thumbnail') {
         const allowedImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
         if (!allowedImageTypes.includes(file.type)) {
-          this.showNotification('Only JPG, JPEG, and PNG files are allowed for thumbnails.', 'warning');
+          this.showNotification(
+            'Only JPG, JPEG, and PNG files are allowed for thumbnails.',
+            'warning'
+          );
           return;
         }
 
@@ -144,17 +176,20 @@ export class AddEditTrainingComponent {
         };
         reader.readAsDataURL(file);
 
-      // Document file handling
+        // Document file handling
       } else if (fileType === 'document') {
         if (file.type !== 'application/pdf') {
-          this.showNotification('Only PDF files are allowed for documents.', 'warning');
+          this.showNotification(
+            'Only PDF files are allowed for documents.',
+            'warning'
+          );
           return;
         }
 
         this.uploadedFiles.push(file);
         this.documentFile = file;
 
-      // General file handling (e.g., uploaded files)
+        // General file handling (e.g., uploaded files)
       } else {
         const allowedImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
         if (allowedImageTypes.includes(file.type)) {
@@ -167,7 +202,10 @@ export class AddEditTrainingComponent {
           };
           reader.readAsDataURL(file);
         } else {
-          this.showNotification('Only JPG, JPEG, PNG, and PDF files are allowed.', 'warning');
+          this.showNotification(
+            'Only JPG, JPEG, PNG, and PDF files are allowed.',
+            'warning'
+          );
         }
       }
     }
@@ -179,10 +217,10 @@ export class AddEditTrainingComponent {
       next: (data) => {
         this.studentDatas = data.map((student: any) => ({
           ...student,
-          selected: false  // Ensure all checkboxes are initialized as unchecked
+          selected: false, // Ensure all checkboxes are initialized as unchecked
         }));
         this.updateFilteredStudents();
-       },
+      },
       error: (error) => {
         console.error('Error fetching student data', error);
       },
@@ -257,102 +295,168 @@ export class AddEditTrainingComponent {
   //   }
   // }
 
-//   onFileChange(event: any, fileType: string): void {
-//     const file = event.target.files[0];
-//     if (fileType === 'thumbnail') {
-//       this.thumbnailImage = file;
-//     } else if (fileType === 'document') {
-//       this.documentFile = file;
-//     }
-//   }
+  //   onFileChange(event: any, fileType: string): void {
+  //     const file = event.target.files[0];
+  //     if (fileType === 'thumbnail') {
+  //       this.thumbnailImage = file;
+  //     } else if (fileType === 'document') {
+  //       this.documentFile = file;
+  //     }
+  //   }
 
- // Handle file selection
-//  onFileSelected(event: Event): void {
-//   const input = event.target as HTMLInputElement;
-//   if (input.files && input.files.length > 0) {
-//     const file = input.files[0];
-//       // Validate file format
-//       if (file.type === 'application/pdf') {
-//         this.uploadedFiles.push(file);
-//       } else {
-//         alert('Only PDF files are allowed!');
-//       }
-//     }
-// }
-
-// onFileUpload(event: any): void {
-//   const file: File = event.target.files[0];
-
-//   if (file) {
-//     this.selectedFile = file;
-//     console.log('Selected file:', file);
-
-//     // Validate file type
-//     const allowedFileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-//     if (!allowedFileTypes.includes(file.type)) {
-//       alert('Only JPG, JPEG, and PNG files are allowed.');
-//       return;
-//     }
-
-//     // Generate preview URL
-//     const reader = new FileReader();
-//     reader.onload = (e) => {
-//       this.previewUrl = e.target?.result;
-//     };
-//     reader.readAsDataURL(file);
-//   }
-// }
-
-// Notifiction
-
- // Assign selected students to the training
- assignStudent(): void {
-  console.log('Training ID:', this.TrainingId); // Confirm Training ID is available
-
-  // Check if TrainingId exists
-  // if (!this.TrainingId) {
-  //   console.error('Training ID not found. Cannot assign trainings.');
-  //   alert('Training ID not found. Please try again later.');
-  //   return;
+  // Handle file selection
+  //  onFileSelected(event: Event): void {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files && input.files.length > 0) {
+  //     const file = input.files[0];
+  //       // Validate file format
+  //       if (file.type === 'application/pdf') {
+  //         this.uploadedFiles.push(file);
+  //       } else {
+  //         alert('Only PDF files are allowed!');
+  //       }
+  //     }
   // }
 
-  // Ensure students are selected
-  const selectedStudents = this.studentDatas
-    .filter(student => student.selected)
-    .map(student => student.student_Id)
-    .join(",");
+  // onFileUpload(event: any): void {
+  //   const file: File = event.target.files[0];
 
-  if (!selectedStudents) {
-    alert('Please select at least one student.');
-    return;
+  //   if (file) {
+  //     this.selectedFile = file;
+  //     console.log('Selected file:', file);
+
+  //     // Validate file type
+  //     const allowedFileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+  //     if (!allowedFileTypes.includes(file.type)) {
+  //       alert('Only JPG, JPEG, and PNG files are allowed.');
+  //       return;
+  //     }
+
+  //     // Generate preview URL
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       this.previewUrl = e.target?.result;
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // }
+
+
+  // Assign selected students to the training
+  assignStudents(): void {
+    // Fetch TrainingId from sessionStorage and convert it to a number
+    // const trainingIdFromSession = sessionStorage.getItem("TrainingId");
+    // this.trainingId = trainingIdFromSession ? Number(trainingIdFromSession) : this.trainingId;
+
+    console.log('Training ID:', this.trainingId); // Confirm Training ID is available
+
+    // if (!this.TrainingId) {
+    //   console.error('Training ID not found. Cannot assign trainings.');
+    //   alert('Training ID not found. Please try again.');
+    //   return;
+    // }
+
+    // Ensure students are selected
+    const selectedStudents = this.studentDatas
+      .filter((student) => {
+        return student.selected && student.student_Id;
+      })
+      .map((student) => student.student_Id)
+      .join(',');
+
+    if (!selectedStudents) {
+      this.showNotification('Please select at least one student.','warning');
+      return;
+    }
+
+    // Construct payload
+    const payload = {
+      TrainingId: this.trainingId,
+      StudentIds: selectedStudents,
+    };
+
+    console.log('Payload for assigning students:', payload);
+
+    // Call API
+    this.trainingService.assignStudents(payload).subscribe(
+      (response) => {
+        console.log('Response:', response);
+        this.showNotification(
+          'Successfully assigned Training to Students.',
+          'success'
+        );
+        this.setActiveTab('reviewConfirm');
+      },
+      (error) => {
+        console.error('API Error:', error);
+        this.showNotification(
+          'Failed to assign Training to Students.',
+          'error'
+        );
+        //this.setActiveTab('reviewConfirm');
+      }
+    );
   }
 
-  // Convert selectedStudents into a properly formatted string with double quotes
-  const formattedStudentIds = `"${selectedStudents}"`;
-
-  // Prepare payload
-  const payload = {
-    TrainingId: this.TrainingId,
-    StudentIds: formattedStudentIds // Ensure it's in double quotes
-  };
-
-  console.log('Payload for assigning students:', payload); // Log payload for debugging
-
-  // Call API to assign students
-  this.trainingService.assignStudents(payload).subscribe({
-    next: (response) => {
-      alert('Students successfully assigned to the training.');
-      console.log('Response:', response);
-    },
-    error: (error) => {
-      console.error('Error assigning students:', error);
-      alert(`Failed to assign students. Error: ${error.message || 'Unknown error'}`);
+  getTrainingDetails(): void {
+    if (!this.trainingId) {
+      console.log('No Training ID available.');
+      return;
     }
-  });
-}
+
+    this.trainingService.getTrainingById(this.trainingId).subscribe(
+      (response) => {
+        if (response) {
+          console.log('Training Details:', response);
+
+          // Populate the form with retrieved data
+          this.trainingForm.patchValue({
+            trainingName: response.trainingName,
+            trainingCode: response.trainingCode,
+            externalLinkUrl: response.externalLinkUrl,
+            trainingHours: response.trainingHours,
+            requiresApproval: response.requiresApproval,
+            archiveDate: response.archiveDate,
+            summary: response.summary,
+            courseCatalog: response.courseCatalog,
+            cstartDate: response.cstartDate,
+            cendDate: response.cendDate,
+          });
+
+          // // Handle file URLs if needed (Thumbnail & Document)
+          // this.thumbnailImageUrl = response.thumbnailImageUrl;
+          // this.documentFileUrl = response.documentFileUrl;
+        }
+      },
+      (error) => {
+        console.error('Error fetching training details:', error);
+      }
+    );
+  }
 
 
+  // assignStudents(): void {
+  //   debugger;
+  //   console.log('Training ID:', this.trainingId);
 
+  //   const selectedStudents = this.studentDatas
+  //     .filter(student => student.selected && student.student_Id)
+  //     .map(student => student.student_Id)
+  //     .join(',');
+
+  //   if (!selectedStudents) {
+  //     alert('Please select at least one student.');
+  //     return;
+  //   }
+
+  //   const payload = { TrainingId: this.trainingId, StudentIds: selectedStudents };
+  //   console.log('Payload:', payload);
+
+  //   this.trainingService.assignStudents(payload).subscribe({
+  //     next: response => this.showNotification('Students assigned successfully.', 'success'),
+  //     error: error => this.showNotification('Failed to assign training.', 'error')
+  //   });
+  // }
 
 
   setActiveTab(tab: string) {
@@ -407,13 +511,13 @@ export class AddEditTrainingComponent {
     this.accordionState[section] = !this.accordionState[section];
   }
 
-
   // Trigger file input
   triggerFileUpload(): void {
-    const fileInput = document.querySelector('input[type="file"]') as HTMLElement;
+    const fileInput = document.querySelector(
+      'input[type="file"]'
+    ) as HTMLElement;
     fileInput.click();
   }
-
 
   // Delete file
   deleteFile(index: number): void {
@@ -423,89 +527,89 @@ export class AddEditTrainingComponent {
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null | undefined = null;
 
-/**
- * Triggered when a file is selected.
- */
+  /**
+   * Triggered when a file is selected.
+   */
 
-
-/**
- * Clears the selected file and preview.
- */
-clearFile(): void {
-  this.selectedFile = null;
-  this.previewUrl = null;
-}
-
-/**
- * Triggered when the upload button is clicked.
- */
-triggerFileInput(fileInput: HTMLInputElement): void {
-  fileInput.click();
-}
-
-
-// search student
-searchStudent(): void {
-  const trimmedValue = this.searchValue.trim();
-  if (!trimmedValue) {
-    this.filteredStudents = [...this.studentDatas];
-    this.noDataFound = false;
-    return;
+  /**
+   * Clears the selected file and preview.
+   */
+  clearFile(): void {
+    this.selectedFile = null;
+    this.previewUrl = null;
   }
 
-  this.filteredStudents = this.studentDatas.filter((student) =>
-    `${student.firstname} ${student.lastname}`
-      .toLowerCase()
-      .includes(trimmedValue.toLowerCase())
-  );
-
-  this.noDataFound = this.filteredStudents.length === 0;
-}
-
-// notification
-showNotification(
-  message: string,
-  type: 'success' | 'warning' | 'error' = 'error'
-): void {
-  // Ensure the container exists or create it
-  let container = document.getElementById('notification-container');
-  if (!container) {
-    container = document.createElement('div');
-    container.id = 'notification-container';
-    container.style.position = 'fixed';
-    container.style.top = '10px';
-    container.style.right = '10px';
-    container.style.zIndex = '1000';
-    document.body.appendChild(container);
+  /**
+   * Triggered when the upload button is clicked.
+   */
+  triggerFileInput(fileInput: HTMLInputElement): void {
+    fileInput.click();
   }
 
-  // Remove existing notification if any
-  const existingNotification = document.getElementById('current-notification');
-  if (existingNotification) {
-    existingNotification.remove();
+  // search student
+  searchStudent(): void {
+    const trimmedValue = this.searchValue.trim();
+    if (!trimmedValue) {
+      this.filteredStudents = [...this.studentDatas];
+      this.noDataFound = false;
+      return;
+    }
+
+    this.filteredStudents = this.studentDatas.filter((student) =>
+      `${student.firstname} ${student.lastname}`
+        .toLowerCase()
+        .includes(trimmedValue.toLowerCase())
+    );
+
+    this.noDataFound = this.filteredStudents.length === 0;
   }
 
-  // Create a new notification element
-  const notification = document.createElement('div');
-  notification.id = 'current-notification'; // Set unique ID for the notification
-  notification.style.backgroundColor =
-    type === 'success'
-      ? '#4caf50'
-      : type === 'warning'
-      ? '#ff9800'
-      : '#f44336'; // Set color based on type
-  notification.style.color = 'white';
-  notification.style.padding = '15px 20px';
-  notification.style.marginBottom = '10px';
-  notification.style.borderRadius = '8px';
-  notification.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.2)';
-  notification.style.display = 'flex';
-  notification.style.alignItems = 'center';
-  notification.style.justifyContent = 'space-between';
-  notification.style.fontSize = '14px';
+  // notification
+  showNotification(
+    message: string,
+    type: 'success' | 'warning' | 'error' = 'error'
+  ): void {
+    // Ensure the container exists or create it
+    let container = document.getElementById('notification-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'notification-container';
+      container.style.position = 'fixed';
+      container.style.top = '10px';
+      container.style.right = '10px';
+      container.style.zIndex = '1000';
+      document.body.appendChild(container);
+    }
 
-  // Set message and close button
-  notification.innerHTML = `
+    // Remove existing notification if any
+    const existingNotification = document.getElementById(
+      'current-notification'
+    );
+    if (existingNotification) {
+      existingNotification.remove();
+    }
+
+    // Create a new notification element
+    const notification = document.createElement('div');
+    notification.id = 'current-notification'; // Set unique ID for the notification
+    notification.style.backgroundColor =
+      type === 'success'
+        ? '#4caf50'
+        : type === 'warning'
+        ? '#ff9800'
+        : '#f44336'; // Set color based on type
+    notification.style.color = 'white';
+    notification.style.padding = '15px 20px';
+    notification.style.marginBottom = '10px';
+    notification.style.borderRadius = '8px';
+    notification.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.2)';
+    notification.style.display = 'flex';
+    notification.style.alignItems = 'center';
+    notification.style.justifyContent = 'space-between';
+    notification.style.fontSize = '14px';
+
+    // Set message and close button
+    notification.innerHTML = `
     <span>${message}</span>
     <button style="
       background: transparent;
@@ -517,77 +621,77 @@ showNotification(
     ">&times;</button>
   `;
 
-  // Add close button functionality
-  const closeButton = notification.querySelector('button') as HTMLButtonElement;
-  closeButton.onclick = () => notification.remove();
+    // Add close button functionality
+    const closeButton = notification.querySelector(
+      'button'
+    ) as HTMLButtonElement;
+    closeButton.onclick = () => notification.remove();
 
-  // Append the new notification to the container
-  container.appendChild(notification);
+    // Append the new notification to the container
+    container.appendChild(notification);
 
-  // Automatically remove the notification after 5 seconds
-  setTimeout(() => {
-    notification.remove();
-  }, 5000);
-}
-
-
-//add training button function
-nextStep() {
-  const tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
-  const currentIndex = tabOrder.indexOf(this.activeTab);
-
-  if (this.activeTab === 'personInfo') {
-    this.addTraining(); // Insert student first
-  } else if (this.activeTab === 'assignTrainings') {
-    //this.assignStudent(); // Then assign training
-  } else if (currentIndex < tabOrder.length - 1) {
-    this.setActiveTab(tabOrder[currentIndex + 1]);
-  }
-}
-
-// ✅ Move to the previous tab
-prevStep() {
-  const tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
-  const currentIndex = tabOrder.indexOf(this.activeTab);
-
-  if (currentIndex > 0) {
-    this.setActiveTab(tabOrder[currentIndex - 1]);
-  }
-}
-
-saveAndExit(){
-
-}
-
-saveReview(){
-
-}
-
-readyToFinish(){
-
-}
-
-// checkbox select
-toggleSelectAll() {
-  this.studentDatas.forEach(student => student.selected = this.selectAll);
-}
-
-updateSelectAll() {
-  this.selectAll = this.studentDatas.every(student => student.selected);
-}
-
-toggleShowSelected() {
-  this.updateFilteredStudents();
-}
-
-updateFilteredStudents() {
-  if (this.showSelectedOnly) {
-    this.filteredStudents = this.studentDatas.filter(student => student.selected);
-  } else if (!this.searchValue.trim()) {
-    this.filteredStudents = [...this.studentDatas];
+    // Automatically remove the notification after 5 seconds
+    setTimeout(() => {
+      notification.remove();
+    }, 5000);
   }
 
-  this.noDataFound = this.filteredStudents.length === 0;
-}
+  //add training button function
+  savenextStep() {
+    const tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
+    const currentIndex = tabOrder.indexOf(this.activeTab);
 
+    if (this.activeTab === 'personInfo') {
+      this.showNotification("Please fill all required fields.",'error');
+      this.addTraining(); // Insert Training first
+    } else if (this.activeTab === 'assignTrainings') {
+      this.assignStudents(); // Then assign Student
+    } else if (currentIndex < tabOrder.length - 1) {
+      this.setActiveTab(tabOrder[currentIndex + 1]);
+    }
+  }
+
+  // ✅ Move to the previous tab
+  prevStep() {
+    const tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
+    const currentIndex = tabOrder.indexOf(this.activeTab);
+
+    if (currentIndex > 0) {
+      this.setActiveTab(tabOrder[currentIndex - 1]);
+    }
+  }
+
+  next() {
+    this.setActiveTab('reviewConfirm');
+  }
+
+  saveAndExit() {
+    window.location.href = '/training'; // Redirect to another page
+  }
+
+
+  // checkbox select
+  toggleSelectAll() {
+    this.studentDatas.forEach((student) => (student.selected = this.selectAll));
+  }
+
+  updateSelectAll() {
+    this.selectAll = this.studentDatas.every((student) => student.selected);
+  }
+
+  toggleShowSelected() {
+    this.updateFilteredStudents();
+  }
+
+  updateFilteredStudents() {
+    if (this.showSelectedOnly) {
+      this.filteredStudents = this.studentDatas.filter(
+        (student) => student.selected
+      );
+    } else if (!this.searchValue.trim()) {
+      this.filteredStudents = [...this.studentDatas];
+    }
+
+    this.noDataFound = this.filteredStudents.length === 0;
+  }
 }

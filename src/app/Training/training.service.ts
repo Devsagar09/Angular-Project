@@ -18,9 +18,15 @@ export class TrainingService {
 
   private addTrainingapiUrl = 'https://localhost:7172/api/Training/addTraining';
 
+  private delTrainingapiUrl = 'https://localhost:7172/api/Training/deleteTraining';
+
   private SearchStudUrl = 'https://localhost:7172/api/Student/searchStudent';
 
   private assignStudentUrl = 'https://localhost:7172/api/AssignStudents/AssignStudents';
+
+  private updateTraUrl = 'https://localhost:7172/api/Training/updateTraining';
+
+  private gettrainingbyidUrl = 'https://localhost:7172/api/Training/getTrainingById';
 
   constructor(private http: HttpClient) { }
 
@@ -49,7 +55,29 @@ export class TrainingService {
     return this.http.post<any>(this.addTrainingapiUrl, formData); // Use POST for FormData
   }
 
-  assignStudents(payload: any): Observable<any> {
-    return this.http.post(`${this.assignStudentUrl}`, payload);
+  assignStudents(assignData: any): Observable<any> {
+    return this.http.post(`${this.assignStudentUrl}`, assignData);
+  }
+
+  // Send DELETE request with an array of IDs
+  deleteTraining(trainingIds: number[]) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.request('DELETE', `${this.delTrainingapiUrl}`, {
+      body: trainingIds,
+      headers: headers
+    });
+  }
+
+  getTrainingById(id: number): Observable<any> {
+    return this.http.get<any>(`https://localhost:7172/api/Training/getTraining/${id}`);
+  }
+
+  updateTraining(trainingData: FormData): Observable<any> {
+    return this.http.put(`${this.updateTraUrl}`, trainingData);
+  }
+
+  getTrainingByIds(id: number): Observable<any> {
+    return this.http.get(`https://localhost:7172/api/Training/getTrainingById/${id}`);
   }
 }
