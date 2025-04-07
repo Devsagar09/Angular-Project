@@ -121,7 +121,9 @@
         <ng-container *ngIf="filteredTrainings.length > 0; else noTrainingsTemplate">
             <div class="training-card" *ngFor="let training of filteredTrainings">
                 <div class="card-header">
-                    <img src="training.thumbnail_image" alt="Training Image" />
+                    <img 
+                    [src]="getThumbnailUrl(training.thumbnail_image, training.trainingtype_name)" 
+                    alt="{{ training.training_name }} Thumbnail">
                 </div>
 
                 <div class="card-body">
@@ -168,8 +170,9 @@
                 </div>
 
                 <div class="modals-image">
-                    <img [src]="selectedTraining?.trainingtype_name === 'Document' ? 'Doc_Image.jpeg' : selectedTraining.thumbnail_image"
-                    alt="{{ selectedTraining.training_name }} Training" />
+                    <img 
+                    [src]="getThumbnailUrl(selectedTraining?.thumbnail_image, selectedTraining?.trainingtype_name)" 
+                    alt="{{ selectedTraining?.training_name }} Thumbnail">
                 </div>
 
                 <div class="modals-body">

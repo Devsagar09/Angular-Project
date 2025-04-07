@@ -11,6 +11,7 @@ export class HomeService {
   private apiUrl = 'https://localhost:7172/api/CountStudentDashboard/getCountStudentDashboard';
   private starthomeTraining = "https://localhost:7172/api/ManageEnrollment"
   private gettrainingdata = "https://localhost:7172/api/DisplayData/GetTrainingDataByID";
+  private getThumbnailImage = "https://localhost:7172/api/DisplayData";
 
   constructor(private http: HttpClient) { }
 
@@ -50,5 +51,9 @@ export class HomeService {
 
   getTrainingDocument(fileName: string): Observable<Blob> {
     return this.http.get(`${this.starthomeTraining}/GetTrainingDocument/${fileName}`, { responseType: 'blob' });
+  }
+
+  getTrainingThumbnail(fileName: string, type: string) {
+    return `${this.getThumbnailImage}/GetThumbnail?fileName=${fileName}&type=${type}`;
   }
 }
