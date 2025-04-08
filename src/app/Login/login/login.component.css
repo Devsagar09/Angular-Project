@@ -164,7 +164,7 @@
 ::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
   background-color: rgb(19, 139, 19) !important;
   color: white !important;
-  --mdc-snackbar-container-color: #rgb(19, 139, 19);
+  --mdc-snackbar-container-color: rgb(19, 139, 19);
 }
 
 ::ng-deep .mat-mdc-snack-bar-container.app-notification-error {

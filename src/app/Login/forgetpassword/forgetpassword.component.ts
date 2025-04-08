@@ -43,6 +43,7 @@ showConfirmPassword = false;
 
     this.loginService.checkUserExists(emailOrUsername).subscribe({
       next: () => {
+        this.message = ''; 
         this.showPasswordFields = true;
         this.forgetPasswordForm.get('UsernameAndEmail')?.disable();
       },
