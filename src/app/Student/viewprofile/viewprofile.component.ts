@@ -98,7 +98,6 @@ export class ViewprofileComponent implements OnInit {
   }
   
   updateStudentProfile() {
-    debugger
     const studentId = sessionStorage.getItem('studentId');
   
     if (!studentId) {
@@ -158,7 +157,6 @@ export class ViewprofileComponent implements OnInit {
   
 
   uploadProfileImage() {
-    debugger
     if (this.imagePreview && this.imagePreview !== this.profileImage) {
         const studentId = sessionStorage.getItem('studentId');
         const parsedStudentId = Number(studentId);
@@ -211,7 +209,6 @@ dataURLtoFile(dataurl: string, filename: string): File {
 
   resetPassword(form: NgForm) {
     const formData = form.value;
-  
     if (formData.newPassword !== formData.confirmPassword) {
       this.message = 'New Password and Confirm Password do not match.';
       return;

@@ -70,16 +70,16 @@ editStudentProfile(studentData: any): Observable<any> {
   return this.http.post(`${this.editprofile}`, studentData);
 }
 
-resetPassword(studentId: number,data: any): Observable<any> {
+resetPassword(student_Id: number,data: any): Observable<any> {
   return this.http.post(this.resetpasswordurl, {
-    student_Id : studentId,
+    student_Id : student_Id,
     current_Password: data.currentPassword,
     new_Password: data.newPassword,
     confirm_Password: data.confirmPassword
   });
 }
 
-checkPassword(studentId: number, password: string): Observable<any> {
-  return this.http.post(this.checkcurrentpassword, { studentId, password });
+checkPassword(student_Id: number, password: string): Observable<any> {
+  return this.http.post(this.checkcurrentpassword, { student_Id, password });
 }
 }

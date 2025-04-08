@@ -11,6 +11,7 @@
     max-height: 20px;
     color: rgb(112, 109, 115);
     border-top: 1px solid #ddd; /* Adds a subtle line for separation */
+    z-index: -1;
 }
 
 /* Responsive Footer Adjustments */
