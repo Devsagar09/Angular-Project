@@ -288,7 +288,7 @@ export class AddeditstudentComponent implements OnInit {
     this.buttonText = this.showField ? "SHOW LESS" : "SHOW MORE";
   }
  
-  nextStep() {
+  nextStep(studentForm?: NgForm) {
     const tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
  
     const currentIndex = tabOrder.indexOf(this.activeTab);
