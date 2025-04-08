@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { HttpClient } from '@angular/common/http';
 import { HomeService } from './home.service';
@@ -10,7 +10,7 @@ import { ChartData } from './chart-data';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit {
   public idpIcon = "assets/icons/idp-icon.png";
   public catalogIcon = "assets/icons/catalog-icon.png";
   public transcriptIcon = "assets/icons/transcript-icon.png";
@@ -22,6 +22,9 @@ export class HomeComponent {
   documentTraining = { completed: 0, assigned: 0, enrolled: 0 };
   externalTraining = { completed: 0, assigned: 0, enrolled: 0 };
 
+  @ViewChild('docCanvas') docCanvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('linkCanvas') linkCanvasRef!: ElementRef<HTMLCanvasElement>;
+
   chartInstances: { [key: string]: any } = {};  // Store chart instances
 
   activeTab: string = 'inProgress'; // Default tab
@@ -30,7 +33,7 @@ export class HomeComponent {
   isModalOpens: boolean = false;
   selectedTraining: any = null; 
 
-  constructor(private http: HttpClient, private homeService: HomeService) { }
+  constructor(private homeService: HomeService) { }
 
   ngOnInit() {
     const storedStudentId = sessionStorage.getItem('studentId');
@@ -38,49 +41,95 @@ export class HomeComponent {
       this.studentId = parseInt(storedStudentId, 10);
       console.log("Student ID:", this.studentId);
       this.loadTrainings();
-      this.fetchTrainingData();
+      // this.fetchTrainingData();
     } else {
       console.error("No student ID found in local storage!");
     }
   }
 
-  fetchTrainingData(): void {
-    if (this.studentId !== null) {
-      this.isLoading = true;
-
-      this.homeService.getStudentChart(this.studentId).subscribe({
-        next: (response: ChartData[]) => {  //  
-          response.forEach((item: ChartData) => {   
-            if (item.trainingtype_name === "Document") {
-              this.documentTraining = {
-                completed: item.completedTrainingCount || 0,
-                assigned: item.assignedTrainingCount || 0,
-                enrolled: item.enrollTrainingCount || 0
-              };
-            } else if (item.trainingtype_name === "External Link") {
-              this.externalTraining = {
-                completed: item.completedTrainingCount || 0,
-                assigned: item.assignedTrainingCount || 0,
-                enrolled: item.enrollTrainingCount || 0
-              };
-            }
-          });
-
-          this.createBarChart("docChart", this.documentTraining.completed, this.documentTraining.assigned, this.documentTraining.enrolled, "#4caf50");
-          this.createBarChart("linkChart", this.externalTraining.completed, this.externalTraining.assigned, this.externalTraining.enrolled, "#2196f3");
-
-          this.isLoading = false;
-        },
-        error: (error) => {
-          console.error("Error fetching training data:", error);
-          this.isLoading = false;
-        }
-      });
-    } else {
-      console.error("No student ID found.");
-    }
+  
+  ngAfterViewInit(): void { 
+    setTimeout(() => {
+      this.fetchTrainingData();
+    }, 0);
   }
 
+    fetchTrainingData(): void {
+    if (!this.studentId) return;
+    this.isLoading = true;
+
+    this.homeService.getStudentChart(this.studentId).subscribe({
+      next: (response: any[]) => {
+        response.forEach((item) => {
+          if (item.trainingtype_name === "Document") {
+            this.documentTraining = {
+              completed: item.completedTrainingCount || 0,
+              assigned: item.assignedTrainingCount || 0,
+              enrolled: item.enrollTrainingCount || 0
+            };
+          } else if (item.trainingtype_name === "External Link") {
+            this.externalTraining = {
+              completed: item.completedTrainingCount || 0,
+              assigned: item.assignedTrainingCount || 0,
+              enrolled: item.enrollTrainingCount || 0
+            };
+          }
+        });
+
+        this.createPieChart("docChart", this.documentTraining, [
+          "#4caf50", "#ff9800", "#2196f3"
+        ]);
+
+        this.createPieChart("linkChart", this.externalTraining, [
+          "#8e44ad", "#f39c12", "#3498db"
+        ]);
+
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error("Failed to fetch chart data", err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  createPieChart(canvasId: string, data: any, colors: string[]) {
+    const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+    if (!canvas) {
+      console.error(`Canvas with ID '${canvasId}' not found.`);
+      return;
+    }
+
+    const ctx = canvas.getContext("2d");
+    if (this.chartInstances[canvasId]) {
+      this.chartInstances[canvasId].destroy();
+    }
+
+    this.chartInstances[canvasId] = new Chart(ctx!, {
+      type: "pie",
+      data: {
+        labels: ["Completed", "Assigned", "Enrolled"],
+        datasets: [{
+          data: [data.completed, data.assigned, data.enrolled],
+          backgroundColor: colors
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' }
+        }
+      }
+    });
+  }
+
+  changeTab(tab: string) {
+    if (this.activeTab !== tab) {
+      this.activeTab = tab;
+      this.loadTrainings(); // only reload trainings, not chart
+    }
+  }
+  
   closeModal() { 
     this.isModalOpens = false;
   }
@@ -118,51 +167,16 @@ export class HomeComponent {
   }
 
  
-  changeTab(tab: string) {
-    if (this.activeTab !== tab) {
-      this.activeTab = tab;
-      this.filteredTrainings = [];
-      this.loadTrainings();
-      this.fetchTrainingData();  //  Reload chart data when tab changes
-    }
-  }
+  // changeTab(tab: string) {
+  //   if (this.activeTab !== tab) {
+  //     this.activeTab = tab;
+  //     this.filteredTrainings = [];
+  //     this.loadTrainings();  
+  //   }
+  // }
 
 
-  createBarChart(canvasId: string, completed: number, assigned: number, enrolled: number, color: string) {
-    if (this.chartInstances[canvasId]) {
-      this.chartInstances[canvasId].destroy();  // Destroy previous chart before creating a new one
-    }
-
-    const ctx = document.getElementById(canvasId) as HTMLCanvasElement;
-    if (!ctx) {
-      console.error(`Canvas with ID '${canvasId}' not found.`);
-      return;
-    }
-
-    this.chartInstances[canvasId] = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: ["Completed", "Assigned", "Enrolled"],
-        datasets: [{
-          label: "Training Stats",
-          data: [completed, assigned, enrolled],
-          backgroundColor: [color, "#ff9800", "#2196f3"],
-          borderRadius: 5
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { stepSize: 2, precision: 0 }
-          }
-        }
-      }
-    });
-  }
+ 
 
   getThumbnailUrl(fileName: string, type: string): string {
     return this.homeService.getTrainingThumbnail(fileName, type);
