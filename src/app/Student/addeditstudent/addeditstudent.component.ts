@@ -288,6 +288,8 @@ export class AddeditstudentComponent implements OnInit {
     this.buttonText = this.showField ? "SHOW LESS" : "SHOW MORE";
   }
  
+ 
+  
   nextStep(studentForm?: NgForm) {
     const tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
  
@@ -409,7 +411,6 @@ export class AddeditstudentComponent implements OnInit {
       });
     }
   }
- 
  
  
   assignTrainings() {

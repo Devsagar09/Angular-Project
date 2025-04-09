@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfigurationComponent } from './Config/configuration.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 
 
@@ -10,7 +11,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ConfigurationComponent
   ],
   imports: [
-    CommonModule,MatSnackBarModule
+    CommonModule,MatSnackBarModule,ImageCropperModule
   ]
 })
 export class ConfigurationModule { }
