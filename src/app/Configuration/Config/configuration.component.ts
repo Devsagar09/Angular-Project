@@ -16,7 +16,7 @@ interface Config {
 export class ConfigurationComponent implements OnInit {
   configData: Config[] = []; // Explicitly define the type as an array of Config
 
-  constructor(private configService: ConfigurationService) {}
+  constructor(private configService: ConfigurationService) { }
 
   ngOnInit(): void {
     this.displayConfig();
@@ -49,14 +49,15 @@ export class ConfigurationComponent implements OnInit {
   }
 
   updateConfiguration(config: any): void {
+
     this.configService.updateConfig(config).subscribe({
       next: (res) => {
-        alert('Configuration updated successfully!');
+        this.configService.showNotification('Configuration updated successfully!', 'success');
         console.log('Configuration updated:', res);
       },
       error: (err) => {
         console.error('Update failed:', err);
-        alert('Failed to update configuration.');
+        this.configService.showNotification('Failed to update configuration.', 'error');
       }
     });
   }

@@ -70,7 +70,8 @@ body {
 /* Containers */
 .container {
   width: 550px;
-  max-width: 90%; /* Responsive width */
+  max-width: 90%;
+  /* Responsive width */
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -149,11 +150,11 @@ body {
   border-radius: 50%;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: #138496;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   transform: translateX(18px);
 }
 
@@ -183,115 +184,115 @@ input:checked + .slider:before {
 /* Small Screens */
 @media (max-width: 768px) {
   .navbar {
-      padding: 8px;
+    padding: 8px;
   }
 
   .navbar a {
-      font-size: 14px;
+    font-size: 14px;
   }
 
   .navbar a i {
-      font-size: 14px;
-      margin-right: 5px;
+    font-size: 14px;
+    margin-right: 5px;
   }
 
   .training-header {
-      font-size: 18px;
-      padding: 12px;
+    font-size: 18px;
+    padding: 12px;
   }
 
   .training-header .title i {
-      font-size: 20px;
+    font-size: 20px;
   }
 
   .config {
-      flex-direction: column;
-      align-items: center;
+    flex-direction: column;
+    align-items: center;
   }
 
   .container {
-      width: 90%;
-      margin: 10px 0;
+    width: 90%;
+    margin: 10px 0;
   }
 
   .header {
-      font-size: 14px;
+    font-size: 14px;
   }
 
   .content {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
   .toggle-label {
-      font-size: 14px;
+    font-size: 14px;
   }
 
   .switch {
-      width: 35px;
-      height: 18px;
+    width: 35px;
+    height: 18px;
   }
 
   .slider:before {
-      width: 12px;
-      height: 12px;
+    width: 12px;
+    height: 12px;
   }
 
-  input:checked + .slider:before {
-      transform: translateX(16px);
+  input:checked+.slider:before {
+    transform: translateX(16px);
   }
 }
 
 /* Extra Small Screens */
 @media (max-width: 480px) {
   .navbar {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
   }
 
   .navbar a {
-      font-size: 14px;
-      padding: 5px 0;
+    font-size: 14px;
+    padding: 5px 0;
   }
 
   .training-header {
-      flex-direction: column;
-      align-items: flex-start;
-      font-size: 16px;
-      padding: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 16px;
+    padding: 10px;
   }
 
   .config {
-      padding: 10px;
-      gap: 10px;
+    padding: 10px;
+    gap: 10px;
   }
 
   .container {
-      width: 95%;
-      margin: 5px 0;
+    width: 95%;
+    margin: 5px 0;
   }
 
   .content {
-      padding: 10px;
+    padding: 10px;
   }
 
   .toggle-label {
-      font-size: 13px;
+    font-size: 13px;
   }
 
   .switch {
-      width: 30px;
-      height: 15px;
+    width: 30px;
+    height: 15px;
   }
 
   .slider:before {
-      width: 10px;
-      height: 10px;
+    width: 10px;
+    height: 10px;
   }
 
-  input:checked + .slider:before {
-      transform: translateX(14px);
+  input:checked+.slider:before {
+    transform: translateX(14px);
   }
 }

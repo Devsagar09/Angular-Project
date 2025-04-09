@@ -6,15 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AdminNavigationService {
-  private apiUrl = 'https://localhost:7172/api/Profile/GetStudentProfile'; 
+  private apiUrl = 'https://localhost:7172/api/Profile/GetStudentProfile';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getStudentProfile(studentId: string | null): Observable<any> {
     if (!studentId) {
       console.error('Student ID is missing from session storage.');
-      return new Observable(); 
+      return new Observable();
     }
-    return this.http.get<any>(`${this.apiUrl}?studentId=${studentId}`); 
+    return this.http.get<any>(`${this.apiUrl}?studentId=${studentId}`);
   }
 }

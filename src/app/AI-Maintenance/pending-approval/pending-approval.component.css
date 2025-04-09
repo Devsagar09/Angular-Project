@@ -1,11 +1,12 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
   background-color: #f4f4f4;
   /* padding: 5px; */
   display: block;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Ensure full height */
+  min-height: 100vh;
+  /* Ensure full height */
   flex-direction: column;
   overflow-x: hidden;
 }
@@ -17,7 +18,8 @@ body {
   padding: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  overflow-x: auto; /*  Enable horizontal scrolling */
+  overflow-x: auto;
+  /*  Enable horizontal scrolling */
 }
 
 .navbar {
@@ -61,17 +63,21 @@ body {
     margin-right: 5px;
   }
 }
+
 /* Table Styles */
 table {
   width: 98%;
   border-collapse: collapse;
   margin: 8px;
-  table-layout: auto; /* Columns adjust dynamically */
+  table-layout: auto;
+  /* Columns adjust dynamically */
 }
+
 /* Define specific width for the checkbox column */
 th:first-child,
 td:first-child {
-  width: 50px; /* Adjust this value as needed */
+  width: 50px;
+  /* Adjust this value as needed */
   text-align: center;
 }
 
@@ -80,19 +86,23 @@ td {
   border: 1px solid #ddd;
   padding: 10px;
   text-align: center;
-  white-space: nowrap; /* Prevent text wrapping */
+  white-space: nowrap;
+  /* Prevent text wrapping */
 }
 
 th {
   background-color: #134c68;
   color: white;
 }
+
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+
 input[type="checkbox"] {
   transform: scale(1.2);
 }
+
 /* .pagination {
   margin-top: 20px;
   display: flex;
@@ -179,15 +189,18 @@ input[type="checkbox"] {
 
 
 .training-header {
-  background-color: #134c68; /* Teal background */
-  color: white; /* White text */
+  background-color: #134c68;
+  /* Teal background */
+  color: white;
+  /* White text */
   padding: 15px 20px;
   font-size: 20px;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid #138496; /* Slightly darker border */
+  border-bottom: 2px solid #138496;
+  /* Slightly darker border */
 }
 
 .training-header .title {
@@ -197,7 +210,8 @@ input[type="checkbox"] {
 }
 
 .training-header .title i {
-  font-size: 24px; /* Icon size */
+  font-size: 24px;
+  /* Icon size */
 }
 
 
@@ -253,10 +267,14 @@ input[type="checkbox"] {
 }
 
 .action-buttons button:hover {
-  background-color: #134c68; /* Darker background color on hover */
-  color: #f8f9fa; /* Slightly lighter text color on hover */
-  transform: scale(1.05); /* Slightly enlarge the button */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  background-color: #134c68;
+  /* Darker background color on hover */
+  color: #f8f9fa;
+  /* Slightly lighter text color on hover */
+  transform: scale(1.05);
+  /* Slightly enlarge the button */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Add a subtle shadow */
 }
 
 .delete-btn {
@@ -264,7 +282,7 @@ input[type="checkbox"] {
   color: white;
 }
 
-i{
+i {
   margin-right: 6px;
 }
 

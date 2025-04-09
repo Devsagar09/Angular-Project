@@ -17,7 +17,7 @@ export class AdmindashboardComponent implements OnInit {
   lastLogin: string = new Date().toLocaleString(); // Example last login time
   profileImage: string | null = '';
 
-  constructor(private admindashboardService: AdmindashboardService, private trainingService: TrainingService,private adminNavigationService: AdminNavigationService) { }
+  constructor(private admindashboardService: AdmindashboardService, private trainingService: TrainingService, private adminNavigationService: AdminNavigationService) { }
 
   ngOnInit(): void {
 
@@ -27,11 +27,11 @@ export class AdmindashboardComponent implements OnInit {
       this.loadDashboardCounts();
       this.loadtraining();
       const studentId = sessionStorage.getItem('studentId'); // Get studentId from sessionStorage
-    if (studentId) {
-      this.fetchProfileImage(studentId); // ✅ Fetch profile image
-    } else {
-      console.error('Student ID not found in SessionStorage.');
-    }
+      if (studentId) {
+        this.fetchProfileImage(studentId); // ✅ Fetch profile image
+      } else {
+        console.error('Student ID not found in SessionStorage.');
+      }
     }, 1000);
 
   }
@@ -67,7 +67,7 @@ export class AdmindashboardComponent implements OnInit {
           this.dashboardData = null; // Reset data on error
         },
       });
-      this.isLoading=false;
+      this.isLoading = false;
     } else {
       console.error('Student ID not found in SessionStorage.');
       this.dashboardData = null;
@@ -77,17 +77,17 @@ export class AdmindashboardComponent implements OnInit {
 
 
 
-//  for display training
-  loadtraining():void{
+  //  for display training
+  loadtraining(): void {
     this.trainingService.getTraining().subscribe({
-      next: (data) =>{
-        this.trainingDatas = data.slice(0,5);
+      next: (data) => {
+        this.trainingDatas = data.slice(0, 5);
       },
-      error: (error)=>{
+      error: (error) => {
         console.error('error fetching training data', error);
       }
     })
-    this.isLoading=false;
+    this.isLoading = false;
 
   }
 
