@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <br />
+<br />
 
     <div class="tab-content">
     <div *ngIf="isActive('personInfo')">
@@ -45,7 +45,7 @@
             [ngClass]="{'invalid-input': (!studentData.student_No && studentData.touchedFields) || (studentNo?.invalid && studentNo?.touched) || studentNumberExists}"
             (input)="checkStudentNumber()" (blur)="checkStudentNumber()">
                 <span *ngIf="studentNo?.invalid && studentNo?.touched" class="error-message">
-                    Student Number is required.
+                    Student No is required.
                 </span>  
                 <span *ngIf="studentNumberExists" class="error-message">
                     Already exists.
@@ -57,7 +57,7 @@
             <input type="text" name="firstname" [(ngModel)]="studentData.firstname" 
             (keyup)="generateUsernameAndPassword()"
             [(ngModel)]="studentData.firstname" #firstname="ngModel" required
-            [ngClass]="{'invalid-input': (!studentData.student_No && studentData.touchedFields) || (firstname?.invalid && firstname?.touched)}">
+            [ngClass]="{'invalid-input': (!studentData.firstname && studentData.touchedFields) || (firstname?.invalid && firstname?.touched)}">
             <span *ngIf="firstname.invalid && firstname.touched" class="error-message">
                 Firstname is required.
             </span>  
@@ -73,7 +73,7 @@
             <input type="text" name="lastname" [(ngModel)]="studentData.lastname" 
             (keyup)="generateUsernameAndPassword()"
             [(ngModel)]="studentData.lastname" #lastname="ngModel" required
-            [ngClass]="{'invalid-input': (!studentData.student_No && studentData.touchedFields) || (lastname?.invalid && lastname?.touched)}">
+            [ngClass]="{'invalid-input': (!studentData.lastname && studentData.touchedFields) || (lastname?.invalid && lastname?.touched)}">
             <span *ngIf="lastname.invalid && lastname.touched" class="error-message">
                 Lastname is required.
             </span> 
@@ -83,15 +83,13 @@
             <label>Email</label>
             <input type="email" name="email" [(ngModel)]="studentData.email"
                 #email="ngModel" required email pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                [ngClass]="{'invalid-input': (!studentData.student_No && studentData.touchedFields) || (email?.invalid && email?.touched) || studentEmailExists}"
+                [ngClass]="{'invalid-input': (!studentData.email && studentData.touchedFields) || (email?.invalid && email?.touched) || studentEmailExists}"
                 (input)="checkEmail()" (blur)="checkEmail()">
         
-            <!-- Show "Email is required" only when the field is empty -->
             <span *ngIf="email.errors?.['required'] && email.touched" class="error-message">
                 Email is required.
             </span>
         
-            <!-- Show "Not valid" only when the email is not empty but has an invalid format -->
             <span *ngIf="!email.errors?.['required'] && email.errors?.['pattern'] && email.touched" class="error-message">
                 Not valid.
             </span>

@@ -35,9 +35,10 @@
     overflow-y: auto;
   }
 
-.nav-left img {
-    height: 60px;
-}
+  .nav-left img {
+    height: 65px;
+    width: 90px;
+  }
 
 .nav-right {
     display: flex;
