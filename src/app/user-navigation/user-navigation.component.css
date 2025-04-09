@@ -37,6 +37,10 @@
 
 .nav-left img {
     height: 60px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 .nav-right {
@@ -221,8 +225,8 @@
     }
 
     .user-profile img {
-        width: 100px;
-        height: 100px;
+        width: 40px;
+        height: 40px;
     }
 
     .dropdown-menu {

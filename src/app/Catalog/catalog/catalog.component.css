@@ -127,7 +127,7 @@
     width: 18px;
     height: 18px;
     cursor: pointer;
-    background-color: #9c83e8;
+    background-color: #9790ab26;
     border-radius: 50%;
     padding: 10px;
     margin-left: 10px;   
@@ -450,7 +450,8 @@
   
   .modals-image img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: 250px;
     object-fit: cover;
   }
   

@@ -12,11 +12,13 @@
 </h2>
 
 <div class="search-bar">
-  <input type="text" placeholder="Search Training Transcript" [(ngModel)]="searchQuery">
-  <span class="search-icon" (click)="fetchTranscriptP()">
+  <input type="text" placeholder="Search Training Transcript" [(ngModel)]="searchQuery"
+    (ngModelChange)="onSearchChange($event)" />
+
+  <span class="search-icon">
 
     <svg viewBox="0 0 512 512">
-      <path fill="white"
+      <path fill="black"
         d="M365.3 320h-22.7l-26.7-26.7C338.5 265.7 352 230.4 352 192c0-88.4-71.6-160-160-160S32 103.6 32 192s71.6 160 160 160c38.4 0 73.7-13.5 101.3-36.1l26.7 26.7v22.7L434.7 480l45.3-45.3zM64 192c0-70.7 57.3-128 128-128s128 57.3 128 128-57.3 128-128 128S64 262.7 64 192">
       </path>
     </svg>
@@ -86,12 +88,21 @@
         <span class="close" (click)="closeModal()">&times;</span>
       </div>
 
-      <div class="modal-body"  *ngIf="!isLoading">
+      <div class="modal-body">
         <p><strong>Training Name :</strong> {{ selectedTranscript?.training_name }}</p>
         <p><strong>Training Code :</strong> {{ selectedTranscript?.training_code }}</p>
-        <p><strong>Training Type :</strong> {{ selectedTranscript?.trainingtype_name }}</p> 
-        <p><strong>Summary :</strong> {{ selectedTranscript?.summary }}</p> 
-        <p><strong>Status :</strong> {{ selectedTranscript?.status_name }}</p>
+        <p><strong>Training Type :</strong> {{ selectedTranscript?.trainingtype_name }}</p>
+
+        <p *ngIf="selectedTranscript?.trainingtype_name == 'External Link'"><strong>Link:</strong>
+          <span class="open-link" (click)="openExternalLink(selectedTranscript?.external_link_URL)">🔗Open
+            Training</span>
+        </p>
+
+        <p><strong>Summary :</strong> {{ selectedTranscript?.summary }}</p>
+        <p><strong>Status :</strong><span [ngClass]="{'inprogress': selectedTranscript.status_name === 'In Progress',
+          'completed':selectedTranscript.status_name === 'Completed',
+        'denied':selectedTranscript.status_name === 'Approval Denied',
+        'pending':selectedTranscript.status_name === 'Pending Approval'}"> {{ selectedTranscript?.status_name }}</span> </p>
         <p><strong>Completion Date :</strong> {{ selectedTranscript?.completion_date | date:'dd-MM-yyyy' }}</p>
       </div>
 
