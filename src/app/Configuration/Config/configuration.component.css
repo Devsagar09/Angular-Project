@@ -337,9 +337,6 @@ h2 {
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
-  margin-top: 1rem;
-  border: 1px solid #000;
-
 }
 
 .cropper-box {
@@ -364,9 +361,6 @@ h2 {
   --mdc-snackbar-container-color: rgb(225, 71, 71)    ;
 }
  
- 
- 
-/* -------- RESPONSIVE DESIGN -------- */
  
 /* Small Screens */
 @media (max-width: 768px) {

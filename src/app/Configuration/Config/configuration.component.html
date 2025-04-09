@@ -44,19 +44,12 @@
 </div>
 
 <div class="logo-content">
-  <!-- Logo Preview -->
   <div class="logo-flex-row">
-
     <div class="logo-box-wrapper">
-      <!-- Hidden File Input -->
       <input type="file" id="logoInput" hidden (change)="onFileSelected($event)"
         accept="image/png, image/jpeg, image/jpg" />
-
-      <!-- Label wraps the image to trigger file input -->
       <label for="logoInput" class="logo-hover-container">
         <img [src]="croppedImage || companyimage" alt="Company Logo" class="companylogo" />
-
-        <!-- Hover overlay -->
         <div class="overlay">
           <i class="fas fa-camera"></i>
           <span>Change Logo</span>
@@ -64,34 +57,20 @@
       </label>
     </div>
 
-    <!-- Cropper + Cropped Image Side-by-Side -->
     <div class="logo-row-wrapper">
-      <!-- Image Cropper -->
-      <div class="cropper-box">
-        <image-cropper
-        [imageChangedEvent]="imageChangedEvent"
-        [maintainAspectRatio]="false"
-        [resizeToWidth]="300"
-        format="png"
-        (imageCropped)="onImageCropped($event)"
-        [style.max-width.%]="100"
-        [style.height]="'auto'"
-      ></image-cropper>
+      <div class="cropper-box" *ngIf="showCropper">
+        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" [resizeToWidth]="300"
+          format="png" (imageCropped)="onImageCropped($event)" [style.max-width.%]="100"
+          [style.height]="'auto'"></image-cropper>
       </div>
-
-
-
-      <!-- Buttons -->
-
     </div>
-
   </div>
+
+
   <div class="buttons">
     <button class="save-btn" (click)="uploadLogo()">
       <i class="fa fa-upload"></i>Save
     </button>
-
-
     <button class="reset-btn" (click)="resetLogo()">
       <i class="fa fa-refresh"></i>Reset
     </button>
