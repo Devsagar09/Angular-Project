@@ -1,77 +1,99 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <div class="training-header">
   <div class="title">
-      <i class="fas fa-gear"></i>
-      <a href="/dashboard">Dashboard</a>/ Configuration
-      
+    <i class="fas fa-gear"></i>
+    <a href="/dashboard">Dashboard</a>/ Configuration
+
   </div>
 </div>
 
 <div class="config">
   <div *ngFor="let config of configData">
-      <div class="container" *ngIf="config.config_key === 'Requires Approval'">
-          <div class="header"><i class="fas fa-gear"></i> Do you need approval for training?</div>
-          <div class="content">
-              <span class="toggle-label">{{ config?.config_key }}</span>
-              <label class="switch">
-                  <input type="checkbox" [checked]="config?.config_value" (change)="toggleApproval(config)">
-                  <span class="slider"></span>
-              </label>
+    <div class="container" *ngIf="config.config_key === 'Requires Approval'">
+      <div class="header"><i class="fas fa-gear"></i> Do you need approval for training?</div>
+      <div class="content">
+        <span class="toggle-label">{{ config?.config_key }}</span>
+        <label class="switch">
+          <input type="checkbox" [checked]="config?.config_value" (change)="toggleApproval(config)">
+          <span class="slider"></span>
+        </label>
 
-              <!-- <button (click)="updateConfiguration(config)">Update</button> -->
+        <!-- <button (click)="updateConfiguration(config)">Update</button> -->
 
-          </div>
       </div>
+    </div>
 
-      <div class="container" *ngIf="config.config_key === 'Course Catalog'">
-          <div class="header"><i class="fas fa-check-circle"></i> Is the training shown in the course catalog?</div>
-          <div class="content">
-              <span class="toggle-label">{{ config?.config_key }}</span>
-              <label class="switch">
-                  <input type="checkbox" [checked]="config?.config_value" (change)="toggleApproval(config)">
-                  <span class="slider"></span>
-              </label>
-          </div>
+    <div class="container" *ngIf="config.config_key === 'Course Catalog'">
+      <div class="header"><i class="fas fa-check-circle"></i> Is the training shown in the course catalog?</div>
+      <div class="content">
+        <span class="toggle-label">{{ config?.config_key }}</span>
+        <label class="switch">
+          <input type="checkbox" [checked]="config?.config_value" (change)="toggleApproval(config)">
+          <span class="slider"></span>
+        </label>
       </div>
+    </div>
   </div>
 
 </div>
-<br/>
+<br />
 
 <!-- Logo Upload Section -->
-<div class="logo-container">
-    <div class="header">
-      <i class="fas fa-image"></i> Company Logo
+<div class="header">
+  <i class="fas fa-image"></i> Company Logo
+</div>
+
+<div class="logo-content">
+  <!-- Logo Preview -->
+  <div class="logo-flex-row">
+
+    <div class="logo-box-wrapper">
+      <!-- Hidden File Input -->
+      <input type="file" id="logoInput" hidden (change)="onFileSelected($event)"
+        accept="image/png, image/jpeg, image/jpg" />
+
+      <!-- Label wraps the image to trigger file input -->
+      <label for="logoInput" class="logo-hover-container">
+        <img [src]="croppedImage || companyimage" alt="Company Logo" class="companylogo" />
+
+        <!-- Hover overlay -->
+        <div class="overlay">
+          <i class="fas fa-camera"></i>
+          <span>Change Logo</span>
+        </div>
+      </label>
     </div>
-  
-    <div class="logo-content">
-      <!-- Logo Preview -->
-      <div class="logo-box-wrapper">
-        <!-- Hidden File Input -->
-        <input type="file" id="logoInput" hidden (change)="onFileSelected($event)" accept="image/png, image/jpeg, image/jpg" />
-      
-        <!-- Label wraps the image to trigger file input -->
-        <label for="logoInput" class="logo-hover-container">
-          <img [src]="previewUrl || companyimage" alt="Company Logo" class="companylogo" />
-          
-          <!-- Hover overlay -->
-          <div class="overlay">
-            <i class="fas fa-camera"></i>
-            <span>Change Logo</span>
-          </div>
-        </label>
+
+    <!-- Cropper + Cropped Image Side-by-Side -->
+    <div class="logo-row-wrapper">
+      <!-- Image Cropper -->
+      <div class="cropper-box">
+        <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="false"
+        [resizeToWidth]="300"
+        format="png"
+        (imageCropped)="onImageCropped($event)"
+        [style.max-width.%]="100"
+        [style.height]="'auto'"
+      ></image-cropper>
       </div>
-      
+
+
+
       <!-- Buttons -->
-      <div class="buttons">
-        <button class="save-btn" (click)="uploadLogo()">
-            💾 Save
-          </button>
-          
-      
-        <button class="reset-btn" (click)="resetLogo()">
-          🔄 Reset
-        </button>
-      </div>
+
     </div>
+
   </div>
-  
+  <div class="buttons">
+    <button class="save-btn" (click)="uploadLogo()">
+      <i class="fa fa-upload"></i>Save
+    </button>
+
+
+    <button class="reset-btn" (click)="resetLogo()">
+      <i class="fa fa-refresh"></i>Reset
+    </button>
+  </div>
+</div>
