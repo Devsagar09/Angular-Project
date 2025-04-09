@@ -35,7 +35,7 @@ export class IdpComponent {
   selectedTraining: any = null;
 
   goToDashboard() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/studentdashboard']);
   }
 
   ngOnInit(): void {
@@ -47,6 +47,15 @@ export class IdpComponent {
     } else {
       console.error("No student ID found in local storage!");
     }
+  }
+
+  debounceTimer: any;
+
+  onSearchChange(): void {
+    clearTimeout(this.debounceTimer);
+    this.debounceTimer = setTimeout(() => {
+      this.fetchIDP();
+    }, 500); // Adjust delay as needed
   }
 
   loadTrainings(): void {
@@ -205,11 +214,11 @@ export class IdpComponent {
     });
   }
 
-  completedTraining(training: any){
+  completedTraining(training: any) {
     if (!training) {
       console.error("Invalid training data.");
       return;
-    } 
+    }
 
     const studentId = sessionStorage.getItem('studentId');
     if (!studentId) {
@@ -251,22 +260,22 @@ export class IdpComponent {
         }
 
         // Get the first object from the array 
- 
-          this.IDPService.requestAgainForApproval({
-            studentId: this.studentId ?? 0,
-            trainingId: trainingId,
-          }).subscribe({
-            next: (response: string) => {
-              console.log("Approval Request Response:", response);
-              alert(response);
-              window.location.reload();
-            },
-            error: (error) => {
-              console.error("Error:", error);
-              alert("Failed to request training approval.");
-            },
-          });
-       
+
+        this.IDPService.requestAgainForApproval({
+          studentId: this.studentId ?? 0,
+          trainingId: trainingId,
+        }).subscribe({
+          next: (response: string) => {
+            console.log("Approval Request Response:", response);
+            alert(response);
+            window.location.reload();
+          },
+          error: (error) => {
+            console.error("Error:", error);
+            alert("Failed to request training approval.");
+          },
+        });
+
       },
       error: (error) => {
         console.error("Error fetching training details:", error);
@@ -302,27 +311,7 @@ export class IdpComponent {
     });
   }
 
-  // startTrainingDirectly(trainingId: number) {
-  //   console.log('Starting Training:', trainingId);
-
-  //   if (!trainingId || !this.studentId) {
-  //     alert('Invalid training or student ID. Please try again.');
-  //     return;
-  //   }
-
-  //   this.IDPService.startTraining(this.studentId, trainingId).subscribe({
-  //     next: (response: string) => {
-  //       console.log('Training Started Response:', response);
-  //       alert(response);
-  //       window.location.reload();
-  //     },
-  //     error: (error) => {
-  //       console.error('Error:', error);
-  //       alert('Failed to start training.');
-  //     }
-  //   });
-  // }
-
+ 
   viewTraining(trainingtId: number) {
     console.log("Transcript ID:", trainingtId);
 

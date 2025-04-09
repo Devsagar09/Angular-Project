@@ -31,7 +31,7 @@ export class CatalogComponent {
   selectedTraining: any = null; 
 
   goToDashboard() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/studentdashboard']);
   }
 
   ngOnInit(): void {
@@ -74,6 +74,15 @@ export class CatalogComponent {
 
   showApprovalAlert() {
     alert('You have already requested approval from the administrator.');
+  }
+
+  debounceTimer: any;
+
+  onSearchChange(): void {
+    clearTimeout(this.debounceTimer);
+    this.debounceTimer = setTimeout(() => {
+      this.fetchCatalog();
+    }, 500); // Adjust delay as needed
   }
 
 
