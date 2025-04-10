@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TrainingService } from '../../Training/training.service';
 import { StudentService } from '../student.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
  
@@ -53,7 +52,7 @@ export class AddeditstudentComponent implements OnInit {
  
   isEditMode = false;
  
-  constructor(private trainingService: TrainingService, private studentService: StudentService, private snackBar: MatSnackBar, private route: ActivatedRoute
+  constructor(private trainingService: TrainingService, private studentService: StudentService, private route: ActivatedRoute
   ) { }
  
   ngOnInit(): void {
@@ -288,8 +287,6 @@ export class AddeditstudentComponent implements OnInit {
     this.buttonText = this.showField ? "SHOW LESS" : "SHOW MORE";
   }
  
- 
-  
   nextStep(studentForm?: NgForm) {
     const tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
  
@@ -300,7 +297,7 @@ export class AddeditstudentComponent implements OnInit {
         !this.studentData.email || !this.studentData.role_Id) {
  
         this.studentData.touchedFields = true; // Add a flag to trigger validation in the template
-        this.showErrorSnackbar("Please fill all required fields.");
+        this.studentService.showNotification("Please fill all required fields.",'error');
         return;
       }
       this.addOrUpdateStudent();
@@ -323,7 +320,7 @@ export class AddeditstudentComponent implements OnInit {
   }
  
   saveReview() {
-    this.showSuccessSnackbar("Data saved.");
+    this.studentService.showNotification("Data saved.",'success');
     this.addOrUpdateStudent(); // Save student first
     setTimeout(() => {
       this.assignTrainings(); // Then assign trainings
@@ -331,7 +328,7 @@ export class AddeditstudentComponent implements OnInit {
   }
  
   saveAndExit() {
-    this.showSuccessSnackbar("Data saved.");
+    this.studentService.showNotification("Data saved Successfully.",'success');
     this.addOrUpdateStudent(); // Save student first
     setTimeout(() => {
       this.assignTrainings(); // Assign trainings
@@ -347,7 +344,7 @@ export class AddeditstudentComponent implements OnInit {
       !this.studentData.lastname || !this.studentData.email || !this.studentData.role_Id) {
  
       this.studentData.touchedFields = true;
-      this.showErrorSnackbar("Please fill all required fields.");
+      this.studentService.showNotification("Please fill all required fields.",'error');
       return;
     }
  
@@ -377,13 +374,13 @@ export class AddeditstudentComponent implements OnInit {
             this.loadStudentData(this.studentData.student_Id);
  
             this.setActiveTab(this.activeTab === 'personInfo' ? 'assignTrainings' : 'reviewConfirm');
-            // this.showSuccessSnackbar("student Updated.");
+            this.studentService.showNotification("student Updated.",'success');
             studentForm?.resetForm();
           }
         },
         error: (error) => {
           console.error("API Error (Update):", error);
-          this.showErrorSnackbar('Failed to update student.');
+          this.studentService.showNotification('Failed to update student.','error');
         }
       });
  
@@ -399,14 +396,14 @@ export class AddeditstudentComponent implements OnInit {
             console.log("New Student ID:", this.studentData.student_Id);
  
             this.setActiveTab(this.activeTab === 'personInfo' ? 'assignTrainings' : 'reviewConfirm');
-            // this.showSuccessSnackbar("student Added.");
+            this.studentService.showNotification("student Added.",'success');
  
             studentForm?.resetForm();
           }
         },
         error: (error) => {
           console.error("API Error (Add):", error);
-          this.showErrorSnackbar('Failed to add student.');
+          this.studentService.showNotification('Failed to add student.','error');
         }
       });
     }
@@ -417,7 +414,7 @@ export class AddeditstudentComponent implements OnInit {
     console.log("Assigning trainings for student ID:", this.studentData.student_Id);
  
     if (!this.studentData.student_Id) {
-      this.showErrorSnackbar("Student not found. Please add student first.");
+      this.studentService.showNotification("Student not found. Please add student first.",'error');
       return;
     }
  
@@ -438,12 +435,12 @@ export class AddeditstudentComponent implements OnInit {
     this.studentService.assignTrainings(requestPayload).subscribe({
       next: (response) => {
         console.log("API Response:", response);
-        // this.showSuccessSnackbar('Trainings assigned.');
+        this.studentService.showNotification('Trainings assigned.','success');
         this.setActiveTab('reviewConfirm');
       },
       error: (error) => {
         console.error("API Error:", error);
-        this.showErrorSnackbar('Failed to assign trainings.');
+        this.studentService.showNotification('Failed to assign trainings.','error');
       }
     });
   }
@@ -466,24 +463,6 @@ export class AddeditstudentComponent implements OnInit {
     this.updateSelectAll(); // <-- make sure selectAll reflects the updated list
   }
  
- 
-  showSuccessSnackbar(message: string) {
-    this.snackBar.open(message, 'X', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['app-notification-success']
-    });
-  }
- 
-  showErrorSnackbar(message: string) {
-    this.snackBar.open(message, 'X', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['app-notification-error']
-    });
-  }
 }
  
  

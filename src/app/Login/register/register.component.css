@@ -134,24 +134,6 @@
   }
   
 
-  /* Snackbar */
-  ::ng-deep .mat-mdc-snack-bar-container {
-    --mat-mdc-snack-bar-button-color: #ffffff;
-    --mdc-snackbar-supporting-text-color: #ffffff;
-  }
-  
-  ::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
-    background-color: rgb(19, 139, 19) !important;
-    color: white !important;
-    --mdc-snackbar-container-color: rgb(19, 139, 19);
-  }
-  
-  ::ng-deep .mat-mdc-snack-bar-container.app-notification-error {
-    background-color: rgb(225, 71, 71) !important;
-    color: white !important;
-    --mdc-snackbar-container-color: rgb(225, 71, 71)    ;
-  }
-
   .invalid {
     border: 1px solid red;
     /* box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); */

@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { AdminNavigationComponent } from '../../admin-navigation/admin-navigation.component';
 import { AdminNavigationService } from '../../admin-navigation/admin-navigation.service';
 import { LoginService } from '../login.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { StudentService } from '../../Student/student.service';
 
 @Component({
@@ -40,7 +39,6 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder,
     private adminnavigationService:AdminNavigationService,
      private loginService:LoginService,
-    private snackBar:MatSnackBar,
   private studentService:StudentService) {}
 
   ngOnInit(): void {
@@ -108,47 +106,28 @@ export class RegisterComponent {
             usernameExists ? 'Username' : ''
           ].filter(f => f).join(' and ');
   
-          this.showErrorSnackbar(`${duplicateFields} already exists.`);
+          this.loginService.showNotification(`${duplicateFields} already exists.`,'warning');
           return;
         }
   
         // Proceed to register if not duplicate
         this.loginService.selfRegister(this.studentData).subscribe({
           next: () => {
-            this.showSuccessSnackbar("Registered.");
+            this.loginService.showNotification("Student Registered.",'success');
             studentForm.resetForm();
           },
           error: (error) => {
             console.error("API Error (Add):", error);
-            this.showErrorSnackbar('Failed to register.');
+            this.loginService.showNotification('Failed to register.','error');
           }
         });
       },
       error: (err) => {
         console.error('Error fetching students:', err);
-        this.showErrorSnackbar('Failed to validate user.');
+        this.loginService.showNotification('Failed to validate user.','error');
       }
     });
   }
-  
-  
-      showSuccessSnackbar(message: string) {
-        this.snackBar.open(message, 'X', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-          panelClass: ['app-notification-success']
-        });
-      }
-    
-      showErrorSnackbar(message: string) {
-        this.snackBar.open(message, 'X', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-          panelClass: ['app-notification-error']
-        });
-      }
     }
 
 

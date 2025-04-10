@@ -357,24 +357,6 @@ h2 {
   max-width: 300px;
   width: 100%;
 }
-
-::ng-deep .mat-mdc-snack-bar-container {
-  --mat-mdc-snack-bar-button-color: #ffffff;
-  --mdc-snackbar-supporting-text-color: #ffffff;
-}
- 
-::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
-  background-color: rgb(19, 139, 19) !important;
-  color: white !important;
-  --mdc-snackbar-container-color: #rgb(19, 139, 19);
-}
- 
-::ng-deep .mat-mdc-snack-bar-container.app-notification-error {
-  background-color: rgb(225, 71, 71) !important;
-  color: white !important;
-  --mdc-snackbar-container-color: rgb(225, 71, 71)    ;
-}
- 
  
 /* Small Screens */
 @media (max-width: 768px) {

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router, private snackBar: MatSnackBar) {}
+  constructor(private router: Router,private loginService:LoginService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree{
     const studentId = sessionStorage.getItem('studentId');
@@ -17,9 +17,7 @@ export class AuthGuard implements CanActivate {
 
     if (studentId) {
       if (allowedRoles && !allowedRoles.includes(userRole!)) {
-        this.snackBar.open('Access Denied: Insufficient Permissions', 'Close', {
-          duration: 3000
-        });
+        this.loginService.showNotification('Access Denied: Insufficient Permissions','warning');
         return this.router.parseUrl('/unauthorized');
       }
   
