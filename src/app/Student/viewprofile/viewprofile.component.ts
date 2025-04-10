@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { UserNavigationService } from '../../user-navigation/user-navigation.service';
 import { StudentService } from '../student.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -43,7 +42,7 @@ export class ViewprofileComponent implements OnInit {
   };
   
 
-  constructor(private router: Router, private usernavigationService: UserNavigationService, private studentService: StudentService, private snackBar: MatSnackBar) {
+  constructor(private router: Router, private usernavigationService: UserNavigationService, private studentService: StudentService) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.isLoading = true;
@@ -119,11 +118,11 @@ export class ViewprofileComponent implements OnInit {
     this.studentService.editStudentProfile(updatedData).subscribe({
       next: (response) => {
         console.log(response.Message);
-        this.showSuccessSnackbar('Profile updated successfully.');
+        this.studentService.showNotification('Profile updated successfully.','success');
       },
       error: (error) => {
         console.error('Error updating profile:', error);
-        this.showErrorSnackbar('Failed to update profile.');
+        this.studentService.showNotification('Failed to update profile.','error');
       }
     });
   }  
@@ -134,7 +133,7 @@ export class ViewprofileComponent implements OnInit {
       const validImageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
 
   if (!validImageTypes.includes(file.type)) {
-    this.showErrorSnackbar('Only PNG, JPG or JPEG images are allowed.');
+    this.studentService.showNotification('Only PNG, JPG or JPEG images are allowed.','warning');
     this.originalFilename = null;
     this.imagePreview = null;
     return;
@@ -170,7 +169,7 @@ export class ViewprofileComponent implements OnInit {
 
         this.studentService.updateProfileImage(parsedStudentId, file, this.originalFilename).subscribe(
             response => {
-                this.showSuccessSnackbar('Profile image updated.');
+                this.studentService.showNotification('Profile image updated.','success');
                 setTimeout(() => {
                   location.reload(); 
               }, 1000);            
@@ -180,7 +179,7 @@ export class ViewprofileComponent implements OnInit {
             }
         );
     } else {
-        this.showErrorSnackbar("No image selected or no change in image.");
+        this.studentService.showNotification("No image selected or no change in image.",'warning');
     }
 }
 
@@ -223,7 +222,7 @@ dataURLtoFile(dataurl: string, filename: string): File {
   
         this.studentService.resetPassword(this.studentId, formData).subscribe(
           (resetResponse: any) => {
-            this.showSuccessSnackbar('Password reset successfully.');
+            this.studentService.showNotification('Password reset successfully.','success');
             form.reset();
           },
           (error) => {
@@ -250,24 +249,5 @@ dataURLtoFile(dataurl: string, filename: string): File {
 
   toggleConfirmPassword() {
     this.showConfirmPassword = !this.showConfirmPassword;
-  }
-
-  showSuccessSnackbar(message: string) {
-    // Ensure snackbar is shown only when there is a successful upload
-    this.snackBar.open(message, 'X', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['custom-snackbar-paddings']
-    });
-  }
-
-  showErrorSnackbar(message: string) {
-    this.snackBar.open(message, 'X', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['custom-snackbar-paddings']
-    });
   }
 }

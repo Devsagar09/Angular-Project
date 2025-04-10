@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
 import { AdminNavigationComponent } from '../../admin-navigation/admin-navigation.component';
@@ -25,7 +24,6 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private loginService: LoginService,
     private router: Router,
-    private snackBar: MatSnackBar ,
     private adminnavigationService:AdminNavigationService
   ) {
     this.loginForm = this.fb.group({
@@ -61,7 +59,7 @@ export class LoginComponent implements OnInit {
       this.loginService.login(this.loginForm.value).subscribe(
         (response: any) => {
           // console.log('Login Success:', response);
-          // this.showSuccessSnackbar('Login successfully.');
+          // this.loginService.showNotification('Login successfully.','success');
           
           sessionStorage.setItem('firstname', response.firstname);
           sessionStorage.setItem('lastname', response.lastname);
@@ -80,44 +78,17 @@ export class LoginComponent implements OnInit {
           // console.error('Login Error:', error);
           if (error.status === 401) { 
             if (error.error.message === "Your Account is archived.") {
-              this.showSnackbar('Your account has been archived. Please contact support.');
+              this.loginService.showNotification('Your account has been archived. Please contact support.','warning');
             } else {
-              this.showErrorSnackbar('Invalid username or password');
+              this.loginService.showNotification('Invalid username or password','error');
             }
           } else {
-            this.showSnackbar('An error occurred. Please try again.');
+            this.loginService.showNotification('An error occurred. Please try again.','error');
           }
         }
       );
     } else {
-      this.showSnackbar('Please enter username and password.');
+      this.loginService.showNotification('Please enter username and password.','error');
     }
-  }
-
-  showSuccessSnackbar(message: string) {
-    this.snackBar.open(message, 'X', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['app-notification-success']
-    });
-  }
-
-  showErrorSnackbar(message: string) {
-    this.snackBar.open(message, 'X', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['app-notification-error']
-    });
-  }
-
-  showSnackbar(message: string) {
-    this.snackBar.open(message, 'X', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['app-notification']
-    });
   }
 }
