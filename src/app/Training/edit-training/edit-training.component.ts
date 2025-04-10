@@ -11,6 +11,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrls: ['./edit-training.component.css']
 })
 export class EditTrainingComponent implements OnInit {
+  isLoading = false;
   trainingForm!: FormGroup;
   uploadedFiles: { file?: File, preview?: SafeUrl, name: string }[] = [];
   trainingtype_Id: number | null = null;
@@ -335,21 +336,36 @@ export class EditTrainingComponent implements OnInit {
   //for assign training to student
   // search student
   searchStudent(): void {
-    const trimmedValue = this.searchValue.trim();
+    const trimmedValue = this.searchValue.trim().toLowerCase();
+
+    let baseList = [...this.studentDatas];
+
+    if (this.showSelectedOnly) {
+      baseList = baseList.filter(student => student.selected);
+    }
+
     if (!trimmedValue) {
-      this.filteredStudents = [...this.studentDatas];
-      this.noDataFound = false;
+      this.filteredStudents = [...baseList];
+      this.noDataFound = this.filteredStudents.length === 0;
       return;
     }
 
-    this.filteredStudents = this.studentDatas.filter((student) =>
-      `${student.firstname} ${student.lastname}`
-        .toLowerCase()
-        .includes(trimmedValue.toLowerCase())
-    );
+    this.filteredStudents = baseList.filter(student => {
+      const fullName = `${student.firstname} ${student.lastname}`.toLowerCase();
+      const studentNo = student.student_No?.toLowerCase() || '';
+      const archiveDate = student.archive_Date?.toLowerCase() || '';
+
+      return (
+        fullName.includes(trimmedValue) ||
+        studentNo.includes(trimmedValue) ||
+        archiveDate.includes(trimmedValue)
+      );
+    });
 
     this.noDataFound = this.filteredStudents.length === 0;
   }
+
+
 
 
   //display all student for assign
@@ -382,16 +398,40 @@ export class EditTrainingComponent implements OnInit {
   }
 
   updateFilteredStudents() {
-    if (this.showSelectedOnly) {
-      this.filteredStudents = this.studentDatas.filter(
-        (student) => student.selected
-      );
-    } else if (!this.searchValue.trim()) {
-      this.filteredStudents = [...this.studentDatas];
-    }
+    this.isLoading = true;
 
-    this.noDataFound = this.filteredStudents.length === 0;
+    setTimeout(() => {
+      const trimmedSearch = this.searchValue.trim().toLowerCase();
+
+      let baseList = this.showSelectedOnly
+        ? this.studentDatas.filter((student) => student.selected)
+        : [...this.studentDatas];
+
+      if (!trimmedSearch) {
+        this.filteredStudents = baseList;
+      } else {
+        this.filteredStudents = baseList.filter((student) => {
+          const fullName = `${student.firstname} ${student.lastname}`.toLowerCase();
+          const studentNo = student.student_No?.toLowerCase() || '';
+          const archiveDate = student.archive_Date
+            ? new Date(student.archive_Date).toLocaleDateString().toLowerCase()
+            : '';
+
+          return (
+            fullName.includes(trimmedSearch) ||
+            studentNo.includes(trimmedSearch) ||
+            archiveDate.includes(trimmedSearch)
+          );
+        });
+      }
+
+      this.noDataFound = this.filteredStudents.length === 0;
+      this.isLoading = false;
+    }, 300);
   }
+
+
+
 
   //assign student
   updateassignStudents(): void {

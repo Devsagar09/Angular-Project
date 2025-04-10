@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './displaystudent.component.css',
 })
 export class DisplaystudentComponent implements OnInit{
+  isLoading = true;
 students: any[]=[];
 p: number = 1;
 itemsPerPage: number = 10;
@@ -27,15 +28,23 @@ selectedStudentIds: number[] = []; // Array to store selected student IDs
 
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.loadStudent();
   }
 
   loadStudent(): void {
+    this.isLoading = true;
     this.studentService.getStudent().subscribe({
       next: (data) => {
-        this.students = data ?? [];  // Ensures it's always an array
+        setTimeout(() => {
+          this.students = data ?? [];  // Ensures it's always an array
+          this.isLoading = false;
+        }, 500);
+
       },
       error: (error) => {
+        this.isLoading = false;
+
         console.error('Error fetching student data', error);
       },
     });
@@ -57,9 +66,9 @@ selectedStudentIds: number[] = []; // Array to store selected student IDs
   }
 
   editStudent(studentId: number) {
-    
+
     console.log('Fetching Student ID:', studentId);
-    
+
     this.studentService.getStudentById(studentId).subscribe({
       next: (studentData) => {
         this.selectedStudent = studentData; // Store fetched student data
@@ -91,7 +100,7 @@ selectedStudentIds: number[] = []; // Array to store selected student IDs
   }
 
   deleteStudents() {
-    if (this.selectedStudentIds.length === 0) 
+    if (this.selectedStudentIds.length === 0)
       {
         this.showErrorSnackbar("First select any student");
       };

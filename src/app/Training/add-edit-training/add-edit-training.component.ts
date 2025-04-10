@@ -13,6 +13,7 @@ import { ConfigurationService } from '../../Configuration/configuration.service'
 export class AddEditTrainingComponent {
   itemsPerPage: number = 10;
   itemsPerPageOptions: number[] = [2, 5, 10, 20, 50];
+  isLoading = false;
   searchValue: string = '';
   showField: boolean = false;
   buttonText: string = 'SHOW MORE';
@@ -213,19 +214,27 @@ export class AddEditTrainingComponent {
 
   //display all student for assign
   loadStudent() {
+    this.isLoading = true;
+
     this.trainingService.getStudent().subscribe({
       next: (data) => {
-        this.studentDatas = data.map((student: any) => ({
-          ...student,
-          selected: false, // Ensure all checkboxes are initialized as unchecked
-        }));
-        this.updateFilteredStudents();
+        setTimeout(() => {
+          this.studentDatas = data.map((student: any) => ({
+            ...student,
+            selected: false, // Ensure all checkboxes are initialized as unchecked
+          }));
+
+          this.updateFilteredStudents();
+          this.isLoading = false;
+        }, 300);
       },
       error: (error) => {
         console.error('Error fetching student data', error);
+        this.isLoading = false; // Stop loader on error too
       },
     });
   }
+
   // assignTrainings() {
   //   // Extract the TrainingId from the form
   //   const trainingId = this.trainingForm.get('trainingid')?.value;
@@ -558,21 +567,35 @@ export class AddEditTrainingComponent {
 
   // search student
   searchStudent(): void {
-    const trimmedValue = this.searchValue.trim();
+    const trimmedValue = this.searchValue.trim().toLowerCase();
+
+    let baseList = [...this.studentDatas];
+
+    if (this.showSelectedOnly) {
+      baseList = baseList.filter(student => student.selected);
+    }
+
     if (!trimmedValue) {
-      this.filteredStudents = [...this.studentDatas];
-      this.noDataFound = false;
+      this.filteredStudents = [...baseList];
+      this.noDataFound = this.filteredStudents.length === 0;
       return;
     }
 
-    this.filteredStudents = this.studentDatas.filter((student) =>
-      `${student.firstname} ${student.lastname}`
-        .toLowerCase()
-        .includes(trimmedValue.toLowerCase())
-    );
+    this.filteredStudents = baseList.filter(student => {
+      const fullName = `${student.firstname} ${student.lastname}`.toLowerCase();
+      const studentNo = student.student_No?.toLowerCase() || '';
+      const archiveDate = student.archive_Date?.toLowerCase() || '';
+
+      return (
+        fullName.includes(trimmedValue) ||
+        studentNo.includes(trimmedValue) ||
+        archiveDate.includes(trimmedValue)
+      );
+    });
 
     this.noDataFound = this.filteredStudents.length === 0;
   }
+
 
 
   //add training button function
@@ -621,16 +644,39 @@ export class AddEditTrainingComponent {
   toggleShowSelected() {
     this.updateFilteredStudents();
   }
-
   updateFilteredStudents() {
-    if (this.showSelectedOnly) {
-      this.filteredStudents = this.studentDatas.filter(
-        (student) => student.selected
-      );
-    } else if (!this.searchValue.trim()) {
-      this.filteredStudents = [...this.studentDatas];
-    }
+    this.isLoading = true;
 
-    this.noDataFound = this.filteredStudents.length === 0;
+    setTimeout(() => {
+      const trimmedSearch = this.searchValue.trim().toLowerCase();
+
+      let baseList = this.showSelectedOnly
+        ? this.studentDatas.filter((student) => student.selected)
+        : [...this.studentDatas];
+
+      if (!trimmedSearch) {
+        this.filteredStudents = baseList;
+      } else {
+        this.filteredStudents = baseList.filter((student) => {
+          const fullName = `${student.firstname} ${student.lastname}`.toLowerCase();
+          const studentNo = student.student_No?.toLowerCase() || '';
+          const archiveDate = student.archive_Date
+            ? new Date(student.archive_Date).toLocaleDateString().toLowerCase()
+            : '';
+
+          return (
+            fullName.includes(trimmedSearch) ||
+            studentNo.includes(trimmedSearch) ||
+            archiveDate.includes(trimmedSearch)
+          );
+        });
+      }
+
+      this.noDataFound = this.filteredStudents.length === 0;
+      this.isLoading = false;
+    }, 300);
   }
+
+
+
 }
