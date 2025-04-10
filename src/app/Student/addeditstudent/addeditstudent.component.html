@@ -143,7 +143,10 @@
         <div  *ngIf="showField" class="show-more-fields">
             <div class="form-group">
                 <label>Phone No</label>
-                <input type="text" name="phone_No" [(ngModel)]="studentData.phone_No">
+                <input type="text" name="phone_No" [(ngModel)]="studentData.phone_No" #phone_No="ngModel" maxlength="15" pattern="^[0-9]*$">
+                <span *ngIf="phone_No.errors?.['pattern']" class="error-message">
+                    Only Numeric allowed.
+                </span>
             </div>
 
             <div class="form-group">

@@ -9,7 +9,7 @@ export class AdmindashboardService {
 
   private apiUrl = 'https://localhost:7172/api/CountAdminDashboard/getCountAdminDashboard'; // Update with your API URL
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // getCountAdminDashboard(studentId: string): Observable<any> {
   //   const url = `${this.apiUrl}?studentId=${studentId}`; // Pass studentId as a query parameter

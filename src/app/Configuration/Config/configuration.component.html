@@ -1,13 +1,20 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <div class="training-header">
   <div class="title">
+
+
     <i class="fas fa-gear"></i>
     <a href="/dashboard">Dashboard</a>/ Configuration
 
   </div>
 </div>
-
-<div class="config">
+      <!-- Loader -->
+      <div *ngIf="isLoading">
+        <div class="loader-container">
+          <div class="spinner"></div>
+        </div>
+  </div>
+<div class="config" *ngIf="!isLoading">
   <div *ngFor="let config of configData">
     <div class="container" *ngIf="config.config_key === 'Requires Approval'">
       <div class="header"><i class="fas fa-gear"></i> Do you need approval for training?</div>
@@ -38,7 +45,6 @@
 </div>
 <br />
 
-<!-- Logo Upload Section -->
 <div class="header">
   <i class="fas fa-image"></i> Company Logo
 </div>
@@ -76,3 +82,4 @@
     </button>
   </div>
 </div>
+

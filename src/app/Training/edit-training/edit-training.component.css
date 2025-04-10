@@ -1,0 +1,949 @@
+body {
+  font-family: 'Inter', sans-serif;
+  margin-top: 85px;
+  padding-bottom: 50px;
+  background-color: #f5f5f5;
+  width: 100%;
+  height: auto;
+}
+
+.tab-container {
+  position: fixed;
+  width: 95%;
+  top: 115px;
+  display: flex;
+  border-bottom: 2px solid #ddd;
+  background-color: #f5f5f5;
+  z-index: 1000;
+  /* Ensures it stays above other elements */
+}
+
+.tab {
+  flex: 1;
+  padding: 13px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  color: #333;
+}
+
+.tab.active {
+  border-bottom: 3px solid #134c68;
+  color: #134c68;
+  background-color: white;
+}
+
+.tab.completed {
+  border-bottom: 3px solid #134c68;
+  color: #134c68;
+  background-color: white;
+}
+
+
+.btn-container {
+  position: fixed;
+  /* Keeps the buttons fixed at the bottom */
+  bottom: 0;
+  /* Position at the bottom */
+  /* left: 0; */
+  right: 0;
+  width: 95%;
+  /* Full width */
+  background-color: white;
+  /* Background to make it visible */
+  padding: 10px 0;
+  display: flex;
+  padding-right: 15px;
+  justify-content: right;
+  /* Centering buttons */
+  gap: 10px;
+  /* Adds space between buttons */
+  /* box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); Light shadow for visibility */
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  border: 2px solid;
+  border-radius: 50px;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.3s ease-in-out;
+}
+
+
+.cancel {
+  color: rgb(238, 38, 38);
+  border-color: rgb(238, 38, 38);
+  box-shadow: 2px 2px 6px rgb(239, 122, 122);
+
+}
+
+.cancel:hover {
+  background: rgb(238, 38, 38);
+  color: white;
+}
+
+.next {
+  color: #1f5a77;
+  border-color: #1f5a77;
+  box-shadow: 2px 2px 6px #50839c;
+
+}
+
+.next:hover {
+  background: #1f5a77;
+  color: white;
+}
+
+
+/* Add icon styling */
+.btn i {
+  font-size: 14px;
+}
+
+.training-header {
+  position: fixed;
+  top: 65px;
+  width: 100%;
+  z-index: 1000;
+  /* Ensures it stays above other elements */
+  background-color: #134c68;
+  /* Teal background */
+  color: white;
+  /* White text */
+  padding: 15px 20px;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #138496;
+  /* Slightly darker border */
+}
+
+.training-header .title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.training-header .title i {
+  font-size: 24px;
+  /* Icon size */
+}
+
+.show-more-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #ccc;
+  border: none;
+}
+
+.show-more-btn {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 8px 16px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: absolute;
+}
+
+.show-more-btn i {
+  color: #888;
+  font-size: 12px;
+}
+
+/* training dropdown */
+.accordion {
+  border: none;
+  /* Remove border to make the shadow more prominent */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow */
+  margin-bottom: 20px;
+  overflow: hidden;
+  /* Prevent content overflow beyond the rounded corners */
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  /* Add some padding for spacing */
+  background-color: #ffffff;
+  /* White background for a clean look */
+  cursor: pointer;
+  border-bottom: 1px solid #e0e0e0;
+  /* Light gray divider between items */
+  font-size: 18px;
+  /* Adjust font size for better readability */
+  font-weight: 500;
+  color: #333;
+  /* Darker text color */
+}
+
+.accordion-header:hover {
+  background-color: #134c68;
+  /* Slight hover effect */
+  color: white;
+}
+
+/* Common Styles for Form and Accordion */
+.container {
+  padding: 16px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  /* border-radius: 8px; */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container .form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-left: 120px;
+  position: relative;
+  /* Enable relative positioning for absolute positioning of the error */
+}
+
+.container .form-group label {
+  width: 25%;
+  text-align: right;
+  font-size: 15px;
+  font-weight: 500;
+  margin-right: 15px;
+  color: #333;
+}
+
+.container .form-group input {
+  width: 40%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+/* Error message styles start */
+.container .form-group small.text-danger {
+  color: red;
+  font-size: 14px;
+  flex-direction: row;
+  /* position: absolute; */
+  white-space: nowrap;
+  /* Absolute positioning */
+  /* right: 270px; Position the error message to the right of the input */
+  /* top: 50%; Vertically center the error message */
+  /* transform: translateY(-50%); Adjust centering */
+  /* white-space: nowrap; Prevent the message from wrapping */
+}
+
+.container .form-group input.is-invalid {
+  border: 1px solid red;
+  /* Apply red border for invalid inputs */
+  background-color: #ffe6e6;
+  /* Optional: Add a light red background */
+}
+
+.container .form-group .file-upload-container.is-invalid {
+  border-color: red;
+  /* Highlight the border in red */
+  background-color: #ffe6e6;
+  /* Optional: Light red background for error */
+}
+
+/* error msg :end */
+
+.container .form-group input:focus,
+.container .form-group select:focus,
+.container .form-group textarea:focus {
+  border-color: #134c68;
+  outline: none;
+}
+
+/* Custom Checkbox */
+.container .form-group .custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.container .form-group .custom-checkbox input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #4CAF50;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.container .form-group .custom-checkbox input[type="checkbox"]:checked {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+.container .form-group .custom-checkbox input[type="checkbox"]::after {
+  content: '✓';
+  color: white;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 20px;
+  /* background: white; */
+  display: none;
+  font-weight: bold;
+}
+
+.container .form-group .custom-checkbox input[type="checkbox"]:checked::after {
+  display: block;
+}
+
+/* document upload css */
+.file-upload-container {
+  display: flex;
+  flex-direction: row;
+  /* padding: 20px; */
+  /* border: 1px solid #ddd; */
+  border-radius: 8px;
+  max-width: 600px;
+  margin-right: 495px;
+  /* margin: auto; */
+}
+
+.file-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.file-table th:first-child,
+.file-table td:first-child {
+  width: 65px;
+  /* Adjust this value as needed */
+  text-align: center;
+}
+
+.file-table th,
+.file-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  width: 420px;
+}
+
+.file-table th {
+  background-color: #f4f4f4;
+  color: #134c68;
+}
+
+.upload-btn {
+  /* position: absolute; */
+  bottom: 16px;
+  margin-left: 10px;
+  margin-top: 8px;
+  /*for display perfect btn*/
+  /* font-weight: bold; */
+  right: 16px;
+  background-color: #134c68;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 47px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 35px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.upload-btn:hover {
+  background-color: #45a049;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* thumbnail image upload */
+.upload-container {
+  display: flex;
+  /* flex-direction: row; */
+  gap: 1rem;
+  margin-left: 150px;
+  /* justify-content: center; */
+}
+
+.upload-label-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 32px;
+  gap: 1rem;
+  /* Add space between label and input */
+}
+
+.upload-label {
+  font-weight: bold;
+  margin-bottom: 0;
+  /* Remove bottom margin for horizontal alignment */
+}
+
+.upload-box {
+  width: 100%;
+  max-width: 400px;
+  height: 200px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+  position: relative;
+  /* margin-left: 45px;new add for design */
+}
+
+.upload-box.has-preview {
+  border: none;
+}
+
+.drag-text {
+  color: #aaa;
+  font-size: 1.1rem;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.file-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: center; */
+  margin-left: 28.8%;
+  margin-top: 10px;
+  /* margin: 10px; */
+  gap: 1rem;
+}
+
+.file-input {
+  display: none;
+}
+
+.select-file-btn {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  height: 35px;
+  width: 350px;
+  gap: 0.5rem;
+  color: #9090e7;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 45px;
+}
+
+.delete-button {
+  font-size: 16px;
+  height: 35px;
+  width: 35px;
+  gap: 0.5rem;
+  color: rgb(252, 59, 59);
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* assign students */
+
+.assign-container {
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 98.5%;
+  background: white;
+  padding: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow-x: auto;
+  /*  Enable horizontal scrolling */
+}
+
+.navbar {
+  /* background: white; */
+  color: #6091c6;
+  padding: 8px 0;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.navbar a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: bold;
+  color: #134c68;
+}
+
+.navbar a i {
+  margin-right: 10px;
+  font-size: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .navbar {
+    padding: 8px;
+  }
+
+  .navbar a {
+    font-size: 15px;
+  }
+
+  .navbar a i {
+    font-size: 15px;
+    margin-right: 5px;
+  }
+}
+
+.fas fa-sort {
+  font-size: medium;
+}
+
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-radius: 5px;
+}
+
+.items-per-page {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 10px;
+}
+
+.items-per-page select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+/* Table Styles */
+table {
+  width: 98%;
+  border-collapse: collapse;
+  margin: 8px;
+  table-layout: auto;
+  /* Columns adjust dynamically */
+}
+
+/* Define specific width for the checkbox column */
+th:first-child,
+td:first-child {
+  width: 50px;
+  /* Adjust this value as needed */
+  text-align: center;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  white-space: nowrap;
+  /* Prevent text wrapping */
+}
+
+th {
+  background-color: #134c68;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  th,
+  td {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.items-per-page {
+  display: flex;
+  align-items: center;
+}
+
+.items-per-page select {
+  margin-left: 5px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Pagination */
+.pagination-container {
+  text-align: center;
+  padding: 10px 0;
+  position: relative;
+}
+
+.stud-header {
+  background-color: #134c68;
+  /* Teal background */
+  color: white;
+  /* White text */
+  padding: 15px 20px;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #138496;
+  /* Slightly darker border */
+}
+
+.stud-header .title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stud-header .title i {
+  font-size: 24px;
+  /* Icon size */
+}
+
+
+
+/* Search Bar */
+.search-container {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 8px 15px;
+  width: 81%;
+  margin-right: 10px;
+}
+
+.search-bar i {
+  margin-right: 10px;
+  color: #888;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.action-buttons button {
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-buttons button:hover {
+  background-color: #0056b3;
+  /* Darker background color on hover */
+  color: #f8f9fa;
+  /* Slightly lighter text color on hover */
+  transform: scale(1.05);
+  /* Slightly enlarge the button */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Add a subtle shadow */
+}
+
+.delete-btn {
+  /* background-color: #134c68; */
+  color: rgb(224, 99, 99);
+}
+
+.add-btn {
+  background-color: #134c68;
+  color: white;
+
+}
+
+/* action menu in 3dots */
+.action-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.action-icons {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background: #ffffff;
+  border: 2px dotted #ccc;
+  border-radius: 4px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  padding: 8px;
+}
+
+.action-menu:hover .action-icons {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  /* background: #134c68; */
+}
+
+.action-icons i {
+  cursor: pointer;
+  padding: 4px;
+  color: #134c68;
+  transition: color 0.2s;
+  font-size: 22px;
+}
+
+.dot {
+  color: #134c68;
+  font-size: 20px;
+}
+
+/* .dot:hover{
+color: white;
+background: #2d7193;
+} */
+
+.action-icons i:hover {
+  color: #007bff;
+}
+
+/* show selected checkbox  */
+
+.toggle-label {
+  font-size: 16px;
+  margin-top: 4px;
+  /* margin-left: 10px; */
+}
+
+.toggle-switch {
+  position: relative;
+  width: 40px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked+.slider {
+  background-color: #4caf50;
+}
+
+input:checked+.slider:before {
+  transform: translateX(18px);
+}
+
+/* Centered Modal for display training */
+/* White Box for Training Details */
+/* White Box for Training Details */
+.training-box {
+  background: white;
+  padding: 20px;
+  width: 40%;
+  max-width: 700px;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Title */
+.training-box h2 {
+  text-align: center;
+  color: #134c68;
+  margin-bottom: 15px;
+  font-size: 22px;
+  border-bottom: 2px solid #134c68;
+  padding-bottom: 10px;
+}
+
+/* Training Details Styling */
+.training-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border-bottom: 1px solid #ddd; */
+  padding: 8px 0;
+}
+
+/* Align Labels to Right */
+.detail-row strong {
+  flex: 1;
+  text-align: right;
+  color: #555;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Align Values to Left */
+.detail-row span {
+  flex: 2;
+  text-align: left;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Links */
+.detail-row a {
+  color: #134c68;
+  text-decoration: none;
+}
+
+.detail-row a:hover {
+  text-decoration: underline;
+}
+
+/* Thumbnail Image */
+.thumbnail-img {
+  width: 100%;
+  max-width: 250px;
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -20,20 +20,20 @@ export class AdminNavigationComponent implements OnInit {
   isLoading = true;
   isLoginPage = true;
 
-  constructor(private eRef: ElementRef, private router: Router, private adminnavigationService : AdminNavigationService) {
-    this.router.events.subscribe(event=>{
-       if (event instanceof NavigationStart) {
-              this.isLoading = true;
-            }
-      if(event instanceof NavigationEnd){
-        this.isLoginPage = this.router.url.toLowerCase()  === '/login';
+  constructor(private eRef: ElementRef, private router: Router, private adminnavigationService: AdminNavigationService) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.isLoading = true;
+      }
+      if (event instanceof NavigationEnd) {
+        this.isLoginPage = this.router.url.toLowerCase() === '/login';
 
-    // Simulate loading process
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 2000);
-  }
-});
+        // Simulate loading process
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 2000);
+      }
+    });
   }
 
   ngOnInit() {
@@ -42,34 +42,32 @@ export class AdminNavigationComponent implements OnInit {
         const studentId = sessionStorage.getItem('studentId');
         if(studentId){
           this.fetchProfileImage(studentId);
-          
+
         }
   }
 
   loadUserData() {
-     this.firstname = sessionStorage.getItem('firstname');
-     this.lastname = sessionStorage.getItem('lastname');
-    }
-
-    
+    this.firstname = sessionStorage.getItem('firstname');
+    this.lastname = sessionStorage.getItem('lastname');
+  }
 
     displayLogo() {
       this.adminnavigationService.displayLogo().subscribe(
         (response: any) => {
-          this.companyimage = response.companylogo; 
+          this.companyimage = response.companylogo;
         },
         error => {
           console.error('Error fetching company logo:', error);
         }
       );
     }
-    
-  
+
+
     fetchProfileImage(studentId: string) {
       this.adminnavigationService.getProfileImage(studentId).subscribe(
         response => {
           // console.log('Image URL:', response.profileImage);
-          this.profileImage=response.profileImage; 
+          this.profileImage=response.profileImage;
         },
         error => {
           console.error('Error fetching profile image:', error);
@@ -90,28 +88,28 @@ export class AdminNavigationComponent implements OnInit {
     this.dropdownVisible = !this.dropdownVisible;
     console.log('Dropdown toggled:', this.dropdownVisible); // Debug log
   }
-  
+
   switchToLearner() {
-    if (this.isAdmin()) {  
+    if (this.isAdmin()) {
       sessionStorage.setItem('newRole', 'Student');  // Temporary role for UI behavior
       this.router.navigateByUrl('/studentdashboard').then(() => {
         location.reload();  // Ensure the UI updates after navigation
       });
     }
   }
-  
+
   getDisplayedRole(): string {
     return sessionStorage.getItem('newRole') || sessionStorage.getItem('userRole') || '';
   }
-  
+
   isAdmin(): boolean {
     return this.getDisplayedRole() === 'Admin';
   }
-  
+
   isStudent(): boolean {
     return this.getDisplayedRole() === 'Student';
   }
-  
+
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;

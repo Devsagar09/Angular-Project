@@ -69,21 +69,21 @@ export class AddEditTrainingComponent {
       this.trainingtype_name = params['trainingtype_Name'];
     });
 
-     // Fetch Configurations (Assuming TrainingService fetches it)
-  this.configService.getConfig().subscribe((data) => {
-    this.configData = data;
+    // Fetch Configurations (Assuming TrainingService fetches it)
+    this.configService.getConfig().subscribe((data) => {
+      this.configData = data;
 
-    //this code for set config value in add training cc and requireapproval
-    // Find specific config values and set them in the form
-    const requiresApprovalConfig = this.configData.find(config => config.config_key === 'Requires Approval');
-    const courseCatalogConfig = this.configData.find(config => config.config_key === 'Course Catalog');
+      //this code for set config value in add training cc and requireapproval
+      // Find specific config values and set them in the form
+      const requiresApprovalConfig = this.configData.find(config => config.config_key === 'Requires Approval');
+      const courseCatalogConfig = this.configData.find(config => config.config_key === 'Course Catalog');
 
-    // Set the form values
-    this.trainingForm.patchValue({
-      requiresApproval: requiresApprovalConfig ? requiresApprovalConfig.config_value : false,
-      courseCatalog: courseCatalogConfig ? courseCatalogConfig.config_value : false
+      // Set the form values
+      this.trainingForm.patchValue({
+        requiresApproval: requiresApprovalConfig ? requiresApprovalConfig.config_value : false,
+        courseCatalog: courseCatalogConfig ? courseCatalogConfig.config_value : false
+      });
     });
-  });
   }
 
   addTraining(): void {
@@ -133,12 +133,12 @@ export class AddEditTrainingComponent {
           // Optionally, patch it into the form if necessary
           //this.trainingForm.patchValue({ training_Id: this.TrainingId });
 
-          this.showNotification('Training added successfully', 'success');
+          this.trainingService.showNotification('Training added successfully', 'success');
           console.log(response, this.trainingForm.value);
           this.setActiveTab('assignTrainings'); // Move to next step
         },
         (error) => {
-          this.showNotification(
+          this.trainingService.showNotification(
             'Error occurred while adding training',
             'error'
           );
@@ -160,7 +160,7 @@ export class AddEditTrainingComponent {
       if (fileType === 'thumbnail') {
         const allowedImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
         if (!allowedImageTypes.includes(file.type)) {
-          this.showNotification(
+          this.trainingService.showNotification(
             'Only JPG, JPEG, and PNG files are allowed for thumbnails.',
             'warning'
           );
@@ -179,7 +179,7 @@ export class AddEditTrainingComponent {
         // Document file handling
       } else if (fileType === 'document') {
         if (file.type !== 'application/pdf') {
-          this.showNotification(
+          this.trainingService.showNotification(
             'Only PDF files are allowed for documents.',
             'warning'
           );
@@ -202,7 +202,7 @@ export class AddEditTrainingComponent {
           };
           reader.readAsDataURL(file);
         } else {
-          this.showNotification(
+          this.trainingService.showNotification(
             'Only JPG, JPEG, PNG, and PDF files are allowed.',
             'warning'
           );
@@ -365,7 +365,7 @@ export class AddEditTrainingComponent {
       .join(',');
 
     if (!selectedStudents) {
-      this.showNotification('Please select at least one student.','warning');
+      this.trainingService.showNotification('Please select at least one student.', 'warning');
       return;
     }
 
@@ -381,7 +381,7 @@ export class AddEditTrainingComponent {
     this.trainingService.assignStudents(payload).subscribe(
       (response) => {
         console.log('Response:', response);
-        this.showNotification(
+        this.trainingService.showNotification(
           'Successfully assigned Training to Students.',
           'success'
         );
@@ -389,7 +389,7 @@ export class AddEditTrainingComponent {
       },
       (error) => {
         console.error('API Error:', error);
-        this.showNotification(
+        this.trainingService.showNotification(
           'Failed to assign Training to Students.',
           'error'
         );
@@ -458,13 +458,13 @@ export class AddEditTrainingComponent {
   //   });
   // }
 
+  tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
 
   setActiveTab(tab: string) {
-    const tabOrder = ['personInfo', 'assignTrainings', 'reviewConfirm'];
 
     // Ensure completion order (Only previous tab should be completed)
-    const currentIndex = tabOrder.indexOf(this.activeTab);
-    const nextIndex = tabOrder.indexOf(tab);
+    const currentIndex = this.tabOrder.indexOf(this.activeTab);
+    const nextIndex = this.tabOrder.indexOf(tab);
 
     if (
       nextIndex > currentIndex &&
@@ -475,7 +475,7 @@ export class AddEditTrainingComponent {
 
     if (nextIndex < currentIndex) {
       // Reset completed state of tabs that come after the previous tab
-      const resetTabs = tabOrder.slice(nextIndex + 1);
+      const resetTabs = this.tabOrder.slice(nextIndex + 1);
       resetTabs.forEach((tab) => {
         const index = this.completedTabs.indexOf(tab);
         if (index > -1) {
@@ -492,6 +492,16 @@ export class AddEditTrainingComponent {
 
   isCompleted(tab: string): boolean {
     return this.completedTabs.includes(tab);
+  }
+
+  // Prevent(stop) jumping to tab unless previous tab is completed
+  //not redirect to another tab when not complete current tab
+  canActivateTab(tab: string): boolean {
+    const tabIndex = this.tabOrder.indexOf(tab);
+    if (tabIndex === 0) return true;
+
+    const previousTab = this.tabOrder[tabIndex - 1];
+    return this.isCompleted(previousTab);
   }
 
   toggleMoreField() {
@@ -564,77 +574,6 @@ export class AddEditTrainingComponent {
     this.noDataFound = this.filteredStudents.length === 0;
   }
 
-  // notification
-  showNotification(
-    message: string,
-    type: 'success' | 'warning' | 'error' = 'error'
-  ): void {
-    // Ensure the container exists or create it
-    let container = document.getElementById('notification-container');
-    if (!container) {
-      container = document.createElement('div');
-      container.id = 'notification-container';
-      container.style.position = 'fixed';
-      container.style.top = '10px';
-      container.style.right = '10px';
-      container.style.zIndex = '1000';
-      document.body.appendChild(container);
-    }
-
-    // Remove existing notification if any
-    const existingNotification = document.getElementById(
-      'current-notification'
-    );
-    if (existingNotification) {
-      existingNotification.remove();
-    }
-
-    // Create a new notification element
-    const notification = document.createElement('div');
-    notification.id = 'current-notification'; // Set unique ID for the notification
-    notification.style.backgroundColor =
-      type === 'success'
-        ? '#4caf50'
-        : type === 'warning'
-        ? '#ff9800'
-        : '#f44336'; // Set color based on type
-    notification.style.color = 'white';
-    notification.style.padding = '15px 20px';
-    notification.style.marginBottom = '10px';
-    notification.style.borderRadius = '8px';
-    notification.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.2)';
-    notification.style.display = 'flex';
-    notification.style.alignItems = 'center';
-    notification.style.justifyContent = 'space-between';
-    notification.style.fontSize = '14px';
-
-    // Set message and close button
-    notification.innerHTML = `
-    <span>${message}</span>
-    <button style="
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-    ">&times;</button>
-  `;
-
-    // Add close button functionality
-    const closeButton = notification.querySelector(
-      'button'
-    ) as HTMLButtonElement;
-    closeButton.onclick = () => notification.remove();
-
-    // Append the new notification to the container
-    container.appendChild(notification);
-
-    // Automatically remove the notification after 5 seconds
-    setTimeout(() => {
-      notification.remove();
-    }, 5000);
-  }
 
   //add training button function
   savenextStep() {
@@ -642,7 +581,7 @@ export class AddEditTrainingComponent {
     const currentIndex = tabOrder.indexOf(this.activeTab);
 
     if (this.activeTab === 'personInfo') {
-      this.showNotification("Please fill all required fields.",'error');
+      // this.trainingService.showNotification("Please fill all required fields.", 'error');
       this.addTraining(); // Insert Training first
     } else if (this.activeTab === 'assignTrainings') {
       this.assignStudents(); // Then assign Student

@@ -73,7 +73,7 @@
   <div class="main-content">
     <div class="navbar">
       <div class="nav-left">
-        <a href="/dashboard" title="Return to Dashboard"><img [src]="companyimage" alt="Company Logo" class="company-logo"></a>
+        <a [routerLink]="['/dashboard']" title="Return to Dashboard"><img [src]="companyimage" alt="Company Logo" class="company-logo"></a>
       </div>
 
       <div class="nav-right">
@@ -81,7 +81,7 @@
           Learner
         </button>
         <div class="user-profile" (click)="toggleDropdown($event)">
-         
+
           <img [src]="profileImage" alt="Profile Image" class="profile-Image">
 
           <span>{{firstname}} {{lastname}}</span>
@@ -112,3 +112,5 @@
   <router-outlet />
 </div>
 
+
+ 

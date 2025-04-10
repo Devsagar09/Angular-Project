@@ -17,7 +17,7 @@ export class AdmindashboardComponent implements OnInit {
   lastLogin: string = new Date().toLocaleString(); // Example last login time
   profileImage: string | null = '';
 
-  constructor(private admindashboardService: AdmindashboardService, private trainingService: TrainingService,private adminNavigationService: AdminNavigationService) { }
+  constructor(private admindashboardService: AdmindashboardService, private trainingService: TrainingService, private adminNavigationService: AdminNavigationService) { }
 
   ngOnInit(): void {
 
@@ -27,11 +27,11 @@ export class AdmindashboardComponent implements OnInit {
       this.loadDashboardCounts();
       this.loadtraining();
       const studentId = sessionStorage.getItem('studentId'); // Get studentId from sessionStorage
-    if (studentId) {
-      this.fetchProfileImage(studentId); // ✅ Fetch profile image
-    } else {
-      console.error('Student ID not found in SessionStorage.');
-    }
+      if (studentId) {
+        this.fetchProfileImage(studentId); // ✅ Fetch profile image
+      } else {
+        console.error('Student ID not found in SessionStorage.');
+      }
     }, 1000);
 
   }
@@ -67,7 +67,7 @@ export class AdmindashboardComponent implements OnInit {
           this.dashboardData = null; // Reset data on error
         },
       });
-      this.isLoading=false;
+      this.isLoading = false;
     } else {
       console.error('Student ID not found in SessionStorage.');
       this.dashboardData = null;
@@ -77,18 +77,32 @@ export class AdmindashboardComponent implements OnInit {
 
 
 
-//  for display training
-  loadtraining():void{
-    this.trainingService.getTraining().subscribe({
-      next: (data) =>{
-        this.trainingDatas = data.slice(0,5);
-      },
-      error: (error)=>{
-        console.error('error fetching training data', error);
-      }
-    })
-    this.isLoading=false;
+  //  for display training
+  loadtraining(): void {
+    this.isLoading = true;
 
+    this.trainingService.getTraining().subscribe({
+      next: (data) => {
+        // Sort by created_at in descending order
+        const sortedData = data.sort((a: any, b: any) => {
+          return new Date(b.create_date).getTime() - new Date(a.create_date).getTime();
+        });
+
+        // Simulate a small delay and then set the top 5
+        setTimeout(() => {
+          this.trainingDatas = sortedData.slice(0, 5);
+          this.isLoading = false;
+        }, 300);
+      },
+      error: (error) => {
+        console.error('Error fetching training data', error);
+        this.isLoading = false;
+      }
+    });
+
+    // ❌ REMOVE this line: it hides loader too early
+    // this.isLoading = false;
   }
+
 
 }
