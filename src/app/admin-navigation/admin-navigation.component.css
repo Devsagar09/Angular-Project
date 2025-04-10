@@ -50,8 +50,11 @@ html {
 }
 
 .nav-left img {
-  height: 65px;
-  width: 100px;
+  height: 60px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 .nav-right {
@@ -124,7 +127,6 @@ html {
   flex-direction: column;
   padding: 10px;
   z-index: 1000;
-
 }
 
 .sidebar.collapsed {

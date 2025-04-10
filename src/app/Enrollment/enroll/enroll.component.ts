@@ -21,7 +21,7 @@ export class EnrollComponent {
   selectedTraining: any = null;
 
   goToDashboard() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/studentdashboard']);
   }
 
   ngOnInit(): void {
@@ -62,6 +62,14 @@ export class EnrollComponent {
     }
   }
 
+  debounceTimer: any;
+
+  onSearchChange(): void {
+    clearTimeout(this.debounceTimer);
+    this.debounceTimer = setTimeout(() => {
+      this.fetchEnrollment();
+    }, 500); // Adjust delay as needed
+  }
 
   fetchEnrollment(): void {
     if (!this.searchQuery.trim()) {

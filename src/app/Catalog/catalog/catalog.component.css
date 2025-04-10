@@ -127,7 +127,7 @@
     width: 18px;
     height: 18px;
     cursor: pointer;
-    background-color: #9c83e8;
+    background-color: #9790ab26;
     border-radius: 50%;
     padding: 10px;
     margin-left: 10px;   
@@ -274,13 +274,13 @@
 
 /* In Progress (Green) */
 .status.in-progress {
-    background: #28a745;
+    background: rgb(236, 185, 45);
     /* Green */
     color: white;
 }
 
 .status.pending-request {
-    background: #3e9b2a;
+    background: rgb(182, 180, 180);
     color: white;
 }
 
@@ -450,7 +450,8 @@
   
   .modals-image img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: 250px;
     object-fit: cover;
   }
   

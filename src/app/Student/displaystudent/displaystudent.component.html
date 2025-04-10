@@ -67,8 +67,11 @@
       </tr>
     </tbody>
   </table>
-  <p *ngIf="students.length === 0 && searchValue.trim().length >0">
+  <p *ngIf="students.length === 0" >
+    <span class="img-search">
+    <img src="assets/no-search.jpg" alt="No Student img" style="width: 150px; opacity: 0.8;">
     <span style="display: flex; justify-content: center;margin-top: 30px;">No Student found.</span>
+    </span>
   </p>
   <div class="pagination-container">
     <div class="items-per-page">

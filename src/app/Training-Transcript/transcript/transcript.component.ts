@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { faLink, faRectangleList, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { TranscriptService } from '../transcript.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-transcript',
@@ -25,6 +26,9 @@ export class TranscriptComponent {
   selectedTranscript: any = null;
   isModalOpen: boolean = false;
 
+  private debounceTimer: any;
+  searchSubject: Subject<string> = new Subject();
+
   ngOnInit(): void {
     const storedStudentId = sessionStorage.getItem('studentId');
     if (storedStudentId) {
@@ -36,9 +40,15 @@ export class TranscriptComponent {
     }
   }
 
+  onSearchChange(query: string) {
+    clearTimeout(this.debounceTimer);
+    this.debounceTimer = setTimeout(() => {
+      this.fetchTranscriptP();
+    }, 500); // Adjust delay as needed
+  }
 
   goToDashboard() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/studentdashboard']);
   }
 
   loadTrainings(): void {
@@ -86,8 +96,7 @@ export class TranscriptComponent {
   viewTranscript(transcriptId: number) {
     console.log("Transcript ID:", transcriptId);
   
-    this.isModalOpen = true;  
-    this.isLoading = true;  
+    this.isModalOpen = true;   
    
     this.selectedTranscript = this.transcriptData.find(t => t.transcriptId === transcriptId);
   
@@ -98,24 +107,24 @@ export class TranscriptComponent {
   
         if (data && data.length > 0) {
           this.selectedTranscript = data[0];
-          this.isLoading = false;
+          
         } else {
           console.error("No valid data received for transcript ID:", transcriptId);
-          this.isLoading = false;
+     
         }
       }, error => {
         console.error("API Error:", error);
-        this.isLoading = false;
+  
       });
     }
   }
 
-  openExternalLink(url: string) {
-
-    if (url) {
-      window.open(url, "_blank");
+  openExternalLink(link: string | null): void {
+    if (link) {
+      window.open(link, '_blank'); // Opens in new tab
+      window.location.reload();
     } else {
-      console.error("Invalid external link");
+      console.error("No link provided");
     }
   }
 

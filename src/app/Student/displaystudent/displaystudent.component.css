@@ -332,6 +332,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9999;
 }
 
 /* Popup Box */
@@ -415,10 +416,18 @@ body {
     cursor: pointer;
 }
 
+.img-search{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
 
 ::ng-deep .mat-mdc-snack-bar-container {
   --mat-mdc-snack-bar-button-color: #ffffff;
-  --mdc-snackbar-supporting-text-color: black;
+  --mdc-snackbar-supporting-text-color: white;
 }
 
 ::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
@@ -429,7 +438,7 @@ body {
 }
 
 ::ng-deep .mat-mdc-snack-bar-container.app-notification-error {
-  background-color: rgb(220, 127, 127) !important;
+  background-color: rgb(225, 71, 71)  !important;
   color: white !important;
-  --mdc-snackbar-container-color: rgb(220, 127, 127)     ;
+  --mdc-snackbar-container-color:rgb(225, 71, 71) ;
 }

@@ -82,6 +82,62 @@
   opacity: 0.6;
 }
 
+@media (max-width: 1024px) {
+  .card-title {
+    font-size: 1.5rem;
+  }
+
+  .card-description {
+    font-size: 0.95rem;
+  }
+
+  .book-icon,
+  .calendar-icon,
+  .ellipse-icon {
+    width: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-content {
+    padding: 1.5rem;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+  }
+
+  .card-description {
+    font-size: 0.9rem;
+  }
+
+  .book-icon,
+  .calendar-icon,
+  .ellipse-icon {
+    width: 3.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-content {
+    padding: 1rem;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-description {
+    font-size: 0.70rem;
+  }
+
+  .book-icon,
+  .calendar-icon,
+  .ellipse-icon {
+    width: 3rem;
+  }
+}
+
 
 /* sub-card design  */
 
@@ -171,19 +227,7 @@
   font-size: 1.1rem;
   color: #ff6f61;
 }
-
-/* .idp-card{
-  background-color: rgb(226, 186, 113)
-  ;
-}
-
-.course-card{
-  background-color: #364358;
-}
-
-.transcript-card{
-  background-color: #ff6a59;
-} */
+ 
 
 /* Hover effect */
 .stat-card:hover {
@@ -478,6 +522,8 @@ canvas {
   }
 }
 
+/* changes */
+
 .cards-container {
   display: flex;
   flex-direction: row;
@@ -485,18 +531,36 @@ canvas {
   width: 100%;
   height: auto;
   padding: 20px;
-  overflow-x: auto;  
+  overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   background-color: #f9f9f9;
-  scroll-behavior: smooth; 
-  min-height: 370px;   
- 
+  scroll-behavior: smooth;
+  min-height: 370px;
 }
 
-/* Prevent cards from wrapping */
+.cards-container::-webkit-scrollbar {
+  height: 5px;
+}
+
+.cards-container::-webkit-scrollbar-track {
+  background: #d3d9de;
+  border-radius: 10px;
+}
+
+.cards-container::-webkit-scrollbar-thumb {
+  background: #717fda;
+  border-radius: 30px;
+  cursor: grab;
+}
+
+.cards-container::-webkit-scrollbar-thumb:hover {
+  background: #646fc7;
+}
+
 .training-card {
-  width: 250px; 
+  flex: 0 0 auto;
+  width: 250px;
   background: white;
   border-radius: 10px;
   padding: 15px;
@@ -504,42 +568,20 @@ canvas {
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  overflow: hidden;  
-  word-wrap: break-word; 
-  text-overflow: ellipsis; 
+  transition: transform 0.3s ease;
+  overflow: hidden;
 }
- 
-.cards-container::-webkit-scrollbar {
-  height: 5px;  
-}
-
-.cards-container::-webkit-scrollbar-track {
-  background: #d3d9de;  
-  border-radius: 10px;
-}
-
-.cards-container::-webkit-scrollbar-thumb {
-  background: #717fda; 
-  border-radius: 30px;
-  cursor: grab;
-}
-
-.cards-container::-webkit-scrollbar-thumb:hover {
-  background: #646fc7;  
-}
-
-
 
 .training-card:hover {
   transform: scale(1.02);
 }
 
 /* Header Image */
-.card-header img { 
+.card-header img {
   width: 100%;
-  height: 140px; /* Reduced height */
+  height: 140px;
   object-fit: cover;
-  border: 1px solid rgb(255, 255, 255);
+  border: 1px solid #ffffff;
   border-radius: 8px;
 }
 
@@ -553,9 +595,8 @@ canvas {
   background: #eee7e7;
   padding: 5px 8px;
   border-radius: 15px;
-  font-size: 12px; /* Smaller font */
+  font-size: 12px;
   border: 1px solid blue;
- 
 }
 
 .training-card .title-heading {
@@ -564,9 +605,8 @@ canvas {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; 
+  max-width: 100%;
 }
-
 
 .training-card .info {
   font-size: 12px;
@@ -574,36 +614,34 @@ canvas {
   margin-top: 6px;
 }
 
-.data-summry{ 
+.data-summry {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
 }
 
 .status {
   padding: 6px 12px;
-  display: inline-block; 
-  font-size: 12px; 
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 5px;
 }
 
-/* Not Started (Red) */
 .status.not-started {
-  background: #ff4d4d; /* Red */
+  background: #ff4d4d;
   color: white;
 }
 
-/* In Progress (Green) */
 .status.in-progress {
-  background: #28a745; /* Green */
-  color: white;
-}
- 
-.status.pending-request {
-  background: #3e9b2a; 
+  background: rgb(236, 185, 45);
   color: white;
 }
 
-/* Button */
+.status.pending-request {
+  background: rgb(182, 180, 180);
+  color: white;
+}
+
 .card-footer {
   padding: 10px;
   text-align: center;
@@ -619,34 +657,88 @@ canvas {
   font-size: 14px;
   font-weight: bold;
   border-radius: 5px;
+  transition: background 0.3s ease;
 }
 
 .btn:hover {
   background: #2c3a9a;
 }
 
-/* Responsive */
+/* ✅ Responsive Media Queries */
 @media (max-width: 1024px) {
-
-
   .training-card {
-      width: calc(33.33% - 15px); /* 3 cards per row */
+    width: 220px;
+  }
+
+  .card-header img {
+    height: 120px;
+  }
+
+  .title-heading {
+    font-size: 16px;
+  }
+
+  .info,
+  .badge,
+  .status {
+    font-size: 11px;
+  }
+
+  .btn {
+    font-size: 13px;
   }
 }
 
 @media (max-width: 768px) {
   .training-card {
-      width: calc(50% - 15px); /* 2 cards per row */
+    width: 200px;
+    padding: 12px;
+  }
+
+  .card-header img {
+    height: 110px;
+  }
+
+  .btn {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .cards-container {
+    gap: 16px;
+    padding: 15px;
+    min-height: 320px;
   }
 }
 
 @media (max-width: 480px) {
-
   .training-card {
-      width: 100%; /* 1 card per row */
+    width: 180px;
+    padding: 10px;
+  }
+
+  .card-header img {
+    height: 100px;
+  }
+
+  .btn {
+    font-size: 11px;
+    padding: 6px;
+  }
+
+  .title-heading {
+    font-size: 14px;
+  }
+
+  .cards-container {
+    gap: 12px;
+    padding: 10px;
+    min-height: 300px;
   }
 }
 
+
+/* over  */
  
 .no-trainings-text {
   display: flex;
