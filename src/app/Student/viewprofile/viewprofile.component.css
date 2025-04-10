@@ -13,9 +13,6 @@ body {
   flex-direction: column;
 }
 
-.custom-snackbar-padding {
-  padding-top: 50px;
-}
 
 /* Account Header (acc-header) */
 .acc-header {
@@ -388,21 +385,4 @@ textarea {
       font-size: 18px;
       padding: 10px 15px;
   }
-}
-
-::ng-deep .mat-mdc-snack-bar-container {
-  --mat-mdc-snack-bar-button-color: #ffffff;
-  --mdc-snackbar-supporting-text-color: #ffffff;
-}
-
-::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
-  background-color: rgb(19, 139, 19) !important;
-  color: white !important;
-  --mdc-snackbar-container-color: rgb(19, 139, 19);
-}
-
-::ng-deep .mat-mdc-snack-bar-container.app-notification-error {
-  background-color: rgb(225, 71, 71) !important;
-  color: white !important;
-  --mdc-snackbar-container-color: rgb(225, 71, 71)    ;
 }

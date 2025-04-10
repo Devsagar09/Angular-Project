@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentService } from '../student.service';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-displaystudent',
@@ -23,7 +22,7 @@ selectedStudentIds: number[] = []; // Array to store selected student IDs
   deleteMessage: string = '';
 
 
-  constructor(private studentService: StudentService,private router :Router,private snackBar :MatSnackBar){}
+  constructor(private studentService: StudentService,private router :Router){}
 
 
   ngOnInit(): void {
@@ -82,7 +81,7 @@ selectedStudentIds: number[] = []; // Array to store selected student IDs
       // Multiple students delete
       this.selectedStudentIds = this.students.filter((student) => student.selected).map((student) => student.student_Id);
       if (this.selectedStudentIds.length === 0) {
-        this.showErrorSnackbar('Please select at least one student to delete.');
+        this.studentService.showNotification('Please select at least one student to delete.','warning');
         return;
       }
       this.deleteMessage = `Are you sure you want to delete ${this.selectedStudentIds.length} students?`;
@@ -93,7 +92,7 @@ selectedStudentIds: number[] = []; // Array to store selected student IDs
   deleteStudents() {
     if (this.selectedStudentIds.length === 0) 
       {
-        this.showErrorSnackbar("First select any student");
+        this.studentService.showNotification("First select any student",'warning');
       };
 
     this.studentService.deleteStudents(this.selectedStudentIds).subscribe(
@@ -101,12 +100,12 @@ selectedStudentIds: number[] = []; // Array to store selected student IDs
         this.students = this.students.filter(
           (student) => !this.selectedStudentIds.includes(student.student_Id)
         );
-        this.showSuccessSnackbar('Students deleted successfully!');
+        this.studentService.showNotification('Students deleted successfully!','success');
         this.closePopup();
       },
       (error) => {
         console.error('Error deleting students', error);
-        this.showErrorSnackbar('An error occurred while deleting students.');
+        this.studentService.showNotification('An error occurred while deleting students.','error');
       }
     );
   }
@@ -143,26 +142,6 @@ toggleStudentSelection(student: any) {
       return 0;
     });
   }
-
-  showSuccessSnackbar(message: string) {
-    this.snackBar.open(message, 'X', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['app-notification-success'],
-    });
-  }
-
-  // Show error snackbar
-  showErrorSnackbar(message: string) {
-    this.snackBar.open(message, 'X', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['app-notification-error'],
-    });
-  }
-
 }
 
 

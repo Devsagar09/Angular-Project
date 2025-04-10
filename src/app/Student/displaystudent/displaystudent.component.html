@@ -1,14 +1,11 @@
-<!-- <div class="loader-container" *ngIf="isLoading">
-        <div class="loader"></div>
-      </div> -->
-<!-- <div class="navbar">
-        <a href=""><i class="fa fa-arrow-alt-circle-left"></i>Back to Dashboard</a>
-      </div> -->
+<div class="navbar">
+  <a [routerLink]="['/dashboard']"><i class="fa fa-arrow-alt-circle-left"></i> Back to Dashboard</a>
+</div>
 
 <div class="stud-header">
   <div class="title">
     <i class="fas fa-users"></i>
-    <a href="/dashboard">Dashboard</a>/ Students
+    Students
   </div>
 </div>
 <br />
@@ -23,10 +20,10 @@
         placeholder="Search Students">
     </div>
     <div class="action-buttons">
-      <button class="delete-btn" title="Delete" (click)="confirmDelete()"><i class="fa fa-trash"></i></button>
       <button class="add-btn" title="Add" [routerLink]="['/addStudent']">
         <i class="fa fa-plus"></i>
       </button>
+      <button class="delete-btn" title="Delete" (click)="confirmDelete()"><i class="fa fa-trash"></i></button>
     </div>
   </div>
 

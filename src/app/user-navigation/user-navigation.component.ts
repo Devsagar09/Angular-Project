@@ -68,9 +68,13 @@ export class UserNavigationComponent implements OnInit {
 
   switchToAdmin() {
     sessionStorage.removeItem('newRole');  // Remove the new role
-    this.router.navigate(['/dashboard']).then(() => {
-        window.location.href = '/dashboard';
-    });
+      this.isLoading = true;
+  
+      setTimeout(() => {
+        this.router.navigate(['/dashboard']).then(() => {
+          this.isLoading = false;
+        });
+      }, 10);
 }
 
   loadUserData() {
