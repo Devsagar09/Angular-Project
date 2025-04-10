@@ -18,7 +18,7 @@ export class DocumentViewerComponent {
     this.activatedRoute.queryParams.subscribe(params => {
       if (params['url']) {
         setTimeout(() => {
-          this.pdfUrl = decodeURIComponent(params['url']);  
+          this.pdfUrl = decodeURIComponent(params['url']);
           this.loading = false;
         }, 500);
       } else {

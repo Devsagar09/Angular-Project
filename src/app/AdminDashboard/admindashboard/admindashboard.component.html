@@ -14,7 +14,6 @@
 </div> -->
 <html>
   <body>
-
     <div class="stats-container" *ngIf="dashboardData">
       <div class="stat-card">
         <div class="stat-icon cell">
@@ -85,7 +84,9 @@
           <img src="studd11.jpg" alt="Student" />
         </div>
         <div class="stat-details1">
-          <p class="stat-title1">Student Management</p>
+          <p class="stat-title1" [routerLink]="['/Student']">
+            Student Management
+          </p>
           <p class="stat-value1">
             <strong>Add, Update or Delete Student</strong>
           </p>
@@ -122,12 +123,22 @@
               <th>Archive Date</th>
             </tr>
           </thead>
-          <tbody>
+           <!-- Loader -->
+   <tbody *ngIf="isLoading">
+    <tr>
+      <td colspan="6">
+        <div class="loader-container">
+          <div class="spinner"></div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+          <tbody *ngIf="!isLoading">
             <tr *ngFor="let trainingData of trainingDatas">
               <td>{{ trainingData?.training_name }}</td>
               <td>{{ trainingData?.training_code }}</td>
               <td>{{ trainingData?.trainingtype_name }}</td>
-              <td>{{ trainingData?.archive_date | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ trainingData?.archive_date | date : "dd/MM/yyyy" }}</td>
             </tr>
           </tbody>
         </table>
@@ -138,24 +149,25 @@
         </div>
 
         <div class="card-body">
+
           <img
             [src]="profileImage"
             alt="User Image"
             class="profile-img"/>
 
           <div class="user-details">
-            <p class="last-login">last login : {{ lastLogin}}</p>
+            <p class="last-login">last login : {{ lastLogin }}</p>
             <h3 class="username">{{ dashboardData.login_username }}</h3>
           </div>
         </div>
 
         <div class="card-footer">
+
           <button class="profile-btn" onclick="window.location.href='viewProfile'">
             View profile <span>&#8594;</span>
           </button>
         </div>
       </div>
-
     </div>
   </body>
 </html>

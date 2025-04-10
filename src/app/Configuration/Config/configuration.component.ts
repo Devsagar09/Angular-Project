@@ -19,7 +19,8 @@ interface Config {
 
 
 export class ConfigurationComponent implements OnInit {
-  companyimage: string | null = '';
+  isLoading = false;
+  companyimage : string | null = '';
   selectedFile: File | null = null;
   previewUrl: string | null = null;
   logoChanged = false;
@@ -61,13 +62,12 @@ export class ConfigurationComponent implements OnInit {
       this.showCropper = true;
     }
   }
-
-  onImageCropped(event: ImageCroppedEvent) {
+  
+   onImageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64!;
   }
   
-
-  base64ToBlob(base64: string): Blob {
+   base64ToBlob(base64: string): Blob {
     const byteString = atob(base64.split(',')[1]);
     const mimeString = base64.split(',')[0].split(':')[1].split(';')[0];
     const ab = new ArrayBuffer(byteString.length);
@@ -110,44 +110,52 @@ resetLogo(): void {
   this.logoChanged = false;
 }
 
-displayConfig(): void {
-  this.configService.getConfig().subscribe({
-    next: (data: Config[]) => {
-      this.configData = data.map(config => ({
-        config_id: config.config_id,
-        config_key: config.config_key,
-        config_value: Boolean(config.config_value) // Ensure it's a boolean
-      }));
 
-      console.log('Processed Data:', this.configData);
-    },
-    error: (error) => {
-      console.error('Error fetching data:', error);
-    }
-  });
-}
-
-toggleApproval(config: Config): void {
-  config.config_value = !config.config_value; // Toggle between true/false
-  setTimeout(() => {
-  this.updateConfiguration(config); // Call API after UI update
-}, 300); // Slight delay for smooth effect
-// this.updateConfiguration(config);
-console.log('Updated Value:', config);
+   displayConfig(): void {
+    this.isLoading = true;
+    this.configService.getConfig().subscribe({
+      next: (data: Config[]) => {
+        setTimeout(() => {
+          this.configData = data.map(config => ({
+            config_id: config.config_id,
+            config_key: config.config_key,
+            config_value: Boolean(config.config_value) // Ensure it's a boolean
+          }));
+          this.isLoading = false;
+        }, 500);
+ 
+ 
+        console.log('Processed Data:', this.configData);
+      },
+      error: (error) => {
+        this.isLoading = false;
+        console.error('Error fetching data:', error);
+      }
+    });
   }
-
-updateConfiguration(config: any): void {
-  this.configService.updateConfig(config).subscribe({
-    next: (res) => {
-      alert('Configuration updated successfully!');
-      console.log('Configuration updated:', res);
-    },
-    error: (err) => {
-      console.error('Update failed:', err);
-      alert('Failed to update configuration.');
-    }
-  });
-}
+ 
+  toggleApproval(config: Config): void {
+    config.config_value = !config.config_value; // Toggle between true/false
+    setTimeout(() => {
+      this.updateConfiguration(config); // Call API after UI update
+    }, 300); // Slight delay for smooth effect
+    // this.updateConfiguration(config);
+    console.log('Updated Value:', config);
+  }
+ 
+  updateConfiguration(config: any): void {
+ 
+    this.configService.updateConfig(config).subscribe({
+      next: (res) => {
+        this.configService.showNotification('Configuration updated successfully!', 'success');
+        console.log('Configuration updated:', res);
+      },
+      error: (err) => {
+        console.error('Update failed:', err);
+        this.configService.showNotification('Failed to update configuration.', 'error');
+      }
+    });
+  }
 
 showSuccessSnackbar(message: string) {
   this.snackBar.open(message, 'X', {

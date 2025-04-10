@@ -1,79 +1,113 @@
-  <!-- <div *ngFor="let trainingData of trainingDatas">
+<!-- <div *ngFor="let trainingData of trainingDatas">
   <p>{{trainingData?.training_name}}</p>
   <p>{{trainingData?.training_code}}</p>
   <p>{{trainingData?.trainingtype_name}}</p>
   <p>{{trainingData?.archive_date}}</p>
   </div> -->
 
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
-    <div class="navbar">
-      <a href="#"><i class="fa fa-arrow-alt-circle-left"></i>Back to Dashboard</a>
+  <div class="navbar">
+    <a href="#"><i class="fa fa-arrow-alt-circle-left"></i>Back to Dashboard</a>
+  </div>
+  <div class="training-header">
+    <div class="title">
+      <i class="fas fa-lightbulb"></i> AI Maintenance
     </div>
-    <div class="training-header">
-      <div class="title">
-          <i class="fas fa-lightbulb"></i> AI Maintenance
+  </div>
+  <br />
+  <div class="container">
+    <!-- Display error message if any -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    <!-- Search Bar Section -->
+    <div class="search-container">
+      <label for="search"><strong>Search</strong></label>
+      <div class="search-bar">
+        <i class="fa fa-search"></i>
+        <input type="text" id="search" [(ngModel)]="searchValue" (input)="searchPendingApproval()"
+          placeholder="Search Pending Approval">
+      </div>
+      <div class="action-buttons">
+        <button (click)="approveSelectedTrainings()" class="add-btn" title="Approve"><i class="fa fa-check-circle"></i>
+          APPROVE</button>
+        <button (click)="denySelectedTrainings()" class="delete-btn" title="Denied"><i
+            class="fa fa-xmark-circle"></i>DENIED</button>
       </div>
     </div>
-      <br/>
-    <div class="container">
-      <!-- Display error message if any -->
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
-        <!-- Search Bar Section -->
-        <div class="search-container">
-            <label for="search"><strong>Search</strong></label>
-            <div class="search-bar">
-                <i class="fa fa-search"></i>
-                <input type="text" id="search"
-                [(ngModel)]="searchValue"
-                (input)="searchPendingApproval()"
-                placeholder="Search Pending Approval">
-            </div>
-            <div class="action-buttons">
-                <button (click)="approveSelectedTrainings()" class="add-btn" title="Approve"><i class="fa fa-check-circle"></i> APPROVE</button>
-                <button (click)="denySelectedTrainings()" class="delete-btn" title="Denied"><i class="fa fa-xmark-circle"></i>DENIED</button>
-            </div>
-        </div>
 
-        <table id="data-table">
-            <thead>
-                <tr>
-                    <th><input type="checkbox" [checked]="allSelected"
-                      (change)="toggleSelectAll($event)"
-                      ></th>
-                    <!-- <th>Actions</th> -->
-                    <th>Student Name</th>
-                    <th>Training Name</th>
-                    <th>Training Type Name</th>
-                    <!-- <th>Decision Date</th> -->
-                </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let trainingData of pendingapprovalDatas |  paginate:{ itemsPerPage: itemsPerPage, currentPage: p }">
-                  <td><input type="checkbox"
+    <table id="data-table">
+      <thead>
+        <tr>
+          <th><input type="checkbox" [checked]="allSelected" (change)="toggleSelectAll($event)"></th>
+          <!-- <th>Actions</th> -->
+          <th>Student Name</th>
+          <th>Training Name</th>
+          <th>Training Type Name</th>
+          <!-- <th>Decision Date</th> -->
+        </tr>
+      </thead>
+         <!-- Loader -->
+   <tbody *ngIf="isLoading">
+    <tr>
+      <td colspan="6">
+        <div class="loader-container">
+          <div class="spinner"></div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+      <tbody *ngIf="!isLoading && pendingapprovalDatas.length > 0;">
+        <tr
+          *ngFor="let trainingData of pendingapprovalDatas |  paginate:{ itemsPerPage: itemsPerPage, currentPage: p }">
+          <!-- <td><input type="checkbox"
                     (change)="toggleSelection(trainingData, $event)"
-                    ></td>
-                  <!-- <td><i class="fas fa-ellipsis-h" aria-hidden="true"></i></td> -->
-                   <td hidden>{{ trainingData?.student_id}}</td>
-                   <td hidden>{{ trainingData?.training_id}}</td>
-                  <td>{{ trainingData?.student_name }}</td>
-                  <td>{{ trainingData?.training_name }}</td>
-                  <td>{{ trainingData?.trainingtype_name }}</td>
-                  <!-- <td>{{ trainingData?.decision_date | date: 'dd/MM/yyyy'}}</td> -->
-              </tr>
-          </tbody>
-        </table>
-        <p *ngIf="pendingapprovalDatas.length === 0 && searchValue.trim().length > 0">
-          No results found.
-      </p>
-        <!-- <div class="pagination-controls">
+                    ></td> -->
+          <td>
+            <input type="checkbox" [(ngModel)]="trainingData.selected"
+              (change)="toggleSelection(trainingData, $event)" />
+          </td>
+
+          <!-- <td><i class="fas fa-ellipsis-h" aria-hidden="true"></i></td> -->
+          <td hidden>{{ trainingData?.student_id}}</td>
+          <td hidden>{{ trainingData?.training_id}}</td>
+          <td>{{ trainingData?.student_name }}</td>
+          <td>{{ trainingData?.training_name }}</td>
+          <td>{{ trainingData?.trainingtype_name }}</td>
+          <!-- <td>{{ trainingData?.decision_date | date: 'dd/MM/yyyy'}}</td> -->
+        </tr>
+      </tbody>
+       <!-- No Records Message -->
+  <tbody *ngIf="!isLoading && pendingapprovalDatas.length === 0">
+    <tr>
+      <td colspan="6">
+        <div class="img-search">
+          <img src="assets/no-search.jpg" alt="No Records Found" style="width: 150px; opacity: 0.8;" />
+          <span style="color: #134c68;">No training records found.</span>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+    </table>
+    <!-- Template to show when no data found -->
+  <!-- <div *ngIf="pendingapprovalDatas.length === 0">
+    <div class="img-search">
+        <img src="assets/no-search.jpg" alt="No Records Found" style="width: 150px; opacity: 0.8;" />
+        <span style="color: #134c68;">No Pending Approval records found.</span>
+    </div>
+  </div> -->
+    <!-- <p *ngIf="pendingapprovalDatas.length === 0 && searchValue.trim().length > 0">
+      No results found.
+    </p> -->
+    <!-- <div class="pagination-controls">
           <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">
             <i class="fas fa-arrow-left"></i>
           </button>
@@ -90,19 +124,20 @@
             <span>records</span>
           </div>
         </div> -->
-        <div class="pagination-container">
-          <!-- Dropdown for selecting items per page -->
-          <div class="items-per-page">
-            <label for="itemsPerPage">Show:</label>
-            <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
-              <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
-            </select>
-            <span>entries per page</span>
-          </div>
+    <div class="pagination-container">
+      <!-- Dropdown for selecting items per page -->
+      <div class="items-per-page">
+        <label for="itemsPerPage">Show:</label>
+        <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
+          <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+        </select>
+        <span>entries per page</span>
+      </div>
 
-          <!-- Pagination Controls -->
-          <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
-        </div>
+      <!-- Pagination Controls -->
+      <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
     </div>
+  </div>
 </body>
+
 </html>

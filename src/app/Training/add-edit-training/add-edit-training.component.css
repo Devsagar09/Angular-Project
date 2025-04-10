@@ -1,5 +1,5 @@
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   margin-top: 85px;
   padding-bottom: 50px;
   background-color: #f5f5f5;
@@ -19,9 +19,10 @@ body {
 
 .tab {
   flex: 1;
-  padding: 15px;
+  padding: 13px;
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
   transition: background 0.3s ease;
   color: #333;
@@ -38,20 +39,19 @@ body {
   background-color: white;
 }
 
-
 .btn-container {
-  position: fixed;  /* Keeps the buttons fixed at the bottom */
-  bottom: 0;  /* Position at the bottom */
-  left: 0;
-  width: 99%; /* Full width */
-  background-color: white; /* Background to make it visible */
-  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%; /* Adjust based on actual sidebar width */
+  margin-bottom: 21px;
+  background-color: white;
+  padding: 10px 15px;
   display: flex;
-  padding-right: 15px;
-  justify-content: right; /* Centering buttons */
-  gap: 10px; /* Adds space between buttons */
-  /* box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); Light shadow for visibility */
+  justify-content: flex-end;
+  gap: 10px;
 }
+
 
 .btn {
   display: flex;
@@ -67,12 +67,10 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
-
 .cancel {
   color: rgb(238, 38, 38);
   border-color: rgb(238, 38, 38);
   box-shadow: 2px 2px 6px rgb(239, 122, 122);
-
 }
 
 .cancel:hover {
@@ -84,14 +82,12 @@ body {
   color: #1f5a77;
   border-color: #1f5a77;
   box-shadow: 2px 2px 6px #50839c;
-
 }
 
 .next:hover {
   background: #1f5a77;
   color: white;
 }
-
 
 /* Add icon styling */
 .btn i {
@@ -175,7 +171,7 @@ body {
   background-color: #ffffff; /* White background for a clean look */
   cursor: pointer;
   border-bottom: 1px solid #e0e0e0; /* Light gray divider between items */
-  font-size: 16px; /* Adjust font size for better readability */
+  font-size: 18px; /* Adjust font size for better readability */
   font-weight: 500;
   color: #333; /* Darker text color */
 }
@@ -205,7 +201,7 @@ body {
 .container .form-group label {
   width: 25%;
   text-align: right;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   margin-right: 15px;
   color: #333;
@@ -216,7 +212,7 @@ body {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 /* Error message styles start */
@@ -225,7 +221,7 @@ body {
   font-size: 14px;
   flex-direction: row;
   /* position: absolute; */
-  white-space: nowrap;/* Absolute positioning */
+  white-space: nowrap; /* Absolute positioning */
   /* right: 270px; Position the error message to the right of the input */
   /* top: 50%; Vertically center the error message */
   /* transform: translateY(-50%); Adjust centering */
@@ -261,19 +257,19 @@ body {
   appearance: none;
   width: 18px;
   height: 18px;
-  border: 2px solid #4CAF50;
+  border: 2px solid #4caf50;
   border-radius: 4px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 .container .form-group .custom-checkbox input[type="checkbox"]:checked {
-  background-color: #4CAF50;
-  border-color: #4CAF50;
+  background-color: #4caf50;
+  border-color: #4caf50;
 }
 
 .container .form-group .custom-checkbox input[type="checkbox"]::after {
-  content: '✓';
+  content: "✓";
   color: white;
   position: relative;
   top: 50%;
@@ -298,6 +294,7 @@ body {
   /* border: 1px solid #ddd; */
   border-radius: 8px;
   max-width: 600px;
+  margin-right: 495px;
   /* margin: auto; */
 }
 
@@ -308,9 +305,9 @@ body {
 
 .file-table th:first-child,
 .file-table td:first-child {
-    width: 65px; /* Adjust this value as needed */
-    text-align: center;
-  }
+  width: 65px; /* Adjust this value as needed */
+  text-align: center;
+}
 
 .file-table th,
 .file-table td {
@@ -329,6 +326,7 @@ body {
   /* position: absolute; */
   bottom: 16px;
   margin-left: 10px;
+  margin-top: 8px; /*for display perfect btn*/
   /* font-weight: bold; */
   right: 16px;
   background-color: #134c68;
@@ -370,6 +368,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-left: -12px;
   gap: 1rem; /* Add space between label and input */
 }
 
@@ -389,6 +388,7 @@ body {
   justify-content: center;
   background-color: #f9f9f9;
   position: relative;
+  /* margin-left: 45px;new add for design */
 }
 
 .upload-box.has-preview {
@@ -412,7 +412,7 @@ body {
   flex-direction: row;
   align-items: center;
   /* justify-content: center; */
-  margin-left: 452px;
+  margin-left: 410px;
   margin-top: 10px;
   /* margin: 10px; */
   gap: 1rem;
@@ -433,10 +433,10 @@ body {
   background: white;
   border: 1px solid #ccc;
   border-radius: 4px;
-
+  margin-left: 45px;
 }
 
-.delete-button{
+.delete-button {
   font-size: 16px;
   height: 35px;
   width: 35px;
@@ -501,10 +501,9 @@ body {
     margin-right: 5px;
   }
 }
-.fas fa-sort{
-font-size:medium;
+.fas fa-sort {
+  font-size: medium;
 }
-
 
 .pagination-container {
   display: flex;
@@ -527,7 +526,6 @@ font-size:medium;
   border-radius: 5px;
   cursor: pointer;
 }
-
 
 /* Table Styles */
 table {
@@ -581,8 +579,7 @@ input[type="checkbox"] {
   }
 }
 
-
- .pagination-controls {
+.pagination-controls {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -630,8 +627,6 @@ input[type="checkbox"] {
 .stud-header .title i {
   font-size: 24px; /* Icon size */
 }
-
-
 
 /* Search Bar */
 .search-container {
@@ -684,10 +679,10 @@ input[type="checkbox"] {
 }
 
 .action-buttons button:hover {
-background-color: #0056b3; /* Darker background color on hover */
-color: #f8f9fa; /* Slightly lighter text color on hover */
-transform: scale(1.05); /* Slightly enlarge the button */
-box-shadow: 0 4px  8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  background-color: #0056b3; /* Darker background color on hover */
+  color: #f8f9fa; /* Slightly lighter text color on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
 }
 
 .delete-btn {
@@ -698,46 +693,45 @@ box-shadow: 0 4px  8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
 .add-btn {
   background-color: #134c68;
   color: white;
-
 }
 
 /* action menu in 3dots */
 .action-menu {
-position: relative;
-display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .action-icons {
-display: none;
-position: absolute;
-top: 0;
-left: 100%;
-background: #ffffff;
-border: 2px dotted #ccc;
-border-radius: 4px;
-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
-z-index: 10;
-padding: 8px;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background: #ffffff;
+  border: 2px dotted #ccc;
+  border-radius: 4px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  padding: 8px;
 }
 
 .action-menu:hover .action-icons {
-display: flex;
-flex-direction: row;
-gap: 12px;
-/* background: #134c68; */
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  /* background: #134c68; */
 }
 
 .action-icons i {
-cursor: pointer;
-padding: 4px;
-color: #134c68;
-transition: color 0.2s;
-font-size: 22px;
+  cursor: pointer;
+  padding: 4px;
+  color: #134c68;
+  transition: color 0.2s;
+  font-size: 22px;
 }
 
-.dot{
-color: #134c68;
-font-size: 20px;
+.dot {
+  color: #134c68;
+  font-size: 20px;
 }
 /* .dot:hover{
 color: white;
@@ -745,7 +739,7 @@ background: #2d7193;
 } */
 
 .action-icons i:hover {
-color: #007bff;
+  color: #007bff;
 }
 
 /* show selected checkbox  */

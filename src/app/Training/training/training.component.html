@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trainings</title>
 </head>
+
 <body>
   <div class="navbar">
     <a href="#"><i class="fa fa-arrow-alt-circle-left"></i> Back to Dashboard</a>
@@ -16,7 +18,7 @@
     </div>
   </div>
 
-  <br/>
+  <br />
 
   <div class="container">
     <!-- Search Bar Section -->
@@ -24,13 +26,8 @@
       <label for="search"><strong>Search</strong></label>
       <div class="search-bar">
         <i class="fa fa-search"></i>
-        <input
-        type="text"
-        id="search"
-        [(ngModel)]="searchValue"
-        (input)="searchTraining()"
-        placeholder="Search Training"
-      />
+        <input type="text" id="search" [(ngModel)]="searchValue" (input)="searchTraining()"
+          placeholder="Search Training" />
 
       </div>
       <div class="action-buttons">
@@ -38,9 +35,7 @@
           <i class="fa fa-plus"></i>
         </button>
 
-        <app-trainingtype
-          *ngIf="isModalOpen"
-          (closeModalEvent)="closeModal()">
+        <app-trainingtype *ngIf="isModalOpen" (closeModalEvent)="closeModal()">
         </app-trainingtype>
 
         <button class="delete-btn" title="Delete" (click)="deleteSelectedTrainings()">
@@ -49,46 +44,70 @@
       </div>
     </div>
 
-    <!-- Data Table Section -->
-    <table id="data-table" *ngIf="trainingDatas.length > 0">
-      <thead>
-        <tr>
-          <th><input type="checkbox" (change)="toggleSelectAll($event)"></th>
-          <th>Actions</th>
-          <th>Training Name</th>
-          <th>Training Code</th>
-          <th>Training Type</th>
-          <th>Archive Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let trainingData of trainingDatas | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-          <td>
-            <input type="checkbox" [checked]="selectedTrainings.includes(trainingData.training_id)"
-                   (change)="toggleSelection(trainingData.training_id, $event)">
-          </td>
-          <td class="dot">
-            <div class="action-menu">
-              <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
-              <div class="action-icons">
-                <i class="fas fa-list" title="Details"></i>
-                <i class="fas fa-edit" title="Edit" [routerLink]="['/edit-training', trainingData.training_id]"></i>
-                <i class="fas fa-trash" title="Delete" (click)="deleteSingleTraining(trainingData.training_id)"></i>
-              </div>
-            </div>
-          </td>
-          <!-- <td>{{trainingData?.training_id}}</td> -->
-          <td>{{ trainingData?.training_name }}</td>
-          <td>{{ trainingData?.training_code }}</td>
-          <td>{{ trainingData?.trainingtype_name }}</td>
-          <td>{{ trainingData?.archive_date | date: 'dd/MM/yyyy' }}</td>
-        </tr>
-      </tbody>
-    </table>
 
-        <p *ngIf="trainingDatas.length === 0 && searchValue.trim().length > 0">
-            No results found.
-        </p>
+
+   <!-- Data Table Section -->
+<table id="data-table">
+  <thead>
+    <tr>
+      <th><input type="checkbox" (change)="toggleSelectAll($event)"></th>
+      <th>Actions</th>
+      <th>Training Name</th>
+      <th>Training Code</th>
+      <th>Training Type</th>
+      <th>Archive Date</th>
+    </tr>
+  </thead>
+
+   <!-- Loader -->
+   <tbody *ngIf="isLoading">
+    <tr>
+      <td colspan="6">
+        <div class="loader-container">
+          <div class="spinner"></div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+
+  <!-- Data Rows -->
+  <tbody *ngIf="!isLoading && trainingDatas.length > 0">
+    <tr *ngFor="let trainingData of trainingDatas | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+      <td>
+        <input type="checkbox" [checked]="selectedTrainings.includes(trainingData.training_id)"
+              (change)="toggleSelection(trainingData.training_id, $event)">
+      </td>
+      <td class="dot">
+        <div class="action-menu">
+          <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+          <div class="action-icons">
+            <i class="fas fa-list" title="Details" (click)="openDetailsModal(trainingData.training_id)"></i>
+            <i class="fas fa-edit" title="Edit" [routerLink]="['/edit-training', trainingData.training_id]"></i>
+            <i class="fas fa-trash" title="Delete" (click)="deleteSingleTraining(trainingData.training_id)"></i>
+          </div>
+        </div>
+      </td>
+      <td>{{ trainingData?.training_name }}</td>
+      <td>{{ trainingData?.training_code }}</td>
+      <td>{{ trainingData?.trainingtype_name }}</td>
+      <td>{{ trainingData?.archive_date | date: 'dd/MM/yyyy' }}</td>
+    </tr>
+  </tbody>
+
+  <!-- No Records Message -->
+  <tbody *ngIf="!isLoading && trainingDatas.length === 0">
+    <tr>
+      <td colspan="6">
+        <div class="img-search">
+          <img src="assets/no-search.jpg" alt="No Records Found" style="width: 150px; opacity: 0.8;" />
+          <span style="color: #134c68;">No training records found.</span>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
 
 
     <!-- Pagination Section -->
@@ -106,4 +125,94 @@
     </div>
   </div>
 </body>
+
 </html>
+
+<!-- model for training detail -->
+<!-- Modal for training detail -->
+<div *ngIf="showModal" class="modal-overlay">
+  <div class="modal-box">
+    <span class="close-icon" (click)="closedetailModal()">✖</span>
+
+    <!-- Left section: Image + Top Info -->
+    <div class="left-section">
+      <img *ngIf="selectedTraining.thumbnailImage; else noImage" [src]="selectedTraining.thumbnailImage" alt="Thumbnail"
+        class="thumbnail-img" />
+      <ng-template #noImage>
+        <p>No Image</p>
+      </ng-template>
+
+      <div class="left-info">
+        <p><strong>Training Name:</strong> {{ selectedTraining.trainingName || 'NA' }}</p>
+        <p><strong>Training Code:</strong> {{ selectedTraining.trainingCode || 'NA' }}</p>
+        <p><strong>Training Hours:</strong> {{ selectedTraining.trainingHours || 'NA' }}</p>
+      </div>
+    </div>
+
+    <!-- Right section: Full details -->
+    <div class="right-section">
+      <p><strong>TrainingType Name:</strong> {{ selectedTraining.trainingTypeName || 'NA' }}</p>
+      <p><strong>Requires Approval:</strong> {{ selectedTraining.requiresApproval || 'NA' }}</p>
+      <p><strong>Summary:</strong> {{ selectedTraining.summary || 'NA' }}</p>
+      <p><strong>Course Catalog:</strong> {{ selectedTraining.courseCatalog || 'NA' }}</p>
+      <p><strong>Archive Date:</strong> {{ selectedTraining.archiveDate ? (selectedTraining.archiveDate |
+        date:'dd/MM/yyyy') : 'NA' }}</p>
+
+      <!-- Document Section -->
+      <div *ngIf="selectedTraining.trainingtype_Id == 1" class="document-section">
+        <p><strong>Document File:</strong></p>
+        <div *ngIf="selectedTraining.documentFile && selectedTraining.documentFile.trim() !== ''; else noDoc"
+          class="doc-links">
+          <!-- <div class="doc-link">
+      <a [href]="selectedTraining.documentFile" download target="_blank">
+        <i class="fas fa-file-download"></i> Download - {{ selectedTraining.documentFile.split('/').pop() }}
+      </a>
+    </div> -->
+          <div class="doc-link">
+            <a [href]="selectedTraining.documentFile" target="_blank">
+              <i class="fas fa-eye"></i> View & <i class="fas fa-file-download"></i>Download - {{
+              selectedTraining.documentFile.split('/').pop() }}
+            </a>
+          </div>
+        </div>
+        <ng-template #noDoc>
+          <p>NA</p>
+        </ng-template>
+      </div>
+
+      <!-- Show Document if trainingTypeId is 1 -->
+      <!-- <div *ngIf="selectedTraining.trainingtype_Id == 1">
+        <p><strong>Document:</strong></p>
+        <div *ngIf="selectedTraining.documentFile && selectedTraining.documentFile.trim() !== ''; else noDoc">
+          <a [href]="selectedTraining.documentFile" download target="_blank">
+            📄 Download - {{ selectedTraining.documentFile.split('/').pop() }}
+          </a><br />
+          <a [href]="selectedTraining.documentFile" target="_blank">
+            <i class="fas fa-file-download"></i> View - {{ selectedTraining.documentFile.split('/').pop() }}
+          </a>
+        </div>
+        <ng-template #noDoc><p>NA</p></ng-template>
+      </div><br> -->
+
+
+      <!-- Show External Link if trainingTypeId is 2 -->
+      <div *ngIf="selectedTraining.trainingtype_Id == 2" class="document-section">
+        <p><strong>External Link:</strong></p>
+        <div *ngIf="selectedTraining.externalLinkUrl && selectedTraining.externalLinkUrl.trim() !== ''; else noLink">
+          <div class="doc-link">
+            <a [href]="selectedTraining.externalLinkUrl" target="_blank"><i class="fas fa-link"></i> Open - {{
+              selectedTraining.externalLinkUrl.split('/').pop() }}</a>
+          </div>
+        </div>
+        <ng-template #noLink>
+          <p>NA</p>
+        </ng-template>
+      </div>
+
+      <p><strong>Start Date:</strong> {{ selectedTraining.cstartDate ? (selectedTraining.cstartDate | date:'dd/MM/yyyy')
+        : 'NA' }}</p>
+      <p><strong>End Date:</strong> {{ selectedTraining.cendDate ? (selectedTraining.cendDate | date:'dd/MM/yyyy') :
+        'NA' }}</p>
+    </div>
+  </div>
+</div>
