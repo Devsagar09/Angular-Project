@@ -71,19 +71,18 @@ export class TranscriptComponent {
 
       setTimeout(() => {
         this.isLoading = false; // Hide loader after delay
-      }, 2000);
+      }, 200);
       return;
     }
     this.isLoading = true;
 
     this.TranscriptService.searchTranscript(this.searchQuery, this.studentId ?? 0).subscribe({
       next: (data) => {
-
-        setTimeout(() => {
+ 
           console.log("Filtered Search Results:", data);
           this.transcriptData = data;
           this.isLoading = false; // Hide skeleton loader after delay
-        }, 2000);
+      
 
       },
       error: (error) => {

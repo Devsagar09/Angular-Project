@@ -41,7 +41,7 @@ export class HomeComponent implements AfterViewInit {
       this.studentId = parseInt(storedStudentId, 10);
       console.log("Student ID:", this.studentId);
       this.loadTrainings();
-      // this.fetchTrainingData();
+      this.fetchTrainingData();
     } else {
       console.error("No student ID found in local storage!");
     }

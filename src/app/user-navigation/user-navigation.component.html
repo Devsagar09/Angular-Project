@@ -35,7 +35,11 @@
     <div class="main-content">
         <div class="navbar">
             <div class="nav-left">
+ 
+                <a href="/studentdashboard" title="Return to Dashboard"><img [src]="companyimage"   class="company-logo"></a>
+ 
                 <a [routerLink]="['/studentdashboard']" title="Return to Dashboard"><img [src]="companyimage" alt="Company Logo" class="company-logo"></a>
+ 
             </div>
 
             <div class="nav-right">
@@ -45,7 +49,7 @@
  
                 <div class="user-profile" (click)="toggleDropdown($event)">
 
-                    <img [src]="profileImage" alt="Profile Image" class="profile-Image">
+                    <img [src]="profileImage"  class="profile-Image">
                     <span>{{ firstname }} {{ lastname }}</span>
                 </div>
                 <div class="dropdown-menu" [class.show]="dropdownVisible">
