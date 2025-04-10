@@ -1,0 +1,7 @@
+<ngx-extended-pdf-viewer *ngIf="pdfUrl" [src]="pdfUrl" useBrowserLocale="true"
+  [showSidebarButton]="true" >
+</ngx-extended-pdf-viewer>
+
+<div *ngIf="loading">
+  <p>Loading PDF...</p>
+</div>

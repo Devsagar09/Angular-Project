@@ -67,19 +67,19 @@
     <h3 class="quick-links">Quick Setups</h3>
 
     <div class="stats-container1">
-      <div class="stat-card1">
+      <div class="stat-card1" [routerLink]="['/training']">
         <div class="stat-icon1">
           <img src="training.png" alt="Training setup" />
         </div>
         <div class="stat-details1">
-          <p class="stat-title1" [routerLink]="['/training']">Training Setup</p>
-          <p class="stat-value1" [routerLink]="['/training']">
+          <p class="stat-title1">Training Setup</p>
+          <p class="stat-value1">
             <strong>Add, Update or Delete Training</strong>
           </p>
         </div>
       </div>
 
-      <div class="stat-card1">
+      <div class="stat-card1" [routerLink]="['/Student']">
         <div class="stat-icon1">
           <img src="studd11.jpg" alt="Student" />
         </div>
@@ -87,13 +87,13 @@
           <p class="stat-title1" [routerLink]="['/Student']">
             Student Management
           </p>
-          <p class="stat-value1" [routerLink]="['/Student']">
+          <p class="stat-value1">
             <strong>Add, Update or Delete Student</strong>
           </p>
         </div>
       </div>
 
-      <div class="stat-card1">
+      <div class="stat-card1" [routerLink]="['/AI-Maintenance']">
         <div class="stat-icon1">
           <img src="ai1.jpg" alt="AI" />
         </div>
@@ -111,7 +111,7 @@
       <div class="tbl-container">
         <div class="training-header">
           <p>Recently Created Training</p>
-          <p class="view-all" [routerLink]="['/Training']">view all</p>
+          <p class="view-all" [routerLink]="['/training']">view all</p>
         </div>
         <!-- <h2 style="text-align:center;">DataTable with API Data & Pagination</h2> -->
         <table id="data-table">
@@ -123,7 +123,17 @@
               <th>Archive Date</th>
             </tr>
           </thead>
-          <tbody>
+           <!-- Loader -->
+   <tbody *ngIf="isLoading">
+    <tr>
+      <td colspan="6">
+        <div class="loader-container">
+          <div class="spinner"></div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+          <tbody *ngIf="!isLoading">
             <tr *ngFor="let trainingData of trainingDatas">
               <td>{{ trainingData?.training_name }}</td>
               <td>{{ trainingData?.training_code }}</td>
@@ -139,8 +149,12 @@
         </div>
 
         <div class="card-body">
-          <img [src]="profileImage" alt="User Image" class="profile-img" />
-          <!-- *ngIf="dashboardData.login_image;" -->
+
+          <img
+            [src]="profileImage"
+            alt="User Image"
+            class="profile-img"/>
+
           <div class="user-details">
             <p class="last-login">last login : {{ lastLogin }}</p>
             <h3 class="username">{{ dashboardData.login_username }}</h3>
@@ -148,7 +162,10 @@
         </div>
 
         <div class="card-footer">
-          <button class="profile-btn">View profile <span>&#8594;</span></button>
+
+          <button class="profile-btn" onclick="window.location.href='viewProfile'">
+            View profile <span>&#8594;</span>
+          </button>
         </div>
       </div>
     </div>

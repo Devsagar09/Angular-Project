@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
+import { AdminNavigationComponent } from '../../admin-navigation/admin-navigation.component';
+import { AdminNavigationService } from '../../admin-navigation/admin-navigation.service';
 
 @Component({
   selector: 'app-login',
@@ -10,17 +12,21 @@ import { LoginService } from '../login.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   errorMessage: string = '';
   loading: boolean = false;
+  companyimage :string | null = '';
+  showPassword: boolean = false;
+
 
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
     private router: Router,
-    private snackBar: MatSnackBar 
+    private snackBar: MatSnackBar ,
+    private adminnavigationService:AdminNavigationService
   ) {
     this.loginForm = this.fb.group({
       logintext: ['', Validators.required],
@@ -28,8 +34,27 @@ export class LoginComponent {
     });
   }
 
-  onLogin() {
 
+  ngOnInit(): void {
+    this.displayLogo();
+  }
+  
+  displayLogo() {
+    this.adminnavigationService.displayLogo().subscribe(
+      (response: any) => {
+        this.companyimage = response.companylogo; 
+      },
+      error => {
+        console.error('Error fetching company logo:', error);
+      }
+    );
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  onLogin() {
     // alert("clicked");
     if (this.loginForm.valid) {
       this.loading = true;
@@ -43,11 +68,11 @@ export class LoginComponent {
           sessionStorage.setItem('userRole', response.role);
           sessionStorage.setItem('studentId', response.studentId);
           
-         this.router.navigate([response.role === 'Admin' ? '/dashboard' : '/studentdashboard']).then(() => {
-            this.loading=true;
-            window.location.reload(); // Reload after a small delay
-        });
-        
+          setTimeout(() => {
+            this.router.navigate([response.role === 'Admin' ? '/dashboard' : '/studentdashboard']).then(() => {
+              window.location.reload(); // Reload after a small delay
+          }); 
+          }, 300); 
       },
 
         (error: any) => {
@@ -72,8 +97,8 @@ export class LoginComponent {
   showSuccessSnackbar(message: string) {
     this.snackBar.open(message, 'X', {
       duration: 3000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
       panelClass: ['app-notification-success']
     });
   }
@@ -81,8 +106,8 @@ export class LoginComponent {
   showErrorSnackbar(message: string) {
     this.snackBar.open(message, 'X', {
       duration: 3000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
       panelClass: ['app-notification-error']
     });
   }
@@ -90,8 +115,8 @@ export class LoginComponent {
   showSnackbar(message: string) {
     this.snackBar.open(message, 'X', {
       duration: 3000,
-      horizontalPosition: 'right',
-      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
       panelClass: ['app-notification']
     });
   }

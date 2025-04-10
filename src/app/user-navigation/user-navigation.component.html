@@ -35,18 +35,22 @@
     <div class="main-content">
         <div class="navbar">
             <div class="nav-left">
-                <img src="https://logomakr.com/wp-content/uploads/2024/12/ai-logo-generator-space-sample.png" alt="Company Logo" class="company-logo">
+                <a href="/studentdashboard" title="Return to Dashboard"><img [src]="companyimage" alt="Company Logo" class="company-logo"></a>
             </div>
 
             <div class="nav-right">
+  
+ 
                 <button kendoButton size="large" themeColor="primary" title="Switch to Admin"  *ngIf="userRole=='Admin'" (click)="switchToAdmin()">Admin</button>
-                <div class="user-profile" (click)="toggleDropdown()">
-                    <img [src]="profileImage" alt="Profile Image">
+ 
+                <div class="user-profile" (click)="toggleDropdown($event)">
+
+                    <img [src]="profileImage" alt="Profile Image" class="profile-Image">
                     <span>{{ firstname }} {{ lastname }}</span>
                 </div>
                 <div class="dropdown-menu" [class.show]="dropdownVisible">
                     <ul>
-                        <li (click)="viewProfile()"><fa-icon [icon]="faUser"></fa-icon> View Profile</li>
+                        <li [routerLink]="['/viewProfile']" (click)="dropdownVisible = false"><fa-icon [icon]="faUser"></fa-icon> View Profile</li>
                         <li (click)="logout()"><fa-icon [icon]="faArrowRightFromBracket"></fa-icon>  Logout</li>
                     </ul>
                 </div>

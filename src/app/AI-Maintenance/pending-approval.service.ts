@@ -51,7 +51,7 @@ export class PendingApprovalService {
       container = document.createElement('div');
       container.id = 'notification-container';
       container.style.position = 'fixed';
-      container.style.top = '10px';
+      container.style.top = '70px';
       container.style.right = '10px';
       container.style.zIndex = '1000';
       document.body.appendChild(container);

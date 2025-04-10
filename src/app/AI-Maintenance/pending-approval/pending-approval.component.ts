@@ -26,11 +26,16 @@ export class PendingApprovalComponent {
 
   // Load pending training approvals
   loadPendingApprovalData(): void {
+    this.isLoading = true;
     this.pendingapprovalServices.DisplayPendingApproval().subscribe({
       next: (data) => {
-        this.pendingapprovalDatas = data;
+        setTimeout(() => {
+          this.pendingapprovalDatas = data;
+          this.isLoading = false
+        }, 500);
       },
       error: (error) => {
+        this.isLoading = false;
         console.error('Error fetching training data:', error);
       }
     });

@@ -37,7 +37,7 @@ export class AdmindashboardComponent implements OnInit {
   }
 
   fetchProfileImage(studentId: string) {
-    this.adminNavigationService.getStudentProfile(studentId).subscribe({
+    this.adminNavigationService.getProfileImage(studentId).subscribe({
       next: (response) => {
         // console.log('Image URL:', response.profileImage);
         this.profileImage = response.profileImage;
@@ -79,16 +79,30 @@ export class AdmindashboardComponent implements OnInit {
 
   //  for display training
   loadtraining(): void {
+    this.isLoading = true;
+
     this.trainingService.getTraining().subscribe({
       next: (data) => {
-        this.trainingDatas = data.slice(0, 5);
+        // Sort by created_at in descending order
+        const sortedData = data.sort((a: any, b: any) => {
+          return new Date(b.create_date).getTime() - new Date(a.create_date).getTime();
+        });
+
+        // Simulate a small delay and then set the top 5
+        setTimeout(() => {
+          this.trainingDatas = sortedData.slice(0, 5);
+          this.isLoading = false;
+        }, 300);
       },
       error: (error) => {
-        console.error('error fetching training data', error);
+        console.error('Error fetching training data', error);
+        this.isLoading = false;
       }
-    })
-    this.isLoading = false;
+    });
 
+    // ❌ REMOVE this line: it hides loader too early
+    // this.isLoading = false;
   }
+
 
 }

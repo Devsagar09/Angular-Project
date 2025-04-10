@@ -14,6 +14,7 @@ export class AdminNavigationComponent implements OnInit {
   firstname: string | null = '';
   lastname: string | null = '';
   profileImage: string | null = '';
+  companyimage : string | null = '';
   dropdownVisible = false;
   isCollapsed = true;
   isLoading = true;
@@ -36,11 +37,13 @@ export class AdminNavigationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadUserData();
-    const studentId = sessionStorage.getItem('studentId');
-    if (studentId) {
-      this.fetchProfileImage(studentId);
-    }
+    this.displayLogo();
+        this.loadUserData();
+        const studentId = sessionStorage.getItem('studentId');
+        if(studentId){
+          this.fetchProfileImage(studentId);
+
+        }
   }
 
   loadUserData() {
@@ -48,26 +51,37 @@ export class AdminNavigationComponent implements OnInit {
     this.lastname = sessionStorage.getItem('lastname');
   }
 
-  fetchProfileImage(studentId: string) {
-    this.adminnavigationService.getStudentProfile(studentId).subscribe(
-      response => {
-        // console.log('Image URL:', response.profileImage);
-        this.profileImage = response.profileImage;
-      },
-      error => {
-        console.error('Error fetching profile image:', error);
-      }
-    );
-  }
+    displayLogo() {
+      this.adminnavigationService.displayLogo().subscribe(
+        (response: any) => {
+          this.companyimage = response.companylogo;
+        },
+        error => {
+          console.error('Error fetching company logo:', error);
+        }
+      );
+    }
 
-  logout() {
-    this.isLoading = true;
 
-    this.firstname = '';
-    this.lastname = '';
-    sessionStorage.clear();
-    window.location.href = '/login';
-  }
+    fetchProfileImage(studentId: string) {
+      this.adminnavigationService.getProfileImage(studentId).subscribe(
+        response => {
+          // console.log('Image URL:', response.profileImage);
+          this.profileImage=response.profileImage;
+        },
+        error => {
+          console.error('Error fetching profile image:', error);
+        }
+      );
+    }
+
+    logout() {
+      this.isLoading = true;
+        this.firstname = '';
+        this.lastname = '';
+        sessionStorage.clear();
+        window.location.href = '/login';
+    }
 
   toggleDropdown(event: Event) {
     event.stopPropagation();
@@ -99,10 +113,6 @@ export class AdminNavigationComponent implements OnInit {
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
-  }
-
-  viewProfile() {
-    console.log('View Profile clicked');
   }
 
   @HostListener('document:click', ['$event'])

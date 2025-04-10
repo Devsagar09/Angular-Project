@@ -11,6 +11,11 @@ export class ConfigurationService {
 
   private addorupdateCon = 'https://localhost:7172/api/Configuration/updateConfiguration';
 
+  private displaylogo = 'https://localhost:7172/api/Profile/DisplayCompanyLogo';
+
+  private setlogo = 'https://localhost:7172/api/Profile/SetCompanyLogo';
+
+
   constructor(private http: HttpClient) { }
 
   getConfig(): Observable<any> {
@@ -18,6 +23,14 @@ export class ConfigurationService {
   }
   updateConfig(data: any): Observable<any> {
     return this.http.post(`${this.addorupdateCon}`, data);
+  }
+
+  displayLogo(): Observable<any> {
+    return this.http.get<any>(`${this.displaylogo}`);
+  }
+
+  uploadLogo(data: FormData): Observable<any> {
+    return this.http.post<any>(this.setlogo, data);
   }
 
   showNotification(
@@ -30,7 +43,7 @@ export class ConfigurationService {
       container = document.createElement('div');
       container.id = 'notification-container';
       container.style.position = 'fixed';
-      container.style.top = '10px';
+      container.style.top = '70px';
       container.style.right = '10px';
       container.style.zIndex = '1000';
       document.body.appendChild(container);
@@ -90,5 +103,4 @@ export class ConfigurationService {
       notification.remove();
     }, 5000);
   }
-
 }

@@ -222,7 +222,7 @@ export class EditTrainingComponent implements OnInit {
     const currentIndex = tabOrder.indexOf(this.activeTab);
 
     if (this.activeTab === 'personInfo') {
-      this.trainingService.showNotification("Please fill all required fields.", 'error');
+      // this.trainingService.showNotification("Please fill all required fields.", 'error');
       this.updateTraining();
       // this.loadTrainingDetails(); // Insert Training first
     } else if (this.activeTab === 'assignTrainings') {

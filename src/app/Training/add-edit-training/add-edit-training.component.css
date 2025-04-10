@@ -40,19 +40,18 @@ body {
 }
 
 .btn-container {
-  position: fixed; /* Keeps the buttons fixed at the bottom */
-  bottom: 0; /* Position at the bottom */
-  /* left: 0; */
+  position: fixed;
+  bottom: 0;
   right: 0;
-  width: 95%; /* Full width */
-  background-color: white; /* Background to make it visible */
-  padding: 10px 0;
+  width: 100%; /* Adjust based on actual sidebar width */
+  margin-bottom: 21px;
+  background-color: white;
+  padding: 10px 15px;
   display: flex;
-  padding-right: 15px;
-  justify-content: right; /* Centering buttons */
-  gap: 10px; /* Adds space between buttons */
-  /* box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); Light shadow for visibility */
+  justify-content: flex-end;
+  gap: 10px;
 }
+
 
 .btn {
   display: flex;
@@ -369,7 +368,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-left: 32px;
+  margin-left: -12px;
   gap: 1rem; /* Add space between label and input */
 }
 
@@ -413,7 +412,7 @@ body {
   flex-direction: row;
   align-items: center;
   /* justify-content: center; */
-  margin-left: 28.8%;
+  margin-left: 410px;
   margin-top: 10px;
   /* margin: 10px; */
   gap: 1rem;

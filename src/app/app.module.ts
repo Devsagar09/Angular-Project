@@ -23,7 +23,6 @@ import {FormsModule} from '@angular/forms';
 import { IdpModule } from './MenuSection/idp.module';
 import { UserNavigationComponent } from './user-navigation/user-navigation.component';
 import { EnrollModule } from './Enrollment/enroll.module';
-import { CatalogModule } from './Catalog/catalog.module';
 import { LoaderComponent } from './Shared/loader/loader.component';
 import { LoginModule } from './Login/login.module';
 import { AdminNavigationComponent } from './admin-navigation/admin-navigation.component';
@@ -35,6 +34,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranscriptModule } from './Training-Transcript/transcript.module';
 import { RouterModule } from '@angular/router';
 import { ConfigurationModule } from './Configuration/configuration.module';
+import { UnauthorizedpageComponent } from './not-found-page/unauthorizedpage/unauthorizedpage.component';
+import { CatalogModule } from './Catalog/catalog.module';
 
 
 
@@ -46,8 +47,9 @@ import { ConfigurationModule } from './Configuration/configuration.module';
     FooterComponent,
     UserNavigationComponent,
     LoaderComponent,
-    AdminNavigationComponent
-  ],
+    AdminNavigationComponent,
+    UnauthorizedpageComponent
+    ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,

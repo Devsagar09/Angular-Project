@@ -1,0 +1,408 @@
+/* General Reset and Body Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-snackbar-padding {
+  padding-top: 50px;
+}
+
+/* Account Header (acc-header) */
+.acc-header {
+  position: fixed;
+  top: 70px;
+  width: 100%;
+  z-index: 1000;
+  background-color: #134c68;
+  color: white;
+  padding: 15px 20px;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #138496;
+}
+
+.acc-header .title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.acc-header .title i {
+  font-size: 24px;
+}
+
+
+/* Profile Container */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 45px auto 0;
+}
+
+/* Profile Content (Split into Left and Right) */
+.profile-content {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Left Section (User Info: Avatar and Name) */
+.profile-left {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-info {
+  background: #d9dcde;
+  border-radius: 8px;
+  padding: 40px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-info .avatar {
+  width: 130px;
+  height: 130px;
+  margin-bottom: 10px;
+}
+
+.user-info h3 {
+  font-size: 20px;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.user-info .save-btn {
+  margin-top: 15px;
+  width: 100%;
+  justify-content: center;
+}
+
+
+
+/* Avatar Styling with Hover Overlay */
+.avatar {
+  position: relative;
+  width: 120px; /* Increased size */
+  height: 120px;
+  margin: 0 auto;
+  border: 3px solid #134c68; /* Adds a border around the image */
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #f8f9fa;
+}
+
+.avatar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column; /* Stack icon and text vertically */
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+}
+
+.avatar-overlay i {
+  font-size: 30px; /* Increase icon size */
+  /* margin-bottom: 5px;  */
+}
+
+.avatar-overlay span {
+  font-size: 12px;
+}
+
+.avatar:hover .avatar-overlay {
+  opacity: 1;
+}
+
+
+#profile-pic-input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Right Section (Tabs and Content) */
+.profile-right {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Profile Tabs (Navigation) */
+.profile-tabs {
+  cursor: pointer;
+  display: flex;
+  gap: 20px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.profile-tabs a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #666;
+  padding: 5px 10px;
+  transition: color 0.3s ease;
+}
+
+.profile-tabs a:hover, .profile-tabs a.active {
+  color: #134c68;
+  border-bottom: 2px solid #134c68;
+  font-weight: bold;
+}
+
+/* Hide scrollbar but allow scrolling */
+.tab-content {
+  height: 100%;
+  max-height: 395px;
+  overflow-y: auto;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.tab-content::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 1px;
+}
+
+
+textarea {
+  width: 100%;
+  height: auto; /* Allow height to be changeable */
+  min-height: 50px; /* Set a reasonable minimum height */
+  max-height: 200px; /* Set a reasonable maximum height */
+  resize: vertical; /* Allow resizing only in the vertical direction */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border 0.3s ease;
+}
+
+
+.section {
+  flex-grow: 1;
+  min-height: 200px;
+  display: none;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section.active {
+  display: block;
+}
+
+.section h4 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Reset Password Form */
+.section form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.section input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+}
+
+.section input:focus {
+  border-color: #134c68;
+}
+
+
+/* Save Changes Button */
+.save-btn {
+  background: #134c68;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-end;
+  transition: background 0.3s ease;
+}
+
+.save-btn:hover {
+  background: #6485a7;
+}
+
+.saveimg-btn {
+  background: #134c68;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-end;
+  transition: background 0.3s ease;
+}
+
+.saveimg-btn:hover {
+  background: #6485a7;
+}
+
+
+.img-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.reset-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-end;
+  transition: background 0.3s ease;
+}
+
+.reset-btn:hover {
+  background-color: #d97b7b;
+}
+
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 35px; /* Space for the icon */
+}
+
+.password-container .fa {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #777;
+  font-size: 15px;
+}
+
+.password-container .fa:hover {
+  color: #000;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-content {
+      flex-direction: column;
+  }
+
+  .profile-left, .profile-right {
+      flex: 1;
+      min-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+      padding: 10px;
+  }
+
+  .acc-header {
+      font-size: 18px;
+      padding: 10px 15px;
+  }
+}
+
+::ng-deep .mat-mdc-snack-bar-container {
+  --mat-mdc-snack-bar-button-color: #ffffff;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+}
+
+::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
+  background-color: rgb(19, 139, 19) !important;
+  color: white !important;
+  --mdc-snackbar-container-color: rgb(19, 139, 19);
+}
+
+::ng-deep .mat-mdc-snack-bar-container.app-notification-error {
+  background-color: rgb(225, 71, 71) !important;
+  color: white !important;
+  --mdc-snackbar-container-color: rgb(225, 71, 71)    ;
+}

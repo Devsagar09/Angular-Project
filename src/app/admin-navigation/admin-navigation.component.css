@@ -25,7 +25,8 @@ html {
 .container {
   font-family: "Inter", sans-serif;
   display: flex;
-  height: 100vh;
+  height: 97vh;
+  z-index: 2000;
 }
 
 .navbar {
@@ -37,6 +38,8 @@ html {
   border-bottom: 2px solid #ddd;
   height: 65px;
   /* z-index: 1000; */
+  /* z-index: 3000; */
+
 }
 
 .page-content {
@@ -47,7 +50,8 @@ html {
 }
 
 .nav-left img {
-  height: 60px;
+  height: 65px;
+  width: 100px;
 }
 
 .nav-right {
@@ -87,7 +91,7 @@ html {
   border-radius: 8px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
   width: 180px;
-  z-index: 1000;
+  z-index: 4000;
   color: #134c68;
 }
 
@@ -114,10 +118,13 @@ html {
   background-color: #fff;
   border-right: 2px solid #ddd;
   width: 200px;
+  height:100vh;
   transition: width 0.5s ease;
   display: flex;
   flex-direction: column;
   padding: 10px;
+  z-index: 1000;
+
 }
 
 .sidebar.collapsed {
@@ -217,6 +224,13 @@ html {
   float: left;
   font-weight: bold;
 }
+
+
+.profile-Image {
+  object-fit: cover;
+}
+
+
 
 /* Loader code design */
 

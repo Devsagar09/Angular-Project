@@ -1,0 +1,228 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Background Image */
+  .bg-image {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  
+  /* Container */
+  .login-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    padding-left: 13%;
+  }
+  
+  /* Card */
+  .login-card {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 500px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  /* Logo */
+  .logo {
+    width: 65%;
+    margin-left: 18%;
+    text-align: center;
+  }
+  
+  .logo img {
+    width: 50%;
+    margin-bottom: 20px;
+  }
+  
+  /* Title */
+  .title {
+    font-size: 30px;
+    color: #134c68;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: gray;
+    margin-bottom: 20px;
+  }
+  
+  /* Form Fields */
+  .form-group {
+    position: relative;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 10px 40px 10px 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+  }
+  
+  .input-label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #888;
+    transition: 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .input-field:focus + .input-label,
+  .input-field:not(:placeholder-shown) + .input-label {
+    top: 1px;
+    font-size: 13px;
+    color: #134c68;
+  }
+  
+  /* Password Eye Icon */
+  .fa {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #777;
+    font-size: 15px;
+  }
+  
+  .fa:hover {
+    color: #134c68;
+  }
+  
+  /* Button */
+  .login-btn {
+    width: 100%;
+    padding: 10px;
+    margin: 15px 0;
+    background-color: #134c68;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  
+  .login-btn:hover {
+    background-color: #0d3a52;
+  }
+  
+
+  /* Snackbar */
+  ::ng-deep .mat-mdc-snack-bar-container {
+    --mat-mdc-snack-bar-button-color: #ffffff;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+  }
+  
+  ::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
+    background-color: rgb(19, 139, 19) !important;
+    color: white !important;
+    --mdc-snackbar-container-color: rgb(19, 139, 19);
+  }
+  
+  ::ng-deep .mat-mdc-snack-bar-container.app-notification-error {
+    background-color: rgb(225, 71, 71) !important;
+    color: white !important;
+    --mdc-snackbar-container-color: rgb(225, 71, 71)    ;
+  }
+
+  .invalid {
+    border: 1px solid red;
+    /* box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); */
+  }
+  
+  .error-msg {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+
+  .highlight-login{
+    color: #134c68;
+    font-weight: bold;
+    text-decoration: none !important;
+  }
+  
+  
+  
+  /* RESPONSIVE DESIGN */
+  @media (max-width: 992px) {
+    .login-container {
+      justify-content: center;
+      padding-left: 0;
+    }
+  
+    .login-card {
+      width: 90%;
+      height: auto;
+      padding: 40px 20px;
+      border-radius: 10px;
+    }
+  
+    .logo img {
+      width: 60%;
+    }
+  }
+  
+  
+  
+  @media (max-width: 600px) {
+    .login-card {
+      width: 95%;
+      max-width: 350px;
+      padding: 20px;
+    }
+  
+    .title {
+      font-size: 22px;
+    }
+  
+    .subtitle {
+      font-size: 13px;
+    }
+  
+    .input-field {
+      font-size: 14px;
+    }
+  
+    .input-label {
+      font-size: 14px;
+    }
+  
+    .login-btn {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+
+    .fa {
+      font-size: 14px;
+    }
+  }
+  

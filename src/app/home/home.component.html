@@ -70,32 +70,49 @@
         <!-- Document Training Card -->
         <div class="stat-cards">
             <h3>Document Training</h3>
-
+          
             <div *ngIf="isLoading" class="loader-container">
-                <div class="loader"></div>
+              <div class="loader"></div>
             </div>
-
-            <canvas *ngIf="!isLoading" id="docChart"></canvas>
-
+          
+            <canvas id="docChart" width="200" height="200" *ngIf="!isLoading"></canvas>
+          
             <p>Completed: <strong>{{ documentTraining.completed }}</strong></p>
             <p>Assigned: <strong>{{ documentTraining.assigned }}</strong></p>
             <p>Enrolled: <strong>{{ documentTraining.enrolled }}</strong></p>
-        </div>
-
-        <!-- External Link Training Card -->
-        <div class="stat-cards">
+          </div>
+          
+          <div class="stat-cards">
             <h3>External Link Training</h3>
-
+          
             <div *ngIf="isLoading" class="loader-container">
-                <div class="loader"></div>
+              <div class="loader"></div>
             </div>
-
-            <canvas *ngIf="!isLoading" id="linkChart"></canvas>
-
+          
+            <canvas id="linkChart" width="200" height="200" *ngIf="!isLoading"></canvas>
+          
             <p>Completed: <strong>{{ externalTraining.completed }}</strong></p>
             <p>Assigned: <strong>{{ externalTraining.assigned }}</strong></p>
             <p>Enrolled: <strong>{{ externalTraining.enrolled }}</strong></p>
-        </div>
+          </div>
+
+
+
+          <!-- <div class="stat-cards" >
+            <h3>Document Training</h3>
+            <canvas #docCanvas></canvas>
+            <p>Completed: <strong>{{ documentTraining.completed }}</strong></p>
+            <p>Assigned: <strong>{{ documentTraining.assigned }}</strong></p>
+            <p>Enrolled: <strong>{{ documentTraining.enrolled }}</strong></p>
+          </div>
+           
+          <div class="stat-cards"  >
+            <h3>External Link Training</h3>
+            <canvas #linkCanvas></canvas>
+            <p>Completed: <strong>{{ externalTraining.completed }}</strong></p>
+            <p>Assigned: <strong>{{ externalTraining.assigned }}</strong></p>
+            <p>Enrolled: <strong>{{ externalTraining.enrolled }}</strong></p>
+          </div> -->
     </div>
 </div>
 <!-- states end -->
@@ -121,7 +138,9 @@
         <ng-container *ngIf="filteredTrainings.length > 0; else noTrainingsTemplate">
             <div class="training-card" *ngFor="let training of filteredTrainings">
                 <div class="card-header">
-                    <img src="training.thumbnail_image" alt="Training Image" />
+                    <img 
+                    [src]="getThumbnailUrl(training.thumbnail_image, training.trainingtype_name)" 
+                    alt="{{ training.training_name }} Thumbnail">
                 </div>
 
                 <div class="card-body">
@@ -144,11 +163,11 @@
                 </div>
 
                 <div class="card-footer">
-                    <button class="btn" *ngIf="training.status === 'Not Started'">
+                    <button class="btn" *ngIf="training.status === 'Not Started'" (click)="requestTrainingApprovalOrView(training.training_id)">
                         {{ training.trainingtype_name }}
                     </button>
 
-                    <button class="btn" *ngIf="training.status === 'In Progress'">
+                    <button class="btn" *ngIf="training.status === 'In Progress'" (click)="viewTraining(training.training_id)">
                         {{ training.trainingtype_name }}
                     </button>
 
@@ -159,6 +178,37 @@
                 </div>
             </div>
         </ng-container>
+
+        <div class="modals-overlay" *ngIf="isModalOpens">
+            <div class="modals">
+                <div class="modals-header">
+                    <h2>Training Details</h2>
+                    <span class="close-btn" (click)="closeModal()">&times;</span>
+                </div>
+
+                <div class="modals-image">
+                    <img 
+                    [src]="getThumbnailUrl(selectedTraining?.thumbnail_image, selectedTraining?.trainingtype_name)" 
+                    alt="{{ selectedTraining?.training_name }} Thumbnail">
+                </div>
+
+                <div class="modals-body">
+                    <p><strong>Training Name:</strong> {{ selectedTraining?.training_name }}</p>
+                    <p><strong>Training Code:</strong> {{ selectedTraining?.training_code }}</p>
+                    <p><strong>Training Type:</strong> {{ selectedTraining?.trainingtype_name }}</p>
+                    <p><strong>Training Hours:</strong> {{ selectedTraining?.training_hours }}</p>
+                    <p><strong>Summary:</strong> {{ selectedTraining?.summary || 'N/A' }}</p>
+                </div>
+
+                <div class="modals-footer">
+                    <button class="btn-join" (click)="startTraining(selectedTraining)">Join Training</button>
+
+                    <button class="btn-complete" (click)="completedTraining(selectedTraining)">
+                        Mark as Completed
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <!-- No Trainings Available Message (Shown when filteredTrainings is empty) -->
         <ng-template #noTrainingsTemplate>

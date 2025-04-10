@@ -5,25 +5,30 @@
     font-family: Arial, sans-serif;
   }
 
-  body, html {
+  body {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
     overflow: hidden; /* Prevent extra scrolling */
+    background-image: url('/background.jpg');
+    background-size: cover;
+
   }
 
   /* Fullscreen background image */
   .bg-image {
-    width: 100%;
-    height: 100vh; /* Ensures full height */
-    object-fit: cover;
     position: absolute;
     top: 0;
     left: 0;
     z-index: -1;
-
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
+  
 
   /* Full height login container (aligned to the left) */
   .login-container {
@@ -52,14 +57,14 @@
   .logo {
     width: 100%;
       float: left;
-      padding: 20px 20px;
+      padding: 10px 10px;
       text-align: center;
     display: block;
-    margin: 0 auto 15px;
+    /* margin: 0 auto 15px; */
   }
 
   .logo img {
-    width: 50%;
+    width: 35%;
     margin-bottom: 20px;
   }
 
@@ -77,7 +82,7 @@
 
   .input-field {
     width: 100%;
-    padding: 10px;
+    padding: 10px 40px 10px 10px; /* Space for the icon */
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -130,7 +135,19 @@
   .links a {
     text-decoration: none;
     color: #134c68;
-    /* font-weight: bold; */
+  }
+
+  .fa {
+    position: absolute;
+    top:22px;
+    right: 9px;
+    cursor: pointer;
+    color: #777;
+    font-size: 15px;
+  }
+  
+  .fa:hover {
+    color: #000;
   }
 
 
@@ -139,19 +156,26 @@
     --mdc-snackbar-supporting-text-color: #ffffff;
 }
 
-::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
-    background-color: #68d96c !important;
-    color: white !important;
-  }
+::ng-deep .mat-mdc-snack-bar-container {
+  --mat-mdc-snack-bar-button-color: #ffffff;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+}
 
-
 ::ng-deep .mat-mdc-snack-bar-container.app-notification-success {
-    --mdc-snackbar-container-color: #68d96c;
+  background-color: rgb(19, 139, 19) !important;
+  color: white !important;
+  --mdc-snackbar-container-color: rgb(19, 139, 19);
+}
+
+::ng-deep .mat-mdc-snack-bar-container.app-notification-error {
+  background-color: rgb(225, 71, 71) !important;
+  color: white !important;
+  --mdc-snackbar-container-color: rgb(225, 71, 71)    ;
 }
 
 
 ::ng-deep .mat-mdc-snack-bar-container.app-notification {
-    --mdc-snackbar-container-color: rgb(138, 132, 132);
+    --mdc-snackbar-container-color: rgb(84, 84, 84);
 }
 
 

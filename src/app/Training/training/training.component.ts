@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class TrainingComponent {
   searchValue: string = '';
+  isLoading = true;
   itemsPerPage: number = 10;
   itemsPerPageOptions: number[] = [2, 5, 10, 20, 50];
   isModalOpen = false;
@@ -30,16 +31,22 @@ export class TrainingComponent {
 
   // Load training data from the service
   loadTrainingData(): void {
+    this.isLoading = true;
+
     this.trainingService.getTraining().subscribe({
       next: (data) => {
-        this.trainingDatas = data;
-        // this.updatePagination();
+        // Add a slight delay to show the loader for smoother UX (e.g., 500ms)
+        setTimeout(() => {
+          this.trainingDatas = data;
+          this.isLoading = false;
+          // this.updatePagination(); // Optional if you need it
+        }, 500); // ⏱ Loader stays for 0.5 seconds
       },
       error: (error) => {
+        this.isLoading = false;
         console.error('Error fetching training data:', error);
       }
     });
-    // this.isLoading=false;
   }
 
   openModal() {

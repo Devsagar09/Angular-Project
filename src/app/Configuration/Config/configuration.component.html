@@ -1,14 +1,20 @@
-<div class="navbar">
-  <a href="#"><i class="fas fa-arrow-circle-left"></i> Back to Dashboard</a>
-</div>
-
 <div class="training-header">
   <div class="title">
-    <i class="fas fa-gear"></i> AI Maintenance
+
+    <i class="fas fa-gear"></i> Configuration
+
+      <!-- <i class="fas fa-gear"></i>
+      <a href="/dashboard">Dashboard</a>/ Configuration -->
+
   </div>
 </div>
-
-<div class="config">
+      <!-- Loader -->
+      <div *ngIf="isLoading">
+        <div class="loader-container">
+          <div class="spinner"></div>
+        </div>
+  </div>
+<div class="config" *ngIf="!isLoading">
   <div *ngFor="let config of configData">
     <div class="container" *ngIf="config.config_key === 'Requires Approval'">
       <div class="header"><i class="fas fa-gear"></i> Do you need approval for training?</div>
@@ -35,4 +41,44 @@
       </div>
     </div>
   </div>
+
 </div>
+<br/>
+
+<!-- Logo Upload Section -->
+<div class="logo-container" *ngIf="!isLoading">
+    <div class="header">
+      <i class="fas fa-image"></i> Company Logo
+    </div>
+
+    <div class="logo-content">
+      <!-- Logo Preview -->
+      <div class="logo-box-wrapper">
+        <!-- Hidden File Input -->
+        <input type="file" id="logoInput" hidden (change)="onFileSelected($event)" accept="image/png, image/jpeg, image/jpg" />
+
+        <!-- Label wraps the image to trigger file input -->
+        <label for="logoInput" class="logo-hover-container">
+          <img [src]="previewUrl || companyimage" alt="Company Logo" class="companylogo" />
+
+          <!-- Hover overlay -->
+          <div class="overlay">
+            <i class="fas fa-camera"></i>
+            <span>Change Logo</span>
+          </div>
+        </label>
+      </div>
+
+      <!-- Buttons -->
+      <div class="buttons">
+        <button class="save-btn" (click)="uploadLogo()">
+            💾 Save
+          </button>
+
+
+        <button class="reset-btn" (click)="resetLogo()">
+          🔄 Reset
+        </button>
+      </div>
+    </div>
+  </div>

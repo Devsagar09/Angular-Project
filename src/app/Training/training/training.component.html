@@ -44,46 +44,70 @@
       </div>
     </div>
 
-    <!-- Data Table Section -->
-    <table id="data-table" *ngIf="trainingDatas.length > 0">
-      <thead>
-        <tr>
-          <th><input type="checkbox" (change)="toggleSelectAll($event)"></th>
-          <th>Actions</th>
-          <th>Training Name</th>
-          <th>Training Code</th>
-          <th>Training Type</th>
-          <th>Archive Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let trainingData of trainingDatas | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
-          <td>
-            <input type="checkbox" [checked]="selectedTrainings.includes(trainingData.training_id)"
-              (change)="toggleSelection(trainingData.training_id, $event)">
-          </td>
-          <td class="dot">
-            <div class="action-menu">
-              <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
-              <div class="action-icons">
-                <i class="fas fa-list" title="Details" (click)="openDetailsModal(trainingData.training_id)"></i>
-                <i class="fas fa-edit" title="Edit" [routerLink]="['/edit-training', trainingData.training_id]"></i>
-                <i class="fas fa-trash" title="Delete" (click)="deleteSingleTraining(trainingData.training_id)"></i>
-              </div>
-            </div>
-          </td>
-          <!-- <td>{{trainingData?.training_id}}</td> -->
-          <td>{{ trainingData?.training_name }}</td>
-          <td>{{ trainingData?.training_code }}</td>
-          <td>{{ trainingData?.trainingtype_name }}</td>
-          <td>{{ trainingData?.archive_date | date: 'dd/MM/yyyy' }}</td>
-        </tr>
-      </tbody>
-    </table>
 
-    <p *ngIf="trainingDatas.length === 0 && searchValue.trim().length > 0">
-      No results found.
-    </p>
+
+   <!-- Data Table Section -->
+<table id="data-table">
+  <thead>
+    <tr>
+      <th><input type="checkbox" (change)="toggleSelectAll($event)"></th>
+      <th>Actions</th>
+      <th>Training Name</th>
+      <th>Training Code</th>
+      <th>Training Type</th>
+      <th>Archive Date</th>
+    </tr>
+  </thead>
+
+   <!-- Loader -->
+   <tbody *ngIf="isLoading">
+    <tr>
+      <td colspan="6">
+        <div class="loader-container">
+          <div class="spinner"></div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+
+  <!-- Data Rows -->
+  <tbody *ngIf="!isLoading && trainingDatas.length > 0">
+    <tr *ngFor="let trainingData of trainingDatas | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
+      <td>
+        <input type="checkbox" [checked]="selectedTrainings.includes(trainingData.training_id)"
+              (change)="toggleSelection(trainingData.training_id, $event)">
+      </td>
+      <td class="dot">
+        <div class="action-menu">
+          <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+          <div class="action-icons">
+            <i class="fas fa-list" title="Details" (click)="openDetailsModal(trainingData.training_id)"></i>
+            <i class="fas fa-edit" title="Edit" [routerLink]="['/edit-training', trainingData.training_id]"></i>
+            <i class="fas fa-trash" title="Delete" (click)="deleteSingleTraining(trainingData.training_id)"></i>
+          </div>
+        </div>
+      </td>
+      <td>{{ trainingData?.training_name }}</td>
+      <td>{{ trainingData?.training_code }}</td>
+      <td>{{ trainingData?.trainingtype_name }}</td>
+      <td>{{ trainingData?.archive_date | date: 'dd/MM/yyyy' }}</td>
+    </tr>
+  </tbody>
+
+  <!-- No Records Message -->
+  <tbody *ngIf="!isLoading && trainingDatas.length === 0">
+    <tr>
+      <td colspan="6">
+        <div class="img-search">
+          <img src="assets/no-search.jpg" alt="No Records Found" style="width: 150px; opacity: 0.8;" />
+          <span style="color: #134c68;">No training records found.</span>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
 
 
     <!-- Pagination Section -->

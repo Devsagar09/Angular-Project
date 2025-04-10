@@ -9,13 +9,20 @@ export class AuthGuard implements CanActivate {
 
   constructor(private router: Router, private snackBar: MatSnackBar) {}
 
-
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree{
     const studentId = sessionStorage.getItem('studentId');
     const userRole = sessionStorage.getItem('userRole'); 
     const newRole = sessionStorage.getItem('newRole');
+    const allowedRoles = route.data['roles'] as Array<string>;
 
     if (studentId) {
+      if (allowedRoles && !allowedRoles.includes(userRole!)) {
+        this.snackBar.open('Access Denied: Insufficient Permissions', 'Close', {
+          duration: 3000
+        });
+        return this.router.parseUrl('/unauthorized');
+      }
+  
       if (state.url === '/' || state.url === '/login') {
         if (userRole === 'Admin' || newRole==='Admin') {
           return this.router.parseUrl('/dashboard');
@@ -25,13 +32,7 @@ export class AuthGuard implements CanActivate {
       }
       return true; 
     } else {
-      this.snackBar.open('You must log in first!', 'OK', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top',
-        panelClass: ['app-notification']
-      });
-
+      
       this.router.navigate(['/login']);
       return false;
     }

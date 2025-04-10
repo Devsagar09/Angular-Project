@@ -581,7 +581,7 @@ export class AddEditTrainingComponent {
     const currentIndex = tabOrder.indexOf(this.activeTab);
 
     if (this.activeTab === 'personInfo') {
-      this.trainingService.showNotification("Please fill all required fields.", 'error');
+      // this.trainingService.showNotification("Please fill all required fields.", 'error');
       this.addTraining(); // Insert Training first
     } else if (this.activeTab === 'assignTrainings') {
       this.assignStudents(); // Then assign Student

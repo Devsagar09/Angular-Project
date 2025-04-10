@@ -48,7 +48,9 @@
             <div class="training-card"
                 *ngFor="let training of trainings | paginate: { itemsPerPage: 20, currentPage: p }">
                 <div class="card-header">
-                    <img [src]="training.thumbnail_image" alt="{{ training.training_name }} Training" />
+                    <img 
+                    [src]="getThumbnailUrl(training.thumbnail_image, training.trainingtype_name)" 
+                    alt="{{ training.training_name }} Thumbnail">
                 </div>
 
                 <div class="card-body">
@@ -64,29 +66,40 @@
                     <span class="status" [ngClass]="{'not-started': training.status === 'Not Started', 
                                 'in-progress': training.status === 'In Progress',
                                 'pending-request': training.status === 'Pending Approval',
-                                'completed': training.status === 'Completed'}">
+                                'completed': training.status === 'Completed',
+                                'rejected': training.status === 'Approval Denied'}">
                         {{ training.status }}
                     </span>
                 </div>
 
                 <div class="card-footer">
-                    <button class="btn"
-                        *ngIf="training.status === 'Not Started' || training.status === 'Completed'">
+                    <!-- <button class="btn" *ngIf="training.status === 'Not Started' || training.status === 'Completed'"
+                    (click)="startTrainingOrRequestApproval(training.training_id)" >
+                        {{ training.trainingtype_name }}
+                    </button> -->
+                    <button class="btn" *ngIf="training.status === 'Not Started'"
+                        (click)="requestTrainingApprovalOrView(training.training_id)">
                         {{ training.trainingtype_name }}
                     </button>
 
-                    <button class="btn"
-                        *ngIf="training.status === 'In Progress'" (click)="OpenModelBox()">
-                        Join
+                    <!-- requestAgain -->
+                    <button class="btn" *ngIf="training.status === 'Approval Denied'"
+                        (click)="requestAgain(training.training_id)">
+                        Request Again
+                    </button>
+
+                    <button class="btn" *ngIf="training.status === 'In Progress' || training.status === 'Completed'"
+                        (click)="viewTraining(training.training_id)">
+                        Action
                     </button>
 
                     <!-- Pending Approval (Request for Approval Button) -->
-                    <button class="btn pending-btn" *ngIf="training.status === 'Pending Approval'">
-                        Request for Approval
+                    <button class="btn" *ngIf="training.status === 'Pending Approval'" (click)="showApprovalAlert()">
+                        Requested for Approval
                     </button>
                 </div>
 
-                
+
             </div>
 
             <div *ngIf="isModalOpen" class="modal">
@@ -94,10 +107,9 @@
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <span class="close" (click)="closeModal()">&times;</span>
-                        <h3 class="model-title">Confirmation</h3>
+                        <h3>Confirmation</h3>
                     </div>
-            
-               
+
                     <!-- Modal Footer with Aligned Buttons -->
                     <div class="modal-footer">
                         <button (click)="closeModal()" class="btn-yes">Re-Join Training</button>
@@ -106,6 +118,39 @@
                 </div>
             </div>
         </div>
+
+        <div class="modals-overlay" *ngIf="isModalOpens">
+            <div class="modals">
+                <div class="modals-header">
+                    <h2>Training Details</h2>
+                    <span class="close-btn" (click)="closeModal()">&times;</span>
+                </div>
+
+                <div class="modals-image">
+                    <img 
+                    [src]="getThumbnailUrl(selectedTraining?.thumbnail_image, selectedTraining?.trainingtype_name)" 
+                    alt="{{ selectedTraining?.training_name }} Thumbnail">
+                </div>
+
+                <div class="modals-body">
+                    <p><strong>Training Name:</strong> {{ selectedTraining?.training_name }}</p>
+                    <p><strong>Training Code:</strong> {{ selectedTraining?.training_code }}</p>
+                    <p><strong>Training Type:</strong> {{ selectedTraining?.trainingtype_name }}</p>
+                    <p><strong>Training Hours:</strong> {{ selectedTraining?.training_hours }}</p>
+                    <p><strong>Summary:</strong> {{ selectedTraining?.summary || 'N/A' }}</p>
+                </div>
+
+                <div class="modals-footer">
+                    <button class="btn-join" (click)="startTraining(selectedTraining)">Join Training</button>
+
+                    <button class="btn-complete" (click)="completedTraining(selectedTraining)">
+                        Mark as Completed
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
 
         <div class="pagination-container">
             <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
