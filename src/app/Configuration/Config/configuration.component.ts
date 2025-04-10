@@ -78,17 +78,18 @@ export class ConfigurationComponent implements OnInit {
     return new Blob([ab], { type: mimeString });
   }
 
+  
 uploadLogo(): void {
   debugger
   if (!this.croppedImage || !this.selectedFile) return;
 
     const blob = this.base64ToBlob(this.croppedImage);
   const formData = new FormData();
-  formData.append('file',blob, this.selectedFile.name); // Don't forget to append the actual file!
+  formData.append('file',blob, this.selectedFile.name); 
 
   this.configService.uploadLogo(formData).subscribe({
     next: (res) => {
-      this.displayLogo(); // Refresh logo from server
+      this.displayLogo(); 
       this.logoChanged = false;
       this.showSuccessSnackbar('Company Logo Changed.');
       this.showCropper = false;

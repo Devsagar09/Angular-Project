@@ -633,12 +633,12 @@ canvas {
 }
 
 .status.in-progress {
-  background: #28a745;
+  background: rgb(236, 185, 45);
   color: white;
 }
 
 .status.pending-request {
-  background: #3e9b2a;
+  background: rgb(182, 180, 180);
   color: white;
 }
 
