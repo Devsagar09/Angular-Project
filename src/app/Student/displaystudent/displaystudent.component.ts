@@ -109,13 +109,14 @@ selectedStudentIds: number[] = []; // Array to store selected student IDs
         this.students = this.students.filter(
           (student) => !this.selectedStudentIds.includes(student.student_Id)
         );
-        this.studentService.showNotification('Students deleted successfully!','success');
+        this.studentService.showNotification('Student deleted successfully!','success');
         this.closePopup();
       },
       (error) => {
         console.error('Error deleting students', error);
         this.studentService.showNotification('An error occurred while deleting students.','error');
       }
+      
     );
   }
 

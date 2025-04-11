@@ -740,17 +740,29 @@ canvas {
 
 /* over  */
  
-.no-trainings-text {
+.no-trainings-wrapper {
   display: flex;
-  margin: auto;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  font-size: 18px;
-  font-weight: bold;
-  color: #888;
   text-align: center;
+  gap: 12px;
+  padding: 1rem;
+  justify-content: center;
+  width: 100%;
 }
 
+.no-data-image {
+  width: 290px;
+  height: auto;
+  object-fit: contain;
+}
+
+.no-trainings-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #440b5e;
+  font-family: cursive;
+}
 
 /* Full-Screen Modal Overlay */
 .modals-overlay {
@@ -940,3 +952,8 @@ canvas {
   }
 }
 
+/* image design */
+.no-data-image{
+  width: 290px;
+  height: auto;
+}

@@ -72,10 +72,9 @@
         <div class="page-content" *ngIf="!isLoading">
             <router-outlet />
         </div>
-
-        <app-footer *ngIf="!isLoading"></app-footer>
     </div>
 </div>
+<app-footer *ngIf="!isLoginPage"></app-footer>
 
 <!-- Login Page Content -->
 <div *ngIf="isLoginPage">

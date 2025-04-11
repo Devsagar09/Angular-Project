@@ -47,7 +47,6 @@ export class ConfigurationComponent implements OnInit {
   }
 
   onFileSelected(event: any): void {
-    debugger
     const file = event.target.files[0];
     if (file) {
       const validImageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
@@ -79,7 +78,6 @@ export class ConfigurationComponent implements OnInit {
 
   
 uploadLogo(): void {
-  debugger
   if (!this.croppedImage || !this.selectedFile) return;
 
     const blob = this.base64ToBlob(this.croppedImage);
