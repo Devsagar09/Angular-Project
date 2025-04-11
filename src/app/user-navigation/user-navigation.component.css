@@ -273,9 +273,8 @@
 
 /* active link  */
 .active-link {
-    background-color: #e0f0ff;
-    color: #007bff;
-    border-left: 3px solid #007bff;
+    background-color: #e2d8ff;
+    color: #007bff; 
     font-weight: 600;
     border-radius: 8px;
   }
