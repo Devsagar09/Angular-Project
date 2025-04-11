@@ -195,31 +195,26 @@ export class AddeditstudentComponent implements OnInit {
   }
  
   searchTraining(): void {
-    if (!this.searchValue.trim()) {
-      this.loadTrainings(); // Reload all training data if search is empty
-      this.noDataFound = false; // Reset "No data found" message
+    const searchTerm = this.searchValue.trim().toLowerCase();
+  
+    if (!searchTerm) {
+      this.filteredTrainings = [...this.trainings];
+      this.noDataFound=false;
+      // this.updateFilteredTrainings();
       return;
     }
- 
-    this.trainingService.searchTraining(this.searchValue).subscribe({
-      next: (data: any[]) => {
-        if (data && data.length > 0) {
-          this.filteredTrainings = data;
-          this.noDataFound = false;
-        } else {
-          this.filteredTrainings = [];
-          this.noDataFound = true;
-        }
-      },
-      error: (error) => {
-        console.error('Error searching training data', error);
-        this.filteredTrainings = [];
-        this.noDataFound = true;
-      }
-    });
+  
+      this.filteredTrainings = this.trainings
+        .filter(t =>
+          t.training_name.toLowerCase().includes(searchTerm) ||
+          t.training_code.toLowerCase().includes(searchTerm) ||
+          t.trainingtype_name.toLowerCase().includes(searchTerm)
+        );
+  
+      this.noDataFound = this.filteredTrainings.length === 0;
+   
   }
- 
- 
+  
   updateFilteredTrainings() {
     if (this.showSelectedOnly) {
       this.filteredTrainings = this.trainings.filter(training => training.selected);
@@ -450,7 +445,7 @@ export class AddeditstudentComponent implements OnInit {
   }
  
   toggleSelectAll() {
-    this.trainings.forEach(training => training.selected = this.selectAll);
+    this.trainings.forEach((training) => training.selected = this.selectAll);
     this.updateFilteredTrainings();
     }
  
@@ -464,6 +459,3 @@ export class AddeditstudentComponent implements OnInit {
   }
  
 }
- 
- 
- 
