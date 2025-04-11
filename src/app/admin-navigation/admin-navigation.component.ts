@@ -17,7 +17,7 @@ export class AdminNavigationComponent implements OnInit {
   companyimage : string | null = '';
   dropdownVisible = false;
   isCollapsed = true;
-  isLoading = true;
+  isLoading = false;
   isLoginPage = true;
 
   constructor(private eRef: ElementRef, private router: Router, private adminnavigationService: AdminNavigationService) {
@@ -42,10 +42,22 @@ export class AdminNavigationComponent implements OnInit {
         const studentId = sessionStorage.getItem('studentId');
         if(studentId){
           this.fetchProfileImage(studentId);
-
         }
   }
 
+  switchToLearner() {
+    if (this.isAdmin()) {
+      sessionStorage.setItem('newRole', 'Student');
+      this.isLoading = true;
+  
+      setTimeout(() => {
+        this.router.navigate(['/studentdashboard']).then(() => {
+          this.isLoading = false;
+        });
+      }, 10);
+    }
+  }
+  
   loadUserData() {
     this.firstname = sessionStorage.getItem('firstname');
     this.lastname = sessionStorage.getItem('lastname');
@@ -89,14 +101,7 @@ export class AdminNavigationComponent implements OnInit {
     console.log('Dropdown toggled:', this.dropdownVisible); // Debug log
   }
 
-  switchToLearner() {
-    if (this.isAdmin()) {
-      sessionStorage.setItem('newRole', 'Student');  // Temporary role for UI behavior
-      this.router.navigateByUrl('/studentdashboard').then(() => {
-        location.reload();  // Ensure the UI updates after navigation
-      });
-    }
-  }
+ 
 
   getDisplayedRole(): string {
     return sessionStorage.getItem('newRole') || sessionStorage.getItem('userRole') || '';

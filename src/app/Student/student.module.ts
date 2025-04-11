@@ -5,7 +5,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { AddeditstudentComponent } from './addeditstudent/addeditstudent.component';
 import { RouterModule } from '@angular/router';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ViewprofileComponent } from './viewprofile/viewprofile.component';
 
 
@@ -16,7 +15,7 @@ import { ViewprofileComponent } from './viewprofile/viewprofile.component';
     ViewprofileComponent
   ],
   imports: [
-    CommonModule,NgxPaginationModule,FormsModule,RouterModule, MatSnackBarModule 
+    CommonModule,NgxPaginationModule,FormsModule,RouterModule 
   
   ],
   exports: [

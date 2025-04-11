@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigurationService } from '../configuration.service';
 import { AdminNavigationService } from '../../admin-navigation/admin-navigation.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 interface Config {
@@ -29,7 +28,7 @@ export class ConfigurationComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: string = '';
 
-  constructor(private configService: ConfigurationService, private adminnavigationService: AdminNavigationService, private snackBar: MatSnackBar) { }
+  constructor(private configService: ConfigurationService, private adminnavigationService: AdminNavigationService) { }
 
   ngOnInit(): void {
     this.displayConfig();
@@ -54,7 +53,7 @@ export class ConfigurationComponent implements OnInit {
       const validImageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
 
       if (!validImageTypes.includes(file.type)) {
-        this.showErrorSnackbar('Only PNG, JPG or JPEG images are allowed.');
+        this.configService.showNotification('Only PNG, JPG or JPEG images are allowed.','error');
         return;
       }
       this.selectedFile = file; // Store the original file with its name
@@ -91,7 +90,7 @@ uploadLogo(): void {
     next: (res) => {
       this.displayLogo(); 
       this.logoChanged = false;
-      this.showSuccessSnackbar('Company Logo Changed.');
+      this.configService.showNotification('Company Logo Changed.','success');
       this.showCropper = false;
       setTimeout(() => {
         location.reload();
@@ -99,7 +98,7 @@ uploadLogo(): void {
     },
     error: (err) => {
       console.error('Logo upload failed:', err);
-      this.showErrorSnackbar('Failed to upload logo.');
+      this.configService.showNotification('Failed to upload logo.','error');
     }
   });
 }
@@ -157,22 +156,5 @@ resetLogo(): void {
     });
   }
 
-showSuccessSnackbar(message: string) {
-  this.snackBar.open(message, 'X', {
-    duration: 3000,
-    horizontalPosition: 'center',
-    verticalPosition: 'bottom',
-    panelClass: ['app-notification-success']
-  });
-}
-
-showErrorSnackbar(message: string) {
-  this.snackBar.open(message, 'X', {
-    duration: 3000,
-    horizontalPosition: 'center',
-    verticalPosition: 'bottom',
-    panelClass: ['app-notification-error']
-  });
-}
 
 }

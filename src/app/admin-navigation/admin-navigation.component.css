@@ -60,7 +60,7 @@ html {
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 /* User Profile */
@@ -79,9 +79,10 @@ html {
 }
 
 .user-profile img {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
+  border: 2px solid #134c68;
 }
 
 /* Dropdown Menu */

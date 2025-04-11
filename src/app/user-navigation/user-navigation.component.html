@@ -35,14 +35,13 @@
     <div class="main-content">
         <div class="navbar">
             <div class="nav-left">
-  
+
                 <a [routerLink]="['/studentdashboard']" title="Return to Dashboard"><img [src]="companyimage"  class="company-logo"></a>
  
             </div>
 
             <div class="nav-right">
-  
- 
+
                 <button kendoButton size="large" themeColor="primary" title="Switch to Admin"  *ngIf="userRole=='Admin'" (click)="switchToAdmin()">Admin</button>
  
                 <div class="user-profile" (click)="toggleDropdown($event)">

@@ -11,7 +11,6 @@ body {
   }
 
   .container {
-    margin-top: 40px;
     width: 100%;
     max-width: 98.5%;
     background: white;
@@ -176,8 +175,6 @@ body {
   }
 
   .stud-header {
-    position: fixed;
-    top:65px;
     width: 98%;
     /* z-index: 1000; */
     background-color: #134c68; /* Teal background */
@@ -423,6 +420,7 @@ body {
     justify-content: center;
     height: 100%;
 }
+
 
 
 ::ng-deep .mat-mdc-snack-bar-container {

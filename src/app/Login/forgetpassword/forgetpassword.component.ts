@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../login.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-forgetpassword',
@@ -17,7 +16,7 @@ export class ForgetpasswordComponent {
 showConfirmPassword = false;
 
 
-  constructor(private fb: FormBuilder, private loginService: LoginService, private snackBar:MatSnackBar) {
+  constructor(private fb: FormBuilder, private loginService: LoginService) {
     this.forgetPasswordForm = this.fb.group({
       UsernameAndEmail: this.fb.control({ value: '', disabled: false }, [Validators.required, Validators.email]),
       New_Password: ['', [Validators.required]],
@@ -72,10 +71,7 @@ showConfirmPassword = false;
 
     this.loginService.forgetPassword(resetData).subscribe({
       next: (res) => {
-        this.snackBar.open('Password reset successfully.', 'X', {
-          duration: 3000,
-          panelClass: ['success-snackbar']
-        });
+        this.loginService.showNotification("password Reset Successfully.",'success');
         this.showPasswordFields = false;
         this.forgetPasswordForm.reset();
         setTimeout(() => {
