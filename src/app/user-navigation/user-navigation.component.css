@@ -127,7 +127,7 @@
   }
 
 .sidebar.collapsed {
-    width: 75px;
+    width: 75px; /* sidebar width*/
 }
 /* Sidebar Menu */
 .menu h4 {
