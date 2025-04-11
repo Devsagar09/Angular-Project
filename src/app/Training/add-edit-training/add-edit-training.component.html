@@ -90,7 +90,7 @@
             <div class="form-group" *ngIf="trainingTypeId == 1">
               <label>Document</label>
               <div class="file-upload-container"
-                [ngClass]="{ 'is-invalid': trainingForm.get('document')?.invalid && trainingForm.get('document')?.touched }">
+                [ngClass]="{ 'is-invalid': trainingForm.get('DocumentFile')?.invalid && trainingForm.get('DocumentFile')?.touched }">
                 <table class="file-table">
                   <thead>
                     <tr>
@@ -111,9 +111,9 @@
                 </table>
                 <button mat-raised-button type="button" class="upload-btn" (click)="triggerFileUpload()">+</button>
                 <input type="file" #fileInput (change)="onFileInput($event, 'document')" style="display: none"
-                  name="documentFile" accept=".pdf" />
+                  name="documentFile" accept=".pdf" required/>
                 <!-- Validation Message -->
-                <small *ngIf="trainingForm.get('document')?.invalid && trainingForm.get('document')?.touched"
+                <small *ngIf="trainingForm.get('DocumentFile')?.invalid && trainingForm.get('DocumentFile')?.touched"
                   class="text-danger">
                   Document File is required.
                 </small>
@@ -125,9 +125,9 @@
               <label> External Link</label>
               <input
                 [ngClass]="{ 'is-invalid': trainingForm.get('externalLinkUrl')?.invalid && trainingForm.get('externalLinkUrl')?.touched }"
-                type="text" placeholder="URL" formControlName="externalLinkUrl" name="trainingName" required />
+                type="text" placeholder="URL" formControlName="externalLinkUrl" name="externalLinkUrl" required />
               <!-- Validation Message -->
-              <small *ngIf="trainingForm.get('trainingName')?.invalid && trainingForm.get('trainingName')?.touched"
+              <small *ngIf="trainingForm.get('externalLinkUrl')?.invalid && trainingForm.get('externalLinkUrl')?.touched"
                 class="text-danger">
                 External Link is required.
               </small>

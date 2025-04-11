@@ -151,20 +151,25 @@ html {
 
 .menu ul {
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .menu li {
+  position: relative; /* Needed for positioning pseudo-element */
   display: flex;
   align-items: center;
-  padding: 13px;
+  padding: 13px 14px;
   border-radius: 8px;
   gap: 15px;
   cursor: pointer;
   transition: background 0.6s ease;
+  /* margin-left: 5px; */
+  box-sizing: border-box;
 }
 
 .menu li:hover {
-  background: #cde4ef;
+  background: #dcf0fa;
 }
 
 .icon {
@@ -177,6 +182,31 @@ html {
   color: #134c68;
   font-weight: 500;
 }
+
+.menu li.active-link {
+  background-color: #e0f0ff;
+  font-weight: 600;
+  color: #007bff;
+}
+
+/* Pseudo-element for the border */
+.menu li.active-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10%;
+  bottom: 10%;
+  width: 4px;
+  background-color: #236789;
+  border-radius: 4px;
+}
+
+  /* Ensure icon/text colors inside active are blue */
+/* .menu li.active-link .icon,
+.menu li.active-link .text {
+  color: #007bff;
+} */
+
 
 .sidebar.collapsed .text {
   display: none;
@@ -290,12 +320,3 @@ html {
   }
 }
 
-
-/* active link  */
-.active-link {
-  background-color: #e0f0ff;
-  color: #007bff;
-  border-left: 4px solid #007bff;
-  font-weight: 600;
-  border-radius: 8px;
-}

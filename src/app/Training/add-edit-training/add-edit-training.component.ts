@@ -204,7 +204,7 @@ export class AddEditTrainingComponent {
           reader.readAsDataURL(file);
         } else {
           this.trainingService.showNotification(
-            'Only JPG, JPEG, PNG, and PDF files are allowed.',
+            'Only JPG, JPEG, PNG files are allowed.',
             'warning'
           );
         }

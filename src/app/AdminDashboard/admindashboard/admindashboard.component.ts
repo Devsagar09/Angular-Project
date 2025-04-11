@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdmindashboardService } from '../admindashboard.service';
 import { TrainingService } from '../../Training/training.service';
 import { AdminNavigationService } from '../../admin-navigation/admin-navigation.service';
+import { dataCsvIcon } from '@progress/kendo-svg-icons';
 
 @Component({
   selector: 'app-admindashboard',
@@ -48,9 +49,14 @@ export class AdmindashboardComponent implements OnInit {
     });
   }
 
+  // for display admin dashboard increase count
+  animatedData : any = {
+    total_admins: 0,
+    total_students: 0,
+    total_trainings: 0,
+    pending_approvals: 0
+  };
 
-
-  // for display admin dashboard count
   loadDashboardCounts(): void {
     const studentId = sessionStorage.getItem('studentId'); // Ensure studentId exists
     console.log('Student ID:', studentId);
@@ -59,12 +65,16 @@ export class AdmindashboardComponent implements OnInit {
       this.admindashboardService.getCountAdminDashboard(studentId).subscribe({
         next: (data) => {
           console.log('Dashboard data:', data);
-          // If data is an array, extract the first element
+          // Extract first element if array
           this.dashboardData = data.length > 0 ? data[0] : null;
+
+          if (this.dashboardData) {
+            this.animateStats(); // 🟢 Animate after data is loaded
+          }
         },
         error: (error) => {
           console.error('Error fetching dashboard counts:', error);
-          this.dashboardData = null; // Reset data on error
+          this.dashboardData = null;
         },
       });
       this.isLoading = false;
@@ -72,6 +82,25 @@ export class AdmindashboardComponent implements OnInit {
       console.error('Student ID not found in SessionStorage.');
       this.dashboardData = null;
     }
+  }
+
+  // for cards to display 1 to value increasing data
+  animateStats(): void {
+    const keys = Object.keys(this.animatedData);
+
+    keys.forEach((key) => {
+      const targetValue = this.dashboardData[key];
+      let current = 1;
+
+      const interval = setInterval(() => {
+        if (current >= targetValue) {
+          this.animatedData[key] = targetValue;
+          clearInterval(interval);
+        } else {
+          this.animatedData[key] = current++;
+        }
+      }, 20); // Adjust speed if needed
+    });
   }
 
 
@@ -103,6 +132,8 @@ export class AdmindashboardComponent implements OnInit {
     // ❌ REMOVE this line: it hides loader too early
     // this.isLoading = false;
   }
+
+
 
 
 }
