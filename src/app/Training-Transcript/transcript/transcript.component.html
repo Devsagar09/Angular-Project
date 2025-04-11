@@ -98,7 +98,7 @@
             Training</span>
         </p>
 
-        <p><strong>Summary :</strong> {{ selectedTranscript?.summary }}</p>
+        <p><strong>Summary :</strong> {{ selectedTranscript?.summary || 'N/A' }}</p>
         <p><strong>Status :</strong><span [ngClass]="{'inprogress': selectedTranscript.status_name === 'In Progress',
           'completed':selectedTranscript.status_name === 'Completed',
         'denied':selectedTranscript.status_name === 'Approval Denied',

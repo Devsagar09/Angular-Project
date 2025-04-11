@@ -119,10 +119,11 @@
     background-color: #fff;
     border-right: 2px solid #ddd;
     width: 250px;
-    transition: width 0.5s ease;
+    transition: width 0.3s ease;
     display: flex;
     flex-direction: column;
     padding: 10px;
+    max-width: calc(100% - 16px);
   }
 
 .sidebar.collapsed {
@@ -153,7 +154,7 @@
     border-radius: 8px;
     gap: 15px;
     cursor: pointer;
-    transition: background 0.6s ease;
+     
 }
 
 .menu li:hover {
