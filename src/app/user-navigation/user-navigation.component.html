@@ -9,22 +9,27 @@
             <h4>Menu</h4>
         </div>
 
-        <div class="menu">
+        <div class="menu" >
             <ul>
-                <li kendotooltip title="Dashboard" [routerLink]="['/studentdashboard']">
+                <li kendotooltip title="Dashboard" [routerLink]="['/studentdashboard']" routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: true }">
                     <span class="icon">🏠</span>
                     <span class="text">Dashboard</span>
                 </li>
-                <li kendotooltip title="IDP" [routerLink]="['/IDP']">
+                <li kendotooltip title="IDP" [routerLink]="['/IDP']" routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: true }">
                     <span class="icon">📚</span><span class="text">IDP</span>
                 </li>
-                <li kendotooltip title="My Enrollment" [routerLink]="['/myenrollments']">
+                <li kendotooltip title="My Enrollment" [routerLink]="['/myenrollments']" routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: true }">
                     <span class="icon">📝</span><span class="text">My Enrollment</span>
                 </li>
-                <li kendotooltip title="Course Catalog" [routerLink]="['/coursecatalog']">
+                <li kendotooltip title="Course Catalog" [routerLink]="['/coursecatalog']" routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: true }">
                     <span class="icon">📖</span><span class="text">Course Catalog</span>
                 </li>
-                <li kendotooltip title="Training Transcript" [routerLink]="['/transcript']">
+                <li kendotooltip title="Training Transcript" [routerLink]="['/transcript']"
+                    routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
                     <span class="icon">📜</span><span class="text">Training Transcript</span>
                 </li>
             </ul>
@@ -36,23 +41,26 @@
         <div class="navbar">
             <div class="nav-left">
 
-                <a [routerLink]="['/studentdashboard']" title="Return to Dashboard"><img [src]="companyimage"  class="company-logo"></a>
- 
+                <a [routerLink]="['/studentdashboard']" title="Return to Dashboard"><img [src]="companyimage"
+                        class="company-logo"></a>
+
             </div>
 
             <div class="nav-right">
 
-                <button kendoButton size="large" themeColor="primary" title="Switch to Admin"  *ngIf="userRole=='Admin'" (click)="switchToAdmin()">Admin</button>
- 
+                <button kendoButton size="large" themeColor="primary" title="Switch to Admin" *ngIf="userRole=='Admin'"
+                    (click)="switchToAdmin()">Admin</button>
+
                 <div class="user-profile" (click)="toggleDropdown($event)">
 
-                    <img [src]="profileImage"  class="profile-Image">
+                    <img [src]="profileImage" class="profile-Image">
                     <span>{{ firstname }} {{ lastname }}</span>
                 </div>
                 <div class="dropdown-menu" [class.show]="dropdownVisible">
                     <ul>
-                        <li [routerLink]="['/viewProfile']" (click)="dropdownVisible = false"><fa-icon [icon]="faUser"></fa-icon> View Profile</li>
-                        <li (click)="logout()"><fa-icon [icon]="faArrowRightFromBracket"></fa-icon>  Logout</li>
+                        <li [routerLink]="['/viewProfile']" (click)="dropdownVisible = false"><fa-icon
+                                [icon]="faUser"></fa-icon> View Profile</li>
+                        <li (click)="logout()"><fa-icon [icon]="faArrowRightFromBracket"></fa-icon> Logout</li>
                     </ul>
                 </div>
             </div>
@@ -62,7 +70,7 @@
 
         <!-- Page Content -->
         <div class="page-content" *ngIf="!isLoading">
-            <router-outlet/>
+            <router-outlet />
         </div>
 
         <app-footer *ngIf="!isLoading"></app-footer>
@@ -71,5 +79,5 @@
 
 <!-- Login Page Content -->
 <div *ngIf="isLoginPage">
-    <router-outlet/>
+    <router-outlet />
 </div>

@@ -76,6 +76,17 @@ export class IdpComponent {
     }
   }
 
+  isApprovalDialogOpen: boolean = false;
+
+showApprovalAlert() {
+  this.isApprovalDialogOpen = true;
+}
+
+closeApprovalDialog() {
+  this.isApprovalDialogOpen = false;
+}
+
+
   OpenModelBox(): void {
     this.isModalOpen = true
   }
@@ -85,9 +96,9 @@ export class IdpComponent {
     this.isModalOpens = false;
   }
 
-  showApprovalAlert() {
-    alert('You have already requested approval from the administrator.');
-  }
+  // showApprovalAlert() {
+  //   alert('You have already requested approval from the administrator.');
+  // }
 
 
   fetchIDP(): void {

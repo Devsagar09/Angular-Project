@@ -47,22 +47,27 @@
 
     <div class="menu">
       <ul>
-        <li kendotooltip title="Dashboard" [routerLink]="['/dashboard']">
+        <li kendotooltip title="Dashboard" [routerLink]="['/dashboard']" routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }">
           <i class="fas fa-laptop icon" aria-hidden="true"></i>
           <span class="text">
             Dashboard
           </span>
         </li>
-        <li kendotooltip title="Trainings" [routerLink]="['/training']">
+        <li kendotooltip title="Trainings" [routerLink]="['/training']" routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }">
           <i class="fas fa-book icon" aria-hidden="true"></i><span class="text">Trainings</span>
         </li>
-        <li kendotooltip title="Students" [routerLink]="['/Student']">
+        <li kendotooltip title="Students" [routerLink]="['/Student']" routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }">
           <i class="fas fa-user-graduate icon"></i><span class="text">Students</span>
         </li>
-        <li kendotooltip title="Configuration" [routerLink]="['/Configuration']">
+        <li kendotooltip title="Configuration" [routerLink]="['/Configuration']" routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }">
           <i class="fas fa-tools icon"></i><span class="text">Configuration</span>
         </li>
-        <li kendotooltip title="AI Maintenance" [routerLink]="['/AI-Maintenance']">
+        <li kendotooltip title="AI Maintenance" [routerLink]="['/AI-Maintenance']" routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }">
           <i class="fas fa-lightbulb icon"></i><span class="text">AI Maintenance</span>
         </li>
       </ul>
