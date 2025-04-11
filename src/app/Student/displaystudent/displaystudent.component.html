@@ -42,7 +42,8 @@
       </tr>
 
     </thead>
-    <tbody>
+
+    <tbody *ngIf="!isLoading && students.length > 0">
       <tr *ngFor="let s of students | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
         <td><input type="checkbox" style="accent-color: #134c68;" [(ngModel)]="s.selected"
             (change)="toggleStudentSelection(s)"></td>
@@ -58,13 +59,21 @@
         <td>{{ s?.student_No ? s.student_No : '' }}</td>
         <td>{{ s?.firstname }}</td>
         <td>{{ s?.lastname }}</td>
-        <td>{{ s?.archive_Date === '9999-12-31' ? '' : s?.archive_Date | date:'dd-MM-yyyy' }}</td>
+        <td>{{ s?.archive_Date | date:'dd-MM-yyyy' }}</td>
         <td>{{ s?.username }}</td>
         <td>{{ s?.role_name }}</td>
       </tr>
     </tbody>
   </table>
-  <p *ngIf="students.length === 0" >
+                 <!-- Loader -->
+                 <div *ngIf="isLoading">
+
+                      <div class="loader-container">
+                        <div class="spinner"></div>
+                      </div>
+
+                </div>
+  <p *ngIf="!isLoading && students.length === 0" >
     <span class="img-search">
     <img src="assets/no-search.jpg" alt="No Student img" style="width: 150px; opacity: 0.8;">
     <span style="display: flex; justify-content: center;margin-top: 30px;">No Student found.</span>

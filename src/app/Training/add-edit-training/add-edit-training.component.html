@@ -244,7 +244,7 @@
             <th>Archive Date</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="!isLoading">
           <tr *ngFor="let s of filteredStudents | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
             <td>
               <input type="checkbox" style="accent-color: #134c68;" [(ngModel)]="s.selected"
@@ -257,10 +257,21 @@
           </tr>
         </tbody>
       </table>
+       <!-- Loader -->
+       <div *ngIf="isLoading">
+
+        <div class="loader-container">
+          <div class="spinner"></div>
+        </div>
+
+      </div>
 
       <!-- No Data Found -->
-      <p *ngIf="filteredStudents.length === 0 && searchValue.trim().length > 0">
-        No results found.
+      <p *ngIf="!isLoading && filteredStudents.length === 0">
+        <span class="img-search">
+          <img src="assets/no-search.jpg" alt="No Student img" style="width: 150px; opacity: 0.8;">
+          <span style="display: flex; justify-content: center;margin-top: 30px;">No Student found.</span>
+          </span>
       </p>
 
       <!-- Pagination & Items Per Page -->

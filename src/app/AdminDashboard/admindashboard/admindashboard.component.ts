@@ -92,7 +92,7 @@ export class AdmindashboardComponent implements OnInit {
         setTimeout(() => {
           this.trainingDatas = sortedData.slice(0, 5);
           this.isLoading = false;
-        }, 300);
+        }, 500);
       },
       error: (error) => {
         console.error('Error fetching training data', error);

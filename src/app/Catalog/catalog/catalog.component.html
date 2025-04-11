@@ -77,9 +77,14 @@
                     </button>
 
                     
-                    <button class="btn" *ngIf="training.status === 'In Progress' || training.status === 'Completed'"
+                    <button class="btn" *ngIf="training.status === 'In Progress' "
                         (click)="viewTraining(training.training_id)">
                         Action
+                    </button> 
+
+                    <button class="btn" *ngIf="training.status === 'Completed'"
+                        (click)="viewTraining(training.training_id)">
+                        Preview
                     </button> 
                     
                     <!-- Pending Approval (Request for Approval Button) -->

@@ -17,6 +17,11 @@ body {
   z-index: 1000; /* Ensures it stays above other elements */
 }
 
+@media (max-width: 100px) {
+  .tab-container{
+    width: 70px;
+  }
+}
 .tab {
   flex: 1;
   padding: 13px;
@@ -27,6 +32,8 @@ body {
   transition: background 0.3s ease;
   color: #333;
 }
+
+
 .tab.active {
   border-bottom: 3px solid #134c68;
   color: #134c68;
@@ -294,7 +301,7 @@ body {
   /* border: 1px solid #ddd; */
   border-radius: 8px;
   max-width: 600px;
-  margin-right: 495px;
+  margin-right: 370px;
   /* margin: auto; */
 }
 
@@ -881,5 +888,36 @@ input:checked + .slider:before {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.img-search{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* loader */
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* adjust as needed */
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid #e3e3e3;
+  border-top: 6px solid #134c68;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
