@@ -289,3 +289,13 @@ html {
     opacity: 0;
   }
 }
+
+
+/* active link  */
+.active-link {
+  background-color: #e0f0ff;
+  color: #007bff;
+  border-left: 4px solid #007bff;
+  font-weight: 600;
+  border-radius: 8px;
+}
