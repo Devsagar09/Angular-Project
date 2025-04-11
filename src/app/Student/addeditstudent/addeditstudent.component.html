@@ -1,7 +1,7 @@
 <div class="stud-header">
     <div class="title">
         <i class="fas fa-users"></i> 
-        <a href="/dashboard">Dashboard</a>/ Students
+       Students
     </div>
 </div>
 
@@ -189,10 +189,14 @@
             [(ngModel)]="searchValue"
             (input)="searchTraining()"
              placeholder="Search Training">
-            <label class="toggle-switch">
-                <input type="checkbox" [(ngModel)]="showSelectedOnly" (change)="toggleShowSelected()"> Show Selected
-            </label>
-        </div>
+           <div class="action-buttons">
+                <label class="toggle-switch">
+                  <input type="checkbox" [(ngModel)]="showSelectedOnly" (change)="toggleShowSelected()">
+                  <span class="slider"></span>
+                </label>
+                <span class="toggle-label">Show Selected</span>
+              </div>
+            </div>
     
         <table class="training-table">
             <thead>
@@ -206,20 +210,23 @@
                 </tr>
             </thead>
             <tbody  *ngIf="!noDataFound">
-                <tr *ngFor="let training of filteredTrainings  | paginate: { itemsPerPage: itemsPerPage, currentPage: p }" >
-                    <td><input type="checkbox" type="checkbox" 
-                        [(ngModel)]="training.selected"
+                <tr *ngFor="let t of filteredTrainings  | paginate: { itemsPerPage: itemsPerPage, currentPage: p }" >
+                    <td><input type="checkbox" style="accent-color: #134c68;"
+                        [(ngModel)]="t.selected"
                         (change)="updateSelectAll()"></td>
-                        <td hidden>{{training.training_id}}</td>
-                    <td>{{ training.training_name }}</td>
-                    <td>{{ training.training_code }}</td>
-                    <td>{{ training.trainingtype_name }}</td>
+                        <td hidden>{{t.training_id}}</td>
+                    <td>{{ t.training_name }}</td>
+                    <td>{{ t.training_code }}</td>
+                    <td>{{ t.trainingtype_name }}</td>
                   </tr>
             </tbody>
         </table>
         <div *ngIf="noDataFound" class="no-data-message">
-            <span style="display: flex; justify-content: center;margin-top: 30px;">No Training found.</span>
-          </div>
+            <span class="img-search">
+                <img src="assets/no-search.jpg" alt="No Student img" style="width: 150px; opacity: 0.8;">
+                <span style="display: flex; justify-content: center;margin-top: 30px;">No Training found.</span>
+                </span>
+                      </div>
   
           
         <div class="pagination-container">

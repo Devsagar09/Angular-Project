@@ -644,6 +644,7 @@ export class AddEditTrainingComponent {
   toggleShowSelected() {
     this.updateFilteredStudents();
   }
+  
   updateFilteredStudents() {
     this.isLoading = true;
 
