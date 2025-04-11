@@ -124,6 +124,13 @@
     flex-direction: column;
     padding: 10px;
     max-width: calc(100% - 16px);
+    height:100vh;
+    transition: width 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    z-index: 1000;
+
   }
 
 .sidebar.collapsed {
