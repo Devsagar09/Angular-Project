@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; 
 }
 ::-webkit-scrollbar {
     display: none; /* For Chrome, Safari */
@@ -10,10 +12,10 @@
  
 
 .container {
-    font-family: 'Inter', sans-serif;
-  display: flex;
-  height: 100vh;
-  z-index: 2000;
+    font-family: "Inter", sans-serif;
+    display: flex;
+    height: 97vh;
+    z-index: 2000;
   }
 
  
@@ -24,7 +26,7 @@
     align-items: center;
     padding: 15px 30px;
     border-bottom: 2px solid #ddd;
-    height: 70px;
+    height: 65px;
     /* z-index: 3000; */
   }
 
@@ -32,6 +34,7 @@
     padding: 10px;
     background-color: #f4f4f4;
     flex: 1;
+    overflow: hidden;
     overflow-y: auto;
   }
 
@@ -119,10 +122,13 @@
     background-color: #fff;
     border-right: 2px solid #ddd;
     width: 250px;
+    height:100vh;
     transition: width 0.5s ease;
     display: flex;
     flex-direction: column;
     padding: 10px;
+    z-index: 1000;
+
   }
 
 .sidebar.collapsed {

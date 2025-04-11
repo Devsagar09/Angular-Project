@@ -344,21 +344,21 @@ export class AddeditstudentComponent implements OnInit {
  
   saveReview() {
     this.studentService.showNotification("Data saved.",'success');
-    this.addOrUpdateStudent(); // Save student first
-    setTimeout(() => {
-      this.assignTrainings(); // Then assign trainings
-    }, 200);
+    // this.addOrUpdateStudent(); // Save student first
+    // setTimeout(() => {
+      // this.assignTrainings(); // Then assign trainings
+    // }, 200);
   }
  
   saveAndExit() {
-    this.studentService.showNotification("Data saved Successfully.",'success');
-    this.addOrUpdateStudent(); // Save student first
-    setTimeout(() => {
-      this.assignTrainings(); // Assign trainings
-      setTimeout(() => {
+    // this.studentService.showNotification("Data saved Successfully.",'success');
+    // this.addOrUpdateStudent(); 
+    // setTimeout(() => {
+    //   this.assignTrainings(); 
+    //   setTimeout(() => {
         window.location.href = '/Student'; // Redirect after everything is saved
-      }, 300);
-    }, 200);
+    //   }, 300);
+    // }, 200);
   }
  
  
