@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { UserNavigationService } from '../../user-navigation/user-navigation.service';
 import { StudentService } from '../student.service';
 import { NgForm } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-viewprofile',
@@ -40,9 +42,15 @@ export class ViewprofileComponent implements OnInit {
     newPassword: '',
     confirmPassword: ''
   };
-  
+  @ViewChild('imageCropperDialog') imageCropperDialog!: TemplateRef<any>;
+  @ViewChild('fileInput') fileInput!: any;
 
-  constructor(private router: Router, private usernavigationService: UserNavigationService, private studentService: StudentService) {
+imageChangedEvent: any = '';
+croppedImage: string = '';
+dialogRef: any;
+
+
+  constructor(  private dialog: MatDialog,private router: Router, private usernavigationService: UserNavigationService, private studentService: StudentService) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.isLoading = true;
@@ -64,6 +72,37 @@ export class ViewprofileComponent implements OnInit {
       this.fetchProfileImage(studentId); 
       this.loadStudentData(this.studentId);
     }
+  }
+
+  onImageCropped(event: any): void {
+    this.croppedImage = event.base64;
+  }
+
+  openCropperDialog(): void {
+    this.dialogRef = this.dialog.open(this.imageCropperDialog, {
+      width: '500px'
+    });
+  }
+  
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+  
+  
+  resetCropper(): void {
+    this.imageChangedEvent = '';
+  this.croppedImage = '';
+  this.originalFilename = null;
+  this.imagePreview = null;
+
+  if (this.fileInput) {
+    this.fileInput.nativeElement.value = ''; // Clear file input
+  }
+  }
+  
+  
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 
   loadUserData() {
@@ -155,33 +194,43 @@ export class ViewprofileComponent implements OnInit {
   }
   
 
-  uploadProfileImage() {
-    if (this.imagePreview && this.imagePreview !== this.profileImage) {
-        const studentId = sessionStorage.getItem('studentId');
-        const parsedStudentId = Number(studentId);
-
-        if (!this.originalFilename) {
-            console.error("Original filename is missing.");
-            return;
-        }
-
-        const file = this.dataURLtoFile(this.imagePreview, this.originalFilename);
-
-        this.studentService.updateProfileImage(parsedStudentId, file, this.originalFilename).subscribe(
-            response => {
-                this.studentService.showNotification('Profile image updated.','success');
-                setTimeout(() => {
-                  location.reload(); 
-              }, 1000);            
-             },
-            error => {
-                console.error('Error updating profile image:', error);
-            }
-        );
-    } else {
-        this.studentService.showNotification("No image selected or no change in image.",'warning');
+  uploadCroppedImage(): void {
+    if (!this.croppedImage) {
+      this.studentService.showNotification("No image to upload.", "warning");
+      return;
     }
-}
+  
+    const studentId = sessionStorage.getItem('studentId');
+    const parsedStudentId = Number(studentId);
+  
+    if (!this.originalFilename) {
+      this.originalFilename = `profile_${Date.now()}.png`; // fallback filename
+    }
+  
+    const file = this.dataURLtoFile(this.croppedImage, this.originalFilename);
+  
+    this.studentService.updateProfileImage(parsedStudentId, file, this.originalFilename).subscribe(
+      response => {
+        this.studentService.showNotification('Profile image updated.', 'success');
+        this.dialogRef.close();
+  
+        // Refresh the profile image
+        setTimeout(() => {
+          this.fetchProfileImage(studentId!);
+          this.imageChangedEvent = '';
+          this.croppedImage = '';
+          this.imagePreview = null;
+        }, 500);
+        window.location.reload();
+      },
+      
+      error => {
+        console.error('Error updating profile image:', error);
+        this.studentService.showNotification('Failed to upload image.', 'error');
+      }
+    );
+  }
+  
 
 // Helper function to convert base64 to File
 dataURLtoFile(dataurl: string, filename: string): File {
