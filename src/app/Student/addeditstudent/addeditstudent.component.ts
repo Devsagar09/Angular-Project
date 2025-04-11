@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./addeditstudent.component.css']
 })
 export class AddeditstudentComponent implements OnInit {
+  isLoading = false;
   searchValue: string = '';
   noDataFound: boolean = true;;
   showField: boolean = false;
@@ -196,34 +197,61 @@ export class AddeditstudentComponent implements OnInit {
  
   searchTraining(): void {
     const searchTerm = this.searchValue.trim().toLowerCase();
+
+    let baseList = [...this.trainings];
+
+    if (this.showSelectedOnly) {
+      baseList = baseList.filter(trainig => trainig.selected);
+    }
   
     if (!searchTerm) {
-      this.filteredTrainings = [...this.trainings];
-      this.noDataFound=false;
+      this.filteredTrainings = [...baseList];
+      this.noDataFound=this.filteredTrainings.length===0;
       // this.updateFilteredTrainings();
       return;
     }
   
-      this.filteredTrainings = this.trainings
-        .filter(t =>
-          t.training_name.toLowerCase().includes(searchTerm) ||
-          t.training_code.toLowerCase().includes(searchTerm) ||
-          t.trainingtype_name.toLowerCase().includes(searchTerm)
-        );
-  
+      this.filteredTrainings = baseList.filter(t => {
+          const training_name = t.training_name.toLowerCase() || '';
+          const training_code= t.training_code.toLowerCase() || '';
+          const training_type= t.trainingtype_name.toLowerCase() || '';
+
+          return(
+          training_name.includes(searchTerm) ||
+          training_code.includes(searchTerm) ||
+          training_type.includes(searchTerm)
+          );
+      });
+          
       this.noDataFound = this.filteredTrainings.length === 0;
    
   }
   
   updateFilteredTrainings() {
-    if (this.showSelectedOnly) {
-      this.filteredTrainings = this.trainings.filter(training => training.selected);
-    } else if (!this.searchValue.trim()) {
-      this.filteredTrainings = [...this.trainings];
+    setTimeout(() => {
+      const trimmedSearch = this.searchValue.trim().toLowerCase();
+      let baseList = this.showSelectedOnly
+      ? this.trainings.filter(training => training.selected)
+      :[...this.trainings];
+      if (!trimmedSearch) {
+        this.filteredTrainings = baseList;
+      }
+      else{
+        this.filteredTrainings = baseList.filter(t => {
+          const training_name = t.training_name.toLowerCase() || '';
+          const training_code = t.training_code.toLowerCase() || '';
+          const training_type = t.trainingtype_name.toLowerCase() || '';
+          return (
+            training_name.includes(trimmedSearch) ||
+            training_code.includes(trimmedSearch) ||
+            training_type.includes(trimmedSearch)
+            );
+      });
     }
- 
     this.noDataFound = this.filteredTrainings.length === 0;
-  }
+    this.isLoading = false;
+  }, 300);
+}
  
   setActiveTab(tab: string) {
     // console.log(`Switching to tab: ${tab}, Student ID: ${this.studentData.student_Id}`);
@@ -446,7 +474,7 @@ export class AddeditstudentComponent implements OnInit {
  
   toggleSelectAll() {
     this.trainings.forEach((training) => training.selected = this.selectAll);
-    this.updateFilteredTrainings();
+    // this.updateFilteredTrainings();
     }
  
   updateSelectAll() {
@@ -455,7 +483,7 @@ export class AddeditstudentComponent implements OnInit {
  
   toggleShowSelected() {
     this.updateFilteredTrainings();
-    this.updateSelectAll(); // <-- make sure selectAll reflects the updated list
+    // this.updateSelectAll(); // <-- make sure selectAll reflects the updated list
   }
  
 }
