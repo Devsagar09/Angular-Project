@@ -124,11 +124,12 @@ export class HomeComponent implements AfterViewInit {
   }
 
   changeTab(tab: string) {
-    if (this.activeTab !== tab) {
-      this.activeTab = tab;
-      this.loadTrainings(); // only reload trainings, not chart
-    }
+  if (this.activeTab !== tab) {
+    this.activeTab = tab;
+    this.loadTrainings();
+    this.fetchTrainingData(); 
   }
+}
   
   closeModal() { 
     this.isModalOpens = false;
