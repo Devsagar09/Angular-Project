@@ -83,12 +83,7 @@ dialogRef: any;
       width: '500px'
     });
   }
-  
-  fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
-  }
-  
-  
+ 
   resetCropper(): void {
     this.imageChangedEvent = '';
   this.croppedImage = '';
@@ -96,7 +91,7 @@ dialogRef: any;
   this.imagePreview = null;
 
   if (this.fileInput) {
-    this.fileInput.nativeElement.value = ''; // Clear file input
+    this.fileInput.nativeElement.value = ''; 
   }
   }
   
@@ -166,33 +161,30 @@ dialogRef: any;
     });
   }  
 
-  onFileSelected(event: any) {
+  onFileInputChange(event: any): void {
     const file = event.target.files[0];
-    if (file) {
-      const validImageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-
-  if (!validImageTypes.includes(file.type)) {
-    this.studentService.showNotification('Only PNG, JPG or JPEG images are allowed.','warning');
-    this.originalFilename = null;
-    this.imagePreview = null;
-    return;
-  }
-
-      
-      this.originalFilename = file.name; // Store the original filename
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        // Set the preview image (base64 string)
-        this.imagePreview = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
-  resetImagePreview() {
-    this.imagePreview = null;
-  }
+    const validImageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
   
+    if (!file) {
+      this.studentService.showNotification('Please upload an image first.', 'warning');
+      return;
+    }
+  
+    if (!validImageTypes.includes(file.type)) {
+      this.studentService.showNotification('Only PNG, JPG or JPEG images are allowed.', 'warning');
+      this.resetCropper(); // clear inputs
+      return;
+    }
+  
+    this.originalFilename = file.name;
+    this.imageChangedEvent = event; // Pass to ngx-image-cropper
+  
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.imagePreview = e.target.result; // Just in case you want to preview before crop
+    };
+    reader.readAsDataURL(file);
+  }  
 
   uploadCroppedImage(): void {
     if (!this.croppedImage) {
@@ -204,7 +196,7 @@ dialogRef: any;
     const parsedStudentId = Number(studentId);
   
     if (!this.originalFilename) {
-      this.originalFilename = `profile_${Date.now()}.png`; // fallback filename
+      this.originalFilename = `profile_${Date.now()}.png`;
     }
   
     const file = this.dataURLtoFile(this.croppedImage, this.originalFilename);
@@ -220,8 +212,8 @@ dialogRef: any;
           this.imageChangedEvent = '';
           this.croppedImage = '';
           this.imagePreview = null;
-        }, 500);
-        window.location.reload();
+          window.location.reload();
+        }, 1000);
       },
       
       error => {

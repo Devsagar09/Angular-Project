@@ -19,7 +19,7 @@
             <span>Change Profile</span>
           </div>
         </div>
-    
+
         <ng-template #imageCropperDialog>
           <div class="dialog-box">
             <!-- Header -->
@@ -27,39 +27,39 @@
               <h2>Change Profile Image:</h2>
               <button mat-icon-button (click)="closeDialog()" aria-label="Close">X</button>
             </div>
-    
+
             <!-- File input -->
-            <input type="file" accept="image/*" (change)="fileChangeEvent($event)" />
-    
+            <input 
+            type="file" 
+            accept="image/png, image/jpeg, image/jpg" 
+            (change)="onFileInputChange($event)" 
+            #fileInput />
+          
             <!-- Cropper section -->
             <ng-container *ngIf="imageChangedEvent">
               <div *ngIf="croppedImage" class="image-preview">
                 <h4>Preview:</h4>
                 <img [src]="croppedImage" class="preview-img" />
               </div>
-    
-              <image-cropper
-                [imageChangedEvent]="imageChangedEvent"
-                [maintainAspectRatio]="false"
-                format="png"
-                (imageCropped)="onImageCropped($event)"
-                class="image-cropper"
-              ></image-cropper>
+
+              <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" format="png"
+                (imageCropped)="onImageCropped($event)" class="image-cropper"></image-cropper>
             </ng-container>
-    
+
             <!-- Action buttons -->
             <div class="img-btn-group">
-              <button class="save-btn" color="primary" [disabled]="!croppedImage" (click)="uploadCroppedImage()">Upload</button>
+              <button class="save-btn" color="primary" [disabled]="!croppedImage"
+                (click)="uploadCroppedImage()">Upload</button>
               <button class="reset-btn" (click)="resetCropper()" [disabled]="!imageChangedEvent">Reset</button>
             </div>
           </div>
         </ng-template>
-    
+
         <br />
         <h3>{{ firstname }} {{ lastname }}</h3>
       </div>
     </div>
-    
+
 
     <!-- Right Section: Tabs & Forms -->
     <div class="profile-right">
