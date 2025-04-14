@@ -5,7 +5,7 @@ body {
   display: block;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 102vh;
   /* Ensure full height */
   flex-direction: column;
   overflow-x: hidden;
@@ -19,6 +19,7 @@ body {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow-x: auto;
+  margin-bottom: 10px;
   /*  Enable horizontal scrolling */
 }
 
@@ -71,14 +72,6 @@ table {
   margin: 8px;
   table-layout: auto;
   /* Columns adjust dynamically */
-}
-
-/* Define specific width for the checkbox column */
-th:first-child,
-td:first-child {
-  width: 50px;
-  /* Adjust this value as needed */
-  text-align: center;
 }
 
 th,
@@ -231,8 +224,9 @@ input[type="checkbox"] {
   border: 1px solid #ccc;
   border-radius: 20px;
   padding: 8px 15px;
-  width: 80%;
+  width: 100%;
   margin-right: 10px;
+  margin-left: 10px;
 }
 
 .search-bar i {
@@ -247,50 +241,11 @@ input[type="checkbox"] {
   font-size: 16px;
 }
 
-/* Action Buttons */
-.action-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.action-buttons button {
-  border: none;
-  padding: 8px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 15px;
-  width: auto;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.action-buttons button:hover {
-  background-color: #134c68;
-  /* Darker background color on hover */
-  color: #f8f9fa;
-  /* Slightly lighter text color on hover */
-  transform: scale(1.05);
-  /* Slightly enlarge the button */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  /* Add a subtle shadow */
-}
-
-.delete-btn {
-  background-color: #df4747;
-  color: white;
-}
 
 i {
   margin-right: 6px;
 }
 
-.add-btn {
-  background-color: #57e338;
-  color: white;
-
-}
 
 /* if no recode in search */
 .img-search{

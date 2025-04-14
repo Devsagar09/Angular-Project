@@ -1,0 +1,94 @@
+<!-- <div *ngFor="let trainingData of trainingDatas">
+  <p>{{trainingData?.training_name}}</p>
+  <p>{{trainingData?.training_code}}</p>
+  <p>{{trainingData?.trainingtype_name}}</p>
+  <p>{{trainingData?.archive_date}}</p>
+  </div> -->
+
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+
+  <body>
+    <div class="navbar">
+      <a href="#"><i class="fa fa-arrow-alt-circle-left"></i>Back to Dashboard</a>
+    </div>
+    <div class="training-header">
+      <div class="title">
+        <i class="fas fa-lightbulb"></i> AI Maintenance
+      </div>
+    </div>
+    <br />
+    <div class="container">
+      <!-- Search Bar Section -->
+      <div class="search-container">
+        <label for="search"><strong>Search</strong></label>
+        <div class="search-bar">
+          <i class="fa fa-search"></i>
+          <input type="text" id="search" [(ngModel)]="SearchValue" (input)="searchDisplayStatus()"
+            placeholder="Search Pending Approval">
+        </div>
+      </div>
+
+      <table id="data-table">
+        <thead>
+          <tr>
+            <!-- <th>Actions</th> -->
+            <th>Training Name</th>
+            <th>Student Name</th>
+            <th>Status</th>
+            <!-- <th>Decision Date</th> -->
+          </tr>
+        </thead>
+           <!-- Loader -->
+     <tbody *ngIf="isLoading">
+      <tr>
+        <td colspan="6">
+          <div class="loader-container">
+            <div class="spinner"></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+        <tbody *ngIf="!isLoading && displayStatusData.length > 0;">
+          <tr
+            *ngFor="let ds of displayStatusData |  paginate:{ itemsPerPage: itemsPerPage, currentPage: p }">
+            <td>{{ ds?.training_name }}</td>
+            <td>{{ ds?.student_name }}</td>
+            <td>{{ ds?.display_status }}</td>
+            <!-- <td>{{ trainingData?.decision_date | date: 'dd/MM/yyyy'}}</td> -->
+          </tr>
+        </tbody>
+         <!-- No Records Message -->
+    <tbody *ngIf="!isLoading && displayStatusData.length === 0">
+      <tr>
+        <td colspan="6">
+          <div class="img-search">
+            <img src="assets/no-search.jpg" alt="No Records Found" style="width: 150px; opacity: 0.8;" />
+            <span style="color: #134c68;">No Display Status records found.</span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+      </table>
+      <div class="pagination-container">
+        <!-- Dropdown for selecting items per page -->
+        <div class="items-per-page">
+          <label for="itemsPerPage">Show:</label>
+          <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
+            <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+          </select>
+          <span>entries per page</span>
+        </div>
+
+        <!-- Pagination Controls -->
+        <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
+      </div>
+    </div>
+  </body>
+
+  </html>

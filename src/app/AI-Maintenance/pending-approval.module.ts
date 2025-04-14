@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { PendingApprovalComponent } from './pending-approval/pending-approval.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
+import { DisplayStatusComponent } from './display-status/display-status.component';
 
 
 @NgModule({
   declarations: [
-    PendingApprovalComponent
+    PendingApprovalComponent,
+    DisplayStatusComponent
   ],
   imports: [
     CommonModule,

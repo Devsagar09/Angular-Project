@@ -15,6 +15,10 @@ export class PendingApprovalService {
 
   private searchPA = 'https://localhost:7172/api/DisplayData/searchPendingApproval';
 
+  private displaystatusUrl = 'https://localhost:7172/api/AssignStudents/getDisplayStatus';
+
+  private searchstatusUrl = 'https://localhost:7172/api/AssignStudents/searchDisplayStatus';
+
   constructor(private http: HttpClient) { }
 
   DisplayPendingApproval(): Observable<any> {
@@ -39,6 +43,14 @@ export class PendingApprovalService {
       studentId: paData.student_id,
       trainingId: paData.training_id
     });
+  }
+
+  DisplayStatus(): Observable<any>{
+    return this.http.get<any[]>(this.displaystatusUrl);
+  }
+
+  searchDisplayStatus(SearchValue: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.searchstatusUrl}?SearchValue=${SearchValue}`);
   }
 
   showNotification(
