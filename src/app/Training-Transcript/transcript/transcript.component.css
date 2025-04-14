@@ -86,10 +86,9 @@
 .hr-line {
     opacity: 0.4;
     color: #1a55d8;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
-
 
 .search-bar {
     display: flex;
@@ -129,7 +128,7 @@
 /* Table container for responsiveness */
 .table-container {
     width: 100%;
-    max-height: 300px;
+    max-height: 350px;
     /* Set a max height for scroll control */
 
     overflow-y: auto;
@@ -188,6 +187,7 @@
     padding: 12px 16px;
     border-bottom: 1px solid #ddd;
     white-space: nowrap;
+    font-size: 14px;
     /* Prevent text wrapping */
 }
 

@@ -55,6 +55,13 @@ export class CatalogComponent {
   closeModal() { 
     this.isModalOpens = false;
   }
+  
+  isApprovalDialogOpen: boolean = false;
+
+  closeApprovalDialog() {
+    this.isApprovalDialogOpen = false;
+  }
+  
 
   loadTrainings(): void {
     if (this.studentId !== null) {
@@ -73,7 +80,7 @@ export class CatalogComponent {
   }
 
   showApprovalAlert() {
-    alert('You have already requested approval from the administrator.');
+    this.isApprovalDialogOpen = true;
   }
 
   debounceTimer: any;
@@ -124,7 +131,7 @@ export class CatalogComponent {
       return;
     }
 
-    this.CatalogService.getTrainingByID(trainingId).subscribe({
+    this.CatalogService.getTrainingByID(trainingId,this.studentId).subscribe({
       next: (trainingArray) => {
         console.log("Fetched Training Data:", trainingArray);
 
@@ -210,6 +217,32 @@ export class CatalogComponent {
     });
   }
 
+  // started completed trainng 
+  startCompletedTraining(training: any) {
+    if (!training) {
+      console.error("Invalid training data.");
+      return;
+    }
+  
+    if (training.trainingtype_name === "External Link" && training.external_link_URL) {
+      const confirmExternal = confirm("This training is an external link. Do you want to continue?");
+      if (confirmExternal) {
+        window.open(training.external_link_URL, "_blank");
+      }
+    } 
+    else if (training.trainingtype_name === "Document" && training.document_file) {
+      this.CatalogService.getTrainingDocument(training.document_file).subscribe((response: Blob) => {
+        const fileURL = URL.createObjectURL(response);
+        window.open(fileURL, "_blank");
+      }, error => {
+        console.error('Error fetching document:', error);
+      });
+    } 
+    else {
+      alert("No valid training content found.");
+    }
+  }
+
   completedTraining(training: any){
     if (!training) {
       console.error("Invalid training data.");
@@ -240,7 +273,7 @@ export class CatalogComponent {
 
     this.isModalOpens = true; // Open modal immediately
 
-    this.CatalogService.getTrainingByID(trainingtId).subscribe(data => {
+    this.CatalogService.getTrainingByID(trainingtId,this.studentId ?? 0).subscribe(data => {
       console.log("API Response:", data);
 
       if (data && data.length > 0) {

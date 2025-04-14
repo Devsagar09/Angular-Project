@@ -24,8 +24,8 @@ export class IdpService {
     return this.http.get<any>(`${this.apiBase}/${studentId}`);
   }
 
-  getTrainingByID(trainingid: number): Observable<any> {
-    return this.http.get<any>(`${this.gettrainingdata}/${trainingid}`);
+  getTrainingByID(trainingid: number, studentid: number): Observable<any> {
+    return this.http.get<any>(`${this.gettrainingdata}/${trainingid}/${studentid}`);
   }
 
   searchIDP(query: string, studentId: number): Observable<any> {

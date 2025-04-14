@@ -22,10 +22,6 @@ export class AppComponent implements OnInit{
     this.resetInactivityTimer();
 
     this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.isLoading = true;
-        document.body.style.overflow = 'hidden'; // Prevent scroll during transition
-      }
       if (event instanceof NavigationEnd) {
         this.resetInactivityTimer();
       }

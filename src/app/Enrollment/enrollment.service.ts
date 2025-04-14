@@ -34,24 +34,26 @@ export class EnrollmentService {
       responseType: 'text' // Correct response type for plain text
     }) as Observable<string>;
   }
+ 
 
-  getTrainingByID(trainingid: number): Observable<any> {
-    return this.http.get<any>(`${this.gettrainingdata}/${trainingid}`);
+  getTrainingByID(trainingid: number, studentid: number): Observable<any> {
+    return this.http.get<any>(`${this.gettrainingdata}/${trainingid}/${studentid}`);
   }
+
 
 
   getTrainingDocument(fileName: string): Observable<Blob> {
     return this.http.get(`${this.startEnrollTraining}/GetTrainingDocument/${fileName}`, { responseType: 'blob' });
   }
 
-   completeTraining(request: { studentId: number; trainingId: number }): Observable<string> {
-      return this.http.post(`${this.startEnrollTraining}/CompletedTraining`, request, {
-        responseType: 'text' // Correct response type for plain text
-      }) as Observable<string>;
-    }
+  completeTraining(request: { studentId: number; trainingId: number }): Observable<string> {
+    return this.http.post(`${this.startEnrollTraining}/CompletedTraining`, request, {
+      responseType: 'text' // Correct response type for plain text
+    }) as Observable<string>;
+  }
 
-    getTrainingThumbnail(fileName: string, type: string) {
-      return `${this.getThumbnailImage}/GetThumbnail?fileName=${fileName}&type=${type}`;
-    }
+  getTrainingThumbnail(fileName: string, type: string) {
+    return `${this.getThumbnailImage}/GetThumbnail?fileName=${fileName}&type=${type}`;
+  }
 
 }

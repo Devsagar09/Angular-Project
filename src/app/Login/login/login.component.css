@@ -4,16 +4,13 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
   }
-  ::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari */
-  }
 
   body {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden !important;
+    overflow: hidden; /* Prevent extra scrolling */
     background-image: url('/background.jpg');
     background-size: cover;
 

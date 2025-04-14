@@ -42,9 +42,10 @@ export class CatalogService {
     }) as Observable<string>;
   }
 
-  getTrainingByID(trainingid: number): Observable<any> {
-    return this.http.get<any>(`${this.gettrainingdata}/${trainingid}`);
+  getTrainingByID(trainingid: number, studentid: number): Observable<any> {
+    return this.http.get<any>(`${this.gettrainingdata}/${trainingid}/${studentid}`);
   }
+
 
   getTrainingDocument(fileName: string): Observable<Blob> {
     return this.http.get(`${this.startCCTraining}/GetTrainingDocument/${fileName}`, { responseType: 'blob' });
