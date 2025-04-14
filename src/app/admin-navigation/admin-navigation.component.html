@@ -70,6 +70,10 @@
         [routerLinkActiveOptions]="{ exact: true }">
           <i class="fas fa-lightbulb icon"></i><span class="text">AI Maintenance</span>
         </li>
+        <li kendotooltip title="Display Status" [routerLink]="['/Display-Status']" routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fas fa-bars-progress icon"></i><span class="text">Display Status</span>
+        </li>
       </ul>
     </div>
   </div>
@@ -82,7 +86,7 @@
       </div>
 
       <div class="nav-right">
-        
+
         <button kendoButton size="large" themeColor="info" (click)="switchToLearner()" title="Switch to Learner" class="switchbtn">
           Learner
         </button>
@@ -119,4 +123,3 @@
 </div>
 
 
- 

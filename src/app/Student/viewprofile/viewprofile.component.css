@@ -49,6 +49,7 @@ body {
   padding: 20px;
   max-width: 1200px;
   margin: 45px auto 0;
+  height: 500px;
 }
 
 /* Profile Content (Split into Left and Right) */
@@ -198,14 +199,27 @@ body {
 /* Hide scrollbar but allow scrolling */
 .tab-content {
   height: 100%;
-  max-height: 395px;
+  max-height: 460px;
   overflow-y: auto;
-  scrollbar-width: none; /* For Firefox */
-  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  margin-bottom: 0 !important;
 }
 
 .tab-content::-webkit-scrollbar {
-  display: none; /* For Chrome, Safari, and Opera */
+  width: 8px;
+}
+
+.tab-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.tab-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.tab-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .error-message {
@@ -235,6 +249,7 @@ textarea {
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* height: 1000px; */
 }
 
 .section.active {
