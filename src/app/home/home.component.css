@@ -855,6 +855,11 @@ canvas {
   margin: 10px 0;
   color: #333;
   font-weight: 500;
+  line-height: 1.5;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 /* Modal Footer Buttons */

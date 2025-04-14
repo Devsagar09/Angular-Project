@@ -141,12 +141,14 @@
                     <p><strong>Training Type:</strong> {{ selectedTraining?.trainingtype_name }}</p>
                     <p><strong>Training Hours:</strong> {{ selectedTraining?.training_hours }}</p>
                     <p><strong>Summary:</strong> {{ selectedTraining?.summary || 'N/A' }}</p>
+                    <p><strong>Status:</strong> {{ selectedTraining?.status }}</p>
                 </div>
 
                 <div class="modals-footer">
-                    <button class="btn-join" (click)="startTraining(selectedTraining)">Join Training</button>
+                    <button class="btn-join" (click)="startTraining(selectedTraining)" *ngIf="selectedTraining?.status === 'In Progress' || selectedTraining?.status === 'Not Started'">Join Training</button>
+                    
 
-                    <button class="btn-complete" (click)="completedTraining(selectedTraining)">
+                    <button class="btn-complete" (click)="completedTraining(selectedTraining)" *ngIf="selectedTraining?.status === 'In Progress'">
                         Mark as Completed
                     </button>
                 </div>

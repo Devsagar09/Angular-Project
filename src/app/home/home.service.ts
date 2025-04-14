@@ -27,8 +27,8 @@ export class HomeService {
     return this.http.get<any[]>(`${this.apiUrl}/${studentId}`);
   }
 
-  getTrainingByID(trainingid: number): Observable<any> {
-    return this.http.get<any>(`${this.gettrainingdata}/${trainingid}`);
+  getTrainingByID(trainingid: number, studentid: number): Observable<any> {
+    return this.http.get<any>(`${this.gettrainingdata}/${trainingid}/${studentid}`);
   }
 
   startTraining(request: { studentId: number; trainingId: number }): Observable<string> {
@@ -41,7 +41,7 @@ export class HomeService {
     return this.http.post(`${this.starthomeTraining}/RequestTrainingApproval`, request, {
       responseType: 'text' // Correct response type for plain text
     }) as Observable<string>;
-  } 
+  }
 
   completeTraining(request: { studentId: number; trainingId: number }): Observable<string> {
     return this.http.post(`${this.starthomeTraining}/CompletedTraining`, request, {

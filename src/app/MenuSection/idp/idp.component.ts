@@ -78,15 +78,15 @@ export class IdpComponent {
 
   isApprovalDialogOpen: boolean = false;
 
-showApprovalAlert() {
-  this.isApprovalDialogOpen = true;
-}
+  showApprovalAlert() {
+    this.isApprovalDialogOpen = true;
+  }
 
-closeApprovalDialog() {
-  this.isApprovalDialogOpen = false;
-}
+  closeApprovalDialog() {
+    this.isApprovalDialogOpen = false;
+  }
 
- 
+
 
   OpenModelBox(): void {
     this.isModalOpen = true
@@ -131,6 +131,53 @@ closeApprovalDialog() {
     });
   }
 
+  // requestTrainingApprovalOrView(trainingId: number) {
+  //   console.log("Checking Training ID:", trainingId);
+  //   console.log("Student ID:", this.studentId);
+
+  //   if (!trainingId || !this.studentId) {
+  //     alert("Invalid training or student ID. Please try again.");
+  //     return;
+  //   }
+
+  //   this.IDPService.getTrainingByID(trainingId).subscribe({
+  //     next: (trainingArray) => {
+  //       console.log("Fetched Training Data:", trainingArray);
+
+  //       if (!trainingArray || trainingArray.length === 0) {
+  //         alert("Training details not found. Please try again.");
+  //         return;
+  //       }
+
+  //       // Get the first object from the array
+  //       const training = trainingArray[0];
+
+  //       if (training.requires_approval) {
+  //         this.IDPService.requestTrainingApproval({
+  //           studentId: this.studentId ?? 0,
+  //           trainingId: trainingId,
+  //         }).subscribe({
+  //           next: (response: string) => {
+  //             console.log("Approval Request Response:", response);
+  //             alert(response);
+  //             window.location.reload();
+  //           },
+  //           error: (error) => {
+  //             console.error("Error:", error);
+  //             alert("Failed to request training approval.");
+  //           },
+  //         });
+  //       } else {
+  //         this.viewTraining(trainingId);
+  //       }
+  //     },
+  //     error: (error) => {
+  //       console.error("Error fetching training details:", error);
+  //       alert("Failed to fetch training details.");
+  //     },
+  //   });
+  // }
+
   requestTrainingApprovalOrView(trainingId: number) {
     console.log("Checking Training ID:", trainingId);
     console.log("Student ID:", this.studentId);
@@ -140,7 +187,8 @@ closeApprovalDialog() {
       return;
     }
 
-    this.IDPService.getTrainingByID(trainingId).subscribe({
+    // Pass both trainingId and studentId to the API call
+    this.IDPService.getTrainingByID(trainingId, this.studentId).subscribe({
       next: (trainingArray) => {
         console.log("Fetched Training Data:", trainingArray);
 
@@ -149,7 +197,6 @@ closeApprovalDialog() {
           return;
         }
 
-        // Get the first object from the array
         const training = trainingArray[0];
 
         if (training.requires_approval) {
@@ -177,6 +224,7 @@ closeApprovalDialog() {
       },
     });
   }
+
 
   //start training method
   startTraining(training: any) {
@@ -226,6 +274,32 @@ closeApprovalDialog() {
     });
   }
 
+  // started completed trainng 
+  startCompletedTraining(training: any) {
+    if (!training) {
+      console.error("Invalid training data.");
+      return;
+    }
+
+    if (training.trainingtype_name === "External Link" && training.external_link_URL) {
+      const confirmExternal = confirm("This training is an external link. Do you want to continue?");
+      if (confirmExternal) {
+        window.open(training.external_link_URL, "_blank");
+      }
+    }
+    else if (training.trainingtype_name === "Document" && training.document_file) {
+      this.IDPService.getTrainingDocument(training.document_file).subscribe((response: Blob) => {
+        const fileURL = URL.createObjectURL(response);
+        window.open(fileURL, "_blank");
+      }, error => {
+        console.error('Error fetching document:', error);
+      });
+    }
+    else {
+      alert("No valid training content found.");
+    }
+  }
+
   completedTraining(training: any) {
     if (!training) {
       console.error("Invalid training data.");
@@ -262,7 +336,7 @@ closeApprovalDialog() {
       return;
     }
 
-    this.IDPService.getTrainingByID(trainingId).subscribe({
+    this.IDPService.getTrainingByID(trainingId, this.studentId).subscribe({
       next: (trainingArray) => {
         console.log("Fetched Training Data:", trainingArray);
 
@@ -323,22 +397,27 @@ closeApprovalDialog() {
     });
   }
 
- 
-  viewTraining(trainingtId: number) {
-    console.log("Transcript ID:", trainingtId);
+
+  viewTraining(trainingId: number) {
+    console.log("Training ID:", trainingId);
+    console.log("Student ID:", this.studentId);
 
     this.isModalOpens = true; // Open modal immediately
 
-    this.IDPService.getTrainingByID(trainingtId).subscribe(data => {
-      console.log("API Response:", data);
+    // Call API with both trainingId and studentId
+    this.IDPService.getTrainingByID(trainingId, this.studentId ?? 0).subscribe({
+      next: (data) => {
+        console.log("API Response:", data);
 
-      if (data && data.length > 0) {
-        this.selectedTraining = data[0];
-      } else {
-        console.error("No valid data received for Training ID:", trainingtId);
+        if (data && data.length > 0) {
+          this.selectedTraining = data[0]; // Set training data
+        } else {
+          console.error("No valid data received for Training ID:", trainingId);
+        }
+      },
+      error: (error) => {
+        console.error("API Error:", error);
       }
-    }, error => {
-      console.error("API Error:", error);
     });
   }
 

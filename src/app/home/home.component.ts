@@ -195,7 +195,7 @@ export class HomeComponent implements AfterViewInit {
         return;
       }
   
-      this.homeService.getTrainingByID(trainingId).subscribe({
+      this.homeService.getTrainingByID(trainingId,this.studentId).subscribe({
         next: (trainingArray) => {
           console.log("Fetched Training Data:", trainingArray);
   
@@ -311,7 +311,7 @@ export class HomeComponent implements AfterViewInit {
   
       this.isModalOpens = true; // Open modal immediately
   
-      this.homeService.getTrainingByID(trainingtId).subscribe(data => {
+      this.homeService.getTrainingByID(trainingtId,this.studentId ?? 0).subscribe(data => {
         console.log("API Response:", data);
   
         if (data && data.length > 0) {

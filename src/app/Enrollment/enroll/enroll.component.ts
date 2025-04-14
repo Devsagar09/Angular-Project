@@ -111,7 +111,7 @@ export class EnrollComponent {
       return;
     }
 
-    this.EnrollmenstService.getTrainingByID(trainingId).subscribe({
+    this.EnrollmenstService.getTrainingByID(trainingId,this.studentId).subscribe({
       next: (trainingArray) => {
         console.log("Fetched Training Data:", trainingArray);
 
@@ -226,7 +226,7 @@ export class EnrollComponent {
 
     this.isModalOpens = true; // Open modal immediately
 
-    this.EnrollmenstService.getTrainingByID(trainingtId).subscribe(data => {
+    this.EnrollmenstService.getTrainingByID(trainingtId,this.studentId ?? 0).subscribe(data => {
       console.log("API Response:", data);
 
       if (data && data.length > 0) {
