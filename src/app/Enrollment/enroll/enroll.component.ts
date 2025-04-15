@@ -14,6 +14,7 @@ export class EnrollComponent {
 
   p: number = 1; // Current page
   isLoading: boolean = true;
+  isCompleteLoading = false; 
   studentId: number | null = null;
   EnrollmentData: any[] = [];
   searchQuery: string = '';
@@ -210,10 +211,13 @@ export class EnrollComponent {
 
     const request = { studentId: +studentId, trainingId: training.training_id };
 
+    this.isCompleteLoading = true;
+
     this.EnrollmenstService.completeTraining(request).subscribe({
       next: (response) => {
         console.log("Training Completed successfully:", response);
-        alert(response);  // Correctly displays the API message
+        alert(response);  
+        this.isCompleteLoading = false;
         window.location.reload();
       }
     })
