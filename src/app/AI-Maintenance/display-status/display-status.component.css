@@ -5,10 +5,11 @@ body {
   display: block;
   justify-content: center;
   align-items: center;
-  min-height: 102vh;
+  height: auto;
+  min-height: 100vh;
   /* Ensure full height */
   flex-direction: column;
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 
 .container {
@@ -18,7 +19,7 @@ body {
   padding: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  overflow-x: auto;
+  /* overflow-x: auto; */
   margin-bottom: 10px;
   /*  Enable horizontal scrolling */
 }
