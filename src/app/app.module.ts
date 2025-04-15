@@ -38,7 +38,6 @@ import { UnauthorizedpageComponent } from './not-found-page/unauthorizedpage/una
 import { CatalogModule } from './Catalog/catalog.module';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +47,8 @@ import { CatalogModule } from './Catalog/catalog.module';
     UserNavigationComponent,
     LoaderComponent,
     AdminNavigationComponent,
-    UnauthorizedpageComponent
+    UnauthorizedpageComponent,
+    
     ],
   imports: [
     BrowserAnimationsModule,

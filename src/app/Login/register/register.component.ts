@@ -115,6 +115,9 @@ export class RegisterComponent {
           next: () => {
             this.loginService.showNotification("Student Registered.",'success');
             studentForm.resetForm();
+            setTimeout(() => {
+              window.location.href='/login';
+            }, 1000);
           },
           error: (error) => {
             console.error("API Error (Add):", error);

@@ -22,6 +22,7 @@ import { RegisterComponent } from './Login/register/register.component';
 import { DocumentViewerComponent } from './Catalog/document-viewer/document-viewer.component';
 import { UnauthorizedpageComponent } from './not-found-page/unauthorizedpage/unauthorizedpage.component';
 import { DisplayStatusComponent } from './AI-Maintenance/display-status/display-status.component';
+import { ForgetChangePasswordComponent } from './Login/forget-change-password/forget-change-password.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'ChangePassword',
+    component: ForgetChangePasswordComponent,
+    data: { roles: ['Admin', 'Student'] }
   },
   {
     path: 'addStudent',
