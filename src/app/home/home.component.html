@@ -187,8 +187,11 @@
                 <div class="modals-footer">
                     <button class="btn-join" (click)="startTraining(selectedTraining)" >Join Training</button>
 
-                    <button class="btn-complete" (click)="completedTraining(selectedTraining)" *ngIf="selectedTraining?.status === 'In Progress'">
-                        Mark as Completed
+                    <button class="btn-complete" (click)="completedTraining(selectedTraining)" [disabled]="isCompleteLoading"  *ngIf="selectedTraining?.status === 'In Progress'">
+                        <span *ngIf="!isCompleteLoading">Mark as Completed</span>
+                        <span *ngIf="isCompleteLoading">
+                        <div class="spinner"></div> Completing...
+                        </span>
                     </button>
                 </div>
             </div>

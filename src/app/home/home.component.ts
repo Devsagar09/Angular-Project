@@ -14,6 +14,7 @@ export class HomeComponent implements AfterViewInit {
   public idpIcon = "assets/icons/idp-icon.png";
   public catalogIcon = "assets/icons/catalog-icon.png";
   public transcriptIcon = "assets/icons/transcript-icon.png";
+  isCompleteLoading = false; 
 
   isLoading = true;
   dropdownVisible = false;
@@ -295,10 +296,13 @@ export class HomeComponent implements AfterViewInit {
   
       const request = { studentId: +studentId, trainingId: training.training_id };
   
+      this.isCompleteLoading = true;
+
       this.homeService.completeTraining(request).subscribe({
         next: (response) => {
           console.log("Training Completed successfully:", response);
           alert(response);  // Correctly displays the API message
+          this.isCompleteLoading = false;
           window.location.reload();
         }
       })
