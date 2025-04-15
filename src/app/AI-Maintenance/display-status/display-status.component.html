@@ -1,94 +1,145 @@
-<!-- <div *ngFor="let trainingData of trainingDatas">
-  <p>{{trainingData?.training_name}}</p>
-  <p>{{trainingData?.training_code}}</p>
-  <p>{{trainingData?.trainingtype_name}}</p>
-  <p>{{trainingData?.archive_date}}</p>
-  </div> -->
+<!-- <div class="back-dashboard" (click)="goToDashboard()">
+  <span class="icon">
+      <svg viewBox="0 0 512 512">
+          <path d="m353.941 382.059-126.06-126.06 126.06-126.061L320 96 160 255.999 320 416z"></path>
+      </svg>
+  </span>
+  <span class="text">Back to Dashboard</span>
+</div> -->
 
-  <!DOCTYPE html>
-  <html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
 
-  <body>
-    <div class="navbar">
-      <a href="#"><i class="fa fa-arrow-alt-circle-left"></i>Back to Dashboard</a>
-    </div>
-    <div class="training-header">
-      <div class="title">
-        <i class="fas fa-lightbulb"></i> Display Status
-      </div>
-    </div>
-    <br />
-    <div class="container">
-      <!-- Search Bar Section -->
-      <div class="search-container">
-        <label for="search"><strong>Search</strong></label>
-        <div class="search-bar">
-          <i class="fa fa-search"></i>
-          <input type="text" id="search" [(ngModel)]="SearchValue" (input)="searchDisplayStatus()"
-            placeholder="Search Display Status ">
-        </div>
-      </div>
+<!-- <div class="search-bar">
+  <input type="text" placeholder="Search Trainings" [(ngModel)]="searchQuery" (input)="onSearchChange()" >
+  <span class="search-icon" (click)="fetchCatalog()">
 
-      <table id="data-table">
-        <thead>
-          <tr>
-            <!-- <th>Actions</th> -->
-            <th>Training Name</th>
-            <th>Student Name</th>
-            <th>Status</th>
-            <!-- <th>Decision Date</th> -->
-          </tr>
-        </thead>
-           <!-- Loader -->
-     <tbody *ngIf="isLoading">
-      <tr>
-        <td colspan="6">
-          <div class="loader-container">
-            <div class="spinner"></div>
+      <svg viewBox="0 0 512 512">
+          <path fill="black"
+              d="M365.3 320h-22.7l-26.7-26.7C338.5 265.7 352 230.4 352 192c0-88.4-71.6-160-160-160S32 103.6 32 192s71.6 160 160 160c38.4 0 73.7-13.5 101.3-36.1l26.7 26.7v22.7L434.7 480l45.3-45.3zM64 192c0-70.7 57.3-128 128-128s128 57.3 128 128-57.3 128-128 128S64 262.7 64 192">
+          </path>
+      </svg>
+  </span>
+</div> -->
+
+<div class="navbar">
+  <a [routerLink]="['/dashboard']"><i class="fa fa-arrow-alt-circle-left"></i> Back to Dashboard</a>
+</div>
+
+<div class="training-header">
+  <div class="title">
+    <i class="fas fa-laptop-house"></i> Display Status
+  </div>
+</div>
+
+<br />
+
+<div class="search-bar">
+  <i class="fa fa-search"></i>
+  <input type="text" id="search" [(ngModel)]="searchValue" (input)="searchTraining()"
+    placeholder="Search Training" />
+
+</div>
+
+<!-- Training Cards -->
+<div *ngIf="trainingDatas.length > 0; else noData">
+
+  <div class="training-section" *ngIf="isLoading">
+      <div class="cards-container">
+          <div class="training-card skeleton-card" *ngFor="let _ of [1, 2, 3, 4]">
+              <div class="skeleton skeleton-img"></div>
+              <div class="skeleton skeleton-title"></div>
+              <div class="skeleton skeleton-text"></div>
+              <div class="skeleton skeleton-text"></div>
           </div>
-        </td>
-      </tr>
-    </tbody>
-        <tbody *ngIf="!isLoading && displayStatusData.length > 0;">
-          <tr
-            *ngFor="let ds of displayStatusData |  paginate:{ itemsPerPage: itemsPerPage, currentPage: p }">
-            <td>{{ ds?.training_name }}</td>
-            <td>{{ ds?.student_name }}</td>
-            <td>{{ ds?.display_status }}</td>
-            <!-- <td>{{ trainingData?.decision_date | date: 'dd/MM/yyyy'}}</td> -->
-          </tr>
-        </tbody>
-         <!-- No Records Message -->
-    <tbody *ngIf="!isLoading && displayStatusData.length === 0">
-      <tr>
-        <td colspan="6">
-          <div class="img-search">
-            <img src="assets/no-search.jpg" alt="No Records Found" style="width: 150px; opacity: 0.8;" />
-            <span style="color: #134c68;">No Display Status records found.</span>
+      </div>
+  </div>
+
+  <div class="training-section" *ngIf="!isLoading">
+      <div class="cards-container">
+          <div class="training-card"
+              *ngFor="let training of trainingDatas | paginate: { itemsPerPage: 20, currentPage: p }">
+              <div class="card-header">
+                  <!-- <img [src]="training.trainingtype_name === 'Document' ? 'Doc_Image.jpeg' : training.thumbnail_image"
+                  alt="{{ training.training_name }} Training" /> -->
+
+                  <img
+                  [src]="getThumbnailUrl(training.thumbnail_image, training.trainingtype_name)"
+                  alt="Thumbnail">
+              </div>
+
+              <div class="card-body">
+                  <span class="badge">{{ training.trainingtype_name }}</span>
+                  <h3 class="title-heading">Name: {{ training.training_name }}</h3>
+
+                  <div class="info">
+                      <p><i class="fa fa-code"></i> Training Code: {{ training.training_code }}</p>
+                      <p><i class="fa fa-calendar"></i> Archive Date: {{ training.archive_date | date:'dd/MM/yyyy' }}</p>
+                      <!-- <p><i class="fa fa-calendar"></i> Due Date: {{ training.dueDate }}</p> -->
+                      <p><i class="fa fa-user"></i> Summary: {{ training.summary || 'N/A' }}</p>
+                  </div>
+
+              </div>
+
+              <div class="card-footer">
+                <button class="btn" (click)="openDetailsModal(training.training_id)">
+                   <i class="fas fa-eye"></i> View Status
+                </button>
+
+            </div>
           </div>
-        </td>
-      </tr>
-    </tbody>
-      </table>
+      </div>
+
+
       <div class="pagination-container">
-        <!-- Dropdown for selecting items per page -->
-        <div class="items-per-page">
-          <label for="itemsPerPage">Show:</label>
-          <select id="itemsPerPage" [(ngModel)]="itemsPerPage">
-            <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
-          </select>
-          <span>entries per page</span>
-        </div>
-
-        <!-- Pagination Controls -->
-        <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
+          <pagination-controls (pageChange)="p = $event" previousLabel="Prev" nextLabel="Next"></pagination-controls>
       </div>
-    </div>
-  </body>
+  </div>
 
-  </html>
+
+</div>
+
+
+<ng-template #noData>
+  <div class="no-data-container">
+      <img src="assets/nodata.png" alt="No Data" class="no-data-image">
+      <h3>No trainings found.</h3>
+  </div>
+</ng-template>
+
+<div *ngIf="showModal" class="modal-overlay">
+  <div class="modal-box">
+    <span class="close-icon" (click)="closedetailModal()">✖</span>
+
+    <h2>Student Status Details</h2>
+    <div class="search-bar1">
+      <i class="fa fa-search"></i>
+      <input type="text" id="search" [(ngModel)]="searchTerm" (input)="onSearchChange()"
+        placeholder="Search for Display Student With Status" />
+
+    </div>
+    <table *ngIf="studentStatusList.length > 0; else noData">
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Display Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of studentStatusList">
+          <td>{{ student.student_name || 'NA' }}</td>
+          <td [ngClass]="getStatusBadgeClass(student.display_status)"  class="status-badge">{{ student.display_status}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #noData>
+      <div class="img-search">
+        <img src="assets/no-search.jpg" alt="No Records Found" style="width: 150px; opacity: 0.8;" />
+        <span style="color: #134c68;">Assign Student Not found.</span>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+
+

@@ -12,7 +12,7 @@
 </h2>
 
 <div class="search-bar">
-    <input type="text" placeholder="Search Trainings" [(ngModel)]="searchQuery" (input)="onSearchChange()" > 
+    <input type="text" placeholder="Search Trainings" [(ngModel)]="searchQuery" (input)="onSearchChange()" >
     <span class="search-icon" (click)="fetchCatalog()">
 
         <svg viewBox="0 0 512 512">
@@ -46,9 +46,9 @@
                 <div class="card-header">
                     <!-- <img [src]="training.trainingtype_name === 'Document' ? 'Doc_Image.jpeg' : training.thumbnail_image"
                     alt="{{ training.training_name }} Training" /> -->
- 
-                    <img 
-                    [src]="getThumbnailUrl(training.thumbnail_image, training.trainingtype_name)" 
+
+                    <img
+                    [src]="getThumbnailUrl(training.thumbnail_image, training.trainingtype_name)"
                     alt="{{ training.training_name }} Thumbnail">
                 </div>
 
@@ -62,7 +62,7 @@
                         <p><i class="fa fa-user"></i> Summary: {{ training.summary || 'N/A' }}</p>
                     </div>
 
-                    <span class="status" [ngClass]="{'not-started': training.status === 'Not Started', 
+                    <span class="status" [ngClass]="{'not-started': training.status === 'Not Started',
                                 'in-progress': training.status === 'In Progress',
                                 'pending-request': training.status === 'Pending Approval',
                                 'completed': training.status === 'Completed'}">
@@ -76,17 +76,17 @@
                         {{ training.trainingtype_name }}
                     </button>
 
-                    
+
                     <button class="btn" *ngIf="training.status === 'In Progress' "
                         (click)="viewTraining(training.training_id)">
                         Action
-                    </button> 
+                    </button>
 
                     <button class="btn" *ngIf="training.status === 'Completed'"
                         (click)="viewTraining(training.training_id)">
                         Preview
-                    </button> 
-                    
+                    </button>
+
                     <!-- Pending Approval (Request for Approval Button) -->
                     <button class="btn pending-btn" *ngIf="training.status === 'Pending Approval'" (click)="showApprovalAlert()">
                         Request for Approval
@@ -106,8 +106,8 @@
                     <!-- <img [src]="selectedTraining?.trainingtype_name === 'Document' ? 'Doc_Image.jpeg' : selectedTraining.thumbnail_image"
                     alt="{{ selectedTraining.training_name }} Training" /> -->
 
-                    <img 
-                    [src]="getThumbnailUrl(selectedTraining?.thumbnail_image, selectedTraining?.trainingtype_name)" 
+                    <img
+                    [src]="getThumbnailUrl(selectedTraining?.thumbnail_image, selectedTraining?.trainingtype_name)"
                     alt="{{ selectedTraining?.training_name }} Thumbnail">
                 </div>
 
@@ -123,7 +123,7 @@
                 <div class="modals-footer">
                     <button class="btn-join" (click)="startTraining(selectedTraining)"  *ngIf="selectedTraining?.status === 'In Progress' || selectedTraining?.status === 'Not Started'">Join Training</button>
 
-                     
+
 
                     <button class="btn-complete" (click)="completedTraining(selectedTraining)" [disabled]="isCompleteLoading"  *ngIf="selectedTraining?.status === 'In Progress'">
                         <span *ngIf="!isCompleteLoading">Mark as Completed</span>
@@ -149,7 +149,7 @@
         </div>
     </div>
 
-  
+
 </div>
 
 

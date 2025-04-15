@@ -19,7 +19,19 @@ export class PendingApprovalService {
 
   private searchstatusUrl = 'https://localhost:7172/api/AssignStudents/searchDisplayStatus';
 
+  private StudentStatus = "https://localhost:7172/api/AssignStudents/GetStudentStatus";
+
+  private getThumbnailImage = "https://localhost:7172/api/DisplayData";
+
   constructor(private http: HttpClient) { }
+
+  getStudentStatusbyTrainings(trainingId: number): Observable<any> {
+    return this.http.get<any>(`${this.StudentStatus}/${trainingId}`);
+  }
+
+  getTrainingThumbnail(fileName: string, type: string) {
+    return `${this.getThumbnailImage}/GetThumbnail?fileName=${fileName}&type=${type}`;
+  }
 
   DisplayPendingApproval(): Observable<any> {
     return this.http.get<any[]>(this.apiUrl)
