@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
-import { AdminNavigationComponent } from '../../admin-navigation/admin-navigation.component';
 import { AdminNavigationService } from '../../admin-navigation/admin-navigation.service';
 
 @Component({
@@ -68,7 +67,8 @@ export class LoginComponent implements OnInit {
           
           setTimeout(() => {
             this.router.navigate([response.role === 'Admin' ? '/dashboard' : '/studentdashboard']).then(() => {
-              window.location.reload(); 
+              window.location.reload(); // Reload after a small delay
+              document.body.style.overflow = 'hidden'; 
           }); 
           }, 300); 
       },
