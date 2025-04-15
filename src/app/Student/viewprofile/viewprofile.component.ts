@@ -69,7 +69,7 @@ dialogRef: any;
     const studentId = sessionStorage.getItem('studentId');
     if (studentId) {
       this.studentId = Number(studentId);
-      this.fetchProfileImage(studentId); 
+      this.fetchProfileImage(studentId);
       this.loadStudentData(this.studentId);
     }
   }
@@ -83,19 +83,24 @@ dialogRef: any;
       width: '500px'
     });
   }
- 
+
   resetCropper(): void {
+    if (!this.croppedImage) {
+      this.studentService.showNotification("Please upload an image first after Reset.", "warning");
+      return;
+    }
+
     this.imageChangedEvent = '';
   this.croppedImage = '';
   this.originalFilename = null;
   this.imagePreview = null;
 
   if (this.fileInput) {
-    this.fileInput.nativeElement.value = ''; 
+    this.fileInput.nativeElement.value = '';
   }
   }
-  
-  
+
+
   closeDialog(): void {
     this.dialogRef.close();
   }
@@ -114,7 +119,7 @@ dialogRef: any;
       console.warn("Invalid student ID. Skipping API call.");
       return;
     }
-  
+
     this.studentService.getStudentProfile(studentId).subscribe({
       next: (studentData) => {
         console.log('Student Data Fetched:', studentData);
@@ -129,15 +134,15 @@ dialogRef: any;
       }
     });
   }
-  
+
   updateStudentProfile() {
     const studentId = sessionStorage.getItem('studentId');
-  
+
     if (!studentId) {
       console.error("Student ID is missing from session storage.");
       return;
     }
-  
+
     const updatedData = {
       Student_Id: Number(studentId),
       Email: this.studentData.email,
@@ -148,7 +153,7 @@ dialogRef: any;
       State: this.studentData.state,
       Country: this.studentData.country
     };
-  
+
     this.studentService.editStudentProfile(updatedData).subscribe({
       next: (response) => {
         console.log(response.Message);
@@ -159,53 +164,54 @@ dialogRef: any;
         this.studentService.showNotification('Failed to update profile.','error');
       }
     });
-  }  
+  }
 
   onFileInputChange(event: any): void {
     const file = event.target.files[0];
     const validImageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-  
+
     if (!file) {
       this.studentService.showNotification('Please upload an image first.', 'warning');
       return;
     }
-  
+
     if (!validImageTypes.includes(file.type)) {
       this.studentService.showNotification('Only PNG, JPG or JPEG images are allowed.', 'warning');
       this.resetCropper(); // clear inputs
       return;
     }
-  
+
     this.originalFilename = file.name;
     this.imageChangedEvent = event; // Pass to ngx-image-cropper
-  
+
     const reader = new FileReader();
     reader.onload = (e: any) => {
       this.imagePreview = e.target.result; // Just in case you want to preview before crop
     };
     reader.readAsDataURL(file);
-  }  
+  }
 
   uploadCroppedImage(): void {
+
     if (!this.croppedImage) {
-      this.studentService.showNotification("No image to upload.", "warning");
+      this.studentService.showNotification("Please upload an image first.", "warning");
       return;
     }
-  
+
     const studentId = sessionStorage.getItem('studentId');
     const parsedStudentId = Number(studentId);
-  
+
     if (!this.originalFilename) {
       this.originalFilename = `profile_${Date.now()}.png`;
     }
-  
+
     const file = this.dataURLtoFile(this.croppedImage, this.originalFilename);
-  
+
     this.studentService.updateProfileImage(parsedStudentId, file, this.originalFilename).subscribe(
       response => {
         this.studentService.showNotification('Profile image updated.', 'success');
         this.dialogRef.close();
-  
+
         // Refresh the profile image
         setTimeout(() => {
           this.fetchProfileImage(studentId!);
@@ -213,16 +219,16 @@ dialogRef: any;
           this.croppedImage = '';
           this.imagePreview = null;
           window.location.reload();
-        }, 1000);
+        }, 600);
       },
-      
+
       error => {
         console.error('Error updating profile image:', error);
         this.studentService.showNotification('Failed to upload image.', 'error');
       }
     );
   }
-  
+
 
 // Helper function to convert base64 to File
 dataURLtoFile(dataurl: string, filename: string): File {
@@ -253,14 +259,14 @@ dataURLtoFile(dataurl: string, filename: string): File {
       this.message = 'New Password and Confirm Password do not match.';
       return;
     }
-  
+
     this.studentService.checkPassword(this.studentId, formData.currentPassword).subscribe(
       (response: any) => {
         if (formData.currentPassword === formData.newPassword) {
           this.message = 'New password cannot be the same as the current password.';
           return;
         }
-  
+
         this.studentService.resetPassword(this.studentId, formData).subscribe(
           (resetResponse: any) => {
             this.studentService.showNotification('Password reset successfully.','success');
@@ -278,8 +284,8 @@ dataURLtoFile(dataurl: string, filename: string): File {
       }
     );
   }
-  
-  
+
+
   toggleCurrentPassword() {
     this.showCurrentPassword = !this.showCurrentPassword;
     }

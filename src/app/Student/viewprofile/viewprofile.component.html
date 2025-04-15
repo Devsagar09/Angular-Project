@@ -13,7 +13,7 @@
     <div class="profile-left">
       <div class="user-info">
         <div class="avatar" (click)="openCropperDialog()">
-          <img [src]="imagePreview || profileImage" alt="User profile">
+          <img [src]="profileImage" alt="User profile">
           <div class="avatar-overlay">
             <span class="camera-icon">📷</span>
             <span>Change Profile</span>
@@ -28,13 +28,32 @@
               <button mat-icon-button (click)="closeDialog()" aria-label="Close">X</button>
             </div>
 
+            <div class="file-upload-row">
+              <!-- Styled label as upload button -->
+              <label for="fileUpload" class="upload-btn">Upload Image</label>
+
+              <!-- Actual hidden file input -->
+              <input
+                type="file"
+                id="fileUpload"
+                accept="image/png, image/jpeg, image/jpg"
+                (change)="onFileInputChange($event)"
+                #fileInput
+              />
+
+              <!-- Filename on the right -->
+              <div class="filename">
+                {{ originalFilename || 'No file chosen' }}
+              </div>
+            </div>
+
             <!-- File input -->
-            <input 
-            type="file" 
-            accept="image/png, image/jpeg, image/jpg" 
-            (change)="onFileInputChange($event)" 
-            #fileInput />
-          
+            <!-- <input
+            type="file"
+            accept="image/png, image/jpeg, image/jpg"
+            (change)="onFileInputChange($event)"
+            #fileInput /> -->
+
             <!-- Cropper section -->
             <ng-container *ngIf="imageChangedEvent">
               <div *ngIf="croppedImage" class="image-preview">
@@ -48,9 +67,9 @@
 
             <!-- Action buttons -->
             <div class="img-btn-group">
-              <button class="save-btn" color="primary" [disabled]="!croppedImage"
+              <button class="save-btn" color="primary"
                 (click)="uploadCroppedImage()">Upload</button>
-              <button class="reset-btn" (click)="resetCropper()" [disabled]="!imageChangedEvent">Reset</button>
+              <button class="reset-btn" (click)="resetCropper()">Reset</button>
             </div>
           </div>
         </ng-template>
