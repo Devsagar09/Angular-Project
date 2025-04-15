@@ -22,10 +22,20 @@ export class AppComponent implements OnInit{
     this.resetInactivityTimer();
 
     this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.resetInactivityTimer();
+      if (event instanceof NavigationStart) {
+        this.isLoading = true;
+        document.body.style.overflow = 'hidden'; // Prevent scroll during transition
       }
-    });
+    
+      if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+        this.resetInactivityTimer();
+        this.isLoading = false;
+    
+        // Allow scroll again ONLY if you're not on login page
+        const isLoginPage = this.router.url.includes('/login');
+        document.body.style.overflow = isLoginPage ? 'hidden' : 'auto';
+      }
+    });    
     setTimeout(() => {
        this.isLoading = false;
     }, 300);

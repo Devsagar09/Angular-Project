@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
           
           setTimeout(() => {
             this.router.navigate([response.role === 'Admin' ? '/dashboard' : '/studentdashboard']).then(() => {
-              window.location.reload(); // Reload after a small delay
+              window.location.reload(); 
           }); 
           }, 300); 
       },
