@@ -53,6 +53,7 @@ export class AdminNavigationComponent implements OnInit {
       setTimeout(() => {
         this.router.navigate(['/studentdashboard']).then(() => {
           this.isLoading = false;
+          document.body.style.overflow = 'hidden'; 
         });
       }, 10);
     }

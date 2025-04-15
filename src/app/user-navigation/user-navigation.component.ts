@@ -73,6 +73,7 @@ export class UserNavigationComponent implements OnInit {
       setTimeout(() => {
         this.router.navigate(['/dashboard']).then(() => {
           this.isLoading = false;
+          document.body.style.overflow = 'hidden'; 
         });
       }, 10);
 }
@@ -106,7 +107,6 @@ export class UserNavigationComponent implements OnInit {
   }
 
   viewProfile() {
-    console.log('View Profile clicked');
     this.dropdownVisible = false;
   }
 

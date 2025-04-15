@@ -27,6 +27,11 @@ export class ForgetpasswordComponent {
   }
 
   sendResetLink() {
+    debugger
+    if (this.forgetPasswordForm.invalid) {
+      this.forgetPasswordForm.markAllAsTouched(); 
+      return;
+    }
     const email = this.forgetPasswordForm.get('email')?.value?.trim().toLowerCase();
   
     if (!email) {

@@ -255,6 +255,8 @@ dataURLtoFile(dataurl: string, filename: string): File {
 
   resetPassword(form: NgForm) {
     const formData = form.value;
+    this.message = '';
+
     if (formData.newPassword !== formData.confirmPassword) {
       this.message = 'New Password and Confirm Password do not match.';
       return;
@@ -266,6 +268,7 @@ dataURLtoFile(dataurl: string, filename: string): File {
           this.message = 'New password cannot be the same as the current password.';
           return;
         }
+        this.message = '';
 
         this.studentService.resetPassword(this.studentId, formData).subscribe(
           (resetResponse: any) => {
