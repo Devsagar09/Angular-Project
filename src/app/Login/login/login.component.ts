@@ -63,7 +63,8 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('firstname', response.firstname);
           sessionStorage.setItem('lastname', response.lastname);
           sessionStorage.setItem('userRole', response.role);
-          sessionStorage.setItem('studentId', response.studentId);
+          sessionStorage.setItem('studentId', response.studentId); 
+          sessionStorage.setItem('email', response.email); 
           
           setTimeout(() => {
             this.router.navigate([response.role === 'Admin' ? '/dashboard' : '/studentdashboard']).then(() => {

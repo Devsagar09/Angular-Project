@@ -33,6 +33,7 @@ export class IdpComponent {
   isModalOpens: boolean = false;
   requiresApproval: boolean = false
   selectedTraining: any = null;
+  isCompleteLoading = false; 
 
   goToDashboard() {
     this.router.navigate(['/studentdashboard']);
@@ -314,10 +315,13 @@ export class IdpComponent {
 
     const request = { studentId: +studentId, trainingId: training.training_id };
 
+    this.isCompleteLoading = true;  
+
     this.IDPService.completeTraining(request).subscribe({
       next: (response) => {
         console.log("Training Completed successfully:", response);
         alert(response);  // Correctly displays the API message
+        this.isCompleteLoading = false;
         window.location.reload();
       }
     })
