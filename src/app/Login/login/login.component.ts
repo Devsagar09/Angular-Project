@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
-import { AdminNavigationComponent } from '../../admin-navigation/admin-navigation.component';
 import { AdminNavigationService } from '../../admin-navigation/admin-navigation.service';
 
 @Component({
@@ -54,6 +53,10 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     // alert("clicked");
+    if(this.loginForm.invalid)
+    {
+      this.loginForm.markAllAsTouched();
+    }
     if (this.loginForm.valid) {
       this.loading = true;
       this.loginService.login(this.loginForm.value).subscribe(
@@ -64,11 +67,13 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('firstname', response.firstname);
           sessionStorage.setItem('lastname', response.lastname);
           sessionStorage.setItem('userRole', response.role);
-          sessionStorage.setItem('studentId', response.studentId);
+          sessionStorage.setItem('studentId', response.studentId); 
+          sessionStorage.setItem('email', response.email); 
           
           setTimeout(() => {
             this.router.navigate([response.role === 'Admin' ? '/dashboard' : '/studentdashboard']).then(() => {
               window.location.reload(); // Reload after a small delay
+              document.body.style.overflow = 'hidden'; 
           }); 
           }, 300); 
       },

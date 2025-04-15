@@ -4,6 +4,10 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
   }
+  ::-webkit-scrollbar {
+  display: none;
+  /* For Chrome, Safari */
+}
 
   body {
     width: 100%;
@@ -150,6 +154,9 @@
     color: #000;
   }
 
+  .is-invalid {
+    border: 1px solid red !important;
+  }
 
   /* RESPONSIVE DESIGN */
   @media (max-width: 768px) {

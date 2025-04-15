@@ -24,6 +24,10 @@
 </div>
 
 <hr class="hr-line">
+<!-- 
+<div *ngIf="isCompleteLoading" class="loader-container">
+    <div class="loader"></div>
+  </div> -->
 
 <!-- <div *ngIf="isLoading; ">
     <div class="skeleton-card" *ngFor="let i of [1,2,3]"></div>
@@ -105,9 +109,12 @@
 
                 <div class="modals-footer">
                     <button class="btn-join" (click)="startTraining(selectedTraining)">Join Training</button>
-
-                    <button class="btn-complete" (click)="completedTraining(selectedTraining)">
-                        Mark as Completed
+                    <!-- isCompleteLoading -->
+                    <button class="btn-complete" [disabled]="isCompleteLoading" (click)="completedTraining(selectedTraining)">
+                        <span *ngIf="!isCompleteLoading">Mark as Completed</span>
+                        <span *ngIf="isCompleteLoading">
+                        <div class="spinner"></div> Completing...
+                        </span>
                     </button>
                 </div>
             </div>

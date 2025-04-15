@@ -15,7 +15,7 @@ export class AdmindashboardComponent implements OnInit {
   isLoading = true;
   trainingDatas: any;
   dashboardData: any;
-  lastLogin: string = new Date().toLocaleString(); // Example last login time
+  lastLogin: string = new Date().toLocaleString(); 
   profileImage: string | null = '';
 
   constructor(private admindashboardService: AdmindashboardService, private trainingService: TrainingService, private adminNavigationService: AdminNavigationService) { }
@@ -27,9 +27,9 @@ export class AdmindashboardComponent implements OnInit {
       this.isLoading = false;
       this.loadDashboardCounts();
       this.loadtraining();
-      const studentId = sessionStorage.getItem('studentId'); // Get studentId from sessionStorage
+      const studentId = sessionStorage.getItem('studentId'); 
       if (studentId) {
-        this.fetchProfileImage(studentId); // ✅ Fetch profile image
+        this.fetchProfileImage(studentId); 
       } else {
         console.error('Student ID not found in SessionStorage.');
       }

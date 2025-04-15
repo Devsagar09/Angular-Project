@@ -28,7 +28,10 @@ export class CatalogComponent {
   studentId: number | null = null;
   searchQuery: string = '';
   isModalOpens: boolean = false;
-  selectedTraining: any = null;
+
+  selectedTraining: any = null; 
+  isCompleteLoading = false; 
+
 
   goToDashboard() {
     this.router.navigate(['/studentdashboard']);
@@ -256,11 +259,13 @@ export class CatalogComponent {
     }
 
     const request = { studentId: +studentId, trainingId: training.training_id };
+    this.isCompleteLoading = true;
 
     this.CatalogService.completeTraining(request).subscribe({
       next: (response) => {
         console.log("Training Completed successfully:", response);
         alert(response);  // Correctly displays the API message
+        this.isCompleteLoading = false;
         window.location.reload();
       }
     })

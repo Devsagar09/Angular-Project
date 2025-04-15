@@ -255,22 +255,37 @@ dataURLtoFile(dataurl: string, filename: string): File {
 
   resetPassword(form: NgForm) {
     const formData = form.value;
+    this.message = '';
+  
+    if (form.invalid) {
+      // Mark all fields as touched to trigger validation
+      Object.values(form.controls).forEach(control => {
+        control.markAsTouched();
+      });
+      return;
+    }
+  
+    // Password match check
     if (formData.newPassword !== formData.confirmPassword) {
       this.message = 'New Password and Confirm Password do not match.';
       return;
     }
-
+  
     this.studentService.checkPassword(this.studentId, formData.currentPassword).subscribe(
       (response: any) => {
+        // Prevent reusing old password
         if (formData.currentPassword === formData.newPassword) {
           this.message = 'New password cannot be the same as the current password.';
           return;
         }
-
+  
+        this.message = '';
+  
+        // Proceed to reset password
         this.studentService.resetPassword(this.studentId, formData).subscribe(
           (resetResponse: any) => {
-            this.studentService.showNotification('Password reset successfully.','success');
-            form.reset();
+            this.studentService.showNotification('Password reset successfully.', 'success');
+            form.resetForm(); // Also resets validation states
           },
           (error) => {
             console.error('API Error:', error);
@@ -284,6 +299,7 @@ dataURLtoFile(dataurl: string, filename: string): File {
       }
     );
   }
+  
 
 
   toggleCurrentPassword() {

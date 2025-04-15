@@ -9,7 +9,8 @@ export class LoginService {
   private apiUrl = 'https://localhost:7172/api/Auth/Login';
   private forgetpasswordurl = 'https://localhost:7172/api/Auth'; 
 private selfregurl='https://localhost:7172/api/Student/selfRegister';
-  
+  private requestemail='https://localhost:7172/api/Auth/RequestPasswordReset';
+private changepassword='https://localhost:7172/api/Auth/ForgetPassword';
 
   constructor(private http : HttpClient) { }
 
@@ -17,18 +18,13 @@ private selfregurl='https://localhost:7172/api/Student/selfRegister';
     return this.http.post(this.apiUrl, credentials) ;
   }
 
-  checkUserExists(emailOrUsername: string): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
-    return this.http.post(
-      `${this.forgetpasswordurl}/CheckUserExists`,
-      JSON.stringify(emailOrUsername), 
-      { headers }
-    );
+  sendResetEmail(email: string) {
+    debugger
+    return this.http.post(`${this.requestemail}`, { email });
   }
 
-  forgetPassword(data: any): Observable<any> {
-    return this.http.post(`${this.forgetpasswordurl}/ForgetPassword`, data); 
+  resetPassword(data: { email: string; new_password: string; confirm_password: string }) {
+    return this.http.post(`${this.changepassword}`, data);
   }
 
   
