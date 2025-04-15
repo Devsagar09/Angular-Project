@@ -24,7 +24,6 @@ export class AdminNavigationComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.isLoading = true;
-        document.body.style.overflow = 'hidden'; 
       }
       if (event instanceof NavigationEnd) {
         this.isLoginPage = this.router.url.toLowerCase() === '/login';
@@ -32,7 +31,6 @@ export class AdminNavigationComponent implements OnInit {
         // Simulate loading process
         setTimeout(() => {
           this.isLoading = false;
-          document.body.style.overflow = ''; 
         }, 2000);
       }
     });

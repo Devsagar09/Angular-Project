@@ -5,9 +5,9 @@
     font-family: Arial, sans-serif;
   }
   ::-webkit-scrollbar {
-    display: none;
-    /* For Chrome, Safari */
-  }
+  display: none;
+  /* For Chrome, Safari */
+}
 
   body {
     width: 100%;
