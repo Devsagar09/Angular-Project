@@ -4,6 +4,7 @@ import { PendingApprovalComponent } from './pending-approval/pending-approval.co
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { DisplayStatusComponent } from './display-status/display-status.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { DisplayStatusComponent } from './display-status/display-status.componen
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
     NgxPaginationModule
   ]
 })

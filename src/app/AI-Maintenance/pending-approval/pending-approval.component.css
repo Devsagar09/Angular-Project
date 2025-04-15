@@ -70,6 +70,8 @@ table {
   border-collapse: collapse;
   margin: 8px;
   table-layout: auto;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
   /* Columns adjust dynamically */
 }
 
@@ -233,6 +235,8 @@ input[type="checkbox"] {
   padding: 8px 15px;
   width: 80%;
   margin-right: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
 }
 
 .search-bar i {
@@ -280,6 +284,8 @@ input[type="checkbox"] {
 .delete-btn {
   background-color: #df4747;
   color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
 }
 
 i {
@@ -289,6 +295,7 @@ i {
 .add-btn {
   background-color: #57e338;
   color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 
 }
 

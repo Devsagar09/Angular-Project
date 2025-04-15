@@ -28,7 +28,7 @@ export class CatalogComponent {
   studentId: number | null = null;
   searchQuery: string = '';
   isModalOpens: boolean = false;
-  selectedTraining: any = null; 
+  selectedTraining: any = null;
 
   goToDashboard() {
     this.router.navigate(['/studentdashboard']);
@@ -47,21 +47,21 @@ export class CatalogComponent {
     }
   }
 
-  
+
   OpenModelBox(): void {
     this.isModalOpens = true
   }
 
-  closeModal() { 
+  closeModal() {
     this.isModalOpens = false;
   }
-  
+
   isApprovalDialogOpen: boolean = false;
 
   closeApprovalDialog() {
     this.isApprovalDialogOpen = false;
   }
-  
+
 
   loadTrainings(): void {
     if (this.studentId !== null) {
@@ -121,7 +121,7 @@ export class CatalogComponent {
     });
   }
 
-  //start training 
+  //start training
   requestTrainingApprovalOrView(trainingId: number) {
     console.log("Checking Training ID:", trainingId);
     console.log("Student ID:", this.studentId);
@@ -207,7 +207,7 @@ export class CatalogComponent {
           }, error => {
             console.error('Error fetching document:', error);
           });
-        
+
         }
       },
       error: (error) => {
@@ -217,19 +217,19 @@ export class CatalogComponent {
     });
   }
 
-  // started completed trainng 
+  // started completed trainng
   startCompletedTraining(training: any) {
     if (!training) {
       console.error("Invalid training data.");
       return;
     }
-  
+
     if (training.trainingtype_name === "External Link" && training.external_link_URL) {
       const confirmExternal = confirm("This training is an external link. Do you want to continue?");
       if (confirmExternal) {
         window.open(training.external_link_URL, "_blank");
       }
-    } 
+    }
     else if (training.trainingtype_name === "Document" && training.document_file) {
       this.CatalogService.getTrainingDocument(training.document_file).subscribe((response: Blob) => {
         const fileURL = URL.createObjectURL(response);
@@ -237,7 +237,7 @@ export class CatalogComponent {
       }, error => {
         console.error('Error fetching document:', error);
       });
-    } 
+    }
     else {
       alert("No valid training content found.");
     }
@@ -247,7 +247,7 @@ export class CatalogComponent {
     if (!training) {
       console.error("Invalid training data.");
       return;
-    } 
+    }
 
     const studentId = sessionStorage.getItem('studentId');
     if (!studentId) {
@@ -267,7 +267,7 @@ export class CatalogComponent {
 
   }
 
-  
+
   viewTraining(trainingtId: number) {
     console.log("Transcript ID:", trainingtId);
 
@@ -289,6 +289,7 @@ export class CatalogComponent {
   getThumbnailUrl(fileName: string, type: string): string {
     return this.CatalogService.getTrainingThumbnail(fileName, type);
   }
+
 
 
 
