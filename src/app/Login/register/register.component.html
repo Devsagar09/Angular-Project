@@ -16,7 +16,7 @@
                 <!-- First Name -->
                 <div class="form-group">
                   <input type="text" name="firstName" required [(ngModel)]="studentData.firstname"
-                         #firstName="ngModel" class="input-field"
+                         #firstName="ngModel" class="input-field"  (keyup)="generateUsernameAndPassword()"
                          [ngClass]="{'invalid': firstName.invalid && firstName.touched}" placeholder=" " />
                   <label for="firstName" class="input-label">First Name</label>
                   <!-- <div *ngIf="firstName.invalid && firstName.touched" class="error-msg">First Name is required.</div> -->

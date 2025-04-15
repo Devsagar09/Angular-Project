@@ -5,13 +5,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { RouterModule } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
+import { ForgetChangePasswordComponent } from './forget-change-password/forget-change-password.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
     ForgetpasswordComponent,
-    RegisterComponent
+    RegisterComponent,
+    ForgetChangePasswordComponent,
+    
     ],
   imports: [
     CommonModule,
