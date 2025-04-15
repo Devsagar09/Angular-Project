@@ -13,12 +13,14 @@
   
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
           <div class="form-group">
-            <input type="text" formControlName="logintext" class="input-field" id="username" placeholder=" " />
-            <label for="username" class="input-label">Username or Email</label>
+            <input type="text" formControlName="logintext" class="input-field" id="logintext" placeholder=" " required
+            [ngClass]="{'is-invalid': loginForm.get('logintext')?.invalid && loginForm.get('logintext')?.touched}"/>
+            <label for="logintext" class="input-label">Username or Email</label>
           </div>
   
           <div class="form-group">
-            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="input-field" id="password" placeholder=" " />
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="input-field" id="password" placeholder=" " required
+            [ngClass]="{'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"/>            
             <label for="password" class="input-label">Password</label>
             <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility()"></i>
           </div>

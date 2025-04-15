@@ -53,6 +53,10 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     // alert("clicked");
+    if(this.loginForm.invalid)
+    {
+      this.loginForm.markAllAsTouched();
+    }
     if (this.loginForm.valid) {
       this.loading = true;
       this.loginService.login(this.loginForm.value).subscribe(
