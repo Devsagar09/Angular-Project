@@ -379,6 +379,15 @@ textarea {
   color: #000;
 }
 
+.is-invalid {
+  border: 1px solid red !important ;
+}
+
+.validation-error {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
 
 .avatar {
   position: relative;

@@ -124,35 +124,48 @@
         <!-- Security Section -->
         <div id="security" class="section" [ngClass]="{'active': activeTab === 'security'}">
           <h4>Reset Password</h4>
-          <form #resetForm="ngForm" (ngSubmit)="resetPassword(resetForm)">
+          <form #resetForm="ngForm" (ngSubmit)="resetPassword(resetForm)" novalidate>
+            
+            <!-- Current Password -->
             <label>Current Password</label>
             <div class="password-container">
               <input [type]="showCurrentPassword ? 'text' : 'password'" name="currentPassword"
-                [(ngModel)]="resetData.currentPassword" required placeholder="Current Password">
+                [(ngModel)]="resetData.currentPassword" required placeholder="Current Password"
+                #currentPassword="ngModel"
+  [ngClass]="{'is-invalid': currentPassword.invalid && currentPassword.touched}" />
               <i class="fa" [ngClass]="showCurrentPassword ? 'fa-eye' : 'fa-eye-slash'"
                 (click)="toggleCurrentPassword()"></i>
             </div>
-
+        
+            <!-- New Password -->
             <label>New Password</label>
             <div class="password-container">
               <input [type]="showNewPassword ? 'text' : 'password'" name="newPassword"
-                [(ngModel)]="resetData.newPassword" required placeholder="New Password">
+                [(ngModel)]="resetData.newPassword" required placeholder="New Password"
+                #newPassword="ngModel"
+                [ngClass]="{'is-invalid': newPassword.invalid && newPassword.touched}" />
               <i class="fa" [ngClass]="showNewPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="toggleNewPassword()"></i>
             </div>
 
+        
+            <!-- Confirm Password -->
             <label>Confirm Password</label>
             <div class="password-container">
               <input [type]="showConfirmPassword ? 'text' : 'password'" name="confirmPassword"
-                [(ngModel)]="resetData.confirmPassword" required placeholder="Confirm Password">
+                [(ngModel)]="resetData.confirmPassword" required placeholder="Confirm Password"
+                #confirmPassword="ngModel"
+                [ngClass]="{'is-invalid': confirmPassword.invalid && confirmPassword.touched}" />
               <i class="fa" [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'"
                 (click)="toggleConfirmPassword()"></i>
             </div>
+        
+            <!-- Custom Error -->
             <p *ngIf="message" class="error-message">{{ message }}</p>
-
-            <button type="submit" class="save-btn" [disabled]="resetForm.invalid">SAVE CHANGES</button>
+        
+            <button type="submit" class="save-btn" >SAVE CHANGES</button>
           </form>
-
         </div>
+        
 
       </div>
     </div>
