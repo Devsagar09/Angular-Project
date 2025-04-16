@@ -137,12 +137,12 @@ dialogRef: any;
 
   updateStudentProfile() {
     const studentId = sessionStorage.getItem('studentId');
-
+  
     if (!studentId) {
-      console.error("Student ID is missing from session storage.");
+      this.studentService.showNotification('Student ID is missing.', 'error');
       return;
     }
-
+  
     const updatedData = {
       Student_Id: Number(studentId),
       Email: this.studentData.email,
@@ -153,18 +153,28 @@ dialogRef: any;
       State: this.studentData.state,
       Country: this.studentData.country
     };
-
+  
     this.studentService.editStudentProfile(updatedData).subscribe({
       next: (response) => {
-        console.log(response.Message);
-        this.studentService.showNotification('Profile updated successfully.','success');
+        this.studentService.showNotification(response.Message || 'Profile updated successfully.', 'success');
       },
       error: (error) => {
         console.error('Error updating profile:', error);
-        this.studentService.showNotification('Failed to update profile.','error');
+  
+        let errorMessage = 'Failed to update profile.';
+      if (error.error) {
+        if (typeof error.error === 'string') {
+          errorMessage = error.error;
+        } else if (error.error.message) {
+          errorMessage = error.error.message;
+        }
+      }
+      this.studentService.showNotification(errorMessage, 'error');
       }
     });
   }
+  
+  
 
   onFileInputChange(event: any): void {
     const file = event.target.files[0];
