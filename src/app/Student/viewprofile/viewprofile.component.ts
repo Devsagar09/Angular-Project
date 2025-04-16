@@ -136,7 +136,6 @@ dialogRef: any;
   }
 
   updateStudentProfile() {
-    debugger
     const studentId = sessionStorage.getItem('studentId');
   
     if (!studentId) {
